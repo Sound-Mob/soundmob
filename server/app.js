@@ -14,11 +14,41 @@ app.get('/api', (req, res) => {
   });
   // res.send('it works');
 });
-app.post('/api/posts', (req, res) => {
-  res.json({
-    message: 'post created...'
+
+const verifyToken = (req, res, next) => {
+  // get auth header val
+  const bearerHeader = req.headers['authorization'];
+  // check if bearer is undefined
+  if (typeof bearerHeader !== 'undefined') {
+    // split at the space
+    console.log(bearerHeader);
+    const bearer = bearerHeader.split(' ');
+    // get token from array
+    const bearerToken = bearer[1];
+    // set token
+    req.token = bearerToken;
+    // next middleware
+    next();
+  } else {
+    // forbidden
+    res.sendStatus(403);
+  }
+};
+
+app.post('/api/posts', verifyToken, (req, res) => {
+  jwt.verify(req.token, 'secretkey', (err, authData)=>{
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      res.json({
+        message: 'post created...',
+        authData
+      });
+    }
   });
+  
 });
+
 app.post('/api/login', (req, res) => {
   // mock user
   const user = {
@@ -32,6 +62,12 @@ app.post('/api/login', (req, res) => {
     });
   });
 });
+
+// format of token
+// Authorization: Bearer <access_token>
+
+
+
 
 app.listen(3000, ()=>{
   console.log('listening on 3000');
