@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "express":"nodemon server/app.js",
     "build": "ng build",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -23,8 +24,9 @@
     "@angular/router": "^6.1.0",
     "@types/jest": "^23.3.2",
     "core-js": "^2.5.4",
-    "jest": "^23.6.0",
-    "jest-preset-angular": "^6.0.1",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4",
+    "path": "^0.12.7",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },
