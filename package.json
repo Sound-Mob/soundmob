@@ -20,7 +20,10 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "@types/jest": "^23.3.2",
     "core-js": "^2.5.4",
+    "jest": "^23.6.0",
+    "jest-preset-angular": "^6.0.1",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },
@@ -35,7 +38,6 @@
     "codelyzer": "~4.3.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~3.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
