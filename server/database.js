@@ -21,4 +21,4 @@ module.exports = {
       .catch(error => {
         console.log(error); // print the error;
       }),
-}
+};

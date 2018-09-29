@@ -7,7 +7,6 @@ const app = express();
 
 app.get('/api', (req, res) => {
   res.send('it works');
-  createUser();
 });
 
 app.listen(3000, ()=>{
