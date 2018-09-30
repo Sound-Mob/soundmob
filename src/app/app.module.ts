@@ -3,24 +3,24 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SongSearchComponent } from './song-search/song-search.component';
-import { SoundBoardComponent } from './sound-board/sound-board.component';
-import { SoundboardButtonComponent } from './soundboard-button/soundboard-button.component';
-import { MusicPlayerComponent } from './music-player/music-player.component';
-import { ProfileHeaderComponent } from './profile-header/profile-header.component';
+import { DJViewModule } from './dj-view/dj-view.module';
+import { UserViewModule } from './user-view/user-view.module';
+import { ProfileViewModule } from './profile-view/profile-view.module';
+import { AddSongsViewModule } from './add-songs-view/add-songs-view.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SongSearchComponent,
-    SoundBoardComponent,
-    SoundboardButtonComponent,
-    MusicPlayerComponent,
-    ProfileHeaderComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DJViewModule,
+    UserViewModule,
+    ProfileViewModule,
+    AddSongsViewModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
