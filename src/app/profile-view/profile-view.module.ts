@@ -10,5 +10,5 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
   exports: [
     UserProfileComponent
   ]
-})
+}) 
 export class ProfileViewModule { }
