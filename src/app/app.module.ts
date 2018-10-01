@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DJViewModule } from './dj-view/dj-view.module';
+import { DjViewModule } from './dj-view/dj-view.module';
 import { UserViewModule } from './user-view/user-view.module';
 import { ProfileViewModule } from './profile-view/profile-view.module';
-import { AddSongsViewModule } from './add-songs-view/add-songs-view.module';
 
 
 @NgModule({
@@ -16,10 +15,10 @@ import { AddSongsViewModule } from './add-songs-view/add-songs-view.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DJViewModule,
+    DjViewModule,
     UserViewModule,
     ProfileViewModule,
-    AddSongsViewModule
+ 
 
   ],
   providers: [],
