@@ -8,6 +8,7 @@ import { UserViewModule } from './user-view/user-view.module';
 import { ProfileViewModule } from './profile-view/profile-view.module';
 
 
+
 //angular material components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material';
@@ -48,6 +49,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    DjViewModule,
+    UserViewModule,
+    ProfileViewModule,
+    //begin import of angular material
     BrowserAnimationsModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -74,6 +79,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonToggleModule,
     MatChipsModule,
     MatIconModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatDialogModule,
