@@ -1,13 +1,13 @@
-import { DJViewModule } from './dj-view.module';
+import { DjViewModule } from './dj-view.module';
 
-describe('DJViewModule', () => {
-  let dJViewModule: DJViewModule;
+describe('DjViewModule', () => {
+  let djViewModule: DjViewModule;
 
   beforeEach(() => {
-    dJViewModule = new DJViewModule();
+    djViewModule = new DjViewModule();
   });
 
   it('should create an instance', () => {
-    expect(dJViewModule).toBeTruthy();
+    expect(djViewModule).toBeTruthy();
   });
 });
