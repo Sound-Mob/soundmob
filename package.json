@@ -24,6 +24,7 @@
     "core-js": "^2.5.4",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
     "path": "^0.12.7",
     "rxjs": "~6.2.0",

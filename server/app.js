@@ -2,12 +2,17 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const { createUser } = require('./database');
+const morgan = require('morgan');
 // initialize app variable
 const app = express();
 const socket = require('socket.io');
 const bodyParser = require('body-parser');
 
+// middlewares
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 
+// routes
 app.get('/api', (req, res) => {
   res.json({
     message: 'welcome to sound mob'
@@ -73,7 +78,8 @@ app.listen(3000, ()=>{
   console.log('listening on 3000');
 });
 
-app.use(bodyParser.json());
+
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
