@@ -7,18 +7,20 @@ const morgan = require('morgan');
 const app = express();
 const socket = require('socket.io');
 const bodyParser = require('body-parser');
+const { google } = require('googleapis');
+const { Youtube, ClientID, ClientSecret, RedirectURL } = require('./config.js');
 
 // middlewares
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 // routes
-app.get('/api', (req, res) => {
-  res.json({
-    message: 'welcome to sound mob'
-  });
-  // res.send('it works');
-});
+// app.get('/api', (req, res) => {
+//   res.json({
+//     message: 'welcome to sound mob'
+//   });
+//   // res.send('it works');
+// });
 
 const verifyToken = (req, res, next) => {
   // get auth header val
@@ -61,7 +63,7 @@ app.post('/api/login', (req, res) => {
     username: 'joey',
     email: 'jldela@gmail.com'
   };
-  jwt.sign({user}, 'secretkey', (err, token)=>{
+  jwt.sign({user}, 'secretkey', { expiresIn: '30s'}, (err, token)=>{
     res.json({
       token
     });
@@ -83,3 +85,41 @@ app.listen(3000, ()=>{
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+
+const oauth2Client = new google.auth.OAuth2(
+  ClientID,
+  ClientSecret,
+  'http://localhost:3000/api'
+);
+const scopes = [
+  'https://www.googleapis.com/auth/youtube',
+];
+ 
+const url = oauth2Client.generateAuthUrl({
+  // 'online' (default) or 'offline' (gets refresh_token)
+  access_type: 'offline',
+ 
+  // If you only need one scope you can pass it as a string
+  scope: scopes
+});
+
+console.log(url);
+
+
+app.get('/api', (req, res) => {
+  console.log(req.query);
+  const { code } = req.query;
+  const start = async function() {
+  const {tokens} = await oauth2Client.getToken(code);
+  console.log(tokens);
+  }
+  start();
+// oauth2Client.setCredentials(tokens)
+res.send('it works');
+})
+app.post('/api', (req, res) => {
+  console.log(req.body);
+  res.end();
+})
+
