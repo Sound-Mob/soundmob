@@ -3,12 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DjViewModule } from './dj-view/dj-view.module';
+import { UserViewModule } from './user-view/user-view.module';
+import { ProfileViewModule } from './profile-view/profile-view.module';
 
-import { SongSearchComponent } from './song-search/song-search.component';
-import { SoundBoardComponent } from './sound-board/sound-board.component';
-import { SoundboardButtonComponent } from './soundboard-button/soundboard-button.component';
-import { MusicPlayerComponent } from './music-player/music-player.component';
-import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 
 //angular material components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,12 +43,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SongSearchComponent,
-    SoundBoardComponent,
-    SoundboardButtonComponent,
-    MusicPlayerComponent,
-    ProfileHeaderComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
