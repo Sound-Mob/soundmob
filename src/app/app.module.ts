@@ -8,6 +8,7 @@ import { SoundBoardComponent } from './sound-board/sound-board.component';
 import { SoundboardButtonComponent } from './soundboard-button/soundboard-button.component';
 import { MusicPlayerComponent } from './music-player/music-player.component';
 import { ProfileHeaderComponent } from './profile-header/profile-header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProfileHeaderComponent } from './profile-header/profile-header.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
