@@ -1,5 +1,6 @@
 const pgp = require('pg-promise')();
 
+// define db params
 const cn = {
   host: 'localhost', // server name or IP address;
   port: 5432,
