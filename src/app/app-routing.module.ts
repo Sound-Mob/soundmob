@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: "king",
     loadChildren: "../app/king/king.module#KingModule"
+  },
+  {
+    path: "dj-view",
+    loadChildren: "../app/dj-view/dj-view.module#DjViewModule"
   }
 ];
 
