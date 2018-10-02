@@ -1,3 +1,8 @@
-<p>
-  comments works!
-</p>
+<div>Posts</div>
+
+<h1 *ngIf="show" else elseBlock>Loading...</h1>
+
+
+<ul #elseBlock>
+  <li *ngFor="let comment of data">{{comment.name}}: {{comment.company.catchPhrase | json}}</li>
+</ul>
