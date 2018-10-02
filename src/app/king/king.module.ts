@@ -5,6 +5,9 @@ import { CommonModule } from "@angular/common";
 import {KingRoutingModule} from './king-routing.module';
 
 import { KingComponent } from "./king.component";
+import { ProfileComponent } from './profile/profile.component';
+import { SoundplayerComponent } from './soundplayer/soundplayer.component';
+import { CommentsComponent } from './comments/comments.component';
 
 
 @NgModule({
@@ -12,7 +15,7 @@ import { KingComponent } from "./king.component";
         CommonModule,
         KingRoutingModule
     ],
-    declarations:[KingComponent]
+    declarations:[KingComponent, ProfileComponent, SoundplayerComponent, CommentsComponent]
 
 })
 
