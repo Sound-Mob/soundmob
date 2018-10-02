@@ -1,52 +1,64 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const path = require('path');
 const { createUser, getUsers } = require('./database');
-const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+const morgan = require('morgan');
+// initialize app variable
 const app = express();
-const bodyParser = ('body-parser');
-
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+const bodyParser = require('body-parser');
+const { google } = require('googleapis');
+const { Youtube, ClientID, ClientSecret, RedirectURL } = require('./config.js');
+const session = require('express-session'); 
 const passport = require('passport');
-const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 // middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+
+});
+
+io.on('connection', function (socket) {
+  socket.join('rikkirikki');
+  console.log('a user connected');
+  socket.on('disconnect', function (socket) {
+    io.emit('disconnect', 'a user has disconnected');
+  });
+});
+
+io.on('connection', function (socket) {
+  socket.on('voice', function (stream) {
+    io.emit('voice', stream);
+  });
+  socket.on('chat message', function (msg) {
+    io.emit('chat message', msg);
+  });
+});
+
+http.listen(4567, function () {
+  console.log('listening on 4567');
+});
+
 // register the session with its secret id
-app.use(session({ secret: 'test' }));
+// app.use(session({ secret: 'test' }));
 
-// routes
-app.post('/login', (req, res) => {
-  req.session.email = req.body.email;
-  // console.log(req.session);
-  res.end('done');
-});
+// // routes
+// app.post('/login', (req, res) => {
+//   req.session.email = req.body.email;
+//   res.end('done');
+// });
 
-// main view
-app.get('/', (req, res) => {
-  const googleid = 12234;
-  const firstname = 'joey';
-  const lastname = 'delahoussaye';
-  const bio = 'austin tx';
-  const samples = 'binary';
-  const savedplaylists = 'urls';
-  const followercount = 12;
-  const followingcount = 2;
-
-  createUser(googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount);
-  // if(req.session.email) {
-  //   res.redirect('/logged')
-  // } else {
-  //   res.render('index')
-  // }
-  res.end();
-})
-
-app.get('/logged', (req, res) => {
-  if (req.session.email) {
-    res.write('<h1>logged</h1>')
-    res.end();
-  }
-});
+// app.get('/logged', (req, res) => {
+//   if (req.session.email) {
+//     res.write('<h1>logged</h1>')
+//     res.end();
+//   }
+// });
 // app.get('/api', (req, res) => {
 //   res.json({
 //     message: 'welcome to sound mob'
@@ -112,8 +124,25 @@ passport.use(new GoogleStrategy({
   passReqToCallback   : true
 },
 function(request, accessToken, refreshToken, profile, done) {
-  console.log(profile);
-  done();
+  const { id } = profile;
+  const { name } = profile;
+  const { givenName } = name;
+  const { familyName } = name;
+  const bio = 'austin tx';
+  const samples = 'binary';
+  const savedplaylists = 'urls';
+  const followercount = 12;
+  const followingcount = 2;
+  createUser(id.toString(), givenName, familyName, bio, samples, savedplaylists, followercount, followingcount)
+    .then(data => {
+      console.log(data); // print data;
+      done();
+    })
+    .catch(error => {
+      console.log(error); // print the error;
+      done();
+    });
+  
 
 }
 ));
