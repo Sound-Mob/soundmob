@@ -6,7 +6,7 @@ const cn = {
   port: 5432,
   database: 'rvihxahs',
   user: 'rvihxahs',
-  password: 
+  password: 'z9JNsx_qotALE0eELndojuSGuvDF-R6s'
 };
 const db = pgp(cn); // database instance;
 // database methods
@@ -31,6 +31,6 @@ module.exports = {
       });
   },
   getUserById: (id) => {
-   return db.any(`SELECT * FROM users WHERE id (${id})`)
+   return db.any(`SELECT * FROM users WHERE googleid = $1`,[id])
   }
 };
