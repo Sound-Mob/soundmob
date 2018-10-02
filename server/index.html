@@ -59,27 +59,35 @@
   </form>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  
   <script type="text/javascript" src="/index.js"></script>
   <script>
+    // upon entering a room
   $(function () {
-  var socket = io('/');
-  $('form').submit(function () {
-  socket.emit('chat message', $('#m').val());
-  $('#m').val('');
-  return false;
+    const socket = io('/');
+    // placeholder room definition 
+    // **front-end will provide
+    // dj id will be used as room name
+    const room = 'red';
+    // emit room name
+    socket.emit('roomroute', `${room}`);
+    
+    // sending chat messages
+    $('form').submit(function () {
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+    });
+    
+    // listen for new chat messages
+      // append them to dom
+    socket.on('chat message', function (msg) {
+    $('#messages').append($('<li>').text(msg));
+      });
+      // notify room when someone
+      socket.on('disconnect', function () {
+      $('#messages').append($('<li>').text('elvis has left the building'));
+      });
   });
-  
-  // let's assume that the client page, once rendered, knows what room it wants to join
-  var room = "abc123";
-  
-  socket.on('chat message', function (msg) {
-  $('#messages').append($('<li>').text(msg));
-    });
-    socket.on('disconnect', function () {
-    $('#messages').append($('<li>').text('elvis has left the building'));
-    });
-    });
     </script>
 </body>
 </html>

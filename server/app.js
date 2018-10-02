@@ -18,14 +18,21 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// serve index.html
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
-
 });
 
+// socket-wrapped server to listen for new socket connections
 io.on('connection', function (socket) {
-  // once a client has connected, we expect to get a ping from them saying what room they want to join
-  room = 'abc123';
+  // listen for room id
+  socket.on('roomroute', (room) => {
+    // socket joins that room
+    socket.join(room, ()=>{
+      console.log(socket.rooms);
+    }); 
+    
+  });
   console.log('a user connected');
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
@@ -33,18 +40,64 @@ io.on('connection', function (socket) {
 });
 
 io.on('connection', function (socket) {
-  // send a message to just the clients in a given room
-  room = 'abc123';
-  
+  let room = 'blue';
   socket.on('chat message', function (msg) {
-    io.sockets.in(room).emit('chat message', msg + 'what is going on, party people?');
-    // io.emit('chat message', msg);
+    io.sockets.in(room).emit('chat message', msg);
   });
 });
 
 http.listen(4567, function () {
   console.log('listening on 4567');
 });
+
+passport.use(new GoogleStrategy({
+  clientID:     ClientID,
+  clientSecret: ClientSecret,
+  callbackURL: "http://localhost:3000/auth/google/callback",
+  passReqToCallback   : true
+},
+function(request, accessToken, refreshToken, profile, done) {
+  const { id } = profile;
+  const { name } = profile;
+  const { givenName } = name;
+  const { familyName } = name;
+  const bio = 'austin tx';
+  const samples = 'binary';
+  const savedplaylists = 'urls';
+  const followercount = 12;
+  const followingcount = 2;
+  createUser(id.toString(), givenName, familyName, bio, samples, savedplaylists, followercount, followingcount)
+    .then(data => {
+      console.log(data); // print data;
+      done();
+    })
+    .catch(error => {
+      console.log(error); // print the error;
+      done();
+    });
+}
+));
+
+app.get('/',
+passport.authenticate('google', { scope: 
+  [ 'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/youtube',
+   'https://www.googleapis.com/auth/plus.me',
+   'https://www.googleapis.com/auth/userinfo.email' ]  }
+));
+
+app.get( '/auth/google/callback', 
+  passport.authenticate( 'google', { 
+      successRedirect: '/api',
+      failureRedirect: '/auth/google/failure'
+}));
+app.listen(3000, ()=>{
+  console.log('listening on 3000 ')
+})
+app.get('/api', (req, res) => {
+  res.send('it works')
+})
+
 
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));
@@ -118,51 +171,3 @@ http.listen(4567, function () {
 
 // format of token
 // Authorization: Bearer <access_token>
-
-passport.use(new GoogleStrategy({
-  clientID:     ClientID,
-  clientSecret: ClientSecret,
-  callbackURL: "http://localhost:3000/auth/google/callback",
-  passReqToCallback   : true
-},
-function(request, accessToken, refreshToken, profile, done) {
-  const { id } = profile;
-  const { name } = profile;
-  const { givenName } = name;
-  const { familyName } = name;
-  const bio = 'austin tx';
-  const samples = 'binary';
-  const savedplaylists = 'urls';
-  const followercount = 12;
-  const followingcount = 2;
-  createUser(id.toString(), givenName, familyName, bio, samples, savedplaylists, followercount, followingcount)
-    .then(data => {
-      console.log(data); // print data;
-      done();
-    })
-    .catch(error => {
-      console.log(error); // print the error;
-      done();
-    });
-}
-));
-
-app.get('/',
-passport.authenticate('google', { scope: 
-  [ 'https://www.googleapis.com/auth/plus.login',
-    'https://www.googleapis.com/auth/youtube',
-   'https://www.googleapis.com/auth/plus.me',
-   'https://www.googleapis.com/auth/userinfo.email' ]  }
-));
-
-app.get( '/auth/google/callback', 
-  passport.authenticate( 'google', { 
-      successRedirect: '/api',
-      failureRedirect: '/auth/google/failure'
-}));
-app.listen(3000, ()=>{
-  console.log('listening on 3000 ')
-})
-app.get('/api', (req, res) => {
-  res.send('it works')
-})
