@@ -1,28 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import {HttpModule} from '@angular/http';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SongSearchComponent } from './song-search/song-search.component';
-import { SoundBoardComponent } from './sound-board/sound-board.component';
-import { SoundboardButtonComponent } from './soundboard-button/soundboard-button.component';
-import { MusicPlayerComponent } from './music-player/music-player.component';
-import { ProfileHeaderComponent } from './profile-header/profile-header.component';
+import { AppComponent } from "./app.component";
+import {HomeComponent} from './home/home.component';
+
+import { AppRoutingModule } from ".//app-routing.module";
+
+
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SongSearchComponent,
-    SoundBoardComponent,
-    SoundboardButtonComponent,
-    MusicPlayerComponent,
-    ProfileHeaderComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent,HomeComponent],
+  imports: [BrowserModule, AppRoutingModule,FormsModule,HttpModule],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
