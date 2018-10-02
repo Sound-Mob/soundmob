@@ -1,45 +1,42 @@
 const express = require('express');
 const path = require('path');
-const { createUser } = require('./database');
-const { google } = require('googleapis');
+const { createUser, getUsers } = require('./database');
+const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const app = express();
+const passport = require('passport');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
+passport.use(new GoogleStrategy({
+  clientID:     ClientID,
+  clientSecret: ClientSecret,
+  callbackURL: "http://localhost:3000/auth/google/callback",
+  passReqToCallback   : true
+},
+function(request, accessToken, refreshToken, profile, done) {
+  console.log(profile);
+  createUser.findOrCreate({ googleId: profile.id }, function (err, user) {
+    return done(err, user);
+  });
+}
+));
 
-const oauth2Client = new google.auth.OAuth2(
-  ClientID,
-  ClientSecret,
-  'http://localhost:3000/api'
-);
-const scopes = [
-  'https://www.googleapis.com/auth/youtube',
-];
- 
-const url = oauth2Client.generateAuthUrl({
-  // 'online' (default) or 'offline' (gets refresh_token)
-  access_type: 'offline',
- 
-  // If you only need one scope you can pass it as a string
-  scope: scopes
-});
+app.get('/',
+passport.authenticate('google', { scope: 
+  [ 'https://www.googleapis.com/auth/plus.login',
 
-console.log(url);
+    'https://www.googleapis.com/auth/youtube',
+   'https://www.googleapis.com/auth/plus.me',
+   'https://www.googleapis.com/auth/userinfo.email' ]  }
+));
 
-
-app.get('/api', (req, res) => {
-  console.log(req.query);
-  const { code } = req.query;
-  const start = async function() {
-  const {tokens} = await oauth2Client.getToken(code);
-  console.log(tokens);
-  }
-  start();
-// oauth2Client.setCredentials(tokens)
-res.send('it works');
-})
-app.post('/api', (req, res) => {
-  console.log(req.body);
-  res.end();
-})
-module.exports = app.listen(3000, ()=>{
+app.get( '/auth/google/callback', 
+  passport.authenticate( 'google', { 
+      successRedirect: '/api',
+      failureRedirect: '/auth/google/failure'
+}));
+app.listen(3000, ()=>{
   console.log('listening on 3000 ')
+})
+app.get('/api', (req, res) => {
+  getUsers();
+  res.send('it works')
 })
