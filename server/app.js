@@ -13,9 +13,8 @@ passport.use(new GoogleStrategy({
 },
 function(request, accessToken, refreshToken, profile, done) {
   console.log(profile);
-  createUser.findOrCreate({ googleId: profile.id }, function (err, user) {
-    return done(err, user);
-  });
+done();
+
 }
 ));
 
@@ -37,6 +36,5 @@ app.listen(3000, ()=>{
   console.log('listening on 3000 ')
 })
 app.get('/api', (req, res) => {
-  getUsers();
   res.send('it works')
 })
