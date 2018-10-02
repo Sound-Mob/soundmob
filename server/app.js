@@ -25,9 +25,7 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   // once a client has connected, we expect to get a ping from them saying what room they want to join
-  socket.on('room', function (room) {
-    socket.join(room);
-  });
+  room = 'abc123';
   console.log('a user connected');
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
@@ -35,9 +33,6 @@ io.on('connection', function (socket) {
 });
 
 io.on('connection', function (socket) {
-  socket.on('voice', function (stream) {
-    io.emit('voice', stream);
-  });
   // send a message to just the clients in a given room
   room = 'abc123';
   
