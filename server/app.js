@@ -24,7 +24,10 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-  socket.join('rikkirikki');
+  // once a client has connected, we expect to get a ping from them saying what room they want to join
+  socket.on('room', function (room) {
+    socket.join(room);
+  });
   console.log('a user connected');
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
@@ -35,8 +38,12 @@ io.on('connection', function (socket) {
   socket.on('voice', function (stream) {
     io.emit('voice', stream);
   });
+  // send a message to just the clients in a given room
+  room = 'abc123';
+  
   socket.on('chat message', function (msg) {
-    io.emit('chat message', msg);
+    io.sockets.in(room).emit('chat message', msg + 'what is going on, party people?');
+    // io.emit('chat message', msg);
   });
 });
 
@@ -142,8 +149,6 @@ function(request, accessToken, refreshToken, profile, done) {
       console.log(error); // print the error;
       done();
     });
-  
-
 }
 ));
 

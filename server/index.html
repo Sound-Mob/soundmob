@@ -69,7 +69,14 @@
   $('#m').val('');
   return false;
   });
-  // });
+  
+  // let's assume that the client page, once rendered, knows what room it wants to join
+  var room = "abc123";
+  socket.on('connect', function () {
+      // Connected, let's sign-up for to receive messages for this room
+      socket.emit('room', room);
+    });
+  
   socket.on('chat message', function (msg) {
   $('#messages').append($('<li>').text(msg));
     });
