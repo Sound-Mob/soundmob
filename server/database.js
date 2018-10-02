@@ -8,12 +8,18 @@ const cn = {
   user: 'josephdelahoussaye'
 };
 const db = pgp(cn); // database instance;
-// adds a user to the user database
-// db.any('INSERT INTO users (name) VALUES (joey)');
+// database methods
 module.exports = {
-  createUser: () =>
-    db.any('INSERT INTO users (name) VALUES ($1)', ['jan']),
-  // select and return user name from id:
+  // adds a user to the user database
+  createUser: (googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount) =>
+    db.any('INSERT INTO users (googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount])
+      .then(data => {
+        console.log(data); // print data;
+      })
+      .catch(error => {
+        console.log(error); // print the error;
+      }),
+  // select and return users
   getUsers: ()=>
     db.any('SELECT name FROM users')
       .then(user => {
