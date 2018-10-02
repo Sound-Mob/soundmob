@@ -8,6 +8,8 @@ import { HomeComponent } from "./home/home.component";
 
 import { AppRoutingModule } from ".//app-routing.module";
 import { LandingComponent } from './home/landing/landing.component';
+import { LoginComponent } from './home/login/login.component';
+import { SigninComponent } from './home/signin/signin.component';
 
 
 
@@ -48,7 +50,9 @@ import { LandingComponent } from './home/landing/landing.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    LandingComponent
+    LandingComponent,
+    LoginComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
