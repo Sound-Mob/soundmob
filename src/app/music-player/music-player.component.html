@@ -1,0 +1,27 @@
+<div class="container">
+    <section class="panel panel-info">
+        <div class="panel-heading">
+            Angular (+6) Youtube Player Component
+        </div>
+        <div class="panel-body">
+            <youtube-player [videoId]="id" (ready)="savePlayer($event)" (change)="onStateChange($event)">
+            </youtube-player>
+        </div>
+    </section>
+
+    <div class="col-md-12">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" (click)="playVideo()">Play</button>
+            <button type="button" class="btn btn-default" (click)="pauseVideo()">Pause</button>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <section class="panel panel-success">
+            <div class="panel-heading">Player State</div>
+            <div class="panel-body">
+                <pre>{{ ytEvent }}</pre>
+            </div>
+        </section>
+    </div>
+</div>
