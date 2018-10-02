@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@types/jest": "^23.3.2",
+    "b": "^2.0.1",
+    "body-parser": "^1.18.3",
     "core-js": "^2.5.4",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
