@@ -1,27 +1,28 @@
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 const { createUser, getUsers, getUserById } = require('./database');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const passport = require('passport');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 const app = express();
-app.use(require('express-session')({
+app.use(session({
   secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 passport.serializeUser((user, done) => {
-  console.log(user);
   done(null, user.id); 
  // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 passport.deserializeUser((id, done)=> {
-getUserById(id).then((res, user) => {
-  done(null,user)
+getUserById(id).then((err, user) => {
+  done(err,user)
 }).catch( err => console.error(err))
  });
 // passport.serializeUser( (user, done) => {
@@ -43,8 +44,24 @@ passport.use(new GoogleStrategy({
 function(request, accessToken, refreshToken, profile, done) {
   // console.log(accessToken,'token', refreshToken,'refresh')
   // console.log(request);
-done(null, profile);
-
+  const { id } = profile;
+  const { name } = profile;
+  const { givenName } = name;
+  const { familyName } = name;
+  const bio = 'Loray NC';
+  const samples = 'binary';
+  const savedplaylists = 'urls';
+  const followercount = 12;
+  const followingcount = 2;
+  createUser(id.toString(), givenName, familyName, bio, samples, savedplaylists, followercount, followingcount)
+    .then(data => {
+      // console.log(data); // print data;
+      done(null, profile);
+    })
+    .catch(error => {
+      console.log(error); // print the error;
+      done();
+    });
 }
 
 ));
@@ -73,5 +90,6 @@ app.listen(3000, ()=>{
   console.log('listening on 3000 ')
 })
 app.get('/api', (req, res) => {
+
   res.send('it works')
 })
