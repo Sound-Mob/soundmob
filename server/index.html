@@ -53,10 +53,21 @@
   </style>
 </head>
 <body>
+  <div id="roomwrap">
+      <input size="35" id="roomname"></input><button>Room Name</button>
+  </div>
+  <div id="nickwrap">
+    <form id="setNick">
+      <input size="35" id="nickname"></input><button>User Name</button>
+      <input type="submit"></input>
+    </form>
+  </div>
+  <div>
   <ul id="messages"></ul>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
+  </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="/index.js"></script>
@@ -67,9 +78,9 @@
     // placeholder room definition 
     // **front-end will provide
     // dj id will be used as room name
-    const room = 'red';
+    // const room = 'blue';
     // emit room name
-    socket.emit('roomroute', `${room}`);
+    // socket.emit('roomroute', `${room}`);
     
     // sending chat messages
     $('form').submit(function () {
@@ -77,6 +88,13 @@
     $('#m').val('');
     return false;
     });
+
+    // sending room
+    $('button').click(function () {
+      socket.emit('roomroute', $('#roomname').val());
+      return false;
+    });
+
     
     // listen for new chat messages
       // append them to dom
