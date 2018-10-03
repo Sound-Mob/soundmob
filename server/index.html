@@ -61,7 +61,7 @@
       <input size="35" id="nickname"></input><button>User Name</button>
       <!-- <input type="submit"></input> -->
   </div>
-  
+  <div id="result"></div>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
@@ -69,6 +69,10 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="/index.js"></script>
   <script>
+    // Store
+      localStorage.lastname = "Smith";
+      // Retrieve
+      document.getElementById("result").innerHTML = localStorage.lastname;
     // upon entering a room
   $(function () {
     const socket = io('/');
