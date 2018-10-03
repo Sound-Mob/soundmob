@@ -29,10 +29,15 @@ app.get('/', function (req, res) {
 
 //sockets
 io.on('connection', function (socket) {
+  console.log('a user connected');
+
   // listen for room id
   socket.on('roomroute', (room) => {
     // socket joins that room
     socket.join(room, ()=>{
+      // reassign socket room at id to room arg
+      socket.rooms[socket.id] = socket.rooms[room];
+      console.log(socket.rooms);
       // if we want to keep track of users in room
       // if (socket.name){
       //   users.push(socket.name);
@@ -47,8 +52,14 @@ io.on('connection', function (socket) {
     socket.name = name;
     // console.log(socket);
   });
+
+  // listen for chat message
+  socket.on('chat message', function (msg) {
+    let room = socket.rooms[socket.id];
+    io.sockets.in(room).emit('chat message', msg);
+    // io.sockets.emit('chat message', msg);
+  });
   
-  console.log('a user connected');
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
   });
@@ -65,16 +76,6 @@ getUserById(id).then((user) => {
   done(user)
 }).catch( err => console.error(err))
  });
-
-io.on('connection', function (socket) {
-  let room = 'blue';
-  socket.on('chat message', function (msg) {
-    // io.sockets.in(room).emit('chat message', msg);
-    io.sockets.emit('chat message', msg);
-  });
-});
-
-
 
   //session entry
   passport.use(new GoogleStrategy({
