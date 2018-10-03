@@ -56,7 +56,9 @@ io.on('connection', function (socket) {
   // listen for chat message
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
-    io.sockets.in(room).emit('chat message', msg);
+    console.log(msg)
+    console.log({ msg: msg, name: socket.name })
+    io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
     // io.sockets.emit('chat message', msg);
   });
   
