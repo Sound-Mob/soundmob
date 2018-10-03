@@ -11,18 +11,27 @@ const cn = {
 
 const db = pgp(cn); // database instance;
 // database methods
+/* TODO's
+* a function to save playlist
+* refactor function for checking users/ creating users
+*/
 module.exports = {
   // adds a user to the user database
   createUser: (googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount) => {
     return db.any('INSERT INTO users (googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount]);
   },
+  
   // select and return users
-  getUsers: ()=>
-    db.any('SELECT name FROM users')
+  getUsers: ()=> {
+   return  db.any('SELECT name FROM users')
       .then(user => {
         console.log(user); // print user name;
       })
       .catch(error => {
         console.log(error); // print the error;
-      }),
+      });
+  },
+  getUserById: (id) => {
+   return db.any(`SELECT * FROM users WHERE googleid = $1`,id)
+  }
 };
