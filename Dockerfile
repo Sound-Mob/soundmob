@@ -33,6 +33,10 @@ CMD ng serve --host 0.0.0.0
 # push image to gcloud
 # docker push us.gcr.io/sound-mob12282/soundmob:latest
 
+# docker image ls
+# docker container ls
+# docker kill $(docker ps -q)
+
 # update container
 # 
 
@@ -41,3 +45,8 @@ CMD ng serve --host 0.0.0.0
 
 # show docker images
 # docker image ls
+
+# gcloud commands to check the instances i have running
+# gcloud compute instances list
+
+# gcloud compute instances update-container {your-instance-here} --container-image {your-image-here (us.grc.io/whatever)}
