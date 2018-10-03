@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'sound-mob';
+  title = 'app';
+
+  arr=['s','keee','dui']
 }
