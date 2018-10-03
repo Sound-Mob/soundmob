@@ -54,29 +54,61 @@
 </head>
 <body>
   <ul id="messages"></ul>
+  <div id="roomwrap">
+      <input size="35" id="roomname"></input><button>Room Name</button>
+  </div>
+  <div id="nickwrap">
+      <input size="35" id="nickname"></input><button>User Name</button>
+      <!-- <input type="submit"></input> -->
+  </div>
+  
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  
   <script type="text/javascript" src="/index.js"></script>
   <script>
+    // upon entering a room
   $(function () {
-  var socket = io('/');
-  $('form').submit(function () {
-  socket.emit('chat message', $('#m').val());
-  $('#m').val('');
-  return false;
+    const socket = io('/');
+    // placeholder room definition 
+    // **front-end will provide
+    // dj id will be used as room name
+    // const room = 'blue';
+    // emit room name
+    // socket.emit('roomroute', `${room}`);
+    
+    // sending chat messages
+    $('button').click(function () {
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+    });
+
+    // sending room
+    $('button').click(function () {
+      socket.emit('roomroute', $('#roomname').val());
+      return false;
+    });
+
+    // sending user
+    $('button').click(function () {
+      socket.emit('username', $('#nickname').val());
+      return false;
+    });
+
+    
+    // listen for new chat messages
+      // append them to dom
+    socket.on('chat message', function (msg) {
+    $('#messages').append($('<li>').text(msg));
+      });
+      // notify room when someone
+      socket.on('disconnect', function () {
+      $('#messages').append($('<li>').text('elvis has left the building'));
+      });
   });
-  // });
-  socket.on('chat message', function (msg) {
-  $('#messages').append($('<li>').text(msg));
-    });
-    socket.on('disconnect', function () {
-    $('#messages').append($('<li>').text('elvis has left the building'));
-    });
-    });
     </script>
 </body>
 </html>
