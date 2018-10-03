@@ -11,7 +11,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 //Utilites
-const { createUser, getUsers, getUserById } = require('./database');
+const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 // middlewares
 app.use(bodyParser.json());
@@ -37,7 +37,6 @@ io.on('connection', function (socket) {
     socket.join(room, ()=>{
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
-      console.log(socket.rooms);
       // if we want to keep track of users in room
       // if (socket.name){
       //   users.push(socket.name);
@@ -50,20 +49,40 @@ io.on('connection', function (socket) {
   socket.on('userid', (name) => {
     // socket joins that room
     socket.name = name;
-    // console.log(socket);
   });
 
   // listen for chat message
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
-    console.log(msg)
-    console.log({ msg: msg, name: socket.name })
     io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
-    // io.sockets.emit('chat message', msg);
   });
   
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
+  });
+
+  // tell socket to listen for a 'sample' event
+  socket.on('sample', function (stream) {
+    console.log(stream.blob);
+    
+    // save sound to 
+    addSound(stream.blob, 3)
+      .then(data => {
+        // console.log(data); // print data;
+      })
+      .catch(error => {
+        console.log(error); // print the error;
+      });
+    // get sound from database
+    getSoundsById(3)
+    .then((sound) => {
+      console.log(sound);
+      // emit voice stream data to all sockets
+      // socket.emit('voice', sounds[0]);
+      // socket.emit('voice', stream.blob);
+    }).catch(err => console.error(err));
+    // emit voice stream data to all sockets
+   
   });
 });
 //session serializatoin
