@@ -53,21 +53,18 @@
   </style>
 </head>
 <body>
+  <ul id="messages"></ul>
   <div id="roomwrap">
       <input size="35" id="roomname"></input><button>Room Name</button>
   </div>
   <div id="nickwrap">
-    <form id="setNick">
       <input size="35" id="nickname"></input><button>User Name</button>
-      <input type="submit"></input>
-    </form>
+      <!-- <input type="submit"></input> -->
   </div>
-  <div>
-  <ul id="messages"></ul>
+  
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
-  </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="/index.js"></script>
@@ -83,7 +80,7 @@
     // socket.emit('roomroute', `${room}`);
     
     // sending chat messages
-    $('form').submit(function () {
+    $('button').click(function () {
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
@@ -92,6 +89,12 @@
     // sending room
     $('button').click(function () {
       socket.emit('roomroute', $('#roomname').val());
+      return false;
+    });
+
+    // sending user
+    $('button').click(function () {
+      socket.emit('username', $('#nickname').val());
       return false;
     });
 

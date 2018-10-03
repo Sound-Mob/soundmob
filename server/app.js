@@ -29,10 +29,17 @@ io.on('connection', function (socket) {
   socket.on('roomroute', (room) => {
     // socket joins that room
     socket.join(room, ()=>{
-      console.log(socket.rooms);
+      // console.log(socket.rooms);
     }); 
-    
   });
+
+  // listen for username
+  socket.on('username', (name) => {
+    // socket joins that room
+    socket.name = name;
+    console.log(socket);
+  });
+  
   console.log('a user connected');
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
@@ -42,7 +49,8 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   let room = 'blue';
   socket.on('chat message', function (msg) {
-    io.sockets.in(room).emit('chat message', msg);
+    // io.sockets.in(room).emit('chat message', msg);
+    io.sockets.emit('chat message', msg);
   });
 });
 
