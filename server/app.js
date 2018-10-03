@@ -21,10 +21,28 @@ app.use(session({ secret: 'keyboard cat' }))
 app.use(passport.initialize());
 app.use(passport.session())
 
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+
+});
 
 //sockets
 io.on('connection', function (socket) {
-  socket.join('rikkirikki');
+  // listen for room id
+  socket.on('roomroute', (room) => {
+    // socket joins that room
+    socket.join(room, ()=>{
+      // console.log(socket.rooms);
+    }); 
+  });
+
+  // listen for username
+  socket.on('username', (name) => {
+    // socket joins that room
+    socket.name = name;
+    console.log(socket);
+  });
+  
   console.log('a user connected');
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
@@ -44,11 +62,10 @@ getUserById(id).then((user) => {
  });
 
 io.on('connection', function (socket) {
-  socket.on('voice', function (stream) {
-    io.emit('voice', stream);
-  });
+  let room = 'blue';
   socket.on('chat message', function (msg) {
-    io.emit('chat message', msg);
+    // io.sockets.in(room).emit('chat message', msg);
+    io.sockets.emit('chat message', msg);
   });
 });
 
