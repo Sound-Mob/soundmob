@@ -27,11 +27,14 @@ CMD ng serve --host 0.0.0.0
 # us.gcr.io/sound-mob12282/soundmob:1.0
 
 # rebuild after changes
-# remember to reversion or use :latest
-# docker build -t us.gcr.io/sound-mob12282/soundmob:latest .
+# remember to reversion with : or leave blank to default to latest
+# docker build -t us.gcr.io/sound-mob12282/soundmob .
 
 # push image to gcloud
 # docker push us.gcr.io/sound-mob12282/soundmob:latest
+
+# update container
+# 
 
 # show running docker process 
 # docker ps
