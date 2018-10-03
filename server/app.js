@@ -23,8 +23,9 @@ app.use(passport.session())
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
-
 });
+// if we want to keep track of users in room
+// var users = [];
 
 //sockets
 io.on('connection', function (socket) {
@@ -32,15 +33,19 @@ io.on('connection', function (socket) {
   socket.on('roomroute', (room) => {
     // socket joins that room
     socket.join(room, ()=>{
-      // console.log(socket.rooms);
+      // if we want to keep track of users in room
+      // if (socket.name){
+      //   users.push(socket.name);
+      //   console.log(users);
+      // }
     }); 
   });
 
   // listen for username
-  socket.on('username', (name) => {
+  socket.on('userid', (name) => {
     // socket joins that room
     socket.name = name;
-    console.log(socket);
+    // console.log(socket);
   });
   
   console.log('a user connected');

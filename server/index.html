@@ -94,7 +94,7 @@
 
     // sending user
     $('button').click(function () {
-      socket.emit('username', $('#nickname').val());
+      socket.emit('userid', $('#nickname').val());
       return false;
     });
 
