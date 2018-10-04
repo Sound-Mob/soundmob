@@ -66,9 +66,14 @@
       <!-- <input type="submit"></input> -->
   </div>
   <div id="result"></div>
+  <div id="live">
+    <div id="subscriber"></div>
+    <div id="publisher"></div>
+  </div>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
+  <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <!-- <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
   <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script> -->
@@ -76,6 +81,31 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
   <!-- <script src="/dist/RTCMultiConnection.min.js"></script> -->
   <script>
+    var apiKey = "46194612";
+      var sessionId = "2_MX40NjE5NDYxMn5-MTUzODY2NzQxMDczNn5lWFR6MGU0bWRMYXN6UlFQd3NYeGFNSmV-fg";
+      var token = "T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9NmQ2NDE1MWQxMGU4MDdhNTYyNWY0YjNkOWI5NTdkY2Q5OTQyZDI3NDpzZXNzaW9uX2lkPTJfTVg0ME5qRTVORFl4TW41LU1UVXpPRFkyTnpReE1EY3pObjVsV0ZSNk1HVTBiV1JNWVhONlVsRlFkM05ZZUdGTlNtVi1mZyZjcmVhdGVfdGltZT0xNTM4NjY3NDM2Jm5vbmNlPTAuOTgyMDc4NzkzNjM0OTg3MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxMjU5NDM1JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
+
+      var session = OT.initSession(apiKey, sessionId);
+
+      var pubOptions = { videoSource: null };
+
+      // Replace replacementElementId with the ID of the DOM element to replace:
+      publisher = OT.initPublisher('live', pubOptions);
+      // Connect to the session
+      session.connect(token, function (error) {
+        // If the connection is successful, publish to the session
+        if (error) {
+          handleError(error);
+        } else {
+          session.publish(publisher);
+        }
+      });
+      // var options = { subscribeToAudio: true, subscribeToVideo: false };
+      session.on("streamCreated", function (event) {
+        session.subscribe(event.stream);
+        // session.subscribe(event.stream, audio, options);
+      })
+
     const socket = io('/');
   $(function () {
     // sending chat messages

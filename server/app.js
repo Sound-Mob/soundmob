@@ -24,7 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session())
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/tok.html');
+  res.sendFile(__dirname + '/index.html');
 });
 // if we want to keep track of users in room
 // var users = [];
