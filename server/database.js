@@ -17,8 +17,8 @@ const db = pgp(cn); // database instance;
 */
 module.exports = {
   // adds a user to the user database
-  createUser: (googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount) => {
-    return db.any('INSERT INTO users (googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [googleid, firstname, lastname, bio, samples, savedplaylists, followercount, followingcount]);
+  createUser: (googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive) => {
+    return db.any('INSERT INTO users (googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive]);
   },
   // adds a sound to samples collection
   addSound: (sample, id) => {
