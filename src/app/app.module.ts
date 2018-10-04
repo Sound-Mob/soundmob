@@ -10,7 +10,6 @@ import { AppRoutingModule } from ".//app-routing.module";
 import { LandingComponent } from './home/landing/landing.component';
 import { LoginComponent } from './home/login/login.component';
 import { SigninComponent } from './home/signin/signin.component';
-import { HttpClientModule } from "@angular/common/http";
 
 
 
@@ -58,9 +57,8 @@ import { HttpClientModule } from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule,  
+    HttpModule,
     FormsModule,
-    HttpClientModule,
     //begin import of angular material
     // BrowserAnimationsModule,
     // BrowserModule,
@@ -100,4 +98,4 @@ import { HttpClientModule } from "@angular/common/http";
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
