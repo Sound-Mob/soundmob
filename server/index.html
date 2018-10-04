@@ -58,11 +58,14 @@
     <audio id="output">here's a mic</audio>
   </div>
   <ul id="messages"></ul>
+  <div id="makeroom">
+    <input size="35" id="newroom"></input><button id="makeroom">Make Room</button>
+  </div>
   <div id="roomwrap">
-      <input size="35" id="roomname"></input><button>Room Name</button>
+      <input size="35" id="roomname"></input><button id="station">Room Name</button>
   </div>
   <div id="nickwrap">
-      <input size="35" id="nickname"></input><button>User Name</button>
+      <input size="35" id="nickname"></input><button id="username">User Name</button>
       <!-- <input type="submit"></input> -->
   </div>
   <div id="result"></div>
@@ -72,7 +75,7 @@
   </div>
   <div id="users"></div>
   <form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
+    <input id="m" autocomplete="off" /><button id="chat">Send</button>
   </form>
   <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
@@ -85,9 +88,7 @@
     var apiKey = "46194612";
       var sessionId = "2_MX40NjE5NDYxMn5-MTUzODY2NzQxMDczNn5lWFR6MGU0bWRMYXN6UlFQd3NYeGFNSmV-fg";
       var token = "T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9NmQ2NDE1MWQxMGU4MDdhNTYyNWY0YjNkOWI5NTdkY2Q5OTQyZDI3NDpzZXNzaW9uX2lkPTJfTVg0ME5qRTVORFl4TW41LU1UVXpPRFkyTnpReE1EY3pObjVsV0ZSNk1HVTBiV1JNWVhONlVsRlFkM05ZZUdGTlNtVi1mZyZjcmVhdGVfdGltZT0xNTM4NjY3NDM2Jm5vbmNlPTAuOTgyMDc4NzkzNjM0OTg3MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxMjU5NDM1JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
-
       var session = OT.initSession(apiKey, sessionId);
-
       var pubOptions = { videoSource: null };
 
       // Replace replacementElementId with the ID of the DOM element to replace:
@@ -106,24 +107,29 @@
         session.subscribe(event.stream);
         // session.subscribe(event.stream, audio, options);
       })
-
     const socket = io('/');
   $(function () {
     // sending chat messages
-    $('button').click(function () {
+    $('#chat').click(function () {
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
     });
 
     // sending room
-    $('button').click(function () {
+    $('#station').click(function () {
       socket.emit('roomroute', $('#roomname').val());
       return false;
     });
 
+    // sending new room and admin
+    $('#makeroom').click(function () {
+      socket.emit('newroom', $('#newroom').val());
+      return false;
+    });
+
     // sending user
-    $('button').click(function () {
+    $('#username').click(function () {
       socket.emit('userid', $('#nickname').val());
       return false;
     });
