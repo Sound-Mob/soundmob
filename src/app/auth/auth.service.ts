@@ -8,7 +8,7 @@ export class AuthService {
   constructor() { }
 
   get isLoggedIn() {
-    return false;
+    return true;
   }
 
   get isSuperAdmin() {

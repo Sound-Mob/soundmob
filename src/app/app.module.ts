@@ -11,6 +11,9 @@ import { LandingComponent } from './home/landing/landing.component';
 import { LoginComponent } from './home/login/login.component';
 import { SigninComponent } from './home/signin/signin.component';
 
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { AdminGuard } from './auth/guards/admin.guard';
 
 
 //angular material components
@@ -95,7 +98,7 @@ import { SigninComponent } from './home/signin/signin.component';
     // MatTableModule,
     // MatSortModule,
   ],
-  providers: [],
+  providers: [AuthGuard, AuthService, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
