@@ -7,7 +7,10 @@ const passport = require('passport');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const rp = ('request-promise');
 const app = express();
+
+const router = express.Router();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const bodyParser = require('body-parser');
@@ -16,6 +19,7 @@ const userobject = require('./mockuserdata/object');
 //Utilites
 const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
+const { playlist } = require('./util.js');
 // middlewares
 const allowed = ['http://localhost:3000', 'http://localhost:4200']
 // app.use(cors({
@@ -115,6 +119,25 @@ getUserById(id).then((user) => {
 }).catch( err => console.error(err))
  });
 
+<<<<<<< HEAD
+
+ //socket action
+ http.listen(4567, function () {
+  console.log('listening on 4567');
+});
+io.on('connection', function (socket) {
+  socket.on('voice', function (stream) {
+    io.emit('voice', stream);
+  });
+  socket.on('chat message', function (msg) {
+    io.emit('chat message', msg);
+  });
+});
+
+
+
+=======
+>>>>>>> 724de534ed2a170154afb1c224f3c556380d789b
   //session entry
   passport.use(new GoogleStrategy({
     clientID:     ClientID,
@@ -155,6 +178,125 @@ function(req, accessToken, refreshToken, profile, done) {
 }
 
 ));
+<<<<<<< HEAD
+// login
+app.get('/login',
+passport.authenticate('google', { scope: 
+  [ 'https://www.googleapis.com/auth/plus.login',
+  'https://www.googleapis.com/auth/youtube',
+   'https://www.googleapis.com/auth/plus.me',
+   'https://www.googleapis.com/auth/userinfo.email',
+  'https://www.googleapis.com/auth/youtube.force-ssl',
+  'https://www.googleapis.com/auth/youtubepartner'
+]  }
+   ));
+   app.get( '/auth/google/callback', 
+   passport.authenticate('google',{ successRedirect: '/api',
+   failureRedirect: '/login' }));
+
+
+
+    app.listen(3000, ()=>{
+      console.log('listening on 3000 ')
+    })
+
+    ///YOUTUBE API 
+    app.get('/',(req, res) => {
+      playlist(req.body).then( playlist => {
+        console.log(playlist,'the playlist');
+      }).catch(err => console.error(err));
+      res.send('sent');
+    });
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // register the session with its secret id
+  // app.use(session({ secret: 'test' }));
+  
+  // // routes
+  // app.post('/login', (req, res) => {
+  //   req.session.email = req.body.email;
+  //   res.end('done');
+  // });
+  
+  // app.get('/logged', (req, res) => {
+  //   if (req.session.email) {
+  //     res.write('<h1>logged</h1>')
+  //     res.end();
+  //   }
+  // });
+  // app.get('/api', (req, res) => {
+  //   res.json({
+  //     message: 'welcome to sound mob'
+  //   });
+  //   // res.send('it works');
+  // });
+  
+  // const verifyToken = (req, res, next) => {
+  //   // get auth header val
+  //   const bearerHeader = req.headers['authorization'];
+  //   // check if bearer is undefined
+  //   if (typeof bearerHeader !== 'undefined') {
+  //     // split at the space
+  //     console.log(bearerHeader);
+  //     const bearer = bearerHeader.split(' ');
+  //     // get token from array
+  //     const bearerToken = bearer[1];
+  //     // set token
+  //     req.token = bearerToken;
+  //     // next middleware
+  //     next();
+  //   } else {
+  //     // forbidden
+  //     res.sendStatus(403);
+  //   }
+  // };
+  
+  // app.post('/api/posts', verifyToken, (req, res) => {
+  //   jwt.verify(req.token, 'secretkey', (err, authData)=>{
+  //     if (err) {
+  //       res.sendStatus(403);
+  //     } else {
+  //       res.json({
+  //         message: 'post created...',
+  //         authData
+  //       });
+  //     }
+  //   });
+  
+  // });
+  
+  // app.post('/api/login', (req, res) => {
+  //   // mock user
+  //   const user = {
+  //     id: 1,
+  //     username: 'joey',
+  //     email: 'jldela@gmail.com'
+  //   };
+  //   jwt.sign({user}, 'secretkey', { expiresIn: '30s'}, (err, token)=>{
+  //     res.json({
+  //       token
+  //     });
+  //   });
+  // });
+  
+  // format of token
+  // Authorization: Bear
+=======
 
 app.get('/',
   passport.authenticate('google', { scope: 
@@ -251,3 +393,4 @@ http.listen(4567, function () {
 
 // format of token
 // Authorization: Bearer <access_token>
+>>>>>>> 724de534ed2a170154afb1c224f3c556380d789b

@@ -1,0 +1,16 @@
+.container{
+  background: white;
+  height: 208;
+}
+.header{
+  background: white;
+}
+
+nav li {
+  display: inline-block;
+  padding: 31px 18px
+
+}
+ul {
+  list-style: none;
+}
