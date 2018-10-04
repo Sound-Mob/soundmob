@@ -6,13 +6,17 @@ const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const passport = require('passport');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const rp = ('request-promise');
 const app = express();
+
+const router = express.Router();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 //Utilites
 const { createUser, getUsers, getUserById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
+const { playlist } = require('./util.js');
 // middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,6 +47,11 @@ getUserById(id).then((user) => {
 }).catch( err => console.error(err))
  });
 
+
+ //socket action
+ http.listen(4567, function () {
+  console.log('listening on 4567');
+});
 io.on('connection', function (socket) {
   socket.on('voice', function (stream) {
     io.emit('voice', stream);
@@ -94,30 +103,51 @@ function(req, accessToken, refreshToken, profile, done) {
 }
 
 ));
-
-app.get('/',
+// login
+app.get('/login',
 passport.authenticate('google', { scope: 
   [ 'https://www.googleapis.com/auth/plus.login',
   'https://www.googleapis.com/auth/youtube',
    'https://www.googleapis.com/auth/plus.me',
    'https://www.googleapis.com/auth/userinfo.email',
-  'https://www.googleapis.com/auth/youtube.force-ssl' ]  }
+  'https://www.googleapis.com/auth/youtube.force-ssl',
+  'https://www.googleapis.com/auth/youtubepartner'
+]  }
    ));
-   
    app.get( '/auth/google/callback', 
    passport.authenticate('google',{ successRedirect: '/api',
    failureRedirect: '/login' }));
 
+
+
     app.listen(3000, ()=>{
       console.log('listening on 3000 ')
     })
-    app.get('/api',(req, res) => {
-      res.send(req.session);
-    });
-    http.listen(4567, function () {
-      console.log('listening on 4567');
+
+    ///YOUTUBE API 
+    app.get('/',(req, res) => {
+      playlist(req.body).then( playlist => {
+        console.log(playlist,'the playlist');
+      }).catch(err => console.error(err));
+      res.send('sent');
     });
   
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // register the session with its secret id
   // app.use(session({ secret: 'test' }));
   
@@ -189,4 +219,4 @@ passport.authenticate('google', { scope:
   // });
   
   // format of token
-  // Authorization: Bearer <access_token>
+  // Authorization: Bear
