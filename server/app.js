@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const rp = ('request-promise');
 const app = express();
+const cookieSession = require('cookie-session')
 
 const router = express.Router();
 var http = require('http').Server(app);
@@ -20,10 +21,13 @@ const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 const { playlist } = require('./util.js');
 // middlewares
+app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser())
-app.use(session({ secret: 'keyboard cat' }))
+app.use(cookieSession({ 
+  maxAge: 24 * 60 * 60 * 1000,
+  keys:['qwerty']
+  }))
 app.use(passport.initialize());
 app.use(passport.session())
 
@@ -69,7 +73,7 @@ io.on('connection', function (socket) {
 
   // tell socket to listen for a 'sample' event
   socket.on('sample', function (stream) {
-    console.log(stream.blob);
+    // console.log(stream.blob);
     
     // save sound to 
     addSound(stream.blob, 3)
@@ -85,7 +89,7 @@ io.on('connection', function (socket) {
       // console.log(sound);
       // emit voice stream data to all sockets
       // socket.emit('voice', sounds[0]);
-      // socket.emit('voice', stream.blob);
+      socket.emit('voice', stream.blob);
     }).catch(err => console.error(err));
     // emit voice stream data to all sockets
    
@@ -101,8 +105,8 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done)=> {
 
 getUserById(id).then((user) => {
-  done(user[0])
-}).catch( err => console.error(err))
+  done(null,user[0])
+}).catch( err => console.error(err,'here'))
  });
 
   //session entry
@@ -113,6 +117,7 @@ getUserById(id).then((user) => {
   passReqToCallback   : true
 },
 (req, accessToken, refreshToken, profile, done) =>{
+  console.log(accessToken);
   req.session.accessToken = accessToken;
 
   const { id } = profile;
@@ -142,14 +147,16 @@ app.get('/login',
   ));
 
 app.get( '/auth/google/callback', 
-  passport.authenticate('google',{ successRedirect: '/',
-  failureRedirect: '/login' }));
+  passport.authenticate('google',{
+    successRedirect:'/api',
+    failureRedirect:'/login'
+  }) );
 
 app.listen(3000, ()=>{
   console.log('listening on 3000 ')
 })
 app.get('/api',(req, res) => {
-  console.log(req,'popopopopo');
+  console.log(req.session, req.user);
   res.end();
 });
 http.listen(4567, function () {
@@ -184,7 +191,7 @@ http.listen(4567, function () {
 //   // check if bearer is undefined
 //   if (typeof bearerHeader !== 'undefined') {
 //     // split at the space
-//     console.log(bearerHeader);
+//
 //     const bearer = bearerHeader.split(' ');
 //     // get token from array
 //     const bearerToken = bearer[1];
