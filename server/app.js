@@ -4,6 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const passport = require('passport');
+const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -14,13 +15,53 @@ const bodyParser = require('body-parser');
 const { createUser, getUsers, getUserById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 // middlewares
+const allowed = ['http://localhost:3000', 'http://localhost:4200']
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     if(!origin) {
+//       return callback(null, true)
+//     }
+//     if(allowed.indexOf(origin === -1)) {
+//       return callback(new Error(),false);
+//     }
+//     return callback(null, true);
+//   }
+// }));
+app.use(cors({origin:'http://localhost:4200'}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(session({ secret: 'keyboard cat' }))
 app.use(passport.initialize());
 app.use(passport.session())
+// app.use(function (req, res, next) {
 
+//   // Website you wish to allow to connect
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+//   // Request methods you wish to allow
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+//   // Request headers you wish to allow
+//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+//   // Set to true if you need the website to include cookies in the requests sent
+//   // to the API (e.g. in case you use sessions)
+//   res.setHeader('Access-Control-Allow-Credentials', true);
+
+//   // Pass to next layer of middleware
+//   next();
+// // });
+// var corsOptions = {
+  //   origin: 'http://localhost:4200',
+  //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  // }
+  // cors(corsOptions),
+  const options = { origin: 'http://localhost:4200' }
+app.all('/*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 //sockets
 io.on('connection', function (socket) {
@@ -95,25 +136,32 @@ function(req, accessToken, refreshToken, profile, done) {
 
 ));
 
-app.get('/',
-passport.authenticate('google', { scope: 
+
+app.get('/test', cors(options),function (req, res, next) {
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
+})
+
+
+app.get('/login', passport.authenticate('google', { scope: 
   [ 'https://www.googleapis.com/auth/plus.login',
   'https://www.googleapis.com/auth/youtube',
     'https://www.googleapis.com/auth/plus.me',
     'https://www.googleapis.com/auth/userinfo.email',
-  'https://www.googleapis.com/auth/youtube.force-ssl' ]  }
-    ));
-    app.get( '/auth/google/callback', 
-    passport.authenticate('google',{ successRedirect: '/api',
-    failureRedirect: '/login' }));
+  'https://www.googleapis.com/auth/youtube.force-ssl' ]
+  }
+));
 
-    app.listen(3000, ()=>{
+    app.get( '/auth/google/callback', cors(options),
+    passport.authenticate('google',{ successRedirect: '/posts',
+    failureRedirect: '/api' }));
+
+    app.listen(3000, cors(), ()=>{
       console.log('listening on 3000 ')
     })
-    app.get('/api',(req, res) => {
+    app.get('/api',cors(),(req, res) => {
       res.send(req.session);
     });
-    http.listen(4567, function () {
+    http.listen(4567, cors(),function () {
       console.log('listening on 4567');
     });
   
