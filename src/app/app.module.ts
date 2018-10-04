@@ -9,7 +9,7 @@ import { HomeComponent } from "./home/home.component";
 import { AppRoutingModule } from ".//app-routing.module";
 import { LandingComponent } from './home/landing/landing.component';
 import { LoginComponent } from './home/login/login.component';
-import { SigninComponent } from './home/signin/signin.component';
+import { SignInComponent } from './home/signin/signin.component';
 
 
 
@@ -52,12 +52,12 @@ import { SigninComponent } from './home/signin/signin.component';
     HomeComponent,
     LandingComponent,
     LoginComponent,
-    SigninComponent
+    SignInComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule,  
+    HttpModule,
     FormsModule,
     //begin import of angular material
     // BrowserAnimationsModule,
@@ -98,4 +98,4 @@ import { SigninComponent } from './home/signin/signin.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
