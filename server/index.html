@@ -53,6 +53,7 @@
   </style>
 </head>
 <body>
+
   <div>
     <audio id="audio">here's a mic</audio>
     <audio id="output">here's a mic</audio>
@@ -65,13 +66,15 @@
       <input size="35" id="nickname"></input><button>User Name</button>
       <!-- <input type="submit"></input> -->
   </div>
-  
+  <div id="result"></div>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
-  <script src="/socket.io/socket.io.js"></script>
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+  <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+  <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  
+  <!-- <script src="/dist/RTCMultiConnection.min.js"></script> -->
   <script>
     const socket = io('/');
   $(function () {
@@ -123,7 +126,12 @@ const audio = document.querySelector('audio');
           this.chunks.push(e.data);
           // socket.emit('sample', e.data);
           var blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
-          console.log(socket.id)
+         // Let us open our database
+        var request = window.indexedDB.open("MyTestDatabase", 3);
+        // assign audio element's src property to audio blob
+        // audio.src = window.webkit.URL.createObjectURL(localStorage.blob);
+        // play audio
+        // audio.play();
         // emit blob
         socket.emit('sample', {blob: blob, socketid: socket.id})
       };
@@ -152,6 +160,14 @@ socket.on('voice', function(arrayBuffer) {
     // play audio
     audio.play();
 });
+
+  var connection = new RTCMultiConnection();
+
+  // this line is VERY_important
+  connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+  connection.onstream = function (event) {
+      document.body.appendChild(event.mediaElement);
+    };
     </script>
 </body>
 </html>
