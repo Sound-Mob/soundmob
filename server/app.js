@@ -21,7 +21,7 @@ const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 const { playlist } = require('./util.js');
 // middlewares
-const allowed = ['http://localhost:3000', 'http://localhost:4200']
+const allowed = ['http://localhost:3000', 'http://localhost:8080']
 // app.use(cors({
 //   origin: function(origin, callback) {
 //     if(!origin) {
@@ -33,7 +33,7 @@ const allowed = ['http://localhost:3000', 'http://localhost:4200']
 //     return callback(null, true);
 //   }
 // }));
-app.use(cors({origin:'http://localhost:4200'}))
+app.use(cors({origin:'http://localhost:8080'}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
@@ -43,6 +43,7 @@ app.use(passport.session())
 // app.use(function (req, res, next) {
 
 app.get('/', function (req, res) {
+  console.log(here)
   res.sendFile(__dirname + '/index.html');
 });
 // if we want to keep track of users in room
@@ -160,7 +161,11 @@ function(req, accessToken, refreshToken, profile, done) {
 
 ));
 
-app.get('/',
+app.get('/api/test',cors(), (req,res) => {
+  res.json('hello')
+})
+
+app.get('/api/login',
   passport.authenticate('google', { scope: 
   [ 'https://www.googleapis.com/auth/plus.login',
     'https://www.googleapis.com/auth/youtube',
@@ -177,6 +182,7 @@ app.listen(3000, ()=>{
   console.log('listening on 3000 ')
 })
 app.get('/api',(req, res) => {
+  console.log('cool')
   res.send(req.session);
 });
 http.listen(4567, function () {

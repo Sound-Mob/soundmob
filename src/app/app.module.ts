@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
@@ -9,7 +10,6 @@ import { HomeComponent } from "./home/home.component";
 import { AppRoutingModule } from ".//app-routing.module";
 import { LandingComponent } from './home/landing/landing.component';
 import { LoginComponent } from './home/login/login.component';
-import { SigninComponent } from './home/signin/signin.component';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
@@ -54,14 +54,13 @@ import { AdminGuard } from './auth/guards/admin.guard';
     AppComponent,
     HomeComponent,
     LandingComponent,
-    LoginComponent,
-    SigninComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,  
     FormsModule,
+    HttpClientModule
     //begin import of angular material
     // BrowserAnimationsModule,
     // BrowserModule,

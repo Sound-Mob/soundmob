@@ -3,7 +3,6 @@ import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { AuthGuard } from "./auth/guards/auth.guard";
 import { AdminGuard } from "./auth/guards/admin.guard";
-import { SigninComponent } from "./home/signin/signin.component";
 import { LoginComponent } from "./home/login/login.component";
 import { LandingComponent } from "./home/landing/landing.component";
 
@@ -12,14 +11,6 @@ const routes: Routes = [
   {
     path: '',
     component: LandingComponent,
-  },
-  {
-    path: "login",
-    component: LoginComponent
-  },
-  {
-    path: "signin",
-    component: SigninComponent
   },
   {
     path: "posts",
