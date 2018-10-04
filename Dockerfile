@@ -50,5 +50,3 @@ CMD ng serve --host 0.0.0.0
 # gcloud compute instances list
 
 # gcloud compute instances update-container {your-instance-here} --container-image {your-image-here (us.grc.io/whatever)}
-
-# http://35.190.144.142:8080/
