@@ -1,25 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
-import { LandingComponent } from "./home/landing/landing.component"
-import { LoginComponent } from "./home/login/login.component"
-import { SigninComponent } from "./home/signin/signin.component"
-
 
 const routes: Routes = [
   {
     path: "",
-    component: LandingComponent,
+    component: HomeComponent
   },
-  {
-    path: "signin",
-    component: SigninComponent
-  },
-  {
-    path: "login",
-    component: LoginComponent
-  },
-
   {
     path: "posts",
     loadChildren: "../app/posts/posts.module#PostsModule"
@@ -39,4 +26,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
