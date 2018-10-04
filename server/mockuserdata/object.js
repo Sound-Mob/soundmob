@@ -5,6 +5,8 @@ module.exports.userobject = {
   lastname: 'delahoussaye',
   bio: 'austin',
   followercount: 5,
-  followingcount: 7
+  followingcount: 7,
+  djactive: false,
+  followers: [3 ,4 ,6 ],
+  following: [4, 8],
 };
-

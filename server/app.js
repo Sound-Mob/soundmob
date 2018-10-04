@@ -84,7 +84,7 @@ io.on('connection', function (socket) {
 
   // tell socket to listen for a 'sample' event
   socket.on('sample', function (stream) {
-    console.log(stream.blob);
+    // console.log(stream.blob);
     
     // save sound to 
     addSound(stream.blob, 3)
@@ -100,7 +100,7 @@ io.on('connection', function (socket) {
       // console.log(sound);
       // emit voice stream data to all sockets
       // socket.emit('voice', sounds[0]);
-      // socket.emit('voice', stream.blob);
+      socket.emit('voice', stream.blob);
     }).catch(err => console.error(err));
     // emit voice stream data to all sockets
    
@@ -127,7 +127,7 @@ getUserById(id).then((user) => {
   passReqToCallback   : true
 },
 function(req, accessToken, refreshToken, profile, done) {
-  console.log(accessToken)
+  // console.log(accessToken)
   req.session.accessToken = accessToken;
 
   const { id } = profile;
