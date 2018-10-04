@@ -3,28 +3,43 @@ import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { AuthGuard } from "./auth/guards/auth.guard";
 import { AdminGuard } from "./auth/guards/admin.guard";
+import { SigninComponent } from "./home/signin/signin.component";
+import { LoginComponent } from "./home/login/login.component";
+import { LandingComponent } from "./home/landing/landing.component";
 
 
 const routes: Routes = [
   {
-    path: "",
-    component: HomeComponent,
-    
+    path: '',
+    component: LandingComponent,
+  },
+  {
+    path: "login",
+    component: LoginComponent
+  },
+  {
+    path: "signin",
+    component: SigninComponent
   },
   {
     path: "posts",
     loadChildren: "../app/posts/posts.module#PostsModule",
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
+  },
+  {
+    path: "posts",
+    loadChildren: "../app/posts/posts.module#PostsModule",
+    canActivate: [AdminGuard]
   },
   {
     path: "king",
     loadChildren: "../app/king/king.module#KingModule",
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: "dj-view",
     loadChildren: "../app/dj-view/dj-view.module#DjViewModule",
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   }
 ];
 
