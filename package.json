@@ -29,6 +29,7 @@
     "b": "^2.0.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "core-js": "^2.5.4",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
@@ -45,6 +46,8 @@
     "path": "^0.12.7",
     "pg": "^7.4.3",
     "pg-promise": "^8.4.6",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "rxjs": "~6.2.0",
     "supertest": "^3.3.0",
     "zone.js": "~0.8.26"

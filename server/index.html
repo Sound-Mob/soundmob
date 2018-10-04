@@ -53,30 +53,114 @@
   </style>
 </head>
 <body>
+  <div>
+    <audio id="audio">here's a mic</audio>
+    <audio id="output">here's a mic</audio>
+  </div>
   <ul id="messages"></ul>
+  <div id="roomwrap">
+      <input size="35" id="roomname"></input><button>Room Name</button>
+  </div>
+  <div id="nickwrap">
+      <input size="35" id="nickname"></input><button>User Name</button>
+      <!-- <input type="submit"></input> -->
+  </div>
+  <div id="result"></div>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
   <script src="/socket.io/socket.io.js"></script>
+  <!-- <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+  <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script> -->
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  
-  <script type="text/javascript" src="/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
+  <!-- <script src="/dist/RTCMultiConnection.min.js"></script> -->
   <script>
+    const socket = io('https://85a4e7c4.ngrok.io/socket.io', {transports: ['websocket']});
   $(function () {
-  var socket = io('/');
-  $('form').submit(function () {
-  socket.emit('chat message', $('#m').val());
-  $('#m').val('');
-  return false;
+    // sending chat messages
+    $('button').click(function () {
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+    });
+
+    // sending room
+    $('button').click(function () {
+      socket.emit('roomroute', $('#roomname').val());
+      return false;
+    });
+
+    // sending user
+    $('button').click(function () {
+      socket.emit('userid', $('#nickname').val());
+      return false;
+    });
+
+    // listen for new chat messages
+      // append them to dom
+    socket.on('chat message', function (msg) {
+      console.log(msg)
+    $('#messages').append($('<li>').text(`${msg.name}: ${msg.msg}`));
+      });
+      // notify room when someone
+      socket.on('disconnect', function () {
+      $('#messages').append($('<li>').text('elvis has left the building'));
+      });
+ 
   });
-  // });
-  socket.on('chat message', function (msg) {
-  $('#messages').append($('<li>').text(msg));
-    });
-    socket.on('disconnect', function () {
-    $('#messages').append($('<li>').text('elvis has left the building'));
-    });
-    });
+//  set constrainsts for media devices
+var constraints = { audio: true };
+// select the audio element 
+const audio = document.querySelector('audio');
+  // This function returns a promise that gives us access to the users mic and voice from mic
+  navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
+    // setting audio from tag so that the voice 
+      var mediaRecorder = new MediaRecorder(mediaStream);
+      // create chunks array to store audio data
+      mediaRecorder.onstart = function(e) {
+          this.chunks = [];
+      };
+      // push audio data into chunks array
+      mediaRecorder.ondataavailable = function(e) {
+          this.chunks.push(e.data);
+          // socket.emit('sample', e.data);
+          var blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
+         // Let us open our database
+        var request = window.indexedDB.open("MyTestDatabase", 3);
+        // assign audio element's src property to audio blob
+        // audio.src = window.webkit.URL.createObjectURL(localStorage.blob);
+        // play audio
+        // audio.play();
+        // emit blob
+        socket.emit('sample', {blob: blob, socketid: socket.id})
+      };
+      mediaRecorder.onstop = function(e) {
+        console.log('stopped')
+      // convert audio data into sendable audio blob
+      };
+    // start recorder automatically on page render
+    mediaRecorder.start();
+    console.log("recorder started");
+    // stop recording after 5 seconds
+    setTimeout(function() {
+          mediaRecorder.stop()
+      }, 5000);
+  });
+
+
+// When the client receives a voice message it will play the sound
+socket.on('voice', function(arrayBuffer) {
+    // convert data blob into audio
+    var blob = new Blob([arrayBuffer], { 'type' : 'audio/ogg; codecs=opus' });
+    // access audio element on dom
+    const audio = document.querySelector('audio');
+    // assign audio element's src property to audio blob
+    audio.src = window.URL.createObjectURL(blob);
+    // play audio
+    audio.play();
+});
+
     </script>
 </body>
 </html>
