@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 // if we want to keep track of users in room
-// var users = [];
+var users = [];
 
 //sockets
 io.on('connection', function (socket) {
@@ -40,10 +40,11 @@ io.on('connection', function (socket) {
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
       // if we want to keep track of users in room
-      // if (socket.name){
-      //   users.push(socket.name);
-      //   console.log(users);
-      // }
+      if (socket.name){
+        users.push(socket.name);
+        console.log(users,'in roomroute')
+        io.sockets.in(room).emit('new_user', {users: users, name: socket.name});
+      }
     }); 
   });
 
@@ -59,8 +60,13 @@ io.on('connection', function (socket) {
     io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
   });
   
-  socket.on('disconnect', function (socket) {
-    io.emit('disconnect', 'a user has disconnected');
+  // listen for users to leave
+  socket.on('disconnect', function (data) {
+    console.log(users, socket.name);
+    // remove user from users array 
+    users.splice(users.indexOf(socket.name), 1);
+    // emit disconnection
+    io.emit('disconnect', { users: users, name: socket.name });
   });
 
   // tell socket to listen for a 'sample' event

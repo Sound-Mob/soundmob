@@ -70,6 +70,7 @@
     <div id="subscriber"></div>
     <div id="publisher"></div>
   </div>
+  <div id="users"></div>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
@@ -126,17 +127,40 @@
       socket.emit('userid', $('#nickname').val());
       return false;
     });
-
+  var $users = $('#users')
     // listen for new chat messages
       // append them to dom
     socket.on('chat message', function (msg) {
       console.log(msg)
     $('#messages').append($('<li>').text(`${msg.name}: ${msg.msg}`));
       });
-      // notify room when someone
-      socket.on('disconnect', function () {
-      $('#messages').append($('<li>').text('elvis has left the building'));
+      
+      // notify room when someone leaves
+      socket.on('disconnect', function (info) {
+        // update users list
+        var html = '';
+        for (var i = 0; i < info.users.length; i++) {
+          html += info.users[i] + '<br/>'
+        }
+        $users.html(html);
+        // notify that user left
+      $('#messages').append($('<li>').text(`${info.name} has left the station`));
       });
+
+      
+    // listen for new user
+      socket.on('new_user', function(info) {
+        // update user list
+        var html = '';
+        for (var i = 0; i < info.users.length; i++){
+          html += info.users[i] + '<br/>'
+        }
+        $users.html(html);
+        // notify others of new user
+        $('#messages').append($('<li>').text(`${info.name} is listening`));
+      });
+ 
+   
  
   });
 //  set constrainsts for media devices
