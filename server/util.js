@@ -49,6 +49,27 @@ module.exports = {
       json: true
     };
     return rp(options);
+  },
+  insertSong: (token, song) => {
+    const options = {
+      method: 'POST',
+      uri: 'https://www.googleapis.com/youtube/v3/playlists?part=snippet',
+      body:   {
+        "snippet": {
+          "playlistId": "PLR4epTa34lZwzBUMi10kEArbGLhwJ9fv6", 
+          "resourceId": {
+              "kind": "youtube#video",
+              "videoId": "74pZUgCOJoE"
+            }
+       
+          }
+       },
+       headers:{
+        Authorization: `Bearer ${token}`
+       },
+       json: true
+      };
+      return rp(options);
   }
 
   }
