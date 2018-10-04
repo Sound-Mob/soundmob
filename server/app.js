@@ -33,6 +33,7 @@ var users = [];
 io.on('connection', function (socket) {
   // listen for room id
   socket.on('roomroute', (room) => {
+    io.sockets.emit('startlistener');
     // socket joins that room
     socket.join(room, ()=>{
       socket.admin = false;
@@ -74,6 +75,7 @@ io.on('connection', function (socket) {
     socket.join(room, () => {
       socket.admin = true;
       console.log(room, 'in newroom')
+      io.sockets.emit('starttokbox');
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
       // if we want to keep track of users in room
