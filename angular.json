@@ -23,9 +23,6 @@
               "src/assets"
             ],
             "styles": [
-              {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-              },
               "src/styles.css"
             ],
             "scripts": []
@@ -53,7 +50,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sound-mob:build"
+            "browserTarget": "sound-mob:build",
+            "port": 8080
           },
           "configurations": {
             "production": {
