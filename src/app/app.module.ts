@@ -6,10 +6,11 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 
-import { AppRoutingModule } from ".//app-routing.module";
+import { AppRoutingModule } from "./app-routing.module";
 import { LandingComponent } from './home/landing/landing.component';
 import { LoginComponent } from './home/login/login.component';
 import { SignInComponent } from './home/signin/signin.component';
+
 
 
 

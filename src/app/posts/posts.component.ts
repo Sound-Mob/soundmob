@@ -11,7 +11,7 @@ export class PostsComponent implements OnInit {
 
   show: Boolean;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.show = true;
@@ -25,3 +25,6 @@ export class PostsComponent implements OnInit {
       .catch(err => console.log(err));
   }
 }
+
+
+
