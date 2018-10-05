@@ -4,6 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const passport = require('passport');
+const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const rp = ('request-promise');
@@ -30,8 +31,10 @@ app.use(cookieSession({
   }))
 app.use(passport.initialize());
 app.use(passport.session())
+// app.use(function (req, res, next) {
 
 app.get('/', function (req, res) {
+  console.log(here)
   res.sendFile(__dirname + '/index.html');
 });
 // if we want to keep track of users in room
@@ -136,7 +139,10 @@ io.on('connection', function (socket) {
         socket.emit('voice', stream.blob);
       }).catch(err => console.error(err));
     // emit voice stream data to all sockets
+<<<<<<< HEAD
 
+=======
+>>>>>>> a36cd7d66d7dbfd878f5febfe4ddf426a5bf7dda
   });
 });
 //session serializatoin
@@ -248,8 +254,12 @@ app.get('/auth/google/callback',
   }).catch(err=> console.error(err));
     }
 ));
+app.get('/api/tester', (req, res)=>{
+  res.json(userobject)
+})
 
-app.get('/login',
+
+app.get('/api/login',
   passport.authenticate('google', { scope: 
   [ 'https://www.googleapis.com/auth/plus.login',
     'https://www.googleapis.com/auth/youtube',
