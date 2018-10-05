@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const rp = ('request-promise');
 const app = express();
+const cookieSession = require('cookie-session')
 
 const router = express.Router();
 var http = require('http').Server(app);
@@ -20,10 +21,13 @@ const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('
 const { Youtube, ClientID, ClientSecret, RedirectURL } = require('./config.js');
 const { playlist } = require('./util.js');
 // middlewares
+app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser())
-app.use(session({ secret: 'keyboard cat' }))
+app.use(cookieSession({ 
+  maxAge: 24 * 60 * 60 * 1000,
+  keys:['qwerty']
+  }))
 app.use(passport.initialize());
 app.use(passport.session())
 
@@ -31,15 +35,15 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 // if we want to keep track of users in room
-// var users = [];
+var users = [];
 
-//sockets
+// on connection
 io.on('connection', function (socket) {
-  console.log('a user connected');
-
   // listen for room id
   socket.on('roomroute', (room) => {
+    io.sockets.emit('startlistener');
     // socket joins that room
+<<<<<<< HEAD
     socket.join(room, () => {
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
@@ -49,6 +53,19 @@ io.on('connection', function (socket) {
       //   console.log(users);
       // }
     });
+=======
+    socket.join(room, ()=>{
+      socket.admin = false;
+      // reassign socket room at id to room arg
+      socket.rooms[socket.id] = socket.rooms[room];
+      // if we want to keep track of users in room
+      if (socket.name){
+        users.push(socket.name);
+        console.log(room, "in join room")
+        io.sockets.in(room).emit('new_user', {users: users, name: socket.name});
+      }
+    }); 
+>>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
   });
 
   // listen for username
@@ -60,11 +77,42 @@ io.on('connection', function (socket) {
   // listen for chat message
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
+<<<<<<< HEAD
     io.sockets.in(room).emit('chat message', { msg: msg, name: socket.name });
   });
 
   socket.on('disconnect', function (socket) {
     io.emit('disconnect', 'a user has disconnected');
+=======
+    console.log(room, "in chat")
+    io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
+  });
+  
+  // listen for users to leave
+  socket.on('disconnect', function (data) {
+    // console.log(users, socket.name);
+    // remove user from users array 
+    users.splice(users.indexOf(socket.name), 1);
+    // emit disconnection
+    io.emit('disconnect', { users: users, name: socket.name });
+  });
+
+  // listen for new room
+  socket.on('newroom', function (room) {
+    socket.join(room, () => {
+      socket.admin = true;
+      console.log(room, 'in newroom')
+      io.sockets.emit('starttokbox');
+      // reassign socket room at id to room arg
+      socket.rooms[socket.id] = socket.rooms[room];
+      // if we want to keep track of users in room
+      if (socket.name) {
+        users.push(socket.name);
+        
+        io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
+      }
+    }); 
+>>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
   });
 
   // tell socket to listen for a 'sample' event
@@ -93,12 +141,18 @@ io.on('connection', function (socket) {
 });
 //session serializatoin
 passport.serializeUser((user, done) => {
+<<<<<<< HEAD
   done(null, user.id);
+=======
+
+  done(null, user.googleid); 
+>>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
   // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 passport.deserializeUser((id, done) => {
 
+<<<<<<< HEAD
   getUserById(id).then((user) => {
     done(user)
   }).catch(err => console.error(err))
@@ -108,9 +162,21 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
   clientID: ClientID,
   clientSecret: ClientSecret,
+=======
+getUserById(id).then((user) => {
+  done(null,user[0])
+}).catch( err => console.error(err,'here'))
+ });
+
+  //session entry
+  passport.use(new GoogleStrategy({
+    clientID:     ClientID,
+    clientSecret: ClientSecret,
+>>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
   callbackURL: "http://localhost:3000/auth/google/callback",
   passReqToCallback: true
 },
+<<<<<<< HEAD
   function (req, accessToken, refreshToken, profile, done) {
     // console.log(accessToken)
     req.session.accessToken = accessToken;
@@ -161,12 +227,55 @@ app.get('/auth/google/callback',
     successRedirect: '/api',
     failureRedirect: '/login'
   }));
+=======
+(req, accessToken, refreshToken, profile, done) =>{
+  console.log(accessToken);
+  req.session.accessToken = accessToken;
+
+  const { id } = profile;
+  const { name } = profile;
+  const { givenName } = name;
+  const { familyName } = name;
+  const bio = 'Loray NC';
+  const samples = 'binary';
+  const savedplaylists = 'urls';
+  const followercount = 12;
+  const followingcount = 2;
+  getUserById(profile.id).then(user => {
+    if(user) {
+    done(null, user[0])
+    }
+  }).catch(err=> console.error(err));
+    }
+));
+
+app.get('/login',
+  passport.authenticate('google', { scope: 
+  [ 'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/youtube',
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/youtube.force-ssl' ]  }
+  ));
+
+app.get( '/auth/google/callback', 
+  passport.authenticate('google',{
+    successRedirect:'/api',
+    failureRedirect:'/login'
+  }) );
+>>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
 
 app.listen(3000, () => {
   console.log('listening on 3000 ')
 })
+<<<<<<< HEAD
 app.get('/api', (req, res) => {
   res.send(req.session);
+=======
+app.get('/api',(req, res) => {
+  console.log(req.session, req.user);
+  res.end();
+>>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
 });
 http.listen(4567, function () {
   console.log('listening on 4567');
@@ -200,7 +309,7 @@ http.listen(4567, function () {
 //   // check if bearer is undefined
 //   if (typeof bearerHeader !== 'undefined') {
 //     // split at the space
-//     console.log(bearerHeader);
+//
 //     const bearer = bearerHeader.split(' ');
 //     // get token from array
 //     const bearerToken = bearer[1];
