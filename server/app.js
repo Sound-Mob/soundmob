@@ -120,13 +120,19 @@ io.on('connection', function (socket) {
     }); 
 
   });
-
+  var token = 'ya29.GlwtBv1KR0pYX6FVrewrSilhukPWo8Gg0RIiF6wPe68wn2wCG88JfZ3GozdlZjqb4Sc6ersQYbULzcvybjbexECCxRulS2vFrYcGMN-L_Hwa3OMPBVjvkgqPGtpgmg';
   // START CAST LISTENER -- listen for startCast
-  socket.on('startCast', () => {
-    searchDetails().then(({items})=>{ 
+  socket.on('startCast', (id) => {
+    
+    searchDetails(token, id).then(({items})=>{ 
       let durationArray = items[0].contentDetails.duration.split(""); 
-      songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
-      console.log({ songDuration })
+      if (durationArray.length <= 4){
+        songDuration = (Number(durationArray[2]));
+      } else {
+        songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
+      }
+      
+      console.log(items)
       // calculate playlist start time
       playlistStartTime += new Date();
       playlistStartTime = playlistStartTime.split("");

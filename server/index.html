@@ -270,10 +270,10 @@
 
  // START CASTING
   
-
+  let ids = ['JryGDi6SVQQ']
     function startCast(){
       // emit video id on start cast
-      socket.emit('startCast');
+      socket.emit('startCast', ids[0]);
     }
     
   // CAST ON LISTENER
@@ -283,7 +283,7 @@
       castStartTime = playlistStartTime;
       // setInterval(startCast, duration);
       
-      let videos = [`https://www.youtube.com/embed/JryGDi6SVQQ?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+      let videos = [`https://www.youtube.com/embed/${ids[0]}?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       // let videos = [`https://www.youtube.com/embed/0Vto2RT3818?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       document.getElementById('myIframe').src = videos[0];
     } )   
