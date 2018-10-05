@@ -51,16 +51,19 @@ io.on('connection', function (socket) {
   socket.on('roomroute', (room) => {
     // calculate listener start time
     listenerStartTime += new Date();
+    console.log(listenerStartTime)
     listenerStartTime = listenerStartTime.split("");
+    console.log(listenerStartTime);
     listenerStartTime = listenerStartTime.splice(16, 8);
+    console.log(listenerStartTime);
     let minsInSeconds = Number(listenerStartTime[3] + listenerStartTime[4]) * 60;
     let seconds = Number(listenerStartTime[6] + listenerStartTime[7])
     // calculate difference between listener start and playlist start
     listenerStartTime = minsInSeconds + seconds;
     timeInPlaylist = listenerStartTime - playlistStartTime;
     // io.sockets.emit('startlistener', timeInPlaylist);
-    console.log({listenerStartTime})
-    console.log({ timeInPlaylist })
+    console.log({listenerStartTime}, "in join roomroute")
+    console.log({ timeInPlaylist }, "in join roomroute")
     
     io.sockets.to(`${socket.id}`).emit('startlistener', timeInPlaylist);
     
@@ -140,7 +143,7 @@ io.on('connection', function (socket) {
       let minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
       let seconds = Number(playlistStartTime[6] + playlistStartTime[7])
       playlistStartTime = minsInSeconds + seconds;
-      console.log({ playlistStartTime })
+      console.log({ playlistStartTime });
       io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
     }).catch((err)=>{ console.log(err); });
     

@@ -104,6 +104,7 @@
     var session;
     var duration;
     var castStartTime;
+    var ids = ['JryGDi6SVQQ', '0Vto2RT3818']
     
   $(function () {
     // sending chat messages
@@ -165,7 +166,7 @@
       // JOIN ROOM LISTENER -- listen for user joining room
       socket.on('startlistener', function (timeInPlaylist) {
         // alert(timeInPlaylist)
-        let videos = [`https://www.youtube.com/embed/JryGDi6SVQQ?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+        let videos = [`https://www.youtube.com/embed/${ids[1]}?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
         // let videos = [
         // `https://www.youtube.com/embed/0Vto2RT3818?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
         document.getElementById('myIframe').src = videos[0];
@@ -196,7 +197,7 @@
         
         session = OT.initSession(apiKey, sessionId);
         var pubOptions = { videoSource: null };
-        console.log(socket);
+        // console.log(socket);
         // Replace replacementElementId with the ID of the DOM element to replace:
         publisher = OT.initPublisher('liveout', pubOptions);
         // Connect to the session
@@ -270,20 +271,20 @@
 
  // START CASTING
   
-  let ids = ['JryGDi6SVQQ']
+  
     function startCast(){
       // emit video id on start cast
-      socket.emit('startCast', ids[0]);
+      socket.emit('startCast', ids[1]);
     }
     
   // CAST ON LISTENER
     socket.on('castOn', function (playlistStartTime, songDuration) {
-      alert(songDuration);
+      // alert(songDuration);
       duration = songDuration;
       castStartTime = playlistStartTime;
       // setInterval(startCast, duration);
       
-      let videos = [`https://www.youtube.com/embed/${ids[0]}?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+      let videos = [`https://www.youtube.com/embed/${ids[1]}?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       // let videos = [`https://www.youtube.com/embed/0Vto2RT3818?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       document.getElementById('myIframe').src = videos[0];
     } )   
