@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
 const rp = ('request-promise');
-const router = express.Router();
+const authRoutes = require('./routes/auth-routes')
 const app = express();
 
 var http = require('http').Server(app);
@@ -29,6 +29,7 @@ app.use(cookieSession({
   }))
 app.use(passport.initialize());
 app.use(passport.session())
+app.use('/auth', authRoutes)
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
@@ -164,20 +165,6 @@ console.log(profile);
     }
 ));
 
-app.get('/login',
-  passport.authenticate('google', { scope: 
-  [ 'https://www.googleapis.com/auth/plus.login',
-    'https://www.googleapis.com/auth/youtube',
-    'https://www.googleapis.com/auth/plus.me',
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/youtube.force-ssl' ]  }
-  ));
-
-app.get( '/auth/google/callback', 
-  passport.authenticate('google',{
-    successRedirect:'/api',
-    failureRedirect:'/login'
-  }) );
 
 app.listen(3000, ()=>{
   console.log('listening on 3000 ')
