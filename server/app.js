@@ -8,7 +8,6 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
-const rp = ('request-promise');
 const authRoutes = require('./routes/auth-routes')
 const app = express();
 
@@ -19,7 +18,7 @@ const userobject = require('./mockuserdata/object');
 //Utilites
 const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
-const { playlist } = require('./util.js');
+const { playlist , playlistIDs, videoIDArray, searchDetails} = require('./util.js');
 // middlewares
 app.use(cookieParser())
 app.use(bodyParser.json());
@@ -34,9 +33,27 @@ app.use(cors());
 app.use('/auth', authRoutes)
 
 app.get('/', function (req, res) {
-  console.log(here)
+ 
   res.sendFile(__dirname + '/index.html');
 });
+app.get('/test', (req, res) => {
+  console.log(req.session)
+  const key = req.session.accessToken;
+  let body;
+  playlistIDs(key).then(({ items })=> {
+     const array = videoIDArray(items); 
+     searchDetails(array,key).then( ({items}) => {
+       body = items.map((durs)=> {
+         const { contentDetails } = durs;
+         const { duration } = contentDetails;
+         return duration;
+       });
+       console.log(body);
+     })
+   })
+  
+  res.end();
+})
 // if we want to keep track of users in room
 var users = [];
 
@@ -143,10 +160,11 @@ getUserById(id).then((user) => {
   passReqToCallback   : true
 },
 (req, accessToken, refreshToken, profile, done) =>{
+  console.log(accessToken)
   req.session.accessToken = accessToken;
-req.session.photo = 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F017%2F539%2Fcaptain_falcon.jpg&imgrefurl=https%3A%2F%2Fknowyourmeme.com%2Fmemes%2Fcaptain-falcon&docid=JBaRqKw6WeNBZM&tbnid=AT5GKXE04prVuM%3A&vet=10ahUKEwjHgLHSqe7dAhVEMawKHTVvCOUQMwg-KAUwBQ..i&w=600&h=600&bih=767&biw=1440&q=captin%20falcon%20phot&ved=0ahUKEwjHgLHSqe7dAhVEMawKHTVvCOUQMwg-KAUwBQ&iact=mrc&uact=8'
+req.session.photo = profile.photos[0];
   
-console.log(profile.photos[0]);
+console.log();
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
@@ -178,8 +196,8 @@ app.listen(3000, ()=>{
   console.log('listening on 3000 ')
 })
 app.get('/api',(req, res) => {
-  console.log(req.session, req.user);
-  res.send(req.user);
+
+  res.send(req.session);
 });
 http.listen(4567, function () {
   console.log('listening on 4567');
