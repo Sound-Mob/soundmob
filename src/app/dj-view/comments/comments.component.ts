@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import axios from "axios";
+import { ChatService } from '../../chat.service'
 
 @Component({
   selector: 'app-comments',
@@ -12,18 +12,23 @@ export class CommentsComponent implements OnInit {
 
   show: Boolean;
 
-  constructor() { }
+  constructor(private chatService: ChatService) {
+    chatService.messages.subscribe(msg => {
+      console.log("Response From Websocket Server: " + msg)
+    });
+  }
 
   ngOnInit() {
-    this.show = true;
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then(res => {
+  }
 
-        this.data = res.data;
-        this.show = false;
-      })
-      .catch(err => console.log(err));
+  private message = {
+    author: 'elliot forbes',
+    message: 'howdy folks'
+  }
+
+  sendMsg() {
+    console.log("New Message Sent From Client");
+    this.chatService.messages.next(this.message);
   }
 
 }
