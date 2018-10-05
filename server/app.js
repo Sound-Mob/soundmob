@@ -25,10 +25,10 @@ const { playlist } = require('./util.js');
 app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieSession({ 
+app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
-  keys:['qwerty']
-  }))
+  keys: ['qwerty']
+}))
 app.use(passport.initialize());
 app.use(passport.session())
 // app.use(function (req, res, next) {
@@ -46,29 +46,17 @@ io.on('connection', function (socket) {
   socket.on('roomroute', (room) => {
     io.sockets.emit('startlistener');
     // socket joins that room
-<<<<<<< HEAD
     socket.join(room, () => {
-      // reassign socket room at id to room arg
-      socket.rooms[socket.id] = socket.rooms[room];
-      // if we want to keep track of users in room
-      // if (socket.name){
-      //   users.push(socket.name);
-      //   console.log(users);
-      // }
-    });
-=======
-    socket.join(room, ()=>{
       socket.admin = false;
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
       // if we want to keep track of users in room
-      if (socket.name){
+      if (socket.name) {
         users.push(socket.name);
         console.log(room, "in join room")
-        io.sockets.in(room).emit('new_user', {users: users, name: socket.name});
+        io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
       }
-    }); 
->>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
+    });
   });
 
   // listen for username
@@ -80,21 +68,14 @@ io.on('connection', function (socket) {
   // listen for chat message
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
-<<<<<<< HEAD
+    console.log(room, "in chat")
     io.sockets.in(room).emit('chat message', { msg: msg, name: socket.name });
   });
 
-  socket.on('disconnect', function (socket) {
-    io.emit('disconnect', 'a user has disconnected');
-=======
-    console.log(room, "in chat")
-    io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
-  });
-  
   // listen for users to leave
   socket.on('disconnect', function (data) {
     // console.log(users, socket.name);
-    // remove user from users array 
+    // remove user from users array
     users.splice(users.indexOf(socket.name), 1);
     // emit disconnection
     io.emit('disconnect', { users: users, name: socket.name });
@@ -111,11 +92,10 @@ io.on('connection', function (socket) {
       // if we want to keep track of users in room
       if (socket.name) {
         users.push(socket.name);
-        
+
         io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
       }
-    }); 
->>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
+    });
   });
 
   // tell socket to listen for a 'sample' event
@@ -139,52 +119,31 @@ io.on('connection', function (socket) {
         socket.emit('voice', stream.blob);
       }).catch(err => console.error(err));
     // emit voice stream data to all sockets
-<<<<<<< HEAD
-
-=======
->>>>>>> a36cd7d66d7dbfd878f5febfe4ddf426a5bf7dda
   });
 });
 //session serializatoin
 passport.serializeUser((user, done) => {
-<<<<<<< HEAD
-  done(null, user.id);
-=======
 
-  done(null, user.googleid); 
->>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
+  done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 passport.deserializeUser((id, done) => {
 
-<<<<<<< HEAD
   getUserById(id).then((user) => {
-    done(user)
-  }).catch(err => console.error(err))
+    done(null, user[0])
+  }).catch(err => console.error(err, 'here'))
 });
 
 //session entry
 passport.use(new GoogleStrategy({
   clientID: ClientID,
   clientSecret: ClientSecret,
-=======
-getUserById(id).then((user) => {
-  done(null,user[0])
-}).catch( err => console.error(err,'here'))
- });
-
-  //session entry
-  passport.use(new GoogleStrategy({
-    clientID:     ClientID,
-    clientSecret: ClientSecret,
->>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
   callbackURL: "http://localhost:3000/auth/google/callback",
   passReqToCallback: true
 },
-<<<<<<< HEAD
-  function (req, accessToken, refreshToken, profile, done) {
-    // console.log(accessToken)
+  (req, accessToken, refreshToken, profile, done) => {
+    console.log(accessToken);
     req.session.accessToken = accessToken;
 
     const { id } = profile;
@@ -198,26 +157,17 @@ getUserById(id).then((user) => {
     const followingcount = 2;
     getUserById(profile.id).then(user => {
       if (user) {
-        console.log(user.row[0]);
-        done(null, user.row[0])
+        done(null, user[0])
       }
-    }).catch(err => {
-      createUser(id.toString(), givenName, familyName, bio, samples, savedplaylists, followercount, followingcount)
-        .then(data => {
-          // console.log(data); // print data;
-          done(null, profile);
-        })
-        .catch(error => {
-          console.log(error); // print the error;
-          done();
-        });
-    })
-
+    }).catch(err => console.error(err));
   }
-
 ));
+app.get('/api/tester', (req, res) => {
+  res.json(userobject)
+})
 
-app.get('/',
+
+app.get('/api/login',
   passport.authenticate('google', {
     scope:
       ['https://www.googleapis.com/auth/plus.login',
@@ -233,59 +183,13 @@ app.get('/auth/google/callback',
     successRedirect: '/api',
     failureRedirect: '/login'
   }));
-=======
-(req, accessToken, refreshToken, profile, done) =>{
-  console.log(accessToken);
-  req.session.accessToken = accessToken;
-
-  const { id } = profile;
-  const { name } = profile;
-  const { givenName } = name;
-  const { familyName } = name;
-  const bio = 'Loray NC';
-  const samples = 'binary';
-  const savedplaylists = 'urls';
-  const followercount = 12;
-  const followingcount = 2;
-  getUserById(profile.id).then(user => {
-    if(user) {
-    done(null, user[0])
-    }
-  }).catch(err=> console.error(err));
-    }
-));
-app.get('/api/tester', (req, res)=>{
-  res.json(userobject)
-})
-
-
-app.get('/api/login',
-  passport.authenticate('google', { scope: 
-  [ 'https://www.googleapis.com/auth/plus.login',
-    'https://www.googleapis.com/auth/youtube',
-    'https://www.googleapis.com/auth/plus.me',
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/youtube.force-ssl' ]  }
-  ));
-
-app.get( '/auth/google/callback', 
-  passport.authenticate('google',{
-    successRedirect:'/api',
-    failureRedirect:'/login'
-  }) );
->>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
 
 app.listen(3000, () => {
   console.log('listening on 3000 ')
 })
-<<<<<<< HEAD
 app.get('/api', (req, res) => {
-  res.send(req.session);
-=======
-app.get('/api',(req, res) => {
   console.log(req.session, req.user);
   res.end();
->>>>>>> 62216406284f912b944b6155df7cbfbe3ae1bdc3
 });
 http.listen(4567, function () {
   console.log('listening on 4567');
