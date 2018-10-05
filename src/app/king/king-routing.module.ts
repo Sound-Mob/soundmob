@@ -3,9 +3,11 @@ import { RouterModule, Routes } from "@angular/router";
 
 
 import {KingComponent} from './king.component';
+import { CommentComponent } from "./comment/comment.component";
 
 const routes:Routes=[
-    {path:'',component:KingComponent}
+    {path:'',component: KingComponent},
+    { path: 'comment', component: CommentComponent}
 ]
 
 

@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const passport = require('passport');
+const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -32,6 +33,7 @@ app.use(passport.session())
 app.use('/auth', authRoutes)
 
 app.get('/', function (req, res) {
+  console.log(here)
   res.sendFile(__dirname + '/index.html');
 });
 // if we want to keep track of users in room
@@ -116,7 +118,6 @@ io.on('connection', function (socket) {
       socket.emit('voice', stream.blob);
     }).catch(err => console.error(err));
     // emit voice stream data to all sockets
-   
   });
 });
 //session serializatoin
@@ -164,6 +165,10 @@ console.log(profile);
   }).catch(err=> console.error(err,'this should hit'));
     }
 ));
+app.get('/api/tester', (req, res)=>{
+  res.json(userobject)
+})
+
 
 
 app.listen(3000, ()=>{

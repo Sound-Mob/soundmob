@@ -8,6 +8,7 @@ import { KingComponent } from "./king.component";
 import { ProfileComponent } from './profile/profile.component';
 import { SoundplayerComponent } from './soundplayer/soundplayer.component';
 import { CommentsComponent } from './comments/comments.component';
+import { CommentComponent } from './comment/comment.component';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import { CommentsComponent } from './comments/comments.component';
         CommonModule,
         KingRoutingModule
     ],
-    declarations:[KingComponent, ProfileComponent, SoundplayerComponent, CommentsComponent]
+    declarations:[KingComponent, ProfileComponent, SoundplayerComponent, CommentsComponent, CommentComponent]
 
 })
 
