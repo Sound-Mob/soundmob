@@ -30,6 +30,7 @@ app.use(cookieSession({
   }))
 app.use(passport.initialize());
 app.use(passport.session())
+app.use(cors());
 app.use('/auth', authRoutes)
 
 app.get('/', function (req, res) {
@@ -143,7 +144,9 @@ getUserById(id).then((user) => {
 },
 (req, accessToken, refreshToken, profile, done) =>{
   req.session.accessToken = accessToken;
-console.log(profile);
+req.session.photo = 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F017%2F539%2Fcaptain_falcon.jpg&imgrefurl=https%3A%2F%2Fknowyourmeme.com%2Fmemes%2Fcaptain-falcon&docid=JBaRqKw6WeNBZM&tbnid=AT5GKXE04prVuM%3A&vet=10ahUKEwjHgLHSqe7dAhVEMawKHTVvCOUQMwg-KAUwBQ..i&w=600&h=600&bih=767&biw=1440&q=captin%20falcon%20phot&ved=0ahUKEwjHgLHSqe7dAhVEMawKHTVvCOUQMwg-KAUwBQ&iact=mrc&uact=8'
+  
+console.log(profile.photos[0]);
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
