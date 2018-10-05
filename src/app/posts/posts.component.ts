@@ -27,7 +27,7 @@ export class PostsComponent implements OnInit {
         }
       );
   }
-  }
+
 
   // tester(){
   //   console.log('yupppy');
