@@ -143,7 +143,7 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true
 },
   (req, accessToken, refreshToken, profile, done) => {
-    console.log(accessToken);
+    console.log(profile);
     req.session.accessToken = accessToken;
 
     const { id } = profile;

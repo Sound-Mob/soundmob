@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "express": "nodemon server/app.js",
+    "exp": "node server/app.js",
     "build": "ng build",
     "lint": "ng lint",
     "e2e": "ng e2e",

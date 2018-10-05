@@ -20,26 +20,11 @@ export class PostsComponent implements OnInit {
     return this.http.get('/api/tester')
       .subscribe(
         (data) => {
-          console.log(data);
-          // this.data.map(data);
-          // this.show = false
-          // this.firstName = data.
+          console.log(data, 'data');
+          this.data.push(data);
         }
       );
   }
-
-
-  // tester(){
-  //   console.log('yupppy');
-  //   return this.http.get('/tester')
-  //     .subscribe(
-  //       function(data) {
-  //         console.log(data);
-  //         this.data = data;
-  //         this.show = false
-  //       } 
-  //     );
-  // }
 }
 
 
