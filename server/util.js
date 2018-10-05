@@ -50,6 +50,19 @@ module.exports = {
     };
     return rp(options);
   },
+  searchDetails: (token, id) => {
+    token = 'ya29.GlwtBv78qw-KhdjpnAJ0Mgp-cbYK1Tpwd9Csu3RYdzkhwSAWvTUfx3Ptla-tFmBV44e6qbUI5-PrJsE79QB6TU9EJGW0BPdpOdr3ieGzfBaYJORWTBGzzbjiSmgxXw';
+    id = '9bZkp7q19f0';
+    const options = {
+      uri: `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=contentDetails`,
+      headers: {
+        'User-Agent': 'Request-Promise',
+        Authorization: `Bearer ${token}`
+      },
+      json: true
+    };
+    return rp(options);
+  },
   insertSong: (token, song) => {
     const options = {
       method: 'POST',
