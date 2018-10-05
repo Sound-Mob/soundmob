@@ -1,19 +1,18 @@
 //server packages/
 const express = require('express');
 const path = require('path');
-const session = require('express-session');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const passport = require('passport');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const rp = ('request-promise');
-const app = express();
+const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
-
+const rp = ('request-promise');
 const router = express.Router();
+const app = express();
+
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-const bodyParser = require('body-parser');
 // mock data for front end
 const userobject = require('./mockuserdata/object');
 //Utilites
@@ -105,7 +104,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done)=> {
 
 getUserById(id).then((user) => {
-  done(null,user[0])
+  done(null,user)
 }).catch( err => console.error(err,'here'))
  });
 
@@ -117,9 +116,8 @@ getUserById(id).then((user) => {
   passReqToCallback   : true
 },
 (req, accessToken, refreshToken, profile, done) =>{
-  console.log(accessToken);
   req.session.accessToken = accessToken;
-
+console.log(profile);
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
@@ -130,10 +128,15 @@ getUserById(id).then((user) => {
   const followercount = 12;
   const followingcount = 2;
   getUserById(profile.id).then(user => {
-    if(user) {
+    if(user.length === 1) {
     done(null, user[0])
+    } else {
+      createUser(id, givenName, familyName, bio, followercount, followingcount, true, false).then(user=> {
+        console.log(user);
+        done(null, user);
+      }).catch(err =>console.error(err));
     }
-  }).catch(err=> console.error(err));
+  }).catch(err=> console.error(err,'this should hit'));
     }
 ));
 
@@ -157,7 +160,7 @@ app.listen(3000, ()=>{
 })
 app.get('/api',(req, res) => {
   console.log(req.session, req.user);
-  res.end();
+  res.send(req.user);
 });
 http.listen(4567, function () {
   console.log('listening on 4567');
