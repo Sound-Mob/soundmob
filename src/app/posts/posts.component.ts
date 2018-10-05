@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import axios from "axios";
+import { HttpClient } from '@angular/common/http'
+import { HttpHeaders } from '@angular/common/http'
 
 @Component({
   selector: "app-posts",
@@ -8,20 +9,35 @@ import axios from "axios";
 })
 export class PostsComponent implements OnInit {
   data = [];
-
+  firstName = '';
+  lastName = '';
   show: Boolean;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.show = true;
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then(res => {
-
-        this.data = res.data;
-        this.show = false;
-      })
-      .catch(err => console.log(err));
+    console.log('yupppy');
+    return this.http.get('/api/tester')
+      .subscribe(
+        (data) => {
+          console.log(data);
+          // this.data.map(data);
+          // this.show = false
+          // this.firstName = data.
+        }
+      );
   }
+
+
+  // tester(){
+  //   console.log('yupppy');
+  //   return this.http.get('/tester')
+  //     .subscribe(
+  //       function(data) {
+  //         console.log(data);
+  //         this.data = data;
+  //         this.show = false
+  //       } 
+  //     );
+  // }
 }
