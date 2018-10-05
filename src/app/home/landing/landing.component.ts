@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-landing',
@@ -11,10 +12,14 @@ export class LandingComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'my-auth-token'
+    }) 
   }
 
   login() {
-    console.log('yup');
+    // console.log('yup');
     // this.http.get('/api/login',{
     // })
     // .subscribe(

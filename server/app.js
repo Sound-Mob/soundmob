@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const rp = ('request-promise');
 const app = express();
+const cookieSession = require('cookie-session')
 
 const router = express.Router();
 var http = require('http').Server(app);
@@ -21,23 +22,13 @@ const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 const { playlist } = require('./util.js');
 // middlewares
-const allowed = ['http://localhost:3000', 'http://localhost:8080']
-// app.use(cors({
-//   origin: function(origin, callback) {
-//     if(!origin) {
-//       return callback(null, true)
-//     }
-//     if(allowed.indexOf(origin === -1)) {
-//       return callback(new Error(),false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
-app.use(cors({origin:'http://localhost:8080'}))
+app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser())
-app.use(session({ secret: 'keyboard cat' }))
+app.use(cookieSession({ 
+  maxAge: 24 * 60 * 60 * 1000,
+  keys:['qwerty']
+  }))
 app.use(passport.initialize());
 app.use(passport.session())
 // app.use(function (req, res, next) {
@@ -104,20 +95,20 @@ io.on('connection', function (socket) {
       socket.emit('voice', stream.blob);
     }).catch(err => console.error(err));
     // emit voice stream data to all sockets
-   
   });
 });
 //session serializatoin
 passport.serializeUser((user, done) => {
-  done(null, user.id); 
+
+  done(null, user.googleid); 
   // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 passport.deserializeUser((id, done)=> {
 
 getUserById(id).then((user) => {
-  done(user)
-}).catch( err => console.error(err))
+  done(null,user[0])
+}).catch( err => console.error(err,'here'))
  });
 
   //session entry
@@ -127,8 +118,8 @@ getUserById(id).then((user) => {
   callbackURL: "http://localhost:3000/auth/google/callback",
   passReqToCallback   : true
 },
-function(req, accessToken, refreshToken, profile, done) {
-  // console.log(accessToken)
+(req, accessToken, refreshToken, profile, done) =>{
+  console.log(accessToken);
   req.session.accessToken = accessToken;
 
   const { id } = profile;
@@ -142,28 +133,15 @@ function(req, accessToken, refreshToken, profile, done) {
   const followingcount = 2;
   getUserById(profile.id).then(user => {
     if(user) {
-      console.log(user.row[0]);
-    done(null, user.row[0])
+    done(null, user[0])
     }
-  }).catch(err=> {
-    createUser(id.toString(), givenName, familyName, bio, samples, savedplaylists, followercount, followingcount)
-    .then(data => {
-      // console.log(data); // print data;
-      done(null, profile);
-    })
-    .catch(error => {
-      console.log(error); // print the error;
-      done();
-    });
-  })
-
-}
-
+  }).catch(err=> console.error(err));
+    }
 ));
-
-app.get('/api/test',cors(), (req,res) => {
-  res.json('hello')
+app.get('/api/tester', (req, res)=>{
+  res.json(userobject)
 })
+
 
 app.get('/api/login',
   passport.authenticate('google', { scope: 
@@ -175,15 +153,17 @@ app.get('/api/login',
   ));
 
 app.get( '/auth/google/callback', 
-  passport.authenticate('google',{ successRedirect: '/api',
-  failureRedirect: '/login' }));
+  passport.authenticate('google',{
+    successRedirect:'/api',
+    failureRedirect:'/login'
+  }) );
 
 app.listen(3000, ()=>{
   console.log('listening on 3000 ')
 })
 app.get('/api',(req, res) => {
-  console.log('cool')
-  res.send(req.session);
+  console.log(req.session, req.user);
+  res.end();
 });
 http.listen(4567, function () {
   console.log('listening on 4567');
@@ -217,7 +197,7 @@ http.listen(4567, function () {
 //   // check if bearer is undefined
 //   if (typeof bearerHeader !== 'undefined') {
 //     // split at the space
-//     console.log(bearerHeader);
+//
 //     const bearer = bearerHeader.split(' ');
 //     // get token from array
 //     const bearerToken = bearer[1];

@@ -1,7 +1,7 @@
 
 
 <h1 *ngIf="show" else elseBlock>Loading...</h1>
-
+<p>{{data | json}}</p>
 
 <ul #elseBlock>
   <li *ngFor="let person of data">{{person.name}}</li>
