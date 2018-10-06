@@ -15,8 +15,10 @@ export class CommentsComponent implements OnInit {
   constructor(private chatService:ChatService) { 
     this.chatService.receiveMessages()
       .subscribe(data => {
-        console.log(data)
-        this.chatMessages.push(data)
+        if(this.chatMessages.length > 10){
+            this.chatMessages.pop()
+        }
+        this.chatMessages.unshift(data)
       })
   }
 

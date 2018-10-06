@@ -101,8 +101,8 @@ io.on('connection', function (socket) {
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
     console.log(room, "in chat")
-    // io.sockets.in(room).emit('chat message', {message: msg, userName: socket.name});
-    io.sockets.emit('chat message', {message: msg, userName: socket.name});
+    io.sockets.in(room).emit('chat message', { message: msg, userName: socket.name});
+    // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
   
   // listen for users to leave
