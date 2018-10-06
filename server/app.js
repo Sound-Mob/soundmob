@@ -123,7 +123,7 @@ io.on('connection', function (socket) {
     }); 
 
   });
-  var token = 'ya29.GlwtBv1KR0pYX6FVrewrSilhukPWo8Gg0RIiF6wPe68wn2wCG88JfZ3GozdlZjqb4Sc6ersQYbULzcvybjbexECCxRulS2vFrYcGMN-L_Hwa3OMPBVjvkgqPGtpgmg';
+  var token = 'ya29.GlwtBnzWLqRthEHAGZM2gMPqd70-w6GLkvM-zlMKRh_PRowj4Pmf2_nk3RzdCih0lAcPIIAr2fU-SqT8Xkv756ey0FBcMJTMmMD8lbQ8OgPI6fgffEJT5QSi0hqUVA';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
     
@@ -135,7 +135,7 @@ io.on('connection', function (socket) {
         songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
       }
       
-      console.log(items)
+      
       // calculate playlist start time
       playlistStartTime += new Date();
       playlistStartTime = playlistStartTime.split("");
@@ -143,7 +143,8 @@ io.on('connection', function (socket) {
       let minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
       let seconds = Number(playlistStartTime[6] + playlistStartTime[7])
       playlistStartTime = minsInSeconds + seconds;
-      console.log({ playlistStartTime });
+      console.log({playlistStartTime})
+      // console.log({ playlistStartTime });
       io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
     }).catch((err)=>{ console.log(err); });
     
