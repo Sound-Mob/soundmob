@@ -6,4 +6,5 @@
     "pathRewrite": {"^/api" : ""},
     "changeOrigin": true
   }
+
 }
