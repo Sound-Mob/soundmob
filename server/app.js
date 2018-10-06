@@ -51,6 +51,7 @@ var songDuration;
 
 // on connection
 io.on('connection', function (socket) {
+  console.log("hahahahhaha");
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (room) => {
     // calculate listener start time
@@ -92,11 +93,16 @@ io.on('connection', function (socket) {
     socket.name = name;
   });
 
+  socket.on('chatter', (msg)=>{
+    console.log(msg)
+  });
+
   // listen for chat message
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
     console.log(room, "in chat")
-    io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
+    // io.sockets.in(room).emit('chat message', {message: msg, userName: socket.name});
+    io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
   
   // listen for users to leave
