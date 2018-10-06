@@ -10,9 +10,10 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session')
 const authRoutes = require('./routes/auth-routes')
 const app = express();
-
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const server = require('http').createServer(app);  
+const io = require('socket.io')(server);
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
 // mock data for front end
 const userobject = require('./mockuserdata/object');
 //Utilites
@@ -31,9 +32,19 @@ app.use(passport.initialize());
 app.use(passport.session())
 app.use(cors());
 app.use('/auth', authRoutes)
+const mill = cookieSession({ 
+  maxAge: 24 * 60 * 60 * 1000,
+  keys:['qwerty']
+  })
+io.use(function(socket, next) {
+  mill(socket.request, socket.request.res, next);
+});
+app.use(mill);
 
-app.get('/', function (req, res) {
- 
+
+
+///test handlers
+app.get('/', function (req, res) { 
   res.sendFile(__dirname + '/index.html');
 });
 app.get('/test', (req, res) => {
@@ -59,7 +70,8 @@ var users = [];
 
 // on connection
 io.on('connection', function (socket) {
-  // listen for room id
+
+  console.log(socket.request.session);
   socket.on('roomroute', (room) => {
     io.sockets.emit('startlistener');
     // socket joins that room
@@ -152,6 +164,9 @@ getUserById(id).then((user) => {
 }).catch( err => console.error(err,'here'))
  });
 
+
+
+
   //session entry
   passport.use(new GoogleStrategy({
     clientID:     ClientID,
@@ -160,11 +175,11 @@ getUserById(id).then((user) => {
   passReqToCallback   : true
 },
 (req, accessToken, refreshToken, profile, done) =>{
-  console.log(accessToken)
+  // console.log(accessToken)
   req.session.accessToken = accessToken;
+req.session.name = profile.name
 req.session.photo = profile.photos[0];
-  
-console.log();
+
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
@@ -176,6 +191,7 @@ console.log();
   const followingcount = 2;
   getUserById(profile.id).then(user => {
     if(user.length === 1) {
+        user[0].name = profile.name
     done(null, user[0])
     } else {
       createUser(id, givenName, familyName, bio, followercount, followingcount, true, false).then(user=> {
@@ -192,16 +208,16 @@ app.get('/api/tester', (req, res)=>{
 
 
 
-app.listen(3000, ()=>{
+server.listen(3000, ()=>{
   console.log('listening on 3000 ')
 })
 app.get('/api',(req, res) => {
 
   res.send(req.session);
 });
-http.listen(4567, function () {
-  console.log('listening on 4567');
-});
+// http.listen(4567, function () {
+//   console.log('listening on 4567');
+// });
 
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));
