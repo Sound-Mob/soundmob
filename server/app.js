@@ -123,7 +123,7 @@ io.on('connection', function (socket) {
     }); 
 
   });
-  var token = 'ya29.GlwtBnzWLqRthEHAGZM2gMPqd70-w6GLkvM-zlMKRh_PRowj4Pmf2_nk3RzdCih0lAcPIIAr2fU-SqT8Xkv756ey0FBcMJTMmMD8lbQ8OgPI6fgffEJT5QSi0hqUVA';
+  var token = 'a29.GlwtBnzWLqRthEHAGZM2gMPqd70-w6GLkvM-zlMKRh_PRowj4Pmf2_nk3RzdCih0lAcPIIAr2fU-SqT8Xkv756ey0FBcMJTMmMD8lbQ8OgPI6fgffEJT5QSi0hqUVA';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
     
