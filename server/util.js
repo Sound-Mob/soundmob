@@ -50,6 +50,20 @@ module.exports = {
     };
     return rp(options);
   },
+  searchDetails: (token, id) => {
+    console.log({id});
+    
+    // id = '9bZkp7q19f0';
+    const options = {
+      uri: `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=contentDetails`,
+      headers: {
+        'User-Agent': 'Request-Promise',
+        Authorization: `Bearer ${token}`
+      },
+      json: true
+    };
+    return rp(options);
+  },
   insertSong: (token, song) => {
     const options = {
       method: 'POST',
