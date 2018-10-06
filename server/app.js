@@ -20,7 +20,7 @@ const userobject = require('./mockuserdata/object');
 //Utilites
 const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
-const { playlist } = require('./util.js');
+const { playlist, searchDetails } = require('./util.js');
 // middlewares
 app.use(cookieParser())
 app.use(bodyParser.json());
@@ -39,12 +39,38 @@ app.get('/', function (req, res) {
 });
 // if we want to keep track of users in room
 var users = [];
+// keeping track of what time playlist starts
+var playlistStartTime = '';
+// keeping track of what time a listener joins
+var listenerStartTime = '';
+// keeping track of difference between playlist start and listener start
+var timeInPlaylist = '';
+// keeping track of song duration
+var songDuration;
 
 // on connection
 io.on('connection', function (socket) {
-  // listen for room id
+  // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (room) => {
-    io.sockets.emit('startlistener');
+    // calculate listener start time
+    listenerStartTime += new Date();
+    console.log(listenerStartTime)
+    listenerStartTime = listenerStartTime.split("");
+    console.log(listenerStartTime);
+    listenerStartTime = listenerStartTime.splice(16, 8);
+    console.log(listenerStartTime);
+    let minsInSeconds = Number(listenerStartTime[3] + listenerStartTime[4]) * 60;
+    let seconds = Number(listenerStartTime[6] + listenerStartTime[7])
+    // calculate difference between listener start and playlist start
+    listenerStartTime = minsInSeconds + seconds;
+    timeInPlaylist = listenerStartTime - playlistStartTime;
+    // io.sockets.emit('startlistener', timeInPlaylist);
+    console.log({listenerStartTime}, "in join roomroute")
+    console.log({ timeInPlaylist }, "in join roomroute")
+    
+    io.sockets.to(`${socket.id}`).emit('startlistener', timeInPlaylist);
+    
+    // console.log(listenerStartTime, "listen start time")
     // socket joins that room
     socket.join(room, ()=>{
       socket.admin = false;
@@ -81,23 +107,51 @@ io.on('connection', function (socket) {
     io.emit('disconnect', { users: users, name: socket.name });
   });
 
-  // listen for new room
+  // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', function (room) {
+    
     socket.join(room, () => {
       socket.admin = true;
-      console.log(room, 'in newroom')
+      // console.log(playlistStartTime, 'in newroom')
       io.sockets.emit('starttokbox');
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
       // if we want to keep track of users in room
+
       if (socket.name) {
         users.push(socket.name);
         
         io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
       }
     }); 
-  });
 
+  });
+  var token = 'a29.GlwtBnzWLqRthEHAGZM2gMPqd70-w6GLkvM-zlMKRh_PRowj4Pmf2_nk3RzdCih0lAcPIIAr2fU-SqT8Xkv756ey0FBcMJTMmMD8lbQ8OgPI6fgffEJT5QSi0hqUVA';
+  // START CAST LISTENER -- listen for startCast
+  socket.on('startCast', (id) => {
+    
+    searchDetails(token, id).then(({items})=>{ 
+      let durationArray = items[0].contentDetails.duration.split(""); 
+      if (durationArray.length <= 4){
+        songDuration = (Number(durationArray[2]));
+      } else {
+        songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
+      }
+      
+      
+      // calculate playlist start time
+      playlistStartTime += new Date();
+      playlistStartTime = playlistStartTime.split("");
+      playlistStartTime = playlistStartTime.splice(16, 8)
+      let minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
+      let seconds = Number(playlistStartTime[6] + playlistStartTime[7])
+      playlistStartTime = minsInSeconds + seconds;
+      console.log({playlistStartTime})
+      // console.log({ playlistStartTime });
+      io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
+    }).catch((err)=>{ console.log(err); });
+    
+  });
   // tell socket to listen for a 'sample' event
   socket.on('sample', function (stream) {
     // console.log(stream.blob);

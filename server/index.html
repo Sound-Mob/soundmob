@@ -51,6 +51,10 @@
       visibility: hidden;
     }
 
+    #myIframe {
+      display: none;
+    }
+
     #messages li:nth-child(odd) {
       background: #eee;
     }
@@ -92,6 +96,8 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
   <!-- <script src="/dist/RTCMultiConnection.min.js"></script> -->
+  <!-- <iframe id="ytplayer" type="text/html" width="25" height="25" src="https://www.youtube.com/embed?listType=playlist&list=PLaPF86zyEoQHTkmtfe6nUaDMlpHncbhxU"
+    frameborder="0"></iframe> -->
   <script>
 
     const socket = io('/');
@@ -100,6 +106,9 @@
     var sessionId = "_MX40NjE5NDYxMn5-MTUzODY2NzQxMDczNn5lWFR6MGU0bWRMYXN6UlFQd3NYeGFNSmV-fg";
     var token = "1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9NmQ2NDE1MWQxMGU4MDdhNTYyNWY0YjNkOWI5NTdkY2Q5OTQyZDI3NDpzZXNzaW9uX2lkPTJfTVg0ME5qRTVORFl4TW41LU1UVXpPRFkyTnpReE1EY3pObjVsV0ZSNk1HVTBiV1JNWVhONlVsRlFkM05ZZUdGTlNtVi1mZyZjcmVhdGVfdGltZT0xNTM4NjY3NDM2Jm5vbmNlPTAuOTgyMDc4NzkzNjM0OTg3MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxMjU5NDM1JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
     var session;
+    var duration;
+    var castStartTime;
+    var ids = ['JryGDi6SVQQ', 'Nnu1E5Kslig', '0Vto2RT3818']
     
   $(function () {
     // sending chat messages
@@ -109,13 +118,13 @@
     return false;
     });
 
-    // sending room info upon join
+    // JOIN ROOM -- sending room info upon join
     $('#station').click(function () {
       socket.emit('roomroute', $('#roomname').val());
       return false;
     });
 
-    // sending new room
+    // MAKE ROOM -- sending new room
     $('#makeroom').click(function () {
       socket.emit('newroom', $('#newroom').val());
       return false;
@@ -158,8 +167,14 @@
         // notify others of new user
         $('#messages').append($('<li>').text(`${info.name} is listening`));
       });
-      //listen for user joining room
-      socket.on('startlistener', function () {
+      // JOIN ROOM LISTENER -- listen for user joining room
+      socket.on('startlistener', function (timeInPlaylist) {
+        // alert(timeInPlaylist)
+        let videos = [`https://www.youtube.com/embed/${ids[1]}?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+        // let videos = [
+        // `https://www.youtube.com/embed/0Vto2RT3818?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+        document.getElementById('myIframe').src = videos[0];
+
         session = OT.initSession(apiKey, sessionId);
         var pubOptions = { videoSource: null, audioSource: null};
         // Replace replacementElementId with the ID of the DOM element to replace:
@@ -181,12 +196,12 @@
       });
 
 
-      // listen for new room creation
+      // START TOKBOX -- listen for new room creation
       socket.on('starttokbox', function () {
         
         session = OT.initSession(apiKey, sessionId);
         var pubOptions = { videoSource: null };
-        console.log(socket);
+        // console.log(socket);
         // Replace replacementElementId with the ID of the DOM element to replace:
         publisher = OT.initPublisher('liveout', pubOptions);
         // Connect to the session
@@ -206,58 +221,88 @@
       });
  
   });
-//  set constrainsts for media devices
-var constraints = { audio: true };
-// select the audio element 
-const audio = document.querySelector('audio');
-  // This function returns a promise that gives us access to the users mic and voice from mic
-  navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
-    // setting audio from tag so that the voice 
-      var mediaRecorder = new MediaRecorder(mediaStream);
-      // create chunks array to store audio data
-      mediaRecorder.onstart = function(e) {
-          this.chunks = [];
-      };
-      // push audio data into chunks array
-      mediaRecorder.ondataavailable = function(e) {
-          this.chunks.push(e.data);
-          // socket.emit('sample', e.data);
-          var blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
-         // Let us open our database
-        var request = window.indexedDB.open("MyTestDatabase", 3);
-        // assign audio element's src property to audio blob
-        // audio.src = window.webkit.URL.createObjectURL(localStorage.blob);
-        // play audio
-        // audio.play();
-        // emit blob
-        socket.emit('sample', {blob: blob, socketid: socket.id})
-      };
-      mediaRecorder.onstop = function(e) {
-        console.log('stopped')
-      // convert audio data into sendable audio blob
-      };
-    // start recorder automatically on page render
-    mediaRecorder.start();
-    console.log("recorder started");
-    // stop recording after 5 seconds
-    setTimeout(function() {
-          mediaRecorder.stop()
-      }, 5000);
-  });
+// //  set constrainsts for media devices
+// var constraints = { audio: true };
+// // select the audio element 
+// const audio = document.querySelector('audio');
+//   // This function returns a promise that gives us access to the users mic and voice from mic
+//   navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
+//     // setting audio from tag so that the voice 
+//       var mediaRecorder = new MediaRecorder(mediaStream);
+//       // create chunks array to store audio data
+//       mediaRecorder.onstart = function(e) {
+//           this.chunks = [];
+//       };
+//       // push audio data into chunks array
+//       mediaRecorder.ondataavailable = function(e) {
+//           this.chunks.push(e.data);
+//           // socket.emit('sample', e.data);
+//           var blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
+//          // Let us open our database
+//         var request = window.indexedDB.open("MyTestDatabase", 3);
+//         // assign audio element's src property to audio blob
+//         // audio.src = window.webkit.URL.createObjectURL(localStorage.blob);
+//         // play audio
+//         // audio.play();
+//         // emit blob
+//         socket.emit('sample', {blob: blob, socketid: socket.id})
+//       };
+//       mediaRecorder.onstop = function(e) {
+//         console.log('stopped')
+//       // convert audio data into sendable audio blob
+//       };
+//     // start recorder automatically on page render
+//     mediaRecorder.start();
+//     console.log("recorder started");
+//     // stop recording after 5 seconds
+//     setTimeout(function() {
+//           mediaRecorder.stop()
+//       }, 5000);
+//   });
 
 
-// When the client receives a voice message it will play the sound
-socket.on('voice', function(arrayBuffer) {
-    // convert data blob into audio
-    var blob = new Blob([arrayBuffer], { 'type' : 'audio/ogg; codecs=opus' });
-    // access audio element on dom
-    const audio = document.querySelector('audio');
-    // assign audio element's src property to audio blob
-    audio.src = window.URL.createObjectURL(blob);
-    // play audio
-    audio.play();
-});
+// // When the client receives a voice message it will play the sound
+// socket.on('voice', function(arrayBuffer) {
+//     // convert data blob into audio
+//     var blob = new Blob([arrayBuffer], { 'type' : 'audio/ogg; codecs=opus' });
+//     // access audio element on dom
+//     const audio = document.querySelector('audio');
+//     // assign audio element's src property to audio blob
+//     audio.src = window.URL.createObjectURL(blob);
+//     // play audio
+//     audio.play();
+// });
+
+ // START CASTING
+  
+  
+    function startCast(){
+      // emit video id on start cast
+      socket.emit('startCast', ids[1]);
+    }
+    
+  // CAST ON LISTENER
+    socket.on('castOn', function (playlistStartTime, songDuration) {
+      // alert(songDuration);
+      duration = songDuration;
+      castStartTime = playlistStartTime;
+      // setInterval(startCast, duration);
+      
+      let videos = [`https://www.youtube.com/embed/${ids[1]}?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+      // let videos = [`https://www.youtube.com/embed/0Vto2RT3818?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+      document.getElementById('myIframe').src = videos[0];
+    } )   
+ 
 
     </script>
+    <script type="text/javascript">
+      function iframeDidLoad() {
+        console.log("song changed")
+      }
+
+      
+    </script>
+    <input type="button" value="startCast" onClick="startCast()" />
+    <iframe id="myIframe" src="" allow="autoplay" onLoad="iframeDidLoad();"></iframe>
 </body>
 </html>
