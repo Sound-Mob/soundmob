@@ -22,6 +22,7 @@ const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 const { playlist } = require('./util.js');
 // middlewares
+app.use(cors())
 app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -181,6 +182,7 @@ app.get( '/auth/google/callback',
     successRedirect:'/api',
     failureRedirect:'/login'
   }) );
+
 
 app.listen(3000, ()=>{
   console.log('listening on 3000 ')
