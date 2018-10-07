@@ -26,7 +26,7 @@ module.exports = {
   },
   // select and return users
   getUsers: ()=> {
-   return  db.any('SELECT name FROM users')
+   return  db.any('SELECT * FROM users')
       .then(user => {
         console.log(user); // print user name;
       })

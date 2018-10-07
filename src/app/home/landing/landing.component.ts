@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-
+// const httpOptions = {
+//   headers: new HttpHeaders({
+//     'Content-Type':  'application/json',
+//     'Access-Control-Allow-Origin': "*"
+//   })
+// };
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
@@ -12,35 +17,20 @@ export class LandingComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
-    }) 
+    // headers: new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': 'my-auth-token'
+    // }) 
   }
 
   login() {
-    // console.log('yup');
-    // this.http.get('/api/login',{
-    // })
+    console.log('yup');
+    window.location.href="/api/auth"
+    // this.http.get('/api/auth')
     // .subscribe(
     //   data => console.log(data)
     // );
-    window.open('/api/login', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
+    // window.open('/api/login', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
   } 
-
-  test() {
-    console.log('yupppy');
-    return this.http.get('/api')
-      .subscribe(
-        data => console.log(data)
-      );
-  }
-  zip() {
-    console.log('yupppy');
-    return this.http.get('/api/test')
-      .subscribe(
-        data => console.log(data)
-      );
-  }
 }
 
