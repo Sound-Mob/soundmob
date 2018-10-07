@@ -53,16 +53,16 @@ app.get('/test', (req, res) => {
   const key = req.session.accessToken;
   let body;
   playlistIDs(key).then(({ items })=> {
-     const array = videoIDArray(items); 
-     searchDetails(array,key).then( ({items}) => {
-       body = items.map((durs)=> {
-         const { contentDetails } = durs;
-         const { duration } = contentDetails;
-         return duration;
-       });
-       console.log(body);
-     })
-   })
+    const array = videoIDArray(items); 
+    searchDetails(array,key).then( ({items}) => {
+      body = items.map((durs)=> {
+        const { contentDetails } = durs;
+        const { duration } = contentDetails;
+        return duration;
+      });
+      console.log(body);
+    })
+  })
   
   res.end();
 })
@@ -271,26 +271,27 @@ app.get('/api/tester', (req, res)=>{
 
 
 
-server.listen(3000, ()=>{
+server.listen(3000, () => {
 
-app.get( '/auth/google/callback', 
-  passport.authenticate('google',{
-    successRedirect:'/api',
-    failureRedirect:'/login'
-  }) );
+  app.get('/auth/google/callback',
+    passport.authenticate('google', {
+      successRedirect: '/api',
+      failureRedirect: '/login'
+    }));
 
 
-app.listen(3000, ()=>{
+  app.listen(3000, () => {
 
-  console.log('listening on 3000 ')
-})
-app.get('/api',(req, res) => {
+    console.log('listening on 3000 ')
+  })
+  app.get('/api', (req, res) => {
 
-  res.send(req.session);
+    res.send(req.session);
+  });
 });
- http.listen(4567, function () {
-   console.log('listening on 4567');
- });
+  // http.listen(4567, function () {
+  //   console.log('listening on 4567');
+  // });
 
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));
