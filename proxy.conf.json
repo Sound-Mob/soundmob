@@ -3,8 +3,14 @@
     "target":"http://localhost:3000",
     "secure":false,
     "logLevel":"debug",
-    "pathRewrite": {"^/api" : ""},
     "changeOrigin": true
+  },
+  "/socket": {
+    "target": "http://localhost:4567",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/": ""
+    }
   }
-
 }
