@@ -21,6 +21,7 @@ const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
 const { playlist , playlistIDs, videoIDArray, searchDetails} = require('./util.js');
 // middlewares
+app.use(cors())
 app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -80,6 +81,9 @@ var songDuration;
 io.on('connection', function (socket) {
 
   console.log(socket.request.session);
+
+  console.log("hahahahhaha");
+  // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (room) => {
     // calculate listener start time
     listenerStartTime += new Date();
@@ -120,11 +124,16 @@ io.on('connection', function (socket) {
     socket.name = name;
   });
 
+  socket.on('chatter', (msg)=>{
+    console.log(msg)
+  });
+
   // listen for chat message
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
     console.log(room, "in chat")
-    io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
+    io.sockets.in(room).emit('chat message', { message: msg, userName: socket.name});
+    // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
   
   // listen for users to leave
@@ -263,15 +272,25 @@ app.get('/api/tester', (req, res)=>{
 
 
 server.listen(3000, ()=>{
+
+app.get( '/auth/google/callback', 
+  passport.authenticate('google',{
+    successRedirect:'/api',
+    failureRedirect:'/login'
+  }) );
+
+
+app.listen(3000, ()=>{
+
   console.log('listening on 3000 ')
 })
 app.get('/api',(req, res) => {
 
   res.send(req.session);
 });
-// http.listen(4567, function () {
-//   console.log('listening on 4567');
-// });
+ http.listen(4567, function () {
+   console.log('listening on 4567');
+ });
 
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));

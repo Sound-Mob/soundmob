@@ -1,7 +1,27 @@
+<!-- <div>
+  <ul id="messages">
+  </ul>
 
-<h1 *ngIf="show" else elseBlock>Loading...</h1>
+ <form action="">
+  <input id="m" autocomplete="off" /><button id="chat">Send</button>
+</form> -->
+<!-- 
 
+  <form>
+    <input (keyup=on)>
+    <button (click)="sendChatMessage()">Send!</button>
+  </form>
+</div> --> 
 
-<ul #elseBlock>
-  <li *ngFor="let comment of data">{{comment.name}}: {{comment.company.catchPhrase}}</li>
+<ul>
+  <li *ngFor="let message of chatMessages">
+    <b>{{message.userName}}:</b>
+    <p>{{message.message}}</p>
+  </li>
 </ul>
+
+<input type="text" [(ngModel)]="messageToSend"> 
+<button (click)="sendChatMessage()">Send!</button>
+<button (click)="getMessage()">get</button>
+
+
