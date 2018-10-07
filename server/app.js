@@ -272,25 +272,11 @@ app.get('/api/tester', (req, res)=>{
 
 
 server.listen(3000, ()=>{
-
-app.get( '/auth/google/callback', 
-  passport.authenticate('google',{
-    successRedirect:'/api',
-    failureRedirect:'/login'
-  }) );
-
-
-app.listen(3000, ()=>{
-
-  console.log('listening on 3000 ')
-})
-app.get('/api',(req, res) => {
-
-  res.send(req.session);
+  console.log('on 3000')
 });
- http.listen(4567, function () {
-   console.log('listening on 4567');
- });
+
+
+
 
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));
