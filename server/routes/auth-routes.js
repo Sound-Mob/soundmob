@@ -12,7 +12,7 @@ router.get('/',
 
 router.get( '/google/callback', 
   passport.authenticate('google',{
-    successRedirect:'/',
+    successRedirect:'http://localhost:8080/posts',
     failureRedirect:'/auth'
   }) );
 module.exports = router;

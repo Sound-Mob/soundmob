@@ -7,7 +7,7 @@ import { Observable } from 'rxjs'
 })
 export class ChatService {
 
-  private socket = io('ws://localhost:3000/api', { transports: ['websocket'] })
+  private socket = io('ws://localhost:3000', { transports: ['websocket'] })
 
   constructor() { }
 
