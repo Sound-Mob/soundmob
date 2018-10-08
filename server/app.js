@@ -34,7 +34,7 @@ app.use(passport.session())
 // app.use(function (req, res, next) {
 
 app.get('/', function (req, res) {
-  console.log(here)
+
   res.sendFile(__dirname + '/index.html');
 });
 // if we want to keep track of users in room
