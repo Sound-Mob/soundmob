@@ -7,11 +7,12 @@ import { Observable } from 'rxjs'
 })
 export class ChatService {
 
-  private socket = io('ws://localhost:4567', { transports: ['websocket'] })
+  private socket = io('ws://localhost:3000', { transports: ['websocket'] })
 
   constructor() { }
 
   sendMessage(data) {
+    console.log(data)
     this.socket.emit('chat message', data)
   }
 

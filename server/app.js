@@ -31,38 +31,37 @@ app.use(cookieSession({
   }))
 app.use(passport.initialize());
 app.use(passport.session())
-app.use(cors());
 app.use('/auth', authRoutes)
 const mill = cookieSession({ 
   maxAge: 24 * 60 * 60 * 1000,
   keys:['qwerty']
   })
 io.use(function(socket, next) {
-  mill(socket.request, socket.request.res, next);
+  mill(socket.request, {}, next);
 });
 app.use(mill);
 
 
 
-///test handlers
-app.get('/', function (req, res) { 
-  res.sendFile(__dirname + '/index.html');
-});
+// ///test handlers
+// app.get('/', function (req, res) { 
+//   res.sendFile(__dirname + '/index.html');
+// });
 app.get('/test', (req, res) => {
   console.log(req.session)
   const key = req.session.accessToken;
   let body;
   playlistIDs(key).then(({ items })=> {
-     const array = videoIDArray(items); 
-     searchDetails(array,key).then( ({items}) => {
-       body = items.map((durs)=> {
-         const { contentDetails } = durs;
-         const { duration } = contentDetails;
-         return duration;
-       });
-       console.log(body);
-     })
-   })
+    const array = videoIDArray(items); 
+    searchDetails(array,key).then( ({items}) => {
+      body = items.map((durs)=> {
+        const { contentDetails } = durs;
+        const { duration } = contentDetails;
+        return duration;
+      });
+      console.log(body);
+    })
+  })
   
   res.end();
 })
@@ -80,7 +79,7 @@ var songDuration;
 // on connection
 io.on('connection', function (socket) {
 
-  console.log(socket.request.session);
+  // console.log(socket.request.session);
 
   console.log("hahahahhaha");
   // NEW LISTENER LISTENER -- listen for room id
@@ -268,6 +267,7 @@ req.session.photo = profile.photos[0];
 app.get('/api/tester', (req, res)=>{
   res.json(userobject)
 })
+
 
 
 
