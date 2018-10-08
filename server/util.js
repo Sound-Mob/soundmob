@@ -105,7 +105,7 @@ module.exports = {
          return videoId
       });
   },
-  searchDetails: (array, token) => {
+  searchDetailsArray: (array, token) => {
   
     
     const options = {
@@ -117,7 +117,7 @@ module.exports = {
       json: true
     };
     array.forEach(id => {
-      options.uri += `${id},`
+      options.uri += `${id}`
     })
     return rp(options);
   }
