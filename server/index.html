@@ -93,24 +93,16 @@
   </form>
   <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <!-- <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
-  <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script> -->
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
-  <!-- <script src="/dist/RTCMultiConnection.min.js"></script> -->
-  <iframe id="ytplayer" type="text/html" width="25" height="25"
-  src="https://www.youtube.com/embed?listType=playlist&list=PLaPF86zyEoQHTkmtfe6nUaDMlpHncbhxU"
-  frameborder="0"></iframe>
-  <iframe id="ytplayer" type="text/html" width="1" height="1"
-  src="https://www.youtube.com/embed/zJUF64iFGgo"
-  frameborder="0"></iframe>
+  
   <script>
 
     const socket = io('/');
     var isDj = true;
     var apiKey = "46194612";
-    var sessionId = "MX40NjE5NDYxMn5-MTUzODY2NzQxMDczNn5lWFR6MGU0bWRMYXN6UlFQd3NYeGFNSmV-fg";
-    var token = "==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9NmQ2NDE1MWQxMGU4MDdhNTYyNWY0YjNkOWI5NTdkY2Q5OTQyZDI3NDpzZXNzaW9uX2lkPTJfTVg0ME5qRTVORFl4TW41LU1UVXpPRFkyTnpReE1EY3pObjVsV0ZSNk1HVTBiV1JNWVhONlVsRlFkM05ZZUdGTlNtVi1mZyZjcmVhdGVfdGltZT0xNTM4NjY3NDM2Jm5vbmNlPTAuOTgyMDc4NzkzNjM0OTg3MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxMjU5NDM1JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
+    var sessionId = "2MX40NjE5NDYxMn5-MTUzODY2NzQxMDczNn5lWFR6MGU0bWRMYXN6UlFQd3NYeGFNSmV-fg";
+    var token = "T==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9NmQ2NDE1MWQxMGU4MDdhNTYyNWY0YjNkOWI5NTdkY2Q5OTQyZDI3NDpzZXNzaW9uX2lkPTJfTVg0ME5qRTVORFl4TW41LU1UVXpPRFkyTnpReE1EY3pObjVsV0ZSNk1HVTBiV1JNWVhONlVsRlFkM05ZZUdGTlNtVi1mZyZjcmVhdGVfdGltZT0xNTM4NjY3NDM2Jm5vbmNlPTAuOTgyMDc4NzkzNjM0OTg3MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxMjU5NDM1JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
     var session;
     var duration;
     var castStartTime;
@@ -199,10 +191,8 @@
             
           }
         });
-        // var options = { subscribeToAudio: true, subscribeToVideo: false };
         session.on("streamCreated", function (event) {
           session.subscribe(event.stream);
-          // session.subscribe(event.stream, audio, options);
         })
       });
 
@@ -301,33 +291,26 @@
 // });
 
  // START CASTING
-  
-  
     function startCast(){
       // emit video id on start cast
       socket.emit('startCast', ids[1]);
     }
-    
   // CAST ON LISTENER
     socket.on('castOn', function (playlistStartTime, songDuration) {
       // alert(songDuration);
       duration = songDuration;
       castStartTime = playlistStartTime;
       // setInterval(startCast, duration);
-      
+      // console.log("hello")
       let videos = [`https://www.youtube.com/embed/${ids[1]}?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       // let videos = [`https://www.youtube.com/embed/0Vto2RT3818?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       document.getElementById('myIframe').src = videos[0];
     } )   
- 
-
     </script>
     <script type="text/javascript">
       function iframeDidLoad() {
         console.log("song changed")
-      }
-
-      
+      } 
     </script>
     <input type="button" value="startCast" onClick="startCast()" />
     <iframe id="myIframe" src="" allow="autoplay" onLoad="iframeDidLoad();"></iframe>
