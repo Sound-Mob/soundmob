@@ -1,27 +1,27 @@
 //server packages/
 const express = require('express');
 const path = require('path');
-const session = require('express-session');
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const passport = require('passport');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const rp = ('request-promise');
-const app = express();
-const cookieSession = require('cookie-session')
-
-const router = express.Router();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session')
+const authRoutes = require('./routes/auth-routes')
+const app = express();
+const server = require('http').createServer(app);  
+const io = require('socket.io')(server);
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
 // mock data for front end
 const userobject = require('./mockuserdata/object');
 //Utilites
 const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
-const { playlist, searchDetails } = require('./util.js');
+const { playlist , playlistIDs, videoIDArray, searchDetails} = require('./util.js');
 // middlewares
+app.use(cors())
 app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,12 +31,41 @@ app.use(cookieSession({
   }))
 app.use(passport.initialize());
 app.use(passport.session())
-// app.use(function (req, res, next) {
+app.use(cors());
+app.use('/auth', authRoutes)
+const mill = cookieSession({ 
+  maxAge: 24 * 60 * 60 * 1000,
+  keys:['qwerty']
+  })
+io.use(function(socket, next) {
+  mill(socket.request, socket.request.res, next);
+});
+app.use(mill);
 
-app.get('/', function (req, res) {
 
+
+///test handlers
+app.get('/', function (req, res) { 
   res.sendFile(__dirname + '/index.html');
 });
+app.get('/test', (req, res) => {
+  console.log(req.session)
+  const key = req.session.accessToken;
+  let body;
+  playlistIDs(key).then(({ items })=> {
+     const array = videoIDArray(items); 
+     searchDetails(array,key).then( ({items}) => {
+       body = items.map((durs)=> {
+         const { contentDetails } = durs;
+         const { duration } = contentDetails;
+         return duration;
+       });
+       console.log(body);
+     })
+   })
+  
+  res.end();
+})
 // if we want to keep track of users in room
 var users = [];
 // keeping track of what time playlist starts
@@ -50,6 +79,10 @@ var songDuration;
 
 // on connection
 io.on('connection', function (socket) {
+
+  console.log(socket.request.session);
+
+  console.log("hahahahhaha");
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (room) => {
     // calculate listener start time
@@ -91,11 +124,16 @@ io.on('connection', function (socket) {
     socket.name = name;
   });
 
+  socket.on('chatter', (msg)=>{
+    console.log(msg)
+  });
+
   // listen for chat message
   socket.on('chat message', function (msg) {
     let room = socket.rooms[socket.id];
     console.log(room, "in chat")
-    io.sockets.in(room).emit('chat message', {msg: msg, name: socket.name});
+    io.sockets.in(room).emit('chat message', { message: msg, userName: socket.name});
+    // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
   
   // listen for users to leave
@@ -185,9 +223,12 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done)=> {
 
 getUserById(id).then((user) => {
-  done(null,user[0])
+  done(null,user)
 }).catch( err => console.error(err,'here'))
  });
+
+
+
 
   //session entry
   passport.use(new GoogleStrategy({
@@ -197,8 +238,10 @@ getUserById(id).then((user) => {
   passReqToCallback   : true
 },
 (req, accessToken, refreshToken, profile, done) =>{
-  console.log(accessToken);
+  // console.log(accessToken)
   req.session.accessToken = accessToken;
+req.session.name = profile.name
+req.session.photo = profile.photos[0];
 
   const { id } = profile;
   const { name } = profile;
@@ -210,10 +253,16 @@ getUserById(id).then((user) => {
   const followercount = 12;
   const followingcount = 2;
   getUserById(profile.id).then(user => {
-    if(user) {
+    if(user.length === 1) {
+        user[0].name = profile.name
     done(null, user[0])
+    } else {
+      createUser(id, givenName, familyName, bio, followercount, followingcount, true, false).then(user=> {
+        console.log(user);
+        done(null, user);
+      }).catch(err =>console.error(err));
     }
-  }).catch(err=> console.error(err));
+  }).catch(err=> console.error(err,'this should hit'));
     }
 ));
 app.get('/api/tester', (req, res)=>{
@@ -221,14 +270,8 @@ app.get('/api/tester', (req, res)=>{
 })
 
 
-app.get('/api/login',
-  passport.authenticate('google', { scope: 
-  [ 'https://www.googleapis.com/auth/plus.login',
-    'https://www.googleapis.com/auth/youtube',
-    'https://www.googleapis.com/auth/plus.me',
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/youtube.force-ssl' ]  }
-  ));
+
+server.listen(3000, ()=>{
 
 app.get( '/auth/google/callback', 
   passport.authenticate('google',{
@@ -236,16 +279,18 @@ app.get( '/auth/google/callback',
     failureRedirect:'/login'
   }) );
 
+
 app.listen(3000, ()=>{
+
   console.log('listening on 3000 ')
 })
 app.get('/api',(req, res) => {
-  console.log(req.session, req.user);
-  res.end();
+
+  res.send(req.session);
 });
-http.listen(4567, function () {
-  console.log('listening on 4567');
-});
+ http.listen(4567, function () {
+   console.log('listening on 4567');
+ });
 
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));

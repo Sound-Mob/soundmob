@@ -84,6 +84,42 @@ module.exports = {
        json: true
       };
       return rp(options);
+  },
+  playlistIDs: (token)  =>{
+    
+
+    const options = {
+      uri:`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=PLR4epTa34lZzzIbqRVWGRdtbpB_UlvMdl`,
+      headers: {
+        'User-Agent': 'Request-Promise',
+        Authorization: `Bearer ${token}`
+    },
+    json: true
+  };
+  return rp(options);
+  },
+  videoIDArray: (array) => {
+     return array.map(item => {
+        const {contentDetails} = item;
+         const {videoId} = contentDetails;
+         return videoId
+      });
+  },
+  searchDetails: (array, token) => {
+  
+    
+    const options = {
+      uri: `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=`,
+      headers: {
+        'User-Agent': 'Request-Promise',
+        Authorization: `Bearer ${token}`
+      },
+      json: true
+    };
+    array.forEach(id => {
+      options.uri += `${id},`
+    })
+    return rp(options);
   }
 
   }

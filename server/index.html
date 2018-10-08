@@ -80,10 +80,12 @@
   <div class="ghost" id="live">
     <div id="subscriber"></div>
     <div id="publisher"></div>
+    <audio id="publish"></audio>
   </div>
   <div class="dj" id="liveout">
     <div id="subscriber"></div>
     <div id="publisher"></div>
+    <div id="youtube"></div>
   </div>
   <div id="users"></div>
   <form action="">
@@ -96,8 +98,12 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
   <!-- <script src="/dist/RTCMultiConnection.min.js"></script> -->
-  <!-- <iframe id="ytplayer" type="text/html" width="25" height="25" src="https://www.youtube.com/embed?listType=playlist&list=PLaPF86zyEoQHTkmtfe6nUaDMlpHncbhxU"
-    frameborder="0"></iframe> -->
+  <iframe id="ytplayer" type="text/html" width="25" height="25"
+  src="https://www.youtube.com/embed?listType=playlist&list=PLaPF86zyEoQHTkmtfe6nUaDMlpHncbhxU"
+  frameborder="0"></iframe>
+  <iframe id="ytplayer" type="text/html" width="1" height="1"
+  src="https://www.youtube.com/embed/zJUF64iFGgo"
+  frameborder="0"></iframe>
   <script>
 
     const socket = io('/');
@@ -179,6 +185,9 @@
         var pubOptions = { videoSource: null, audioSource: null};
         // Replace replacementElementId with the ID of the DOM element to replace:
         publisher = OT.initPublisher('live', pubOptions);
+        publisher.publishVideo(false);
+        const audio = document.querySelector('iframe');
+        youtube = OT.initPublisher('live', pubOptions);
         // Connect to the session
         session.connect(token, function (error) {
           // If the connection is successful, publish to the session
@@ -186,6 +195,8 @@
             handleError(error);
           } else {
             session.publish(publisher);
+            session.publish(youtube);
+            
           }
         });
         // var options = { subscribeToAudio: true, subscribeToVideo: false };
@@ -201,16 +212,32 @@
         
         session = OT.initSession(apiKey, sessionId);
         var pubOptions = { videoSource: null };
-        // console.log(socket);
+        console.log(socket);
+        const publish = Promise.all([
+  OT.getUserMedia({
+    videoSource: 'screen'
+  }),
+  OT.getUserMedia({
+    videoSource: null
+  })
+])
+.then(([screenStream, micStream]) => {
+  return OT.initPublisher(null, {
+    videoSource: screenStream.getVideoTracks()[0],
+    audioSource: micStream.getAudioTracks()[0]
+  });
+});
         // Replace replacementElementId with the ID of the DOM element to replace:
         publisher = OT.initPublisher('liveout', pubOptions);
+        youtube = OT.initPublisher('liveout', pubOptions);
         // Connect to the session
         session.connect(token, function (error) {
           // If the connection is successful, publish to the session
           if (error) {
             handleError(error);
           } else {
-            session.publish(publisher);
+            session.publish(publish);
+            session.publish(youtube);
           }
         });
         // var options = { subscribeToAudio: true, subscribeToVideo: false };
