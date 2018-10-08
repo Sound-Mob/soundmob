@@ -31,23 +31,22 @@ app.use(cookieSession({
   }))
 app.use(passport.initialize());
 app.use(passport.session())
-app.use(cors());
 app.use('/auth', authRoutes)
 const mill = cookieSession({ 
   maxAge: 24 * 60 * 60 * 1000,
   keys:['qwerty']
   })
 io.use(function(socket, next) {
-  mill(socket.request, socket.request.res, next);
+  mill(socket.request, {}, next);
 });
 app.use(mill);
 
 
 
-///test handlers
-app.get('/', function (req, res) { 
-  res.sendFile(__dirname + '/index.html');
-});
+// ///test handlers
+// app.get('/', function (req, res) { 
+//   res.sendFile(__dirname + '/index.html');
+// });
 app.get('/test', (req, res) => {
   console.log(req.session)
   const key = req.session.accessToken;
@@ -80,7 +79,7 @@ var songDuration;
 // on connection
 io.on('connection', function (socket) {
 
-  console.log(socket.request.session);
+  // console.log(socket.request.session);
 
   console.log("hahahahhaha");
   // NEW LISTENER LISTENER -- listen for room id
@@ -271,27 +270,13 @@ app.get('/api/tester', (req, res)=>{
 
 
 
-server.listen(3000, () => {
 
-  app.get('/auth/google/callback',
-    passport.authenticate('google', {
-      successRedirect: '/api',
-      failureRedirect: '/login'
-    }));
-
-
-  app.listen(3000, () => {
-
-    console.log('listening on 3000 ')
-  })
-  app.get('/api', (req, res) => {
-
-    res.send(req.session);
-  });
+server.listen(3000, ()=>{
+  console.log('on 3000')
 });
-  // http.listen(4567, function () {
-  //   console.log('listening on 4567');
-  // });
+
+
+
 
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));

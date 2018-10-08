@@ -4,13 +4,5 @@
     "secure":false,
     "logLevel":"debug",
     "changeOrigin": true
-  },
-  "/socket": {
-    "target": "http://localhost:4567",
-    "secure": false,
-    "logLevel": "debug",
-    "pathRewrite": {
-      "^/": ""
-    }
   }
 }
