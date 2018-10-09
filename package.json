@@ -6,7 +6,7 @@
     "start": "ng serve --proxy-config proxy.conf.json",
     "express": "nodemon server/app.js",
     "build": "ng build --watch",
-    "lint": "ng lint",
+    "lint": "eslint",
     "e2e": "ng e2e",
     "test": "jest",
     "test:watch": "jest --watch"
