@@ -44,9 +44,9 @@ app.use(mill);
 
 
 // ///test handlers
-// app.get('/', function (req, res) { 
-//   res.sendFile(__dirname + '/index.html');
-// });
+app.get('/', function (req, res) { 
+  res.sendFile(__dirname + '/index.html');
+});
 app.get('/test', (req, res) => {
   console.log(req.session)
   const key = req.session.accessToken;

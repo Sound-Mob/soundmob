@@ -204,19 +204,19 @@
         var pubOptions = { videoSource: null };
         console.log(socket);
         const publish = Promise.all([
-  OT.getUserMedia({
-    videoSource: 'screen'
-  }),
-  OT.getUserMedia({
-    videoSource: null
-  })
-])
-.then(([screenStream, micStream]) => {
-  return OT.initPublisher(null, {
-    videoSource: screenStream.getVideoTracks()[0],
-    audioSource: micStream.getAudioTracks()[0]
-  });
-});
+            OT.getUserMedia({
+              videoSource: 'screen'
+            }),
+            OT.getUserMedia({
+              videoSource: null
+            })
+          ])
+          .then(([screenStream, micStream]) => {
+            return OT.initPublisher(null, {
+              videoSource: screenStream.getVideoTracks()[0],
+              audioSource: micStream.getAudioTracks()[0]
+            });
+          });
         // Replace replacementElementId with the ID of the DOM element to replace:
         publisher = OT.initPublisher('liveout', pubOptions);
         youtube = OT.initPublisher('liveout', pubOptions);
