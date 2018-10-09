@@ -9,11 +9,10 @@ import { MainComponent } from './main/main.component';
 import { SearchComponent } from './search/search.component';
 import { CommentComponent } from './comment/comment.component';
 import { FormsModule } from '@angular/forms';
-import { TokboxComponent } from './tokbox/tokbox.component';
+
 
 import { OpentokService } from '../opentok.service';
-import { SubscriberComponent } from './tokbox/subscriber/subscriber.component';
-import { PublisherComponent } from './tokbox/publisher/publisher.component';
+
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ import { PublisherComponent } from './tokbox/publisher/publisher.component';
     DjViewRoutingModule,
     FormsModule,
   ],
-  declarations: [CommentsComponent, SoundplayerComponent, ProfileComponent, MainComponent, SearchComponent, CommentComponent, TokboxComponent, SubscriberComponent, PublisherComponent],
+  declarations: [CommentsComponent, SoundplayerComponent, ProfileComponent, MainComponent, SearchComponent, CommentComponent],
   providers: [OpentokService]
 })
 export class DjViewModule { }

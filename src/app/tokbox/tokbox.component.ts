@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { OpentokService } from '../../opentok.service';
+
 import * as OT from '@opentok/client';
+import { OpentokService } from '../opentok.service';
 
 
 @Component({
