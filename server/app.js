@@ -166,6 +166,7 @@ io.on('connection', (socket) => {
 
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
+    console.log('room bay bayyy');
     socket.join(room, () => {
       socket.admin = true;
       // console.log(playlistStartTime, 'in newroom')

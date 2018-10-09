@@ -10,12 +10,17 @@ import { SearchComponent } from './search/search.component';
 import { CommentComponent } from './comment/comment.component';
 import { FormsModule } from '@angular/forms';
 
+
+import { OpentokService } from '../opentok.service';
+
+
 @NgModule({
   imports: [
     CommonModule,
     DjViewRoutingModule,
     FormsModule,
   ],
-  declarations: [CommentsComponent, SoundplayerComponent, ProfileComponent, MainComponent, SearchComponent, CommentComponent]
+  declarations: [CommentsComponent, SoundplayerComponent, ProfileComponent, MainComponent, SearchComponent, CommentComponent],
+  providers: [OpentokService]
 })
 export class DjViewModule { }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client'
 import { Observable } from 'rxjs'
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +11,10 @@ export class ChatService {
   private socket = io('ws://localhost:3000', { transports: ['websocket'] })
 
   constructor() { }
+  
+  createRoom(googleId){
+    this.socket.emit('newroom', googleId)
+  }
 
   sendMessage(data) {
     console.log(data)
