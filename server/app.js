@@ -19,7 +19,7 @@ const userobject = require('./mockuserdata/object');
 //Utilites
 const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('./database');
 const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
-const { playlist , playlistIDs, videoIDArray, searchDetails} = require('./util.js');
+const { playlist , playlistIDs, videoIDArray, searchDetails, searchDetailsArray} = require('./util.js');
 // middlewares
 app.use(cors())
 app.use(cookieParser())
@@ -28,20 +28,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({ 
   maxAge: 24 * 60 * 60 * 1000,
   keys:['qwerty']
-  }))
+}))
+
+
 app.use(passport.initialize());
 app.use(passport.session())
-app.use('/auth', authRoutes)
 const mill = cookieSession({ 
   maxAge: 24 * 60 * 60 * 1000,
   keys:['qwerty']
-  })
+})
 io.use(function(socket, next) {
   mill(socket.request, {}, next);
 });
+app.use('/auth', authRoutes)
 app.use(mill);
-
-
+app.use(express.static('dist/sound-mob'));
 
 // ///test handlers
 // app.get('/', function (req, res) { 
@@ -53,7 +54,7 @@ app.get('/test', (req, res) => {
   let body;
   playlistIDs(key).then(({ items })=> {
     const array = videoIDArray(items); 
-    searchDetails(array,key).then( ({items}) => {
+    searchDetailsArray(array,key).then( ({items}) => {
       body = items.map((durs)=> {
         const { contentDetails } = durs;
         const { duration } = contentDetails;
@@ -234,7 +235,7 @@ getUserById(id).then((user) => {
   passport.use(new GoogleStrategy({
     clientID:     ClientID,
     clientSecret: ClientSecret,
-  callbackURL: "http://localhost:3000/auth/google/callback",
+  callbackURL: "/auth/google/callback",
   passReqToCallback   : true
 },
 (req, accessToken, refreshToken, profile, done) =>{
@@ -242,7 +243,7 @@ getUserById(id).then((user) => {
   req.session.accessToken = accessToken;
 req.session.name = profile.name
 req.session.photo = profile.photos[0];
-
+console.log(accessToken);
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
@@ -265,7 +266,7 @@ req.session.photo = profile.photos[0];
   }).catch(err=> console.error(err,'this should hit'));
     }
 ));
-app.get('/api/tester', (req, res)=>{
+app.get('/tester', (req, res)=>{
   res.json(userobject)
 })
 
