@@ -15,6 +15,8 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { AdminGuard } from './auth/guards/admin.guard';
 import { ChatService } from "./chat.service";
+import { OpentokService } from './opentok.service';
+
 
 
 
@@ -30,7 +32,7 @@ import { ChatService } from "./chat.service";
 // import { MatSelectModule } from '@angular/material/select';
 // import { MatSliderModule } from '@angular/material/slider';
 // import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-// import { MatMenuModule } from '@angular/material/menu';
+// import { MatMeuModule } from '@angular/material/menu';
 // import { MatSidenavModule } from '@angular/material/sidenav';
 // import { MatToolbarModule } from '@angular/material/toolbar';
 // import { MatListModule } from '@angular/material/list';
@@ -99,7 +101,7 @@ import { ChatService } from "./chat.service";
     // MatTableModule,
     // MatSortModule,
   ],
-  providers: [AuthGuard, AuthService, AdminGuard, ChatService],
+  providers: [AuthGuard, AuthService, AdminGuard, ChatService, OpentokService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
