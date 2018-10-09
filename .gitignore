@@ -1,7 +1,4 @@
 node_modules
 /server/config.js
-<<<<<<< HEAD
-package-lock.json
-=======
 #package-lock.json
->>>>>>> 724de534ed2a170154afb1c224f3c556380d789b
+/src/app/config.js

@@ -11,12 +11,13 @@ import { CommentsComponent } from './comments/comments.component';
 import { CommentComponent } from './comment/comment.component';
 
 
+
 @NgModule({
     imports:[
         CommonModule,
         KingRoutingModule
     ],
-    declarations:[KingComponent, ProfileComponent, SoundplayerComponent, CommentsComponent, CommentComponent]
+    declarations: [KingComponent, ProfileComponent, SoundplayerComponent, CommentsComponent, CommentComponent]
 
 })
 
