@@ -1,85 +1,104 @@
-//server packages/
+// server packages/
 const express = require('express');
-const path = require('path');
-const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const passport = require('passport');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session')
-const authRoutes = require('./routes/auth-routes')
+const cookieSession = require('cookie-session');
+
 const app = express();
-const server = require('http').createServer(app);  
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+
+const authRoutes = require('./routes/auth-routes');
 // var http = require('http').Server(app);
 // var io = require('socket.io')(http);
 // mock data for front end
 const userobject = require('./mockuserdata/object');
-//Utilites
-const { createUser, getUsers, getUserById, addSound, getSoundsById } = require('./database');
-const { Youtube, ClientID, ClientSecret, RedirectURL} = require('./config.js');
-const { playlist , playlistIDs, videoIDArray, searchDetails, searchDetailsArray} = require('./util.js');
+// Utilites
+const {
+  createUser,
+  getUsers,
+  getUserById,
+  addSound,
+  getSoundsById,
+} = require('./database');
+// hidden keys
+const {
+  Youtube,
+  ClientID,
+  ClientSecret,
+  RedirectURL,
+} = require('./config.js');
+// Youtube api methods
+const {
+  playlist,
+  playlistIDs,
+  videoIDArray,
+  searchDetails,
+  searchDetailsArray,
+} = require('./util.js');
 // middlewares
-app.use(cors())
-app.use(cookieParser())
+app.use(cors());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieSession({ 
+app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
-  keys:['qwerty']
-}))
+  keys: ['qwerty'],
+}));
 
 
 app.use(passport.initialize());
-app.use(passport.session())
-const mill = cookieSession({ 
+app.use(passport.session());
+const mill = cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
-  keys:['qwerty']
-})
-io.use(function(socket, next) {
+  keys: ['qwerty'],
+});
+io.use((socket, next) => {
   mill(socket.request, {}, next);
 });
-app.use('/auth', authRoutes)
+app.use('/auth', authRoutes);
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
 // ///test handlers
-// app.get('/', function (req, res) { 
-//   res.sendFile(__dirname + '/index.html');
-// });
 app.get('/test', (req, res) => {
-  console.log(req.session)
+  console.log(req.session);
   const key = req.session.accessToken;
   let body;
-  playlistIDs(key).then(({ items })=> {
-    const array = videoIDArray(items); 
-    searchDetailsArray(array,key).then( ({items}) => {
-      body = items.map((durs)=> {
+  playlistIDs(key).then(({ items }) => {
+    const array = videoIDArray(items);
+    searchDetailsArray(array, key).then(({ items }) => {
+      body = items.map((durs) => {
         const { contentDetails } = durs;
         const { duration } = contentDetails;
         return duration;
       });
       console.log(body);
-    })
-  })
-  
+    });
+  });
   res.end();
-})
+});
+app.get('/tester', (req, res) => {
+  res.json(userobject);
+});
 // if we want to keep track of users in room
-var users = [];
+const users = [];
 // keeping track of what time playlist starts
-var playlistStartTime = '';
+let playlistStartTime = '';
 // keeping track of what time a listener joins
-var listenerStartTime = '';
+let listenerStartTime = '';
 // keeping track of difference between playlist start and listener start
-var timeInPlaylist = '';
+let timeInPlaylist = '';
 // keeping track of song duration
-var songDuration;
+let songDuration;
 
 // on connection
-io.on('connection', function (socket) {
-
+io.on('connection', (socket) => {
   // console.log(socket.request.session);
 
   console.log("hahahahhaha");
@@ -87,33 +106,33 @@ io.on('connection', function (socket) {
   socket.on('roomroute', (room) => {
     // calculate listener start time
     listenerStartTime += new Date();
-    console.log(listenerStartTime)
-    listenerStartTime = listenerStartTime.split("");
+    console.log(listenerStartTime);
+    listenerStartTime = listenerStartTime.split('');
     console.log(listenerStartTime);
     listenerStartTime = listenerStartTime.splice(16, 8);
     console.log(listenerStartTime);
-    let minsInSeconds = Number(listenerStartTime[3] + listenerStartTime[4]) * 60;
-    let seconds = Number(listenerStartTime[6] + listenerStartTime[7])
+    const minsInSeconds = Number(listenerStartTime[3] + listenerStartTime[4]) * 60;
+    const seconds = Number(listenerStartTime[6] + listenerStartTime[7]);
     // calculate difference between listener start and playlist start
     listenerStartTime = minsInSeconds + seconds;
     timeInPlaylist = listenerStartTime - playlistStartTime;
     // io.sockets.emit('startlistener', timeInPlaylist);
-    console.log({listenerStartTime}, "in join roomroute")
-    console.log({ timeInPlaylist }, "in join roomroute")
+    console.log({ listenerStartTime }, 'in join roomroute');
+    console.log({ timeInPlaylist }, 'in join roomroute');
     
     io.sockets.to(`${socket.id}`).emit('startlistener', timeInPlaylist);
     
     // console.log(listenerStartTime, "listen start time")
     // socket joins that room
-    socket.join(room, ()=>{
+    socket.join(room, () => {
       socket.admin = false;
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
       // if we want to keep track of users in room
-      if (socket.name){
+      if (socket.name) {
         users.push(socket.name);
-        console.log(room, "in join room")
-        io.sockets.in(room).emit('new_user', {users: users, name: socket.name});
+        console.log(room, 'in join room')
+        io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
       }
     }); 
   });
@@ -124,30 +143,29 @@ io.on('connection', function (socket) {
     socket.name = name;
   });
 
-  socket.on('chatter', (msg)=>{
-    console.log(msg)
+  socket.on('chatter', (msg) => {
+    console.log(msg);
   });
 
   // listen for chat message
-  socket.on('chat message', function (msg) {
-    let room = socket.rooms[socket.id];
-    console.log(room, "in chat")
-    io.sockets.in(room).emit('chat message', { message: msg, userName: socket.name});
+  socket.on('chat message',  (msg) => {
+    const room = socket.rooms[socket.id];
+    console.log(room, 'in chat')
+    io.sockets.in(room).emit('chat message', { message: msg, userName: socket.name });
     // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
   
   // listen for users to leave
-  socket.on('disconnect', function (data) {
+  socket.on('disconnect',  (data) => {
     // console.log(users, socket.name);
-    // remove user from users array 
+    // remove user from users array
     users.splice(users.indexOf(socket.name), 1);
     // emit disconnection
     io.emit('disconnect', { users: users, name: socket.name });
   });
 
   // MAKE ROOM LISTENER -- listen for new room
-  socket.on('newroom', function (room) {
-    
+  socket.on('newroom', (room) => {
     socket.join(room, () => {
       socket.admin = true;
       // console.log(playlistStartTime, 'in newroom')
@@ -158,91 +176,78 @@ io.on('connection', function (socket) {
 
       if (socket.name) {
         users.push(socket.name);
-        
         io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
       }
-    }); 
-
+    });
   });
-  var token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
+  const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
     // console.log(id);
-    searchDetails(token, id).then(({items})=>{ 
+    searchDetails(token, id).then(({ items }) => {
       console.log(items);
-      let durationArray = items[0].contentDetails.duration.split(""); 
-      if (durationArray.length <= 4){
+      const durationArray = items[0].contentDetails.duration.split('');
+      if (durationArray.length <= 4) {
         songDuration = (Number(durationArray[2]));
       } else {
         songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
       }
-      
-      
       // calculate playlist start time
       playlistStartTime += new Date();
-      playlistStartTime = playlistStartTime.split("");
-      playlistStartTime = playlistStartTime.splice(16, 8)
-      let minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
-      let seconds = Number(playlistStartTime[6] + playlistStartTime[7])
+      playlistStartTime = playlistStartTime.split('');
+      playlistStartTime = playlistStartTime.splice(16, 8);
+      const minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
+      const seconds = Number(playlistStartTime[6] + playlistStartTime[7]);
       playlistStartTime = minsInSeconds + seconds;
-      console.log({playlistStartTime})
+      console.log({ playlistStartTime });
       // console.log({ playlistStartTime });
       io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
-    }).catch((err)=>{ console.log(err); });
-    
+    }).catch((err) => { console.log(err); });
   });
   // tell socket to listen for a 'sample' event
-  socket.on('sample', function (stream) {
-    // console.log(stream.blob);
-    
-    // save sound to 
+  socket.on('sample', (stream) => {
+    // console.log(stream.blob);     // save sound to
     addSound(stream.blob, 3)
-      .then(data => {
+      .then((data) => {
         // console.log(data); // print data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error); // print the error;
       });
     // get sound from database
     getSoundsById(3)
-    .then((sound) => {
+      .then((sound) => {
       // console.log(sound);
       // emit voice stream data to all sockets
       // socket.emit('voice', sounds[0]);
-      socket.emit('voice', stream.blob);
-    }).catch(err => console.error(err));
+        socket.emit('voice', stream.blob);
+      }).catch(err => console.error(err));
     // emit voice stream data to all sockets
   });
 });
-//session serializatoin
+// session serializatoin
 passport.serializeUser((user, done) => {
-
-  done(null, user.googleid); 
+  done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
 });
 
-passport.deserializeUser((id, done)=> {
-
-getUserById(id).then((user) => {
-  done(null,user)
-}).catch( err => console.error(err,'here'))
- });
-
-
-
-
-  //session entry
-  passport.use(new GoogleStrategy({
-    clientID:     ClientID,
-    clientSecret: ClientSecret,
-  callbackURL: "/auth/google/callback",
-  passReqToCallback   : true
+passport.deserializeUser((id, done) => {
+  getUserById(id).then((user) => {
+    done(null, user);
+  }).catch(err => console.error(err));
+});
+// session entry
+passport.use(new GoogleStrategy({
+  clientID: ClientID,
+  clientSecret: ClientSecret,
+  callbackURL: '/auth/google/callback',
+  passReqToCallback: true,
 },
-(req, accessToken, refreshToken, profile, done) =>{
+(req, accessToken, refreshToken, profile, done) => {
   // console.log(accessToken)
   req.session.accessToken = accessToken;
-req.session.name = profile.name
-req.session.photo = profile.photos[0];
+  req.session.name = profile.name;
+  req.session.photo = profile.photos[0];
 console.log(accessToken);
   const { id } = profile;
   const { name } = profile;
@@ -253,33 +258,23 @@ console.log(accessToken);
   const savedplaylists = 'urls';
   const followercount = 12;
   const followingcount = 2;
-  getUserById(profile.id).then(user => {
-    if(user.length === 1) {
-        user[0].name = profile.name
-    done(null, user[0])
+  getUserById(profile.id).then((user) => {
+    if (user.length === 1) {
+      user[0].name = profile.name;
+      done(null, user[0]);
     } else {
-      createUser(id, givenName, familyName, bio, followercount, followingcount, true, false).then(user=> {
-        console.log(user);
-        done(null, user);
-      }).catch(err =>console.error(err));
+      createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
+        .then((newUser)=> {
+          console.log(newUser);
+          done(null, newUser);
+        }).catch(err => console.error(err));
     }
-  }).catch(err=> console.error(err,'this should hit'));
-    }
-));
-app.get('/tester', (req, res)=>{
-  res.json(userobject)
-})
+  }).catch(err => console.error(err, 'this should hit'));
+}));
 
-
-
-
-server.listen(3000, ()=>{
-  console.log('on 3000')
+server.listen(3000, () => {
+  console.log('on 3000');
 });
-
-
-
-
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));
 
