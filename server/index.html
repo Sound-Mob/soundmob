@@ -101,8 +101,8 @@
     const socket = io('/');
     var isDj = true;
     var apiKey = "46194612";
-    var sessionId = "2MX40NjE5NDYxMn5-MTUzODY2NzQxMDczNn5lWFR6MGU0bWRMYXN6UlFQd3NYeGFNSmV-fg";
-    var token = "T==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9NmQ2NDE1MWQxMGU4MDdhNTYyNWY0YjNkOWI5NTdkY2Q5OTQyZDI3NDpzZXNzaW9uX2lkPTJfTVg0ME5qRTVORFl4TW41LU1UVXpPRFkyTnpReE1EY3pObjVsV0ZSNk1HVTBiV1JNWVhONlVsRlFkM05ZZUdGTlNtVi1mZyZjcmVhdGVfdGltZT0xNTM4NjY3NDM2Jm5vbmNlPTAuOTgyMDc4NzkzNjM0OTg3MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxMjU5NDM1JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
+    var sessionId = "_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg";
+    var token = "1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
     var session;
     var duration;
     var castStartTime;
@@ -167,19 +167,36 @@
       });
       // JOIN ROOM LISTENER -- listen for user joining room
       socket.on('startlistener', function (timeInPlaylist) {
-        // alert(timeInPlaylist)
-        let videos = [`https://www.youtube.com/embed/${ids[1]}?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
-        // let videos = [
-        // `https://www.youtube.com/embed/0Vto2RT3818?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+        // youtube embed / play on listener page
+        let videos = [`https://www.youtube.com/embed/${ids[1]}?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`];
         document.getElementById('myIframe').src = videos[0];
-
+        
+        // START TOKBOX -- Listener
+        // tokbox init for listener
         session = OT.initSession(apiKey, sessionId);
+        // set listener params to no audio and no video
         var pubOptions = { videoSource: null, audioSource: null};
-        // Replace replacementElementId with the ID of the DOM element to replace:
+        // set ID of the DOM element to place toxbox
         publisher = OT.initPublisher('live', pubOptions);
-        publisher.publishVideo(false);
-        const audio = document.querySelector('iframe');
-        youtube = OT.initPublisher('live', pubOptions);
+        // Connect to the session
+        session.connect(token, function (error) {
+          console.log("listener connected to tokbox session")
+        });
+        // listener subscribes to stream
+        session.on("streamCreated", function (event) {
+          session.subscribe(event.stream);
+        })
+      });
+
+
+      // START TOKBOX -- DJ
+      socket.on('starttokbox', function () {
+        // tokbox init for DJ
+        session = OT.initSession(apiKey, sessionId);
+        // set DJ params to no video (yes audio)
+        var pubOptions = { videoSource: null };
+        //  the DOM element to replace:
+        publisher = OT.initPublisher('liveout', pubOptions);
         // Connect to the session
         session.connect(token, function (error) {
           // If the connection is successful, publish to the session
@@ -187,54 +204,8 @@
             handleError(error);
           } else {
             session.publish(publisher);
-            session.publish(youtube);
-            
           }
         });
-        session.on("streamCreated", function (event) {
-          session.subscribe(event.stream);
-        })
-      });
-
-
-      // START TOKBOX -- listen for new room creation
-      socket.on('starttokbox', function () {
-        
-        session = OT.initSession(apiKey, sessionId);
-        var pubOptions = { videoSource: null };
-        console.log(socket);
-        const publish = Promise.all([
-  OT.getUserMedia({
-    videoSource: 'screen'
-  }),
-  OT.getUserMedia({
-    videoSource: null
-  })
-])
-.then(([screenStream, micStream]) => {
-  return OT.initPublisher(null, {
-    videoSource: screenStream.getVideoTracks()[0],
-    audioSource: micStream.getAudioTracks()[0]
-  });
-});
-        // Replace replacementElementId with the ID of the DOM element to replace:
-        publisher = OT.initPublisher('liveout', pubOptions);
-        youtube = OT.initPublisher('liveout', pubOptions);
-        // Connect to the session
-        session.connect(token, function (error) {
-          // If the connection is successful, publish to the session
-          if (error) {
-            handleError(error);
-          } else {
-            session.publish(publish);
-            session.publish(youtube);
-          }
-        });
-        // var options = { subscribeToAudio: true, subscribeToVideo: false };
-        session.on("streamCreated", function (event) {
-          session.subscribe(event.stream);
-          // session.subscribe(event.stream, audio, options);
-        })
       });
  
   });

@@ -44,9 +44,9 @@ app.use(mill);
 
 
 // ///test handlers
-// app.get('/', function (req, res) { 
-//   res.sendFile(__dirname + '/index.html');
-// });
+app.get('/', function (req, res) { 
+  res.sendFile(__dirname + '/index.html');
+});
 app.get('/test', (req, res) => {
   console.log(req.session)
   const key = req.session.accessToken;
@@ -163,7 +163,7 @@ io.on('connection', function (socket) {
     }); 
 
   });
-  var token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
+  var token = 'ya29.GlwxBk9Wzd4Vyi41k9wa72YB0WlqcGSaPj0eROY6MWV6ACw1yemnQY-rjF7Xcg38cQVuSE0osJV7HxpO_fGl4Mv3djrbb4mm7TxUpF6t3qCeq7svK9FnzW0MBQA-pA';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
     // console.log(id);
