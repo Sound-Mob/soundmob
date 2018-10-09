@@ -1,4 +1,4 @@
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet>
 <div>
   <app-profile></app-profile>
 </div>
@@ -13,4 +13,25 @@
 </div>
 <div>
   <button routerLink="song-search">add-song</button>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4" align="center">
+          <app-profile></app-profile>
+          <br>
+          <app-soundplayer></app-soundplayer>
+          <br>
+          <button routerLink="comment">Comment</button>
+          <app-comments align="left"></app-comments>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
