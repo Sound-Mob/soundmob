@@ -9,7 +9,7 @@ router.get('/',
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/youtube.force-ssl' 
   ]  }
-  ));
+  )); 
 
 router.get( '/google/callback',
   passport.authenticate('google',{
