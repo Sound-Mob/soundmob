@@ -9,6 +9,7 @@ const cn = {
   password: 'z9JNsx_qotALE0eELndojuSGuvDF-R6s'
 };
 
+
 const db = pgp(cn); // database instance;
 // database methods
 /* TODO's
@@ -26,7 +27,7 @@ module.exports = {
   },
   // select and return users
   getUsers: ()=> {
-   return  db.any('SELECT name FROM users')
+   return  db.any('SELECT * FROM users')
       .then(user => {
         console.log(user); // print user name;
       })

@@ -16,12 +16,13 @@ export class PostsComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    console.log('yupppy');
-    return this.http.get('/api/tester')
+    // console.log('yupppy');
+    return this.http.get('/api/api')
       .subscribe(
         (data) => {
-          console.log(data, 'data');
-          this.data.push(data);
+          console.log(data)
+          this.data.push(data[0]);
+         
         }
       );
   }

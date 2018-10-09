@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import axios from "axios";
+import { ChatService } from '../../chat.service';
 
 @Component({
   selector: 'app-comments',
@@ -8,22 +8,35 @@ import axios from "axios";
 })
 export class CommentsComponent implements OnInit {
 
-  data = [];
-
-  show: Boolean;
-
-  constructor() { }
+  messageToSend: string = ''; 
+  values = '';
+  chatMessages: Array<{ userName: string, message: string }> = [];
+  
+  constructor(private chatService:ChatService) { 
+    this.chatService.receiveMessages()
+      .subscribe(data => {
+        if(this.chatMessages.length > 10){
+            this.chatMessages.pop()
+        }
+        this.chatMessages.unshift(data)
+      })
+  }
 
   ngOnInit() {
-    this.show = true;
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then(res => {
-
-        this.data = res.data;
-        this.show = false;
-      })
-      .catch(err => console.log(err));
   }
+
+
+  sendChatMessage() {
+    const { messageToSend } = this;
+    this.chatService.sendMessage(messageToSend);
+    this.messageToSend = ""
+    
+  }
+
+  getMessage(){
+    this.chatService.receiveMessages()
+      .subscribe(data => console.log(data))
+  }
+
 
 }

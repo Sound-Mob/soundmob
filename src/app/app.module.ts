@@ -14,6 +14,8 @@ import { LoginComponent } from './home/login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { AdminGuard } from './auth/guards/admin.guard';
+import { ChatService } from "./chat.service";
+
 
 
 //angular material components
@@ -97,7 +99,7 @@ import { AdminGuard } from './auth/guards/admin.guard';
     // MatTableModule,
     // MatSortModule,
   ],
-  providers: [AuthGuard, AuthService, AdminGuard],
+  providers: [AuthGuard, AuthService, AdminGuard, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
