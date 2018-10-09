@@ -11,7 +11,11 @@ import { CommentComponent } from './comment/comment.component';
 import { FormsModule } from '@angular/forms';
 
 
+
 import { OpentokService } from '../opentok.service';
+import { TokboxComponent } from '../tokbox/tokbox.component';
+import { PublisherComponent } from '../tokbox/publisher/publisher.component';
+import { SubscriberComponent } from '../tokbox/subscriber/subscriber.component';
 
 
 @NgModule({
@@ -20,7 +24,7 @@ import { OpentokService } from '../opentok.service';
     DjViewRoutingModule,
     FormsModule,
   ],
-  declarations: [CommentsComponent, SoundplayerComponent, ProfileComponent, MainComponent, SearchComponent, CommentComponent],
+  declarations: [CommentsComponent, SoundplayerComponent, ProfileComponent, MainComponent, SearchComponent, CommentComponent, TokboxComponent, PublisherComponent, SubscriberComponent],
   providers: [OpentokService]
 })
 export class DjViewModule { }
