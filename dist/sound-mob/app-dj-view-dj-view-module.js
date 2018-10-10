@@ -228,9 +228,9 @@ const search_component_1 = __webpack_require__(/*! ./search/search.component */ 
 const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/dj-view/comment/comment.component.ts");
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/opentok.service.ts");
-const app_component_1 = __webpack_require__(/*! ../tokbox/app.component */ "./src/app/tokbox/app.component.ts");
-const subscriber_component_1 = __webpack_require__(/*! ../tokbox/subscriber/subscriber.component */ "./src/app/tokbox/subscriber/subscriber.component.ts");
-const publisher_component_1 = __webpack_require__(/*! ../tokbox/publisher/publisher.component */ "./src/app/tokbox/publisher/publisher.component.ts");
+const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/dj-view/tokbox/app.component.ts");
+const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.ts");
+const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj-view/tokbox/publisher/publisher.component.ts");
 let DjViewModule = class DjViewModule {
 };
 DjViewModule = __decorate([
@@ -267,7 +267,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n<div>\n  <app-profile></app-profile>\n</div>\n<div>\n  <app-soundplayer></app-soundplayer>\n</div>\n<div>\n  <app-comments></app-comments>\n  <app-tokbox></app-tokbox>\n</div>\n<div>\n  <button routerLink=\"dj-comment\" >comment</button>\n</div>\n<div>\n  <button routerLink=\"song-search\">add-song</button>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n<div>\n  <app-profile></app-profile>\n</div>\n<div>\n  <app-soundplayer></app-soundplayer>\n</div>\n<div>\n  <app-comments></app-comments>\n  <dj-tokbox></dj-tokbox>\n</div>\n<div>\n  <button routerLink=\"dj-comment\" >comment</button>\n</div>\n<div>\n  <button routerLink=\"song-search\">add-song</button>\n</div>"
 
 /***/ }),
 
@@ -495,10 +495,10 @@ exports.SoundplayerComponent = SoundplayerComponent;
 
 /***/ }),
 
-/***/ "./src/app/tokbox/app.component.css":
-/*!******************************************!*\
-  !*** ./src/app/tokbox/app.component.css ***!
-  \******************************************/
+/***/ "./src/app/dj-view/tokbox/app.component.css":
+/*!**************************************************!*\
+  !*** ./src/app/dj-view/tokbox/app.component.css ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -506,21 +506,21 @@ module.exports = "app-publisher, app-subscriber {\n  display: block;\n  float: l
 
 /***/ }),
 
-/***/ "./src/app/tokbox/app.component.html":
-/*!*******************************************!*\
-  !*** ./src/app/tokbox/app.component.html ***!
-  \*******************************************/
+/***/ "./src/app/dj-view/tokbox/app.component.html":
+/*!***************************************************!*\
+  !*** ./src/app/dj-view/tokbox/app.component.html ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{title}}</h1>\n<div *ngIf=\"session\">\n  <app-publisher [session]=\"session\"></app-publisher>\n  <app-subscriber *ngFor=\"let stream of streams\" [stream]=\"stream\" [session]=\"session\"></app-subscriber>\n</div>\n"
+module.exports = "<h1>{{title}}</h1>\n<div *ngIf=\"session\">\n  <app-publisher [session]=\"session\"></app-publisher>\n  <!-- <app-subscriber *ngFor=\"let stream of streams\" [stream]=\"stream\" [session]=\"session\"></app-subscriber> -->\n</div>\n"
 
 /***/ }),
 
-/***/ "./src/app/tokbox/app.component.ts":
-/*!*****************************************!*\
-  !*** ./src/app/tokbox/app.component.ts ***!
-  \*****************************************/
+/***/ "./src/app/dj-view/tokbox/app.component.ts":
+/*!*************************************************!*\
+  !*** ./src/app/dj-view/tokbox/app.component.ts ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -537,7 +537,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/dj-view/tokbox/opentok.service.ts");
 let AppComponent = class AppComponent {
     constructor(ref, opentokService) {
         this.ref = ref;
@@ -570,9 +570,9 @@ let AppComponent = class AppComponent {
 };
 AppComponent = __decorate([
     core_1.Component({
-        selector: 'app-tokbox',
-        template: __webpack_require__(/*! ./app.component.html */ "./src/app/tokbox/app.component.html"),
-        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/tokbox/app.component.css")],
+        selector: 'dj-tokbox',
+        template: __webpack_require__(/*! ./app.component.html */ "./src/app/dj-view/tokbox/app.component.html"),
+        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/dj-view/tokbox/app.component.css")],
         providers: [opentok_service_1.OpentokService]
     }),
     __metadata("design:paramtypes", [core_1.ChangeDetectorRef, opentok_service_1.OpentokService])
@@ -582,10 +582,10 @@ exports.AppComponent = AppComponent;
 
 /***/ }),
 
-/***/ "./src/app/tokbox/opentok.service.ts":
-/*!*******************************************!*\
-  !*** ./src/app/tokbox/opentok.service.ts ***!
-  \*******************************************/
+/***/ "./src/app/dj-view/tokbox/opentok.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/dj-view/tokbox/opentok.service.ts ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -603,7 +603,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
-const config_1 = __webpack_require__(/*! ../config */ "./src/app/config.js");
+const config_1 = __webpack_require__(/*! ../../config */ "./src/app/config.js");
 let OpentokService = class OpentokService {
     constructor() { }
     getOT() {
@@ -647,10 +647,10 @@ exports.OpentokService = OpentokService;
 
 /***/ }),
 
-/***/ "./src/app/tokbox/publisher/publisher.component.css":
-/*!**********************************************************!*\
-  !*** ./src/app/tokbox/publisher/publisher.component.css ***!
-  \**********************************************************/
+/***/ "./src/app/dj-view/tokbox/publisher/publisher.component.css":
+/*!******************************************************************!*\
+  !*** ./src/app/dj-view/tokbox/publisher/publisher.component.css ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -658,10 +658,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/tokbox/publisher/publisher.component.html":
-/*!***********************************************************!*\
-  !*** ./src/app/tokbox/publisher/publisher.component.html ***!
-  \***********************************************************/
+/***/ "./src/app/dj-view/tokbox/publisher/publisher.component.html":
+/*!*******************************************************************!*\
+  !*** ./src/app/dj-view/tokbox/publisher/publisher.component.html ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -669,10 +669,10 @@ module.exports = "<div [ngClass]=\"{'publishing': publishing}\" #publisherDiv></
 
 /***/ }),
 
-/***/ "./src/app/tokbox/publisher/publisher.component.ts":
-/*!*********************************************************!*\
-  !*** ./src/app/tokbox/publisher/publisher.component.ts ***!
-  \*********************************************************/
+/***/ "./src/app/dj-view/tokbox/publisher/publisher.component.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/dj-view/tokbox/publisher/publisher.component.ts ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -689,7 +689,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/dj-view/tokbox/opentok.service.ts");
 const publish = () => {
 };
 let PublisherComponent = class PublisherComponent {
@@ -729,8 +729,8 @@ __decorate([
 PublisherComponent = __decorate([
     core_1.Component({
         selector: 'app-publisher',
-        template: __webpack_require__(/*! ./publisher.component.html */ "./src/app/tokbox/publisher/publisher.component.html"),
-        styles: [__webpack_require__(/*! ./publisher.component.css */ "./src/app/tokbox/publisher/publisher.component.css")]
+        template: __webpack_require__(/*! ./publisher.component.html */ "./src/app/dj-view/tokbox/publisher/publisher.component.html"),
+        styles: [__webpack_require__(/*! ./publisher.component.css */ "./src/app/dj-view/tokbox/publisher/publisher.component.css")]
     }),
     __metadata("design:paramtypes", [opentok_service_1.OpentokService])
 ], PublisherComponent);
@@ -739,10 +739,10 @@ exports.PublisherComponent = PublisherComponent;
 
 /***/ }),
 
-/***/ "./src/app/tokbox/subscriber/subscriber.component.css":
-/*!************************************************************!*\
-  !*** ./src/app/tokbox/subscriber/subscriber.component.css ***!
-  \************************************************************/
+/***/ "./src/app/dj-view/tokbox/subscriber/subscriber.component.css":
+/*!********************************************************************!*\
+  !*** ./src/app/dj-view/tokbox/subscriber/subscriber.component.css ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -750,10 +750,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/tokbox/subscriber/subscriber.component.html":
-/*!*************************************************************!*\
-  !*** ./src/app/tokbox/subscriber/subscriber.component.html ***!
-  \*************************************************************/
+/***/ "./src/app/dj-view/tokbox/subscriber/subscriber.component.html":
+/*!*********************************************************************!*\
+  !*** ./src/app/dj-view/tokbox/subscriber/subscriber.component.html ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -761,10 +761,10 @@ module.exports = "<div #subscriberDiv></div>\n"
 
 /***/ }),
 
-/***/ "./src/app/tokbox/subscriber/subscriber.component.ts":
-/*!***********************************************************!*\
-  !*** ./src/app/tokbox/subscriber/subscriber.component.ts ***!
-  \***********************************************************/
+/***/ "./src/app/dj-view/tokbox/subscriber/subscriber.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/dj-view/tokbox/subscriber/subscriber.component.ts ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -808,8 +808,8 @@ __decorate([
 SubscriberComponent = __decorate([
     core_1.Component({
         selector: 'app-subscriber',
-        template: __webpack_require__(/*! ./subscriber.component.html */ "./src/app/tokbox/subscriber/subscriber.component.html"),
-        styles: [__webpack_require__(/*! ./subscriber.component.css */ "./src/app/tokbox/subscriber/subscriber.component.css")]
+        template: __webpack_require__(/*! ./subscriber.component.html */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.html"),
+        styles: [__webpack_require__(/*! ./subscriber.component.css */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.css")]
     }),
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
