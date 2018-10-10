@@ -10,12 +10,10 @@
 var map = {
 	"../app/dj-view/dj-view.module": [
 		"./src/app/dj-view/dj-view.module.ts",
-		"common",
 		"app-dj-view-dj-view-module"
 	],
 	"../app/king/king.module": [
 		"./src/app/king/king.module.ts",
-		"common",
 		"app-king-king-module"
 	],
 	"../app/posts/posts.module": [
@@ -32,7 +30,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
+	return __webpack_require__.e(ids[1]).then(function() {
 		var id = ids[0];
 		return __webpack_require__.t(id, 7);
 	});
@@ -123,7 +121,7 @@ module.exports = "nav{\n    display: flex;\n    justify-content: space-around;\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/posts\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/king\" routerLinkActive=\"active\">User-view</a>\n\n<a routerLink=\"/dj-view\" routerLinkActive=\"active\">Dj-view</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/posts\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/king\" routerLinkActive=\"active\">Listener</a>\n\n<a routerLink=\"/dj-view\" routerLinkActive=\"active\">Dj</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
 
 /***/ }),
 

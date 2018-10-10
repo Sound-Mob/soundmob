@@ -9,9 +9,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { SoundplayerComponent } from './soundplayer/soundplayer.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentComponent } from './comment/comment.component';
-import { AppComponent } from "../tokbox/app.component";
-import { SubscriberComponent } from "../tokbox/subscriber/subscriber.component";
-import { PublisherComponent } from "../tokbox/publisher/publisher.component";
+import { AppComponent } from "./tokbox/app.component";
+import { PublisherComponent } from "./tokbox/publisher/publisher.component";
+import { SubscriberComponent } from "./tokbox/subscriber/subscriber.component";
 
 
 
