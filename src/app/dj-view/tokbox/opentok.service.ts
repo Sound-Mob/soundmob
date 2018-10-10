@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import * as OT from '@opentok/client';
-import config from '../config';
+import config from '../../config';
 
 @Injectable()
 export class OpentokService {
