@@ -699,7 +699,8 @@ let PublisherComponent = class PublisherComponent {
     }
     ngAfterViewInit() {
         const OT = this.opentokService.getOT();
-        this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, { insertMode: 'append' });
+        this.publishOptions = { videoSource: null, insertMode: 'append' };
+        this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, this.publishOptions);
         if (this.session) {
             if (this.session['isConnected']()) {
                 this.publish();

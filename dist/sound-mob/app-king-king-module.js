@@ -1880,7 +1880,7 @@ exports.KingRoutingModule = KingRoutingModule;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "#listenertok {\n  display: none;\n}"
 
 /***/ }),
 
@@ -1891,7 +1891,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n<app-profile></app-profile>\n<app-soundplayer></app-soundplayer>\n<div>\n  <button routerLink=\"comment\">add-comment</button>\n</div>\n<app-comments></app-comments>\n<app-tokbox></app-tokbox>\n"
+module.exports = "<router-outlet></router-outlet>\n<app-profile></app-profile>\n<app-soundplayer></app-soundplayer>\n<div>\n  <button routerLink=\"comment\">add-comment</button>\n</div>\n<app-comments></app-comments>\n<app-tokbox id=\"listenertok\"></app-tokbox>\n"
 
 /***/ }),
 
