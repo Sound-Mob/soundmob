@@ -4,8 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "express": "",
-    "build": "ng build && nodemon server/app.js",
+    "express": "nodemon server/app.js",
+    "buildProd": "ng build && nodemon server/app.js",
+    "build": "ng build --watch",
     "lint": "eslint",
     "e2e": "ng e2e",
     "test": "jest",

@@ -1,5 +1,5 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input } from '@angular/core';
-import { OpentokService } from '../../opentok.service';
+import { OpentokService } from '../opentok.service';
 
 const publish = () => {
 
@@ -23,7 +23,7 @@ export class PublisherComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const OT = this.opentokService.getOT();
-    this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, { insertMode: 'append' });
+    this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, {insertMode: 'append'});
 
     if (this.session) {
       if (this.session['isConnected']()) {
@@ -42,6 +42,5 @@ export class PublisherComponent implements AfterViewInit {
       }
     });
   }
-
 
 }
