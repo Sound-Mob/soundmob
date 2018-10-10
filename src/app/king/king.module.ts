@@ -9,9 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SoundplayerComponent } from './soundplayer/soundplayer.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentComponent } from './comment/comment.component';
-import { SubscriberComponent } from "../tokbox/subscriber/subscriber.component";
-import { TokboxComponent } from "../tokbox/tokbox.component";
-import { PublisherComponent } from "../tokbox/publisher/publisher.component";
+
 
 
 
@@ -20,7 +18,7 @@ import { PublisherComponent } from "../tokbox/publisher/publisher.component";
         CommonModule,
         KingRoutingModule
     ],
-    declarations: [KingComponent, ProfileComponent, SoundplayerComponent, CommentsComponent, CommentComponent, TokboxComponent, PublisherComponent, SubscriberComponent]
+    declarations: [KingComponent, ProfileComponent, SoundplayerComponent, CommentsComponent, CommentComponent]
 
 })
 

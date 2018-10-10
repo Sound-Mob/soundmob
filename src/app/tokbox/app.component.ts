@@ -1,27 +1,24 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-
+import { OpentokService } from './opentok.service';
 import * as OT from '@opentok/client';
-import { OpentokService } from '../opentok.service';
-
 
 @Component({
   selector: 'app-tokbox',
-  templateUrl: './tokbox.component.html',
-  styleUrls: ['./tokbox.component.css'],
-  providers: [OpentokService]
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  providers: [ OpentokService ]
 })
-export class TokboxComponent implements OnInit {
-
-  title = 'coo';
+export class AppComponent implements OnInit {
+  title = 'Angular Basic Video Chat';
   session: OT.Session;
   streams: Array<OT.Stream> = [];
   changeDetectorRef: ChangeDetectorRef;
 
-  constructor(private ref: ChangeDetectorRef, private opentokService: OpentokService) { 
+  constructor(private ref: ChangeDetectorRef, private opentokService: OpentokService) {
     this.changeDetectorRef = ref;
   }
 
-  ngOnInit() {
+  ngOnInit () {
     this.opentokService.initSession().then((session: OT.Session) => {
       this.session = session;
       this.session.on('streamCreated', (event) => {
@@ -36,12 +33,10 @@ export class TokboxComponent implements OnInit {
         }
       });
     })
-      .then(() => this.opentokService.connect())
-      .catch((err) => {
-        console.error(err);
-        alert('Unable to connect. Make sure you have updated the config.ts file with your OpenTok details.');
-      });
+    .then(() => this.opentokService.connect())
+    .catch((err) => {
+      console.error(err);
+      alert('Unable to connect. Make sure you have updated the config.ts file with your OpenTok details.');
+    });
   }
-  }
-
-
+}

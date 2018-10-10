@@ -6,6 +6,7 @@ import * as OT from '@opentok/client';
   templateUrl: './subscriber.component.html',
   styleUrls: ['./subscriber.component.css']
 })
+
 export class SubscriberComponent implements AfterViewInit {
   @ViewChild('subscriberDiv') subscriberDiv: ElementRef;
   @Input() session: OT.Session;
