@@ -84,7 +84,7 @@ module.exports = "ul {\n  list-style: none;\n}\n\n.liker {\n  background: yellow
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div>\n  <ul id=\"messages\">\n  </ul>\n\n <form action=\"\">\n  <input id=\"m\" autocomplete=\"off\" /><button id=\"chat\">Send</button>\n</form> -->\n<!-- \n\n  <form>\n    <input (keyup=on)>\n    <button (click)=\"sendChatMessage()\">Send!</button>\n  </form>\n</div> --> \n\n<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input  type=\"text\" [(ngModel)]=\"messageToSend\"> \n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>\n\n\n"
+module.exports = "<!-- <div>\n  <ul id=\"messages\">\n  </ul>\n\n <form action=\"\">\n  <input id=\"m\" autocomplete=\"off\" /><button id=\"chat\">Send</button>\n</form> -->\n<!-- \n\n  <form>\n    <input (keyup=on)>\n    <button (click)=\"sendChatMessage()\">Send!</button>\n  </form>\n</div> --> \n\n<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input  type=\"text\" [(ngModel)]=\"messageToSend\"> \n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>\n\n\n"
 
 /***/ }),
 

@@ -456,7 +456,9 @@ let ChatService = class ChatService {
         this.socket.emit('newroom', googleId);
     }
     sendMessage(data) {
-        console.log(data);
+        // console.log(data)
+        // console.log("hehehehee")
+        // console.log(this.socket.request, " in request");
         this.socket.emit('chat message', data);
     }
     receiveMessages() {
@@ -465,6 +467,7 @@ let ChatService = class ChatService {
                 observer.next(data);
             });
         });
+        console.log(observable);
         return observable;
     }
 };
