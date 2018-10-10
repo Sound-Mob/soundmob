@@ -5,15 +5,9 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "express": "nodemon server/app.js",
-<<<<<<< HEAD
-    "exp": "node server/app.js",
-    "build": "ng build",
-    "lint": "ng lint",
-=======
     "buildProd": "ng build && nodemon server/app.js",
     "build": "ng build --watch",
     "lint": "eslint",
->>>>>>> 110e66d7a3acb076df668d50f6efaad83755409b
     "e2e": "ng e2e",
     "test": "jest",
     "test:watch": "jest --watch"
