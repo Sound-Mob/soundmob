@@ -10,12 +10,10 @@
 var map = {
 	"../app/dj-view/dj-view.module": [
 		"./src/app/dj-view/dj-view.module.ts",
-		"common",
 		"app-dj-view-dj-view-module"
 	],
 	"../app/king/king.module": [
 		"./src/app/king/king.module.ts",
-		"common",
 		"app-king-king-module"
 	],
 	"../app/posts/posts.module": [
@@ -32,7 +30,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
+	return __webpack_require__.e(ids[1]).then(function() {
 		var id = ids[0];
 		return __webpack_require__.t(id, 7);
 	});
@@ -123,7 +121,7 @@ module.exports = "nav{\n    display: flex;\n    justify-content: space-around;\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/posts\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/king\" routerLinkActive=\"active\">User-view</a>\n\n<a routerLink=\"/dj-view\" routerLinkActive=\"active\">Dj-view</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/posts\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/king\" routerLinkActive=\"active\">Listener</a>\n\n<a routerLink=\"/dj-view\" routerLinkActive=\"active\">Dj</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
 
 /***/ }),
 
@@ -491,16 +489,12 @@ exports.ChatService = ChatService;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // Set this to the base URL of your sample server, such as 'https://your-app-name.herokuapp.com'.
-  // Do not include the trailing slash. See the README for more information:
   SAMPLE_SERVER_BASE_URL: 'http://localhost:3000',
-  // OR, if you have not set up a web server that runs the learning-opentok-php code,
-  // set these values to OpenTok API key, a valid session ID, and a token for the session.
-  // For test purposes, you can obtain these from https://tokbox.com/account.
+  TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9',
   API_KEY: '46194612',
-  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
-  TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'
+  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg'
 });
+
 
 /***/ }),
 
@@ -667,20 +661,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
-const config_js_1 = __webpack_require__(/*! ./config.js */ "./src/app/config.js");
+const config_1 = __webpack_require__(/*! ./config */ "./src/app/config.js");
 let OpentokService = class OpentokService {
     constructor() { }
     getOT() {
         return OT;
     }
     initSession() {
-        if (config_js_1.default.API_KEY && config_js_1.default.TOKEN && config_js_1.default.SESSION_ID) {
-            this.session = this.getOT().initSession(config_js_1.default.API_KEY, config_js_1.default.SESSION_ID);
-            this.token = config_js_1.default.TOKEN;
+        if (config_1.default.API_KEY && config_1.default.TOKEN && config_1.default.SESSION_ID) {
+            this.session = this.getOT().initSession(config_1.default.API_KEY, config_1.default.SESSION_ID);
+            this.token = config_1.default.TOKEN;
             return Promise.resolve(this.session);
         }
         else {
-            return fetch(config_js_1.default.SAMPLE_SERVER_BASE_URL + '/session')
+            return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
                 .then((data) => data.json())
                 .then((json) => {
                 this.session = this.getOT().initSession(json.apiKey, json.sessionId);

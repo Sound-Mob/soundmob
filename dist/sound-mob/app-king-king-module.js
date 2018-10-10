@@ -1962,9 +1962,6 @@ const profile_component_1 = __webpack_require__(/*! ./profile/profile.component 
 const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/king/soundplayer/soundplayer.component.ts");
 const comments_component_1 = __webpack_require__(/*! ./comments/comments.component */ "./src/app/king/comments/comments.component.ts");
 const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/king/comment/comment.component.ts");
-const subscriber_component_1 = __webpack_require__(/*! ../tokbox/subscriber/subscriber.component */ "./src/app/tokbox/subscriber/subscriber.component.ts");
-const tokbox_component_1 = __webpack_require__(/*! ../tokbox/tokbox.component */ "./src/app/tokbox/tokbox.component.ts");
-const publisher_component_1 = __webpack_require__(/*! ../tokbox/publisher/publisher.component */ "./src/app/tokbox/publisher/publisher.component.ts");
 let KingModule = class KingModule {
 };
 KingModule = __decorate([
@@ -1973,7 +1970,7 @@ KingModule = __decorate([
             common_1.CommonModule,
             king_routing_module_1.KingRoutingModule
         ],
-        declarations: [king_component_1.KingComponent, profile_component_1.ProfileComponent, soundplayer_component_1.SoundplayerComponent, comments_component_1.CommentsComponent, comment_component_1.CommentComponent, tokbox_component_1.TokboxComponent, publisher_component_1.PublisherComponent, subscriber_component_1.SubscriberComponent]
+        declarations: [king_component_1.KingComponent, profile_component_1.ProfileComponent, soundplayer_component_1.SoundplayerComponent, comments_component_1.CommentsComponent, comment_component_1.CommentComponent]
     })
 ], KingModule);
 exports.KingModule = KingModule;
