@@ -15,7 +15,7 @@
 
 <ul>
   <li *ngFor="let message of chatMessages">
-    <b>{{message.userName}}:</b>
+    <b>{{message.userName}} {{message.lastName}}:</b>
     <p>{{message.message}}</p>
   </li>
 </ul>

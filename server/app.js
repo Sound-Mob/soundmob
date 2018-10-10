@@ -99,9 +99,11 @@ let songDuration;
 
 // on connection
 io.on('connection', (socket) => {
-  // console.log(socket.request.session);
-
-  console.log("hahahahhaha");
+  const { name } = socket.request.session;
+  const { user } = socket.request.session.passport;
+  const { givenName } = name;
+  const { familyName } = name;
+  // console.log(socket.request);
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (room) => {
     // calculate listener start time
@@ -151,7 +153,7 @@ io.on('connection', (socket) => {
   socket.on('chat message',  (msg) => {
     const room = socket.rooms[socket.id];
     console.log(room, 'in chat')
-    io.sockets.in(room).emit('chat message', { message: msg, userName: socket.name });
+    io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
     // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
   

@@ -11,11 +11,14 @@ export class CommentsComponent implements OnInit {
 
   messageToSend: string = ''; 
   values = '';
-  chatMessages: Array<{ userName: string, message: string }> = [];
+  name: object
+  id: string
+  chatMessages: Array<{ userName: string, lastName: string, message: string }> = [];
   
   constructor(private chatService:ChatService) { 
     this.chatService.receiveMessages()
       .subscribe(data => {
+
         if(this.chatMessages.length > 10){
             this.chatMessages.pop()
         }
