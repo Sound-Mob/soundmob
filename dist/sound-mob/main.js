@@ -502,6 +502,8 @@ __webpack_require__.r(__webpack_exports__);
   TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'
 });
 
+
+
 /***/ }),
 
 /***/ "./src/app/home/home.component.css":
@@ -667,20 +669,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
-const config_js_1 = __webpack_require__(/*! ./config.js */ "./src/app/config.js");
+const config_1 = __webpack_require__(/*! ./config */ "./src/app/config.js");
 let OpentokService = class OpentokService {
     constructor() { }
     getOT() {
         return OT;
     }
     initSession() {
-        if (config_js_1.default.API_KEY && config_js_1.default.TOKEN && config_js_1.default.SESSION_ID) {
-            this.session = this.getOT().initSession(config_js_1.default.API_KEY, config_js_1.default.SESSION_ID);
-            this.token = config_js_1.default.TOKEN;
+        if (config_1.default.API_KEY && config_1.default.TOKEN && config_1.default.SESSION_ID) {
+            this.session = this.getOT().initSession(config_1.default.API_KEY, config_1.default.SESSION_ID);
+            this.token = config_1.default.TOKEN;
             return Promise.resolve(this.session);
         }
         else {
-            return fetch(config_js_1.default.SAMPLE_SERVER_BASE_URL + '/session')
+            return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
                 .then((data) => data.json())
                 .then((json) => {
                 this.session = this.getOT().initSession(json.apiKey, json.sessionId);
@@ -769,7 +771,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
 
 
 /***/ }),

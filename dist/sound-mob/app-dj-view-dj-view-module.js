@@ -228,9 +228,9 @@ const search_component_1 = __webpack_require__(/*! ./search/search.component */ 
 const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/dj-view/comment/comment.component.ts");
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/opentok.service.ts");
-const tokbox_component_1 = __webpack_require__(/*! ../tokbox/tokbox.component */ "./src/app/tokbox/tokbox.component.ts");
-const publisher_component_1 = __webpack_require__(/*! ../tokbox/publisher/publisher.component */ "./src/app/tokbox/publisher/publisher.component.ts");
+const app_component_1 = __webpack_require__(/*! ../tokbox/app.component */ "./src/app/tokbox/app.component.ts");
 const subscriber_component_1 = __webpack_require__(/*! ../tokbox/subscriber/subscriber.component */ "./src/app/tokbox/subscriber/subscriber.component.ts");
+const publisher_component_1 = __webpack_require__(/*! ../tokbox/publisher/publisher.component */ "./src/app/tokbox/publisher/publisher.component.ts");
 let DjViewModule = class DjViewModule {
 };
 DjViewModule = __decorate([
@@ -240,7 +240,7 @@ DjViewModule = __decorate([
             dj_view_routing_module_1.DjViewRoutingModule,
             forms_1.FormsModule,
         ],
-        declarations: [comments_component_1.CommentsComponent, soundplayer_component_1.SoundplayerComponent, profile_component_1.ProfileComponent, main_component_1.MainComponent, search_component_1.SearchComponent, comment_component_1.CommentComponent, tokbox_component_1.TokboxComponent, publisher_component_1.PublisherComponent, subscriber_component_1.SubscriberComponent],
+        declarations: [comments_component_1.CommentsComponent, soundplayer_component_1.SoundplayerComponent, profile_component_1.ProfileComponent, main_component_1.MainComponent, search_component_1.SearchComponent, comment_component_1.CommentComponent, app_component_1.AppComponent, subscriber_component_1.SubscriberComponent, publisher_component_1.PublisherComponent],
         providers: [opentok_service_1.OpentokService]
     })
 ], DjViewModule);
