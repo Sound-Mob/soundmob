@@ -228,12 +228,14 @@ io.on('connection', (socket) => {
 });
 // session serializatoin
 passport.serializeUser((user, done) => {
+  console.log(user)
   done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 passport.deserializeUser((id, done) => {
   getUserById(id).then((user) => {
+    console.log(id)
     done(null, user);
   }).catch(err => console.error(err));
 });
