@@ -1,6 +1,5 @@
 // server packages/
 const express = require('express');
-
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const passport = require('passport');
 const cors = require('cors');
@@ -14,11 +13,11 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const authRoutes = require('./routes/auth-routes');
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
+
 // mock data for front end
 const userobject = require('./mockuserdata/object');
-// Utilites
+/* Utilites */
+// Database
 const {
   createUser,
   getUsers,
@@ -33,13 +32,14 @@ const {
   ClientSecret,
   RedirectURL,
 } = require('./config.js');
-// Youtube api methods
+//  api methods
 const {
   playlist,
   playlistIDs,
   videoIDArray,
   searchDetails,
   searchDetailsArray,
+  getSoundBoard,
 } = require('./util.js');
 // middlewares
 app.use(cors());
@@ -66,22 +66,18 @@ app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
 // ///test handlers
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'index.html'));
+
+// });
 app.get('/test', (req, res) => {
-  console.log(req.session);
   const key = req.session.accessToken;
   let body;
-  playlistIDs(key).then(({ items }) => {
-    const array = videoIDArray(items);
-    searchDetailsArray(array, key).then(({ items }) => {
-      body = items.map((durs) => {
-        const { contentDetails } = durs;
-        const { duration } = contentDetails;
-        return duration;
-      });
-      console.log(body);
+  getSoundBoard(key)
+    .then((data) => {
+      body = data;
+      res.send(body);
     });
-  });
-  res.end();
 });
 app.get('/tester', (req, res) => {
   res.json(userobject);
@@ -131,7 +127,7 @@ io.on('connection', (socket) => {
       // if we want to keep track of users in room
       if (socket.name) {
         users.push(socket.name);
-        console.log(room, 'in join room')
+        console.log(room, 'in join room');
         io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
       }
     }); 
@@ -233,6 +229,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
+  console.log(id);
   getUserById(id).then((user) => {
     done(null, user);
   }).catch(err => console.error(err));
@@ -265,7 +262,7 @@ console.log(accessToken);
       done(null, user[0]);
     } else {
       createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
-        .then((newUser)=> {
+        .then((newUser) => {
           console.log(newUser);
           done(null, newUser);
         }).catch(err => console.error(err));
