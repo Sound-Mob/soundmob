@@ -1,37 +1,24 @@
-<!-- <router-outlet></router-outlet>
-<div>
-  <app-profile></app-profile>
-</div>
-<div>
-  <app-soundplayer></app-soundplayer>
-</div>
-<div>
-  <app-comments></app-comments>
-</div>
-<div>
-  <button routerLink="dj-comment" >comment</button>
-</div>
-<div>
-  <button routerLink="song-search">add-song</button>
-</div> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  crossorigin="anonymous">
 
-<div class="container-fluid">
+
+
+<div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4" align="center">
-          <app-profile></app-profile>
-          <br>
-          <app-soundplayer></app-soundplayer>
-          <br>
-          <button routerLink="comment">Comment</button>
-          <app-comments align="left"></app-comments>
-        </div>
-        <div class="col-md-4">
-        </div>
-      </div>
+    <div class="col-sm-2">
+
+    </div>
+
+    <div class="col-sm-8">
+      <app-profile></app-profile>
+      <br>
+      <app-soundplayer></app-soundplayer>
+      <br>
+      <app-comments></app-comments>
+    </div>
+
+    <div class="col-sm-2">
+
     </div>
   </div>
 </div>

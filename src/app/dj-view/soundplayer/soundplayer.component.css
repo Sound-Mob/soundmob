@@ -1,0 +1,17 @@
+.img-landing {
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+}
+.breadcrumb{
+    background-color: white;
+    text-align: center;
+}
+
+.album-block{
+    background-color: black;
+    width: auto;
+    display: block;
+}
