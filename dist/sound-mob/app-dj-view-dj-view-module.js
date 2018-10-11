@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-dj-view-dj-view-module"],{
 
-/***/ "./src/app/dj-view/comment/comment.component.css":
-/*!*******************************************************!*\
-  !*** ./src/app/dj-view/comment/comment.component.css ***!
-  \*******************************************************/
+/***/ "./src/app/chat/chat.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/chat/chat.component.css ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -11,21 +11,21 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/dj-view/comment/comment.component.html":
-/*!********************************************************!*\
-  !*** ./src/app/dj-view/comment/comment.component.html ***!
-  \********************************************************/
+/***/ "./src/app/chat/chat.component.html":
+/*!******************************************!*\
+  !*** ./src/app/chat/chat.component.html ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a (click)=\"backClicked()\" >\n<i class=\"material-icons\">\n  clear\n</i>\n</a> \n<h1>Add Tracks</h1>\n<input type=\"text\">\n<h3>tracks</h3>"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
 
 /***/ }),
 
-/***/ "./src/app/dj-view/comment/comment.component.ts":
-/*!******************************************************!*\
-  !*** ./src/app/dj-view/comment/comment.component.ts ***!
-  \******************************************************/
+/***/ "./src/app/chat/chat.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/chat/chat.component.ts ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42,74 +42,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-let CommentComponent = class CommentComponent {
-    constructor(_location) {
-        this._location = _location;
-    }
-    ngOnInit() {
-    }
-    backClicked() {
-        this._location.back();
-    }
-};
-CommentComponent = __decorate([
-    core_1.Component({
-        selector: 'app-comment',
-        template: __webpack_require__(/*! ./comment.component.html */ "./src/app/dj-view/comment/comment.component.html"),
-        styles: [__webpack_require__(/*! ./comment.component.css */ "./src/app/dj-view/comment/comment.component.css")]
-    }),
-    __metadata("design:paramtypes", [common_1.Location])
-], CommentComponent);
-exports.CommentComponent = CommentComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/dj-view/comments/comments.component.css":
-/*!*********************************************************!*\
-  !*** ./src/app/dj-view/comments/comments.component.css ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "ul {\n  list-style: none;\n}\n\n.liker {\n  background: yellow;\n}"
-
-/***/ }),
-
-/***/ "./src/app/dj-view/comments/comments.component.html":
-/*!**********************************************************!*\
-  !*** ./src/app/dj-view/comments/comments.component.html ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<!-- <div>\n  <ul id=\"messages\">\n  </ul>\n\n <form action=\"\">\n  <input id=\"m\" autocomplete=\"off\" /><button id=\"chat\">Send</button>\n</form> -->\n<!-- \n\n  <form>\n    <input (keyup=on)>\n    <button (click)=\"sendChatMessage()\">Send!</button>\n  </form>\n</div> --> \n\n<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input  type=\"text\" [(ngModel)]=\"messageToSend\"> \n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>\n\n\n"
-
-/***/ }),
-
-/***/ "./src/app/dj-view/comments/comments.component.ts":
-/*!********************************************************!*\
-  !*** ./src/app/dj-view/comments/comments.component.ts ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const chat_service_1 = __webpack_require__(/*! ../../chat.service */ "./src/app/chat.service.ts");
-let CommentsComponent = class CommentsComponent {
+const chat_service_1 = __webpack_require__(/*! ../chat.service */ "./src/app/chat.service.ts");
+let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
         this.messageToSend = '';
@@ -136,15 +70,15 @@ let CommentsComponent = class CommentsComponent {
             .subscribe(data => console.log(data));
     }
 };
-CommentsComponent = __decorate([
+ChatComponent = __decorate([
     core_1.Component({
-        selector: 'app-comments',
-        template: __webpack_require__(/*! ./comments.component.html */ "./src/app/dj-view/comments/comments.component.html"),
-        styles: [__webpack_require__(/*! ./comments.component.css */ "./src/app/dj-view/comments/comments.component.css")]
+        selector: 'app-chat',
+        template: __webpack_require__(/*! ./chat.component.html */ "./src/app/chat/chat.component.html"),
+        styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/chat/chat.component.css")]
     }),
     __metadata("design:paramtypes", [chat_service_1.ChatService])
-], CommentsComponent);
-exports.CommentsComponent = CommentsComponent;
+], ChatComponent);
+exports.ChatComponent = ChatComponent;
 
 
 /***/ }),
@@ -169,7 +103,6 @@ const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular
 const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj-view/main/main.component.ts");
 const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj-view/search/search.component.ts");
-const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/dj-view/comment/comment.component.ts");
 const admin_guard_1 = __webpack_require__(/*! ../auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const routes = [
     {
@@ -180,11 +113,6 @@ const routes = [
     {
         path: "song-search",
         component: search_component_1.SearchComponent,
-        canActivate: [admin_guard_1.AdminGuard]
-    },
-    {
-        path: "dj-comment",
-        component: comment_component_1.CommentComponent,
         canActivate: [admin_guard_1.AdminGuard]
     }
 ];
@@ -220,17 +148,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
 const dj_view_routing_module_1 = __webpack_require__(/*! ./dj-view-routing.module */ "./src/app/dj-view/dj-view-routing.module.ts");
-const comments_component_1 = __webpack_require__(/*! ./comments/comments.component */ "./src/app/dj-view/comments/comments.component.ts");
 const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/dj-view/soundplayer/soundplayer.component.ts");
 const profile_component_1 = __webpack_require__(/*! ./profile/profile.component */ "./src/app/dj-view/profile/profile.component.ts");
 const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj-view/main/main.component.ts");
 const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj-view/search/search.component.ts");
-const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/dj-view/comment/comment.component.ts");
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/opentok.service.ts");
 const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/dj-view/tokbox/app.component.ts");
 const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.ts");
 const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj-view/tokbox/publisher/publisher.component.ts");
+const chat_component_1 = __webpack_require__(/*! ../chat/chat.component */ "./src/app/chat/chat.component.ts");
 let DjViewModule = class DjViewModule {
 };
 DjViewModule = __decorate([
@@ -240,7 +167,16 @@ DjViewModule = __decorate([
             dj_view_routing_module_1.DjViewRoutingModule,
             forms_1.FormsModule,
         ],
-        declarations: [comments_component_1.CommentsComponent, soundplayer_component_1.SoundplayerComponent, profile_component_1.ProfileComponent, main_component_1.MainComponent, search_component_1.SearchComponent, comment_component_1.CommentComponent, app_component_1.AppComponent, subscriber_component_1.SubscriberComponent, publisher_component_1.PublisherComponent],
+        declarations: [
+            soundplayer_component_1.SoundplayerComponent,
+            profile_component_1.ProfileComponent,
+            main_component_1.MainComponent,
+            search_component_1.SearchComponent,
+            app_component_1.AppComponent,
+            subscriber_component_1.SubscriberComponent,
+            publisher_component_1.PublisherComponent,
+            chat_component_1.ChatComponent
+        ],
         providers: [opentok_service_1.OpentokService]
     })
 ], DjViewModule);
@@ -267,7 +203,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n<div>\n  <app-profile></app-profile>\n</div>\n<div>\n  <app-soundplayer></app-soundplayer>\n</div>\n<div>\n  <app-comments></app-comments>\n  <dj-tokbox></dj-tokbox>\n</div>\n<div>\n  <button routerLink=\"dj-comment\" >comment</button>\n</div>\n<div>\n  <button routerLink=\"song-search\">add-song</button>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n<div>\n  <app-profile></app-profile>\n</div>\n<div>\n  <app-soundplayer></app-soundplayer>\n</div>\n<div>\n  <app-chat></app-chat>\n  <dj-tokbox></dj-tokbox>\n</div>\n<div>\n  <button routerLink=\"dj-comment\" >comment</button>\n</div>\n<div>\n  <button routerLink=\"song-search\">add-song</button>\n</div>"
 
 /***/ }),
 

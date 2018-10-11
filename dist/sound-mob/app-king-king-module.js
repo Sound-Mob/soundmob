@@ -1,154 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-king-king-module"],{
 
-/***/ "./src/app/king/comment/comment.component.css":
-/*!****************************************************!*\
-  !*** ./src/app/king/comment/comment.component.css ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/king/comment/comment.component.html":
-/*!*****************************************************!*\
-  !*** ./src/app/king/comment/comment.component.html ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<a (click)=\"backClicked()\">\n  <i class=\"material-icons\">\n    clear\n  </i>\n</a>\n<h1>Add Tracks</h1>\n<input type=\"text\">\n<h3>tracks</h3>"
-
-/***/ }),
-
-/***/ "./src/app/king/comment/comment.component.ts":
-/*!***************************************************!*\
-  !*** ./src/app/king/comment/comment.component.ts ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-let CommentComponent = class CommentComponent {
-    constructor(_location) {
-        this._location = _location;
-    }
-    ngOnInit() {
-    }
-    backClicked() {
-        this._location.back();
-    }
-};
-CommentComponent = __decorate([
-    core_1.Component({
-        selector: 'app-comment',
-        template: __webpack_require__(/*! ./comment.component.html */ "./src/app/king/comment/comment.component.html"),
-        styles: [__webpack_require__(/*! ./comment.component.css */ "./src/app/king/comment/comment.component.css")]
-    }),
-    __metadata("design:paramtypes", [common_1.Location])
-], CommentComponent);
-exports.CommentComponent = CommentComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/king/comments/comments.component.css":
-/*!******************************************************!*\
-  !*** ./src/app/king/comments/comments.component.css ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "ul {\n  list-style: none;\n}"
-
-/***/ }),
-
-/***/ "./src/app/king/comments/comments.component.html":
-/*!*******************************************************!*\
-  !*** ./src/app/king/comments/comments.component.html ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<!-- <input type=\"text\" [(ngModel)]=\"messageToSend\"> -->\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
-
-/***/ }),
-
-/***/ "./src/app/king/comments/comments.component.ts":
-/*!*****************************************************!*\
-  !*** ./src/app/king/comments/comments.component.ts ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const chat_service_1 = __webpack_require__(/*! ../../chat.service */ "./src/app/chat.service.ts");
-let CommentsComponent = class CommentsComponent {
-    constructor(chatService) {
-        this.chatService = chatService;
-        this.messageToSend = '';
-        this.values = '';
-        this.chatMessages = [];
-        this.chatService.receiveMessages()
-            .subscribe(data => {
-            if (this.chatMessages.length > 10) {
-                this.chatMessages.pop();
-            }
-            this.chatMessages.unshift(data);
-        });
-    }
-    ngOnInit() {
-        this.chatService.createRoom('123ween23');
-    }
-    sendChatMessage() {
-        const { messageToSend } = this;
-        this.chatService.sendMessage(messageToSend);
-        this.messageToSend = "";
-    }
-    getMessage() {
-        this.chatService.receiveMessages()
-            .subscribe(data => console.log(data));
-    }
-};
-CommentsComponent = __decorate([
-    core_1.Component({
-        selector: 'app-comments',
-        template: __webpack_require__(/*! ./comments.component.html */ "./src/app/king/comments/comments.component.html"),
-        styles: [__webpack_require__(/*! ./comments.component.css */ "./src/app/king/comments/comments.component.css")]
-    }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
-], CommentsComponent);
-exports.CommentsComponent = CommentsComponent;
-
-
-/***/ }),
-
 /***/ "./src/app/king/king-routing.module.ts":
 /*!*********************************************!*\
   !*** ./src/app/king/king-routing.module.ts ***!
@@ -168,10 +19,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 const king_component_1 = __webpack_require__(/*! ./king.component */ "./src/app/king/king.component.ts");
-const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/king/comment/comment.component.ts");
 const routes = [
     { path: '', component: king_component_1.KingComponent },
-    { path: 'comment', component: comment_component_1.CommentComponent }
 ];
 let KingRoutingModule = class KingRoutingModule {
 };
@@ -204,7 +53,7 @@ module.exports = "#listenertok {\n  display: none;\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n<app-profile></app-profile>\n<app-soundplayer></app-soundplayer>\n<div>\n  <button routerLink=\"comment\">add-comment</button>\n</div>\n<app-comments></app-comments>\n<app-tokbox id=\"listenertok\"></app-tokbox>\n"
+module.exports = "<router-outlet></router-outlet>\n<app-profile></app-profile>\n<app-soundplayer></app-soundplayer>\n<app-listener-chat></app-listener-chat>\n<app-tokbox id=\"listenertok\"></app-tokbox>\n"
 
 /***/ }),
 
@@ -273,20 +122,29 @@ const king_routing_module_1 = __webpack_require__(/*! ./king-routing.module */ "
 const king_component_1 = __webpack_require__(/*! ./king.component */ "./src/app/king/king.component.ts");
 const profile_component_1 = __webpack_require__(/*! ./profile/profile.component */ "./src/app/king/profile/profile.component.ts");
 const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/king/soundplayer/soundplayer.component.ts");
-const comments_component_1 = __webpack_require__(/*! ./comments/comments.component */ "./src/app/king/comments/comments.component.ts");
-const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/king/comment/comment.component.ts");
 const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/king/tokbox/app.component.ts");
 const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/king/tokbox/publisher/publisher.component.ts");
 const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/king/tokbox/subscriber/subscriber.component.ts");
+const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const listener_chat_component_1 = __webpack_require__(/*! ../listener-chat/listener-chat.component */ "./src/app/listener-chat/listener-chat.component.ts");
 let KingModule = class KingModule {
 };
 KingModule = __decorate([
     core_1.NgModule({
         imports: [
             common_1.CommonModule,
-            king_routing_module_1.KingRoutingModule
+            king_routing_module_1.KingRoutingModule,
+            forms_1.FormsModule,
         ],
-        declarations: [king_component_1.KingComponent, profile_component_1.ProfileComponent, soundplayer_component_1.SoundplayerComponent, comments_component_1.CommentsComponent, comment_component_1.CommentComponent, app_component_1.AppComponent, subscriber_component_1.SubscriberComponent, publisher_component_1.PublisherComponent]
+        declarations: [
+            king_component_1.KingComponent,
+            profile_component_1.ProfileComponent,
+            soundplayer_component_1.SoundplayerComponent,
+            app_component_1.AppComponent,
+            subscriber_component_1.SubscriberComponent,
+            publisher_component_1.PublisherComponent,
+            listener_chat_component_1.ListenerChatComponent
+        ]
     })
 ], KingModule);
 exports.KingModule = KingModule;
@@ -733,6 +591,89 @@ SubscriberComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
 exports.SubscriberComponent = SubscriberComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/listener-chat/listener-chat.component.css":
+/*!***********************************************************!*\
+  !*** ./src/app/listener-chat/listener-chat.component.css ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/listener-chat/listener-chat.component.html":
+/*!************************************************************!*\
+  !*** ./src/app/listener-chat/listener-chat.component.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
+
+/***/ }),
+
+/***/ "./src/app/listener-chat/listener-chat.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/listener-chat/listener-chat.component.ts ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const chat_service_1 = __webpack_require__(/*! ../chat.service */ "./src/app/chat.service.ts");
+let ListenerChatComponent = class ListenerChatComponent {
+    constructor(chatService) {
+        this.chatService = chatService;
+        this.messageToSend = '';
+        this.values = '';
+        this.chatMessages = [];
+        this.chatService.receiveMessages()
+            .subscribe(data => {
+            if (this.chatMessages.length > 10) {
+                this.chatMessages.pop();
+            }
+            this.chatMessages.unshift(data);
+        });
+    }
+    ngOnInit() {
+        this.chatService.createRoom('123ween23');
+    }
+    sendChatMessage() {
+        const { messageToSend } = this;
+        this.chatService.sendMessage(messageToSend);
+        this.messageToSend = "";
+    }
+    getMessage() {
+        this.chatService.receiveMessages()
+            .subscribe(data => console.log(data));
+    }
+};
+ListenerChatComponent = __decorate([
+    core_1.Component({
+        selector: 'app-listener-chat',
+        template: __webpack_require__(/*! ./listener-chat.component.html */ "./src/app/listener-chat/listener-chat.component.html"),
+        styles: [__webpack_require__(/*! ./listener-chat.component.css */ "./src/app/listener-chat/listener-chat.component.css")]
+    }),
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
+], ListenerChatComponent);
+exports.ListenerChatComponent = ListenerChatComponent;
 
 
 /***/ })
