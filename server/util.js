@@ -125,7 +125,6 @@ module.exports = {
       json: true,
     };
     return rp(options);
+  },
+};
 
-  }
-
-  }
