@@ -110,7 +110,7 @@ exports.AppRoutingModule = AppRoutingModule;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "nav{\n    display: flex;\n    justify-content: space-around;\n    background-color: aqua;\n    box-shadow:  0 .4rem .3rem black;\n    padding: .3rem;\n    border-radius: .3rem;\n}\n\nnav a{\n    text-decoration: none;\n    font-size: 2rem;\n}\n\n.center{\n    text-align: center;\n    margin: 1rem;\n    padding: 1rem;\n    font-size: 2rem;\n    margin-top: 2rem;\n    background-color: aliceblue;\n}\n\n.active{\n    color: red;\n}"
+module.exports = ""
 
 /***/ }),
 
@@ -183,13 +183,14 @@ const http_1 = __webpack_require__(/*! @angular/http */ "./node_modules/@angular
 const http_2 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 const app_component_1 = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 const home_component_1 = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
-const app_routing_module_1 = __webpack_require__(/*! .//app-routing.module */ "./src/app/app-routing.module.ts");
+const app_routing_module_1 = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 const landing_component_1 = __webpack_require__(/*! ./home/landing/landing.component */ "./src/app/home/landing/landing.component.ts");
 const auth_service_1 = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
 const auth_guard_1 = __webpack_require__(/*! ./auth/guards/auth.guard */ "./src/app/auth/guards/auth.guard.ts");
 const admin_guard_1 = __webpack_require__(/*! ./auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const chat_service_1 = __webpack_require__(/*! ./chat.service */ "./src/app/chat.service.ts");
 const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/opentok.service.ts");
+// import { YoutubePipe } from './youtube.pipe';
 //angular material components
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { MatCheckboxModule } from '@angular/material';
@@ -467,7 +468,6 @@ let ChatService = class ChatService {
                 observer.next(data);
             });
         });
-        console.log(observable);
         return observable;
     }
 };
@@ -492,17 +492,11 @@ exports.ChatService = ChatService;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // Set this to the base URL of your sample server, such as 'https://your-app-name.herokuapp.com'.
-  // Do not include the trailing slash. See the README for more information:
   SAMPLE_SERVER_BASE_URL: 'http://localhost:3000',
-  // OR, if you have not set up a web server that runs the learning-opentok-php code,
-  // set these values to OpenTok API key, a valid session ID, and a token for the session.
-  // For test purposes, you can obtain these from https://tokbox.com/account.
+  TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9',
   API_KEY: '46194612',
   SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
-  TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'
 });
-
 
 
 /***/ }),
@@ -576,7 +570,7 @@ exports.HomeComponent = HomeComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n}\n"
 
 /***/ }),
 
@@ -587,7 +581,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n<div>\n  <img src=\"https://operationspark.org/assets/images/Robot-Mascot.png\" alt=\"hello\">\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <button href=\"#\" class=\"btn btn-secondary\" (click)=\"test()\">Button</button>\n      <button href=\"#\" class=\"btn btn-secondary\" (click)=\"login()\">Login</button>\n      <a href=\"/auth\">Sign In with Google</a>\n    </div>\n  </div>\n</div>\n\n<!-- <div>\n  <button (click)=\"login()\">Login</button>\n</div> -->\n\n"
+module.exports = "<router-outlet></router-outlet>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n        </div>\n        <div class=\"col-md-4\" align=\"center\">\n          <h3>\n            Sound Mob\n          </h3><img alt=\"Bootstrap Image Preview\" src=\"https://operationspark.org/assets/images/Robot-Mascot.png\"\n            height=\"350\" />\n          <br>\n          <br>\n          <button type=\"button\" class=\"btn btn-success\" routerLink=\"/posts\" routerLinkActive=\"active\">\n            <a href=\"/auth\">Sign In with Google</a>\n          </button>\n        </div>\n        <div class=\"col-md-4\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -611,7 +605,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 // const httpOptions = {
 //   headers: new HttpHeaders({
 //     'Content-Type':  'application/json',
@@ -619,9 +612,7 @@ const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@
 //   })
 // };
 let LandingComponent = class LandingComponent {
-    constructor(http) {
-        this.http = http;
-    }
+    constructor() { }
     ngOnInit() {
         // headers: new HttpHeaders({
         //   'Content-Type': 'application/json',
@@ -629,10 +620,12 @@ let LandingComponent = class LandingComponent {
         // }) 
     }
     login() {
-        console.log('yup');
-        // window.location.href="/auth"
-        this.http.get('/auth')
-            .subscribe(data => console.log(data));
+        //   console.log('yup');
+        // // window.location.href="/auth"
+        //   this.http.get('/auth')
+        //   .subscribe(
+        //     data => console.log(data)
+        //   )
         // window.open('/api/login', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
     }
 };
@@ -642,7 +635,7 @@ LandingComponent = __decorate([
         template: __webpack_require__(/*! ./landing.component.html */ "./src/app/home/landing/landing.component.html"),
         styles: [__webpack_require__(/*! ./landing.component.css */ "./src/app/home/landing/landing.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient])
+    __metadata("design:paramtypes", [])
 ], LandingComponent);
 exports.LandingComponent = LandingComponent;
 
@@ -772,7 +765,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/main.ts */"./src/main.ts");
 
 
 /***/ }),

@@ -1,8 +1,21 @@
 <router-outlet></router-outlet>
-<app-profile></app-profile>
-<app-soundplayer></app-soundplayer>
-<div>
-  <button routerLink="comment">add-comment</button>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-8">
+      <app-profile></app-profile>
+      <br>
+      <app-soundplayer></app-soundplayer>
+      <br>
+      <app-listener-chat></app-listener-chat>
+      <br>
+      <app-tokbox id="listenertok"></app-tokbox>
+    </div>
+    <div class="col-sm-2">
+    </div>
+  </div>
 </div>
-<app-comments></app-comments>
-<app-tokbox id="listenertok"></app-tokbox>

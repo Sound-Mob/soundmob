@@ -1,27 +1,49 @@
-<!-- <div>
-  <ul id="messages">
-  </ul>
+<div class="comments">
+  <div class="comment-wrap">
+    <div class="photo">
+      <div class="avatar" style="background-image: url('https://pbs.twimg.com/profile_images/986327929453006848/c5ShdmQS_400x400.jpg')"></div>
+    </div>
+    <div class="comment-block">
+      <form action="">
+        <textarea name="" id="" cols="30" rows="3" placeholder="Add comment..."></textarea>
+      </form>
+    </div>
+  </div>
 
- <form action="">
-  <input id="m" autocomplete="off" /><button id="chat">Send</button>
-</form> -->
-<!-- 
+  <div class="comment-wrap">
+    <div class="photo">
+      <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')"></div>
+    </div>
+    <div class="comment-block">
+      <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum
+        dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat
+        explicabo veniam fuga corporis totam reprehenderit quasi
+        sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?</p>
+      <div class="bottom-comment">
+        <div class="comment-date">Aug 24, 2014 @ 2:35 PM</div>
+        <ul class="comment-actions">
+          <li class="complain">Complain</li>
+          <li class="reply">Reply</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-  <form>
-    <input (keyup=on)>
-    <button (click)="sendChatMessage()">Send!</button>
-  </form>
-</div> --> 
-
-<ul>
-  <li *ngFor="let message of chatMessages">
-    <b>{{message.userName}} {{message.lastName}}:</b>
-    <p>{{message.message}}</p>
-  </li>
-</ul>
-
-<input  type="text" [(ngModel)]="messageToSend"> 
-<button (click)="sendChatMessage()">Send!</button>
-<button class="btun" (click)="getMessage()">get</button>
-
-
+  <div class="comment-wrap">
+    <div class="photo">
+      <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')"></div>
+    </div>
+    <div class="comment-block">
+      <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum
+        dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat
+        explicabo veniam fuga corporis totam.</p>
+      <div class="bottom-comment">
+        <div class="comment-date">Aug 23, 2014 @ 10:32 AM</div>
+        <ul class="comment-actions">
+          <li class="complain">Complain</li>
+          <li class="reply">Reply</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

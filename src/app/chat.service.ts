@@ -29,7 +29,6 @@ export class ChatService {
         observer.next(data);
       });
     });
-    console.log(observable)
     return observable;
   }
 
