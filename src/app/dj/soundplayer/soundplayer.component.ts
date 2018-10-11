@@ -14,19 +14,18 @@ export class SoundplayerComponent implements OnInit {
 
   ngOnInit() {
 
-
-    this.http.get('/test')
-      .subscribe(({ items }) => {
-        //console.log(data);
-        // let { items } = data;
-        return items.map(item => (
-          this.soundBoardMediaInformation.push({
-            name: item.name,
-            mediaLink: item.mediaLink
-          })
-        ));
-      });
-    console.log(this.soundBoardMediaInformation);
+    // this.http.get('/test')
+    //   .subscribe(({ items }) => {
+    //     console.log(items);
+    //     // let { items } = data;
+    //     return items.map(item => (
+    //       this.soundBoardMediaInformation.push({
+    //         name: item.name,
+    //         mediaLink: item.mediaLink
+    //       })
+    //     ));
+    //   });
+    // console.log(this.soundBoardMediaInformation);
   }
 
 }

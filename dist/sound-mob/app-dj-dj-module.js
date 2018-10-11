@@ -1,9 +1,9 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-dj-view-dj-view-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-dj-dj-module"],{
 
-/***/ "./src/app/chat/chat.component.css":
-/*!*****************************************!*\
-  !*** ./src/app/chat/chat.component.css ***!
-  \*****************************************/
+/***/ "./src/app/dj/chat/chat.component.css":
+/*!********************************************!*\
+  !*** ./src/app/dj/chat/chat.component.css ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -11,10 +11,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/chat/chat.component.html":
-/*!******************************************!*\
-  !*** ./src/app/chat/chat.component.html ***!
-  \******************************************/
+/***/ "./src/app/dj/chat/chat.component.html":
+/*!*********************************************!*\
+  !*** ./src/app/dj/chat/chat.component.html ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -22,10 +22,10 @@ module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{
 
 /***/ }),
 
-/***/ "./src/app/chat/chat.component.ts":
-/*!****************************************!*\
-  !*** ./src/app/chat/chat.component.ts ***!
-  \****************************************/
+/***/ "./src/app/dj/chat/chat.component.ts":
+/*!*******************************************!*\
+  !*** ./src/app/dj/chat/chat.component.ts ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42,7 +42,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const chat_service_1 = __webpack_require__(/*! ../chat.service */ "./src/app/chat.service.ts");
+const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ "./src/app/services/chat.service.ts");
 let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
@@ -73,8 +73,8 @@ let ChatComponent = class ChatComponent {
 ChatComponent = __decorate([
     core_1.Component({
         selector: 'app-chat',
-        template: __webpack_require__(/*! ./chat.component.html */ "./src/app/chat/chat.component.html"),
-        styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/chat/chat.component.css")]
+        template: __webpack_require__(/*! ./chat.component.html */ "./src/app/dj/chat/chat.component.html"),
+        styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/dj/chat/chat.component.css")]
     }),
     __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], ChatComponent);
@@ -83,10 +83,10 @@ exports.ChatComponent = ChatComponent;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/dj-view-routing.module.ts":
-/*!***************************************************!*\
-  !*** ./src/app/dj-view/dj-view-routing.module.ts ***!
-  \***************************************************/
+/***/ "./src/app/dj/dj-routing.module.ts":
+/*!*****************************************!*\
+  !*** ./src/app/dj/dj-routing.module.ts ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -101,8 +101,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj-view/main/main.component.ts");
-const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj-view/search/search.component.ts");
+const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj/main/main.component.ts");
+const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj/search/search.component.ts");
 const admin_guard_1 = __webpack_require__(/*! ../auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const routes = [
     {
@@ -116,23 +116,23 @@ const routes = [
         canActivate: [admin_guard_1.AdminGuard]
     }
 ];
-let DjViewRoutingModule = class DjViewRoutingModule {
+let DjRoutingModule = class DjRoutingModule {
 };
-DjViewRoutingModule = __decorate([
+DjRoutingModule = __decorate([
     core_1.NgModule({
         imports: [router_1.RouterModule.forChild(routes)],
         exports: [router_1.RouterModule]
     })
-], DjViewRoutingModule);
-exports.DjViewRoutingModule = DjViewRoutingModule;
+], DjRoutingModule);
+exports.DjRoutingModule = DjRoutingModule;
 
 
 /***/ }),
 
-/***/ "./src/app/dj-view/dj-view.module.ts":
-/*!*******************************************!*\
-  !*** ./src/app/dj-view/dj-view.module.ts ***!
-  \*******************************************/
+/***/ "./src/app/dj/dj.module.ts":
+/*!*********************************!*\
+  !*** ./src/app/dj/dj.module.ts ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -147,24 +147,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-const dj_view_routing_module_1 = __webpack_require__(/*! ./dj-view-routing.module */ "./src/app/dj-view/dj-view-routing.module.ts");
-const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/dj-view/soundplayer/soundplayer.component.ts");
-const profile_component_1 = __webpack_require__(/*! ./profile/profile.component */ "./src/app/dj-view/profile/profile.component.ts");
-const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj-view/main/main.component.ts");
-const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj-view/search/search.component.ts");
+const dj_routing_module_1 = __webpack_require__(/*! ./dj-routing.module */ "./src/app/dj/dj-routing.module.ts");
+const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/dj/soundplayer/soundplayer.component.ts");
+const profile_component_1 = __webpack_require__(/*! ./profile/profile.component */ "./src/app/dj/profile/profile.component.ts");
+const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj/main/main.component.ts");
+const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj/search/search.component.ts");
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/opentok.service.ts");
-const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/dj-view/tokbox/app.component.ts");
-const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.ts");
-const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj-view/tokbox/publisher/publisher.component.ts");
-const chat_component_1 = __webpack_require__(/*! ../chat/chat.component */ "./src/app/chat/chat.component.ts");
-let DjViewModule = class DjViewModule {
+const opentok_service_1 = __webpack_require__(/*! ../services/opentok.service */ "./src/app/services/opentok.service.ts");
+const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/dj/tokbox/app.component.ts");
+const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/dj/tokbox/subscriber/subscriber.component.ts");
+const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj/tokbox/publisher/publisher.component.ts");
+const chat_component_1 = __webpack_require__(/*! ./chat/chat.component */ "./src/app/dj/chat/chat.component.ts");
+let DjModule = class DjModule {
 };
-DjViewModule = __decorate([
+DjModule = __decorate([
     core_1.NgModule({
         imports: [
             common_1.CommonModule,
-            dj_view_routing_module_1.DjViewRoutingModule,
+            dj_routing_module_1.DjRoutingModule,
             forms_1.FormsModule,
         ],
         declarations: [
@@ -179,16 +179,16 @@ DjViewModule = __decorate([
         ],
         providers: [opentok_service_1.OpentokService]
     })
-], DjViewModule);
-exports.DjViewModule = DjViewModule;
+], DjModule);
+exports.DjModule = DjModule;
 
 
 /***/ }),
 
-/***/ "./src/app/dj-view/main/main.component.css":
-/*!*************************************************!*\
-  !*** ./src/app/dj-view/main/main.component.css ***!
-  \*************************************************/
+/***/ "./src/app/dj/main/main.component.css":
+/*!********************************************!*\
+  !*** ./src/app/dj/main/main.component.css ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -196,10 +196,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/dj-view/main/main.component.html":
-/*!**************************************************!*\
-  !*** ./src/app/dj-view/main/main.component.html ***!
-  \**************************************************/
+/***/ "./src/app/dj/main/main.component.html":
+/*!*********************************************!*\
+  !*** ./src/app/dj/main/main.component.html ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -207,10 +207,10 @@ module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">
 
 /***/ }),
 
-/***/ "./src/app/dj-view/main/main.component.ts":
-/*!************************************************!*\
-  !*** ./src/app/dj-view/main/main.component.ts ***!
-  \************************************************/
+/***/ "./src/app/dj/main/main.component.ts":
+/*!*******************************************!*\
+  !*** ./src/app/dj/main/main.component.ts ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -235,8 +235,8 @@ let MainComponent = class MainComponent {
 MainComponent = __decorate([
     core_1.Component({
         selector: 'app-main',
-        template: __webpack_require__(/*! ./main.component.html */ "./src/app/dj-view/main/main.component.html"),
-        styles: [__webpack_require__(/*! ./main.component.css */ "./src/app/dj-view/main/main.component.css")]
+        template: __webpack_require__(/*! ./main.component.html */ "./src/app/dj/main/main.component.html"),
+        styles: [__webpack_require__(/*! ./main.component.css */ "./src/app/dj/main/main.component.css")]
     }),
     __metadata("design:paramtypes", [])
 ], MainComponent);
@@ -245,10 +245,10 @@ exports.MainComponent = MainComponent;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/profile/profile.component.css":
-/*!*******************************************************!*\
-  !*** ./src/app/dj-view/profile/profile.component.css ***!
-  \*******************************************************/
+/***/ "./src/app/dj/profile/profile.component.css":
+/*!**************************************************!*\
+  !*** ./src/app/dj/profile/profile.component.css ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -256,10 +256,10 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 
 /***/ }),
 
-/***/ "./src/app/dj-view/profile/profile.component.html":
-/*!********************************************************!*\
-  !*** ./src/app/dj-view/profile/profile.component.html ***!
-  \********************************************************/
+/***/ "./src/app/dj/profile/profile.component.html":
+/*!***************************************************!*\
+  !*** ./src/app/dj/profile/profile.component.html ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -267,10 +267,10 @@ module.exports = "<div id=\"container_image\" class=\"profile-block\">\n  <img a
 
 /***/ }),
 
-/***/ "./src/app/dj-view/profile/profile.component.ts":
-/*!******************************************************!*\
-  !*** ./src/app/dj-view/profile/profile.component.ts ***!
-  \******************************************************/
+/***/ "./src/app/dj/profile/profile.component.ts":
+/*!*************************************************!*\
+  !*** ./src/app/dj/profile/profile.component.ts ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -295,8 +295,8 @@ let ProfileComponent = class ProfileComponent {
 ProfileComponent = __decorate([
     core_1.Component({
         selector: 'app-profile',
-        template: __webpack_require__(/*! ./profile.component.html */ "./src/app/dj-view/profile/profile.component.html"),
-        styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/dj-view/profile/profile.component.css")]
+        template: __webpack_require__(/*! ./profile.component.html */ "./src/app/dj/profile/profile.component.html"),
+        styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/dj/profile/profile.component.css")]
     }),
     __metadata("design:paramtypes", [])
 ], ProfileComponent);
@@ -305,10 +305,10 @@ exports.ProfileComponent = ProfileComponent;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/search/search.component.css":
-/*!*****************************************************!*\
-  !*** ./src/app/dj-view/search/search.component.css ***!
-  \*****************************************************/
+/***/ "./src/app/dj/search/search.component.css":
+/*!************************************************!*\
+  !*** ./src/app/dj/search/search.component.css ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -316,10 +316,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/dj-view/search/search.component.html":
-/*!******************************************************!*\
-  !*** ./src/app/dj-view/search/search.component.html ***!
-  \******************************************************/
+/***/ "./src/app/dj/search/search.component.html":
+/*!*************************************************!*\
+  !*** ./src/app/dj/search/search.component.html ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -327,10 +327,10 @@ module.exports = "<a (click)=\"backClicked()\">\n  <i class=\"material-icons\">\
 
 /***/ }),
 
-/***/ "./src/app/dj-view/search/search.component.ts":
-/*!****************************************************!*\
-  !*** ./src/app/dj-view/search/search.component.ts ***!
-  \****************************************************/
+/***/ "./src/app/dj/search/search.component.ts":
+/*!***********************************************!*\
+  !*** ./src/app/dj/search/search.component.ts ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -361,8 +361,8 @@ let SearchComponent = class SearchComponent {
 SearchComponent = __decorate([
     core_1.Component({
         selector: 'app-search',
-        template: __webpack_require__(/*! ./search.component.html */ "./src/app/dj-view/search/search.component.html"),
-        styles: [__webpack_require__(/*! ./search.component.css */ "./src/app/dj-view/search/search.component.css")]
+        template: __webpack_require__(/*! ./search.component.html */ "./src/app/dj/search/search.component.html"),
+        styles: [__webpack_require__(/*! ./search.component.css */ "./src/app/dj/search/search.component.css")]
     }),
     __metadata("design:paramtypes", [common_1.Location])
 ], SearchComponent);
@@ -371,10 +371,10 @@ exports.SearchComponent = SearchComponent;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/soundplayer/soundplayer.component.css":
-/*!***************************************************************!*\
-  !*** ./src/app/dj-view/soundplayer/soundplayer.component.css ***!
-  \***************************************************************/
+/***/ "./src/app/dj/soundplayer/soundplayer.component.css":
+/*!**********************************************************!*\
+  !*** ./src/app/dj/soundplayer/soundplayer.component.css ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -382,10 +382,10 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 
 /***/ }),
 
-/***/ "./src/app/dj-view/soundplayer/soundplayer.component.html":
-/*!****************************************************************!*\
-  !*** ./src/app/dj-view/soundplayer/soundplayer.component.html ***!
-  \****************************************************************/
+/***/ "./src/app/dj/soundplayer/soundplayer.component.html":
+/*!***********************************************************!*\
+  !*** ./src/app/dj/soundplayer/soundplayer.component.html ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -393,10 +393,10 @@ module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ss
 
 /***/ }),
 
-/***/ "./src/app/dj-view/soundplayer/soundplayer.component.ts":
-/*!**************************************************************!*\
-  !*** ./src/app/dj-view/soundplayer/soundplayer.component.ts ***!
-  \**************************************************************/
+/***/ "./src/app/dj/soundplayer/soundplayer.component.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/dj/soundplayer/soundplayer.component.ts ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -420,23 +420,25 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.soundBoardMediaInformation = [];
     }
     ngOnInit() {
-        this.http.get('/test')
-            .subscribe(({ items }) => {
-            //console.log(data);
-            // let { items } = data;
-            return items.map(item => (this.soundBoardMediaInformation.push({
-                name: item.name,
-                mediaLink: item.mediaLink
-            })));
-        });
-        console.log(this.soundBoardMediaInformation);
+        // this.http.get('/test')
+        //   .subscribe(({ items }) => {
+        //     console.log(items);
+        //     // let { items } = data;
+        //     return items.map(item => (
+        //       this.soundBoardMediaInformation.push({
+        //         name: item.name,
+        //         mediaLink: item.mediaLink
+        //       })
+        //     ));
+        //   });
+        // console.log(this.soundBoardMediaInformation);
     }
 };
 SoundplayerComponent = __decorate([
     core_1.Component({
         selector: 'app-soundplayer',
-        template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/dj-view/soundplayer/soundplayer.component.html"),
-        styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/dj-view/soundplayer/soundplayer.component.css")]
+        template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/dj/soundplayer/soundplayer.component.html"),
+        styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/dj/soundplayer/soundplayer.component.css")]
     }),
     __metadata("design:paramtypes", [http_1.HttpClient])
 ], SoundplayerComponent);
@@ -445,10 +447,10 @@ exports.SoundplayerComponent = SoundplayerComponent;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/app.component.css":
-/*!**************************************************!*\
-  !*** ./src/app/dj-view/tokbox/app.component.css ***!
-  \**************************************************/
+/***/ "./src/app/dj/tokbox/app.component.css":
+/*!*********************************************!*\
+  !*** ./src/app/dj/tokbox/app.component.css ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -456,10 +458,10 @@ module.exports = "app-publisher, app-subscriber {\n  display: block;\n  float: l
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/app.component.html":
-/*!***************************************************!*\
-  !*** ./src/app/dj-view/tokbox/app.component.html ***!
-  \***************************************************/
+/***/ "./src/app/dj/tokbox/app.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/dj/tokbox/app.component.html ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -467,10 +469,10 @@ module.exports = "<h1>{{title}}</h1>\n<div *ngIf=\"session\">\n  <app-publisher 
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/app.component.ts":
-/*!*************************************************!*\
-  !*** ./src/app/dj-view/tokbox/app.component.ts ***!
-  \*************************************************/
+/***/ "./src/app/dj/tokbox/app.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/dj/tokbox/app.component.ts ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -487,7 +489,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/dj-view/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/dj/tokbox/opentok.service.ts");
 let AppComponent = class AppComponent {
     constructor(ref, opentokService) {
         this.ref = ref;
@@ -521,8 +523,8 @@ let AppComponent = class AppComponent {
 AppComponent = __decorate([
     core_1.Component({
         selector: 'dj-tokbox',
-        template: __webpack_require__(/*! ./app.component.html */ "./src/app/dj-view/tokbox/app.component.html"),
-        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/dj-view/tokbox/app.component.css")],
+        template: __webpack_require__(/*! ./app.component.html */ "./src/app/dj/tokbox/app.component.html"),
+        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/dj/tokbox/app.component.css")],
         providers: [opentok_service_1.OpentokService]
     }),
     __metadata("design:paramtypes", [core_1.ChangeDetectorRef, opentok_service_1.OpentokService])
@@ -532,10 +534,10 @@ exports.AppComponent = AppComponent;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/opentok.service.ts":
-/*!***************************************************!*\
-  !*** ./src/app/dj-view/tokbox/opentok.service.ts ***!
-  \***************************************************/
+/***/ "./src/app/dj/tokbox/opentok.service.ts":
+/*!**********************************************!*\
+  !*** ./src/app/dj/tokbox/opentok.service.ts ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -597,10 +599,10 @@ exports.OpentokService = OpentokService;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/publisher/publisher.component.css":
-/*!******************************************************************!*\
-  !*** ./src/app/dj-view/tokbox/publisher/publisher.component.css ***!
-  \******************************************************************/
+/***/ "./src/app/dj/tokbox/publisher/publisher.component.css":
+/*!*************************************************************!*\
+  !*** ./src/app/dj/tokbox/publisher/publisher.component.css ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -608,10 +610,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/publisher/publisher.component.html":
-/*!*******************************************************************!*\
-  !*** ./src/app/dj-view/tokbox/publisher/publisher.component.html ***!
-  \*******************************************************************/
+/***/ "./src/app/dj/tokbox/publisher/publisher.component.html":
+/*!**************************************************************!*\
+  !*** ./src/app/dj/tokbox/publisher/publisher.component.html ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -619,10 +621,10 @@ module.exports = "<div [ngClass]=\"{'publishing': publishing}\" #publisherDiv></
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/publisher/publisher.component.ts":
-/*!*****************************************************************!*\
-  !*** ./src/app/dj-view/tokbox/publisher/publisher.component.ts ***!
-  \*****************************************************************/
+/***/ "./src/app/dj/tokbox/publisher/publisher.component.ts":
+/*!************************************************************!*\
+  !*** ./src/app/dj/tokbox/publisher/publisher.component.ts ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -639,7 +641,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/dj-view/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/dj/tokbox/opentok.service.ts");
 const publish = () => {
 };
 let PublisherComponent = class PublisherComponent {
@@ -680,8 +682,8 @@ __decorate([
 PublisherComponent = __decorate([
     core_1.Component({
         selector: 'app-publisher',
-        template: __webpack_require__(/*! ./publisher.component.html */ "./src/app/dj-view/tokbox/publisher/publisher.component.html"),
-        styles: [__webpack_require__(/*! ./publisher.component.css */ "./src/app/dj-view/tokbox/publisher/publisher.component.css")]
+        template: __webpack_require__(/*! ./publisher.component.html */ "./src/app/dj/tokbox/publisher/publisher.component.html"),
+        styles: [__webpack_require__(/*! ./publisher.component.css */ "./src/app/dj/tokbox/publisher/publisher.component.css")]
     }),
     __metadata("design:paramtypes", [opentok_service_1.OpentokService])
 ], PublisherComponent);
@@ -690,10 +692,10 @@ exports.PublisherComponent = PublisherComponent;
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/subscriber/subscriber.component.css":
-/*!********************************************************************!*\
-  !*** ./src/app/dj-view/tokbox/subscriber/subscriber.component.css ***!
-  \********************************************************************/
+/***/ "./src/app/dj/tokbox/subscriber/subscriber.component.css":
+/*!***************************************************************!*\
+  !*** ./src/app/dj/tokbox/subscriber/subscriber.component.css ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -701,10 +703,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/subscriber/subscriber.component.html":
-/*!*********************************************************************!*\
-  !*** ./src/app/dj-view/tokbox/subscriber/subscriber.component.html ***!
-  \*********************************************************************/
+/***/ "./src/app/dj/tokbox/subscriber/subscriber.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/dj/tokbox/subscriber/subscriber.component.html ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -712,10 +714,10 @@ module.exports = "<div #subscriberDiv></div>\n"
 
 /***/ }),
 
-/***/ "./src/app/dj-view/tokbox/subscriber/subscriber.component.ts":
-/*!*******************************************************************!*\
-  !*** ./src/app/dj-view/tokbox/subscriber/subscriber.component.ts ***!
-  \*******************************************************************/
+/***/ "./src/app/dj/tokbox/subscriber/subscriber.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/dj/tokbox/subscriber/subscriber.component.ts ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -759,8 +761,8 @@ __decorate([
 SubscriberComponent = __decorate([
     core_1.Component({
         selector: 'app-subscriber',
-        template: __webpack_require__(/*! ./subscriber.component.html */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.html"),
-        styles: [__webpack_require__(/*! ./subscriber.component.css */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.css")]
+        template: __webpack_require__(/*! ./subscriber.component.html */ "./src/app/dj/tokbox/subscriber/subscriber.component.html"),
+        styles: [__webpack_require__(/*! ./subscriber.component.css */ "./src/app/dj/tokbox/subscriber/subscriber.component.css")]
     }),
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
@@ -770,4 +772,4 @@ exports.SubscriberComponent = SubscriberComponent;
 /***/ })
 
 }]);
-//# sourceMappingURL=app-dj-view-dj-view-module.js.map
+//# sourceMappingURL=app-dj-dj-module.js.map

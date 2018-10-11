@@ -1,9 +1,9 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-posts-posts-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-featured-featured-module"],{
 
-/***/ "./src/app/posts/posts-routing.module.ts":
-/*!***********************************************!*\
-  !*** ./src/app/posts/posts-routing.module.ts ***!
-  \***********************************************/
+/***/ "./src/app/featured/featured-routing.module.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/featured/featured-routing.module.ts ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18,27 +18,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-const posts_component_1 = __webpack_require__(/*! ./posts.component */ "./src/app/posts/posts.component.ts");
+const featured_component_1 = __webpack_require__(/*! ./featured.component */ "./src/app/featured/featured.component.ts");
 const routes = [
-    { path: "", component: posts_component_1.PostsComponent },
+    { path: "", component: featured_component_1.FeaturedComponent },
 ];
-let PostsRoutingModule = class PostsRoutingModule {
+let FeaturedRoutingModule = class FeaturedRoutingModule {
 };
-PostsRoutingModule = __decorate([
+FeaturedRoutingModule = __decorate([
     core_1.NgModule({
         exports: [router_1.RouterModule],
         imports: [router_1.RouterModule.forChild(routes)]
     })
-], PostsRoutingModule);
-exports.PostsRoutingModule = PostsRoutingModule;
+], FeaturedRoutingModule);
+exports.FeaturedRoutingModule = FeaturedRoutingModule;
 
 
 /***/ }),
 
-/***/ "./src/app/posts/posts.component.css":
-/*!*******************************************!*\
-  !*** ./src/app/posts/posts.component.css ***!
-  \*******************************************/
+/***/ "./src/app/featured/featured.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/featured/featured.component.css ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -46,10 +46,10 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 
 /***/ }),
 
-/***/ "./src/app/posts/posts.component.html":
-/*!********************************************!*\
-  !*** ./src/app/posts/posts.component.html ***!
-  \********************************************/
+/***/ "./src/app/featured/featured.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/featured/featured.component.html ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -57,10 +57,10 @@ module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.co
 
 /***/ }),
 
-/***/ "./src/app/posts/posts.component.ts":
-/*!******************************************!*\
-  !*** ./src/app/posts/posts.component.ts ***!
-  \******************************************/
+/***/ "./src/app/featured/featured.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/featured/featured.component.ts ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -78,7 +78,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-let PostsComponent = class PostsComponent {
+let FeaturedComponent = class FeaturedComponent {
     constructor(http) {
         this.http = http;
         this.data = [];
@@ -94,23 +94,23 @@ let PostsComponent = class PostsComponent {
         });
     }
 };
-PostsComponent = __decorate([
+FeaturedComponent = __decorate([
     core_1.Component({
         selector: "app-posts",
-        template: __webpack_require__(/*! ./posts.component.html */ "./src/app/posts/posts.component.html"),
-        styles: [__webpack_require__(/*! ./posts.component.css */ "./src/app/posts/posts.component.css")]
+        template: __webpack_require__(/*! ./featured.component.html */ "./src/app/featured/featured.component.html"),
+        styles: [__webpack_require__(/*! ./featured.component.css */ "./src/app/featured/featured.component.css")]
     }),
     __metadata("design:paramtypes", [http_1.HttpClient])
-], PostsComponent);
-exports.PostsComponent = PostsComponent;
+], FeaturedComponent);
+exports.FeaturedComponent = FeaturedComponent;
 
 
 /***/ }),
 
-/***/ "./src/app/posts/posts.module.ts":
-/*!***************************************!*\
-  !*** ./src/app/posts/posts.module.ts ***!
-  \***************************************/
+/***/ "./src/app/featured/featured.module.ts":
+/*!*********************************************!*\
+  !*** ./src/app/featured/featured.module.ts ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -125,20 +125,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-const posts_routing_module_1 = __webpack_require__(/*! ./posts-routing.module */ "./src/app/posts/posts-routing.module.ts");
-const posts_component_1 = __webpack_require__(/*! ./posts.component */ "./src/app/posts/posts.component.ts");
-let PostsModule = class PostsModule {
+const featured_routing_module_1 = __webpack_require__(/*! ./featured-routing.module */ "./src/app/featured/featured-routing.module.ts");
+const featured_component_1 = __webpack_require__(/*! ./featured.component */ "./src/app/featured/featured.component.ts");
+let FeaturedModule = class FeaturedModule {
 };
-PostsModule = __decorate([
+FeaturedModule = __decorate([
     core_1.NgModule({
-        imports: [common_1.CommonModule, posts_routing_module_1.PostsRoutingModule],
-        declarations: [posts_component_1.PostsComponent]
+        imports: [common_1.CommonModule, featured_routing_module_1.FeaturedRoutingModule],
+        declarations: [featured_component_1.FeaturedComponent]
     })
-], PostsModule);
-exports.PostsModule = PostsModule;
+], FeaturedModule);
+exports.FeaturedModule = FeaturedModule;
 
 
 /***/ })
 
 }]);
-//# sourceMappingURL=app-posts-posts-module.js.map
+//# sourceMappingURL=app-featured-featured-module.js.map

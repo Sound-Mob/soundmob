@@ -4,10 +4,10 @@ import { HttpHeaders } from '@angular/common/http'
 
 @Component({
   selector: "app-posts",
-  templateUrl: "./posts.component.html",
-  styleUrls: ["./posts.component.css"]
+  templateUrl: "./featured.component.html",
+  styleUrls: ["./featured.component.css"]
 })
-export class PostsComponent implements OnInit {
+export class FeaturedComponent implements OnInit {
   data = [];
   firstName = '';
   lastName = '';

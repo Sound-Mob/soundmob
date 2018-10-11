@@ -2,10 +2,10 @@ import { Component, OnInit,Input } from '@angular/core';
 
 @Component({
   selector: 'app-king',
-  templateUrl: './king.component.html',
-  styleUrls: ['./king.component.css']
+  templateUrl: './listener.component.html',
+  styleUrls: ['./listener.component.css']
 })
-export class KingComponent implements OnInit {
+export class ListenerComponent implements OnInit {
 
   @Input() sai:'sai';
 
