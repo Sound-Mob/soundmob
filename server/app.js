@@ -117,9 +117,7 @@ io.on('connection', (socket) => {
     // io.sockets.emit('startlistener', timeInPlaylist);
     console.log({ listenerStartTime }, 'in join roomroute');
     console.log({ timeInPlaylist }, 'in join roomroute');
-    
     io.sockets.to(`${socket.id}`).emit('startlistener', timeInPlaylist);
-    
     // console.log(listenerStartTime, "listen start time")
     // socket joins that room
     socket.join(room, () => {
@@ -231,7 +229,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  console.log(id);
   getUserById(id).then((user) => {
     done(null, user);
   }).catch(err => console.error(err));
@@ -244,7 +241,7 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 },
 (req, accessToken, refreshToken, profile, done) => {
-  // console.log(accessToken)
+  
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
