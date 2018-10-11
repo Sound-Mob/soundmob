@@ -84,6 +84,8 @@ app.get('/tester', (req, res) => {
 });
 // if we want to keep track of users in room
 const users = [];
+// keeping track of djs
+const djs = [];
 // keeping track of what time playlist starts
 let playlistStartTime = '';
 // keeping track of what time a listener joins
@@ -95,11 +97,57 @@ let songDuration;
 
 // on connection
 io.on('connection', (socket) => {
+  const { photo } = socket.request.session;
+  const { value } = photo;
   const { name } = socket.request.session;
   const { user } = socket.request.session.passport;
   const { givenName } = name;
   const { familyName } = name;
-  // console.log(socket.request);
+  // MAKE ROOM LISTENER -- listen for new room
+  socket.on('newroom', (room) => {
+    // console.log('room bay bayyy');
+    socket.join(room, () => {
+      socket.admin = true;
+      // add new dj to active dj list
+      djs.push({name: name, id: user, photo: value });
+      
+      // console.log(playlistStartTime, 'in newroom')
+      io.sockets.emit('starttokbox');
+      // reassign socket room at id to room arg
+      socket.rooms[socket.id] = socket.rooms[room];
+      // sending dj room to client
+      io.sockets.emit('activeDj', socket.rooms[socket.id]);
+      // if we want to keep track of users in room
+      if (socket.name) {
+        users.push(socket.name);
+        io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
+      }
+    });
+  });
+  const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
+  // START CAST LISTENER -- listen for startCast
+  socket.on('startCast', (id) => {
+    // console.log(id);
+    searchDetails(token, id).then(({ items }) => {
+      console.log(items);
+      const durationArray = items[0].contentDetails.duration.split('');
+      if (durationArray.length <= 4) {
+        songDuration = (Number(durationArray[2]));
+      } else {
+        songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
+      }
+      // calculate playlist start time
+      playlistStartTime += new Date();
+      playlistStartTime = playlistStartTime.split('');
+      playlistStartTime = playlistStartTime.splice(16, 8);
+      const minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
+      const seconds = Number(playlistStartTime[6] + playlistStartTime[7]);
+      playlistStartTime = minsInSeconds + seconds;
+      console.log({ playlistStartTime });
+      // console.log({ playlistStartTime });
+      io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
+    }).catch((err) => { console.log(err); });
+  });
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (room) => {
     // calculate listener start time
@@ -148,11 +196,17 @@ io.on('connection', (socket) => {
   // listen for chat message
   socket.on('chat message',  (msg) => {
     const room = socket.rooms[socket.id];
-    console.log(room, 'in chat')
+    // console.log(room, 'in chat')
     io.sockets.emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
     // io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
     // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
+
+  // listen for active DJs request
+  socket.on('djListReq', () =>{
+    console.log("request recieved")
+    io.sockets.emit('djList', {djs});
+  })
 
   // listen for users to leave
   socket.on('disconnect',  (data) => {
@@ -163,47 +217,7 @@ io.on('connection', (socket) => {
     io.emit('disconnect', { users: users, name: socket.name });
   });
 
-  // MAKE ROOM LISTENER -- listen for new room
-  socket.on('newroom', (room) => {
-    console.log('room bay bayyy');
-    socket.join(room, () => {
-      socket.admin = true;
-      // console.log(playlistStartTime, 'in newroom')
-      io.sockets.emit('starttokbox');
-      // reassign socket room at id to room arg
-      socket.rooms[socket.id] = socket.rooms[room];
-      // if we want to keep track of users in room
-
-      if (socket.name) {
-        users.push(socket.name);
-        io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
-      }
-    });
-  });
-  const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
-  // START CAST LISTENER -- listen for startCast
-  socket.on('startCast', (id) => {
-    // console.log(id);
-    searchDetails(token, id).then(({ items }) => {
-      console.log(items);
-      const durationArray = items[0].contentDetails.duration.split('');
-      if (durationArray.length <= 4) {
-        songDuration = (Number(durationArray[2]));
-      } else {
-        songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
-      }
-      // calculate playlist start time
-      playlistStartTime += new Date();
-      playlistStartTime = playlistStartTime.split('');
-      playlistStartTime = playlistStartTime.splice(16, 8);
-      const minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
-      const seconds = Number(playlistStartTime[6] + playlistStartTime[7]);
-      playlistStartTime = minsInSeconds + seconds;
-      console.log({ playlistStartTime });
-      // console.log({ playlistStartTime });
-      io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
-    }).catch((err) => { console.log(err); });
-  });
+  
   // tell socket to listen for a 'sample' event
   socket.on('sample', (stream) => {
     // console.log(stream.blob);     // save sound to
@@ -227,13 +241,13 @@ io.on('connection', (socket) => {
 });
 // session serializatoin
 passport.serializeUser((user, done) => {
-  console.log(user, done)
+  // console.log(user, done)
   done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 passport.deserializeUser((id, done) => {
-  console.log(id);
+  // console.log(id);
   getUserById(id).then((user) => {
     done(null, user);
   }).catch(err => console.error(err));

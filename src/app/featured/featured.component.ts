@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from '@angular/common/http'
 import { HttpHeaders } from '@angular/common/http'
+import { DjlistService } from "../services/djlist.service";
 
 @Component({
   selector: "app-posts",
@@ -13,18 +14,16 @@ export class FeaturedComponent implements OnInit {
   lastName = '';
   show: Boolean;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private djList: DjlistService) {
+    
+   }
+   
+   
+   ngOnInit() {
+     this.djList.liveDjReq()
 
-  ngOnInit() {
-    // console.log('yupppy');
-    return this.http.get('/api/api')
-      .subscribe(
-        (data) => {
-          console.log(data)
-          this.data.push(data[0]);
-         
-        }
-      );
+     this.djList.liveDj()
+       .subscribe(data => console.log(data));
   }
 }
 
