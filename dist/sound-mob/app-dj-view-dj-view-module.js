@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-dj-view-dj-view-module"],{
 
-/***/ "./src/app/dj-view/comment/comment.component.css":
-/*!*******************************************************!*\
-  !*** ./src/app/dj-view/comment/comment.component.css ***!
-  \*******************************************************/
+/***/ "./src/app/chat/chat.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/chat/chat.component.css ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -11,21 +11,21 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/dj-view/comment/comment.component.html":
-/*!********************************************************!*\
-  !*** ./src/app/dj-view/comment/comment.component.html ***!
-  \********************************************************/
+/***/ "./src/app/chat/chat.component.html":
+/*!******************************************!*\
+  !*** ./src/app/chat/chat.component.html ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<a (click)=\"backClicked()\">\n  <i class=\"material-icons\">\n    clear\n  </i>\n</a>\n<h1>Add Tracks</h1>\n<input type=\"text\">\n<h3>tracks</h3>"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
 
 /***/ }),
 
-/***/ "./src/app/dj-view/comment/comment.component.ts":
-/*!******************************************************!*\
-  !*** ./src/app/dj-view/comment/comment.component.ts ***!
-  \******************************************************/
+/***/ "./src/app/chat/chat.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/chat/chat.component.ts ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42,74 +42,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-let CommentComponent = class CommentComponent {
-    constructor(_location) {
-        this._location = _location;
-    }
-    ngOnInit() {
-    }
-    backClicked() {
-        this._location.back();
-    }
-};
-CommentComponent = __decorate([
-    core_1.Component({
-        selector: 'app-comment',
-        template: __webpack_require__(/*! ./comment.component.html */ "./src/app/dj-view/comment/comment.component.html"),
-        styles: [__webpack_require__(/*! ./comment.component.css */ "./src/app/dj-view/comment/comment.component.css")]
-    }),
-    __metadata("design:paramtypes", [common_1.Location])
-], CommentComponent);
-exports.CommentComponent = CommentComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/dj-view/comments/comments.component.css":
-/*!*********************************************************!*\
-  !*** ./src/app/dj-view/comments/comments.component.css ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "ul {\n  list-style: none;\n}\n\n.comment-name {\n  -ms-grid-row-align: left;\n      align-self: left;\n}\n\n.user-comment {\n  -ms-grid-row-align: center;\n      align-self: center;\n}\n\nhtml,\n  body {\n    background-color: #f0f2fa;\n    font-family: \"PT Sans\", \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n    color: #555f77;\n    -webkit-font-smoothing: antialiased;\n  }\n\ninput,\n  textarea {\n    outline: none;\n    border: none;\n    display: block;\n    margin: 0;\n    padding: 0;\n    -webkit-font-smoothing: antialiased;\n    font-family: \"PT Sans\", \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif;\n    font-size: 1rem;\n    color: #555f77;\n  }\n\ninput::-webkit-input-placeholder,\n  textarea::-webkit-input-placeholder {\n    color: #ced2db;\n  }\n\ninput::-moz-placeholder,\n  textarea::-moz-placeholder {\n    color: #ced2db;\n  }\n\ninput:-moz-placeholder,\n  textarea:-moz-placeholder {\n    color: #ced2db;\n  }\n\ninput:-ms-input-placeholder,\n  textarea:-ms-input-placeholder {\n    color: #ced2db;\n  }\n\np {\n    line-height: 1.3125rem;\n  }\n\n.comments {\n    margin: 2.5rem auto 0;\n    max-width: 60.75rem;\n    padding: 0 1.25rem;\n  }\n\n.comment-wrap {\n    margin-bottom: 1.25rem;\n    display: table;\n    width: 100%;\n    min-height: 5.3125rem;\n  }\n\n.photo {\n    padding-top: 0.625rem;\n    display: table-cell;\n    width: 3.5rem;\n  }\n\n.photo .avatar {\n    height: 4.25rem;\n    width: 4.25rem;\n    border-radius: 10%;\n    background-size: contain;\n  }\n\n.comment-block {\n    padding: 1rem;\n    background-color: #fff;\n    display: table-cell;\n    vertical-align: top;\n    border-radius: 0.1875rem;\n    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);\n  }\n\n.comment-block textarea {\n    width: 100%;\n    resize: none;\n  }\n\n.comment-text {\n    margin-bottom: 1.25rem;\n  }\n\n.bottom-comment {\n    color: #acb4c2;\n    font-size: 0.875rem;\n  }\n\n.comment-date {\n    float: left;\n  }\n\n.comment-actions {\n    float: right;\n  }\n\n.comment-actions li {\n    display: inline;\n    margin: -2px;\n    cursor: pointer;\n  }\n\n.comment-actions li.complain {\n    padding-right: 0.75rem;\n    border-right: 1px solid #e1e5eb;\n  }\n\n.comment-actions li.reply {\n    padding-left: 0.75rem;\n    padding-right: 0.125rem;\n  }\n\n.comment-actions li:hover {\n    color: #0095ff;\n  }"
-
-/***/ }),
-
-/***/ "./src/app/dj-view/comments/comments.component.html":
-/*!**********************************************************!*\
-  !*** ./src/app/dj-view/comments/comments.component.html ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"comments\">\n  <div class=\"comment-wrap\">\n    <div class=\"photo\">\n      <div class=\"avatar\" style=\"background-image: url('https://pbs.twimg.com/profile_images/986327929453006848/c5ShdmQS_400x400.jpg')\"></div>\n    </div>\n    <div class=\"comment-block\">\n      <form action=\"\">\n        <textarea name=\"\" id=\"\" cols=\"30\" rows=\"3\" placeholder=\"Add comment...\"></textarea>\n      </form>\n    </div>\n  </div>\n\n  <div class=\"comment-wrap\">\n    <div class=\"photo\">\n      <div class=\"avatar\" style=\"background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')\"></div>\n    </div>\n    <div class=\"comment-block\">\n      <p class=\"comment-text\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum\n        dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat\n        explicabo veniam fuga corporis totam reprehenderit quasi\n        sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?</p>\n      <div class=\"bottom-comment\">\n        <div class=\"comment-date\">Aug 24, 2014 @ 2:35 PM</div>\n        <ul class=\"comment-actions\">\n          <li class=\"complain\">Complain</li>\n          <li class=\"reply\">Reply</li>\n        </ul>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"comment-wrap\">\n    <div class=\"photo\">\n      <div class=\"avatar\" style=\"background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')\"></div>\n    </div>\n    <div class=\"comment-block\">\n      <p class=\"comment-text\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum\n        dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat\n        explicabo veniam fuga corporis totam.</p>\n      <div class=\"bottom-comment\">\n        <div class=\"comment-date\">Aug 23, 2014 @ 10:32 AM</div>\n        <ul class=\"comment-actions\">\n          <li class=\"complain\">Complain</li>\n          <li class=\"reply\">Reply</li>\n        </ul>\n      </div>\n    </div>\n  </div>\n</div>"
-
-/***/ }),
-
-/***/ "./src/app/dj-view/comments/comments.component.ts":
-/*!********************************************************!*\
-  !*** ./src/app/dj-view/comments/comments.component.ts ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const chat_service_1 = __webpack_require__(/*! ../../chat.service */ "./src/app/chat.service.ts");
-let CommentsComponent = class CommentsComponent {
+const chat_service_1 = __webpack_require__(/*! ../chat.service */ "./src/app/chat.service.ts");
+let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
         this.messageToSend = '';
@@ -136,15 +70,15 @@ let CommentsComponent = class CommentsComponent {
             .subscribe(data => console.log(data));
     }
 };
-CommentsComponent = __decorate([
+ChatComponent = __decorate([
     core_1.Component({
-        selector: 'app-comments',
-        template: __webpack_require__(/*! ./comments.component.html */ "./src/app/dj-view/comments/comments.component.html"),
-        styles: [__webpack_require__(/*! ./comments.component.css */ "./src/app/dj-view/comments/comments.component.css")]
+        selector: 'app-chat',
+        template: __webpack_require__(/*! ./chat.component.html */ "./src/app/chat/chat.component.html"),
+        styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/chat/chat.component.css")]
     }),
     __metadata("design:paramtypes", [chat_service_1.ChatService])
-], CommentsComponent);
-exports.CommentsComponent = CommentsComponent;
+], ChatComponent);
+exports.ChatComponent = ChatComponent;
 
 
 /***/ }),
@@ -169,7 +103,6 @@ const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular
 const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj-view/main/main.component.ts");
 const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj-view/search/search.component.ts");
-const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/dj-view/comment/comment.component.ts");
 const admin_guard_1 = __webpack_require__(/*! ../auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const routes = [
     {
@@ -180,11 +113,6 @@ const routes = [
     {
         path: "song-search",
         component: search_component_1.SearchComponent,
-        canActivate: [admin_guard_1.AdminGuard]
-    },
-    {
-        path: "dj-comment",
-        component: comment_component_1.CommentComponent,
         canActivate: [admin_guard_1.AdminGuard]
     }
 ];
@@ -220,17 +148,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
 const dj_view_routing_module_1 = __webpack_require__(/*! ./dj-view-routing.module */ "./src/app/dj-view/dj-view-routing.module.ts");
-const comments_component_1 = __webpack_require__(/*! ./comments/comments.component */ "./src/app/dj-view/comments/comments.component.ts");
 const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/dj-view/soundplayer/soundplayer.component.ts");
 const profile_component_1 = __webpack_require__(/*! ./profile/profile.component */ "./src/app/dj-view/profile/profile.component.ts");
 const main_component_1 = __webpack_require__(/*! ./main/main.component */ "./src/app/dj-view/main/main.component.ts");
 const search_component_1 = __webpack_require__(/*! ./search/search.component */ "./src/app/dj-view/search/search.component.ts");
-const comment_component_1 = __webpack_require__(/*! ./comment/comment.component */ "./src/app/dj-view/comment/comment.component.ts");
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/opentok.service.ts");
 const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/dj-view/tokbox/app.component.ts");
 const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/dj-view/tokbox/subscriber/subscriber.component.ts");
 const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj-view/tokbox/publisher/publisher.component.ts");
+const chat_component_1 = __webpack_require__(/*! ../chat/chat.component */ "./src/app/chat/chat.component.ts");
 let DjViewModule = class DjViewModule {
 };
 DjViewModule = __decorate([
@@ -240,7 +167,16 @@ DjViewModule = __decorate([
             dj_view_routing_module_1.DjViewRoutingModule,
             forms_1.FormsModule,
         ],
-        declarations: [comments_component_1.CommentsComponent, soundplayer_component_1.SoundplayerComponent, profile_component_1.ProfileComponent, main_component_1.MainComponent, search_component_1.SearchComponent, comment_component_1.CommentComponent, app_component_1.AppComponent, subscriber_component_1.SubscriberComponent, publisher_component_1.PublisherComponent],
+        declarations: [
+            soundplayer_component_1.SoundplayerComponent,
+            profile_component_1.ProfileComponent,
+            main_component_1.MainComponent,
+            search_component_1.SearchComponent,
+            app_component_1.AppComponent,
+            subscriber_component_1.SubscriberComponent,
+            publisher_component_1.PublisherComponent,
+            chat_component_1.ChatComponent
+        ],
         providers: [opentok_service_1.OpentokService]
     })
 ], DjViewModule);
@@ -267,7 +203,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n\n    </div>\n\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-comments></app-comments>\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
+module.exports = "<<<<<<< HEAD\n<router-outlet></router-outlet>\n<div>\n  <app-profile></app-profile>\n</div>\n<div>\n  <app-soundplayer></app-soundplayer>\n</div>\n<div>\n  <app-chat></app-chat>\n  <dj-tokbox></dj-tokbox>\n</div>\n<div>\n  <button routerLink=\"dj-comment\" >comment</button>\n</div>\n<div>\n  <button routerLink=\"song-search\">add-song</button>\n=======\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n\n    </div>\n\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-comments></app-comments>\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n>>>>>>> ffd478a0429cd77bd8e40bc5c1a16b2eac35ae2e\n</div>"
 
 /***/ }),
 

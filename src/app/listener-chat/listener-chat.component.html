@@ -1,0 +1,10 @@
+<ul>
+  <li *ngFor="let message of chatMessages">
+    <b>{{message.userName}} {{message.lastName}}:</b>
+    <p>{{message.message}}</p>
+  </li>
+</ul>
+
+<input type="text" [(ngModel)]="messageToSend">
+<button (click)="sendChatMessage()">Send!</button>
+<button class="btun" (click)="getMessage()">get</button>

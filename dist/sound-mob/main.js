@@ -190,6 +190,7 @@ const auth_guard_1 = __webpack_require__(/*! ./auth/guards/auth.guard */ "./src/
 const admin_guard_1 = __webpack_require__(/*! ./auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const chat_service_1 = __webpack_require__(/*! ./chat.service */ "./src/app/chat.service.ts");
 const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/opentok.service.ts");
+// import { YoutubePipe } from './youtube.pipe';
 //angular material components
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { MatCheckboxModule } from '@angular/material';
@@ -467,7 +468,6 @@ let ChatService = class ChatService {
                 observer.next(data);
             });
         });
-        console.log(observable);
         return observable;
     }
 };
@@ -621,12 +621,8 @@ let LandingComponent = class LandingComponent {
     }
     login() {
         console.log('yup');
-        // window.location.href="/auth"
-        //  this.http.get('/auth')
-        //   .subscribe(
-        //     data => console.log(data)
-        //   )
-        // window.open('/api/login', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
+        this.http.get('/auth')
+            .subscribe(data => console.log(data));
     }
 };
 LandingComponent = __decorate([
