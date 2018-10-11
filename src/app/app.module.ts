@@ -15,6 +15,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { AdminGuard } from './auth/guards/admin.guard';
 import { ChatService } from "./chat.service";
 import { OpentokService } from './opentok.service';
+// import { YoutubePipe } from './youtube.pipe';
 
 
 
@@ -58,6 +59,7 @@ import { OpentokService } from './opentok.service';
     AppComponent,
     HomeComponent,
     LandingComponent,
+    // YoutubePipe,
   ],
   imports: [
     BrowserModule,

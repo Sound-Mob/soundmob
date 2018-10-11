@@ -126,6 +126,7 @@ const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src
 const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/king/tokbox/publisher/publisher.component.ts");
 const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/king/tokbox/subscriber/subscriber.component.ts");
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+const youtube_pipe_1 = __webpack_require__(/*! ../youtube.pipe */ "./src/app/youtube.pipe.ts");
 const listener_chat_component_1 = __webpack_require__(/*! ../listener-chat/listener-chat.component */ "./src/app/listener-chat/listener-chat.component.ts");
 let KingModule = class KingModule {
 };
@@ -143,6 +144,7 @@ KingModule = __decorate([
             app_component_1.AppComponent,
             subscriber_component_1.SubscriberComponent,
             publisher_component_1.PublisherComponent,
+            youtube_pipe_1.YoutubePipe,
             listener_chat_component_1.ListenerChatComponent
         ]
     })
@@ -230,7 +232,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\">\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>"
+module.exports = "<div>\n\n  <iframe id='paysonContainer' src=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -255,7 +257,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor() { }
+    constructor() {
+        // videos: any[] = [
+        //   {
+        //     title: 'mazda',
+        //     video: 'https://www.youtube.com/watch?v=Z71tcJtgfN8'
+        //   },
+        //   {
+        //     title: 'honda',
+        //     video: 'https://www.youtube.com/watch?v=B4iz-VVap1w'
+        //   }
+        // ]
+        this.video = 'https://www.youtube.com/watch?v=Z71tcJtgfN8';
+    }
     ngOnInit() {
     }
 };
@@ -674,6 +688,46 @@ ListenerChatComponent = __decorate([
     __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], ListenerChatComponent);
 exports.ListenerChatComponent = ListenerChatComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/youtube.pipe.ts":
+/*!*********************************!*\
+  !*** ./src/app/youtube.pipe.ts ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const platform_browser_1 = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+let YoutubePipe = class YoutubePipe {
+    constructor(dom) {
+        this.dom = dom;
+    }
+    transform(value, args) {
+        return this.dom.bypassSecurityTrustResourceUrl(value);
+    }
+};
+YoutubePipe = __decorate([
+    core_1.Pipe({
+        name: 'youtube'
+    }),
+    __metadata("design:paramtypes", [platform_browser_1.DomSanitizer])
+], YoutubePipe);
+exports.YoutubePipe = YoutubePipe;
 
 
 /***/ })
