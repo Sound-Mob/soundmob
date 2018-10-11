@@ -42,7 +42,7 @@ exports.PostsRoutingModule = PostsRoutingModule;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{\n  background: white;\n}\nnav li {\n  display: inline-block;\n  padding: 31px 18px\n\n}\nul {\n  list-style: none;\n}\n.img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n}\n"
 
 /***/ }),
 
@@ -53,7 +53,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<h1 *ngIf=\"show\" else elseBlock>Loading...</h1>\n<p>{{data | json}}</p>\n\n<ul #elseBlock>\n  <li *ngFor=\"let person of data\">{{perso}}</li>\n</ul>\n\n\n<button routerLink=\"/dj-view\">Create Station</button>\n<router-outlet></router-outlet>\n"
+module.exports = "<!-- <h1 *ngIf=\"show\" else elseBlock>Loading...</h1>\n<p>{{data | json}}</p>\n\n<ul #elseBlock>\n  <li *ngFor=\"let person of data\">{{person}}</li>\n</ul> -->\n\n\n\n<router-outlet></router-outlet>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n        </div>\n        <div class=\"col-md-4\" align=\"center\">\n          <br>\n          pass in the profiles here\n          <br>\n          <button routerLink=\"/dj-view\">Create Station</button>\n        </div>\n        <div class=\"col-md-4\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 

@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 
-import { AppRoutingModule } from ".//app-routing.module";
+import { AppRoutingModule } from "./app-routing.module";
 import { LandingComponent } from './home/landing/landing.component';
 
 import { AuthService } from './auth/auth.service';
@@ -64,7 +64,7 @@ import { OpentokService } from './opentok.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule,  
+    HttpModule,
     FormsModule,
     HttpClientModule
     //begin import of angular material
@@ -106,4 +106,4 @@ import { OpentokService } from './opentok.service';
   providers: [AuthGuard, AuthService, AdminGuard, ChatService, OpentokService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
