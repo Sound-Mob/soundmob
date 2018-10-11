@@ -14,10 +14,9 @@ export class SoundplayerComponent implements OnInit {
 
   ngOnInit() {
 
-
     // this.http.get('/test')
     //   .subscribe(({ items }) => {
-    //     //console.log(data);
+    //     console.log(items);
     //     // let { items } = data;
     //     return items.map(item => (
     //       this.soundBoardMediaInformation.push({

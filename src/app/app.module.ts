@@ -13,8 +13,8 @@ import { LandingComponent } from './home/landing/landing.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { AdminGuard } from './auth/guards/admin.guard';
-import { ChatService } from "./chat.service";
-import { OpentokService } from './opentok.service';
+import { ChatService } from "./services/chat.service";
+import { OpentokService } from './services/opentok.service';
 // import { YoutubePipe } from './youtube.pipe';
 
 

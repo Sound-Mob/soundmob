@@ -1,66 +1,31 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-king-king-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["app-listener-listener-module"],{
 
-/***/ "./src/app/king/king-routing.module.ts":
-/*!*********************************************!*\
-  !*** ./src/app/king/king-routing.module.ts ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-const king_component_1 = __webpack_require__(/*! ./king.component */ "./src/app/king/king.component.ts");
-const routes = [
-    { path: '', component: king_component_1.KingComponent },
-];
-let KingRoutingModule = class KingRoutingModule {
-};
-KingRoutingModule = __decorate([
-    core_1.NgModule({
-        imports: [router_1.RouterModule.forChild(routes)],
-        exports: [router_1.RouterModule]
-    })
-], KingRoutingModule);
-exports.KingRoutingModule = KingRoutingModule;
-
-
-/***/ }),
-
-/***/ "./src/app/king/king.component.css":
-/*!*****************************************!*\
-  !*** ./src/app/king/king.component.css ***!
-  \*****************************************/
+/***/ "./src/app/listener/listener-chat/listener-chat.component.css":
+/*!********************************************************************!*\
+  !*** ./src/app/listener/listener-chat/listener-chat.component.css ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "#listenertok {\n  display: none;\n}"
+module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/king/king.component.html":
-/*!******************************************!*\
-  !*** ./src/app/king/king.component.html ***!
-  \******************************************/
+/***/ "./src/app/listener/listener-chat/listener-chat.component.html":
+/*!*********************************************************************!*\
+  !*** ./src/app/listener/listener-chat/listener-chat.component.html ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
 
 /***/ }),
 
-/***/ "./src/app/king/king.component.ts":
-/*!****************************************!*\
-  !*** ./src/app/king/king.component.ts ***!
-  \****************************************/
+/***/ "./src/app/listener/listener-chat/listener-chat.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/listener/listener-chat/listener-chat.component.ts ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -77,7 +42,125 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-let KingComponent = class KingComponent {
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
+let ListenerChatComponent = class ListenerChatComponent {
+    constructor(chatService) {
+        this.chatService = chatService;
+        this.messageToSend = '';
+        this.values = '';
+        this.chatMessages = [];
+        this.chatService.receiveMessages()
+            .subscribe(data => {
+            if (this.chatMessages.length > 10) {
+                this.chatMessages.pop();
+            }
+            this.chatMessages.unshift(data);
+        });
+    }
+    ngOnInit() {
+        this.chatService.createRoom('123ween23');
+    }
+    sendChatMessage() {
+        const { messageToSend } = this;
+        this.chatService.sendMessage(messageToSend);
+        this.messageToSend = "";
+    }
+    getMessage() {
+        this.chatService.receiveMessages()
+            .subscribe(data => console.log(data));
+    }
+};
+ListenerChatComponent = __decorate([
+    core_1.Component({
+        selector: 'app-listener-chat',
+        template: __webpack_require__(/*! ./listener-chat.component.html */ "./src/app/listener/listener-chat/listener-chat.component.html"),
+        styles: [__webpack_require__(/*! ./listener-chat.component.css */ "./src/app/listener/listener-chat/listener-chat.component.css")]
+    }),
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
+], ListenerChatComponent);
+exports.ListenerChatComponent = ListenerChatComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/listener/listener-routing.module.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/listener/listener-routing.module.ts ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+const listener_component_1 = __webpack_require__(/*! ./listener.component */ "./src/app/listener/listener.component.ts");
+const routes = [
+    { path: '', component: listener_component_1.ListenerComponent },
+];
+let ListenerRoutingModule = class ListenerRoutingModule {
+};
+ListenerRoutingModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.RouterModule.forChild(routes)],
+        exports: [router_1.RouterModule]
+    })
+], ListenerRoutingModule);
+exports.ListenerRoutingModule = ListenerRoutingModule;
+
+
+/***/ }),
+
+/***/ "./src/app/listener/listener.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/listener/listener.component.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "#listenertok {\n  display: none;\n}"
+
+/***/ }),
+
+/***/ "./src/app/listener/listener.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/listener/listener.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<router-outlet></router-outlet>\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/listener/listener.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/listener/listener.component.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let ListenerComponent = class ListenerComponent {
     constructor() {
     }
     ngOnInit() {
@@ -86,24 +169,24 @@ let KingComponent = class KingComponent {
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)
-], KingComponent.prototype, "sai", void 0);
-KingComponent = __decorate([
+], ListenerComponent.prototype, "sai", void 0);
+ListenerComponent = __decorate([
     core_1.Component({
         selector: 'app-king',
-        template: __webpack_require__(/*! ./king.component.html */ "./src/app/king/king.component.html"),
-        styles: [__webpack_require__(/*! ./king.component.css */ "./src/app/king/king.component.css")]
+        template: __webpack_require__(/*! ./listener.component.html */ "./src/app/listener/listener.component.html"),
+        styles: [__webpack_require__(/*! ./listener.component.css */ "./src/app/listener/listener.component.css")]
     }),
     __metadata("design:paramtypes", [])
-], KingComponent);
-exports.KingComponent = KingComponent;
+], ListenerComponent);
+exports.ListenerComponent = ListenerComponent;
 
 
 /***/ }),
 
-/***/ "./src/app/king/king.module.ts":
-/*!*************************************!*\
-  !*** ./src/app/king/king.module.ts ***!
-  \*************************************/
+/***/ "./src/app/listener/listener.module.ts":
+/*!*********************************************!*\
+  !*** ./src/app/listener/listener.module.ts ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -118,27 +201,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-const king_routing_module_1 = __webpack_require__(/*! ./king-routing.module */ "./src/app/king/king-routing.module.ts");
-const king_component_1 = __webpack_require__(/*! ./king.component */ "./src/app/king/king.component.ts");
-const profile_component_1 = __webpack_require__(/*! ./profile/profile.component */ "./src/app/king/profile/profile.component.ts");
-const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/king/soundplayer/soundplayer.component.ts");
-const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/king/tokbox/app.component.ts");
-const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/king/tokbox/publisher/publisher.component.ts");
-const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/king/tokbox/subscriber/subscriber.component.ts");
+const listener_routing_module_1 = __webpack_require__(/*! ./listener-routing.module */ "./src/app/listener/listener-routing.module.ts");
+const listener_component_1 = __webpack_require__(/*! ./listener.component */ "./src/app/listener/listener.component.ts");
+const profile_component_1 = __webpack_require__(/*! ./profile/profile.component */ "./src/app/listener/profile/profile.component.ts");
+const soundplayer_component_1 = __webpack_require__(/*! ./soundplayer/soundplayer.component */ "./src/app/listener/soundplayer/soundplayer.component.ts");
+const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src/app/listener/tokbox/app.component.ts");
+const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/listener/tokbox/publisher/publisher.component.ts");
+const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/listener/tokbox/subscriber/subscriber.component.ts");
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-const youtube_pipe_1 = __webpack_require__(/*! ../youtube.pipe */ "./src/app/youtube.pipe.ts");
-const listener_chat_component_1 = __webpack_require__(/*! ../listener-chat/listener-chat.component */ "./src/app/listener-chat/listener-chat.component.ts");
-let KingModule = class KingModule {
+const listener_chat_component_1 = __webpack_require__(/*! ./listener-chat/listener-chat.component */ "./src/app/listener/listener-chat/listener-chat.component.ts");
+const youtube_pipe_1 = __webpack_require__(/*! ../pipes/youtube.pipe */ "./src/app/pipes/youtube.pipe.ts");
+let ListenerModule = class ListenerModule {
 };
-KingModule = __decorate([
+ListenerModule = __decorate([
     core_1.NgModule({
         imports: [
             common_1.CommonModule,
-            king_routing_module_1.KingRoutingModule,
+            listener_routing_module_1.ListenerRoutingModule,
             forms_1.FormsModule,
         ],
         declarations: [
-            king_component_1.KingComponent,
+            listener_component_1.ListenerComponent,
             profile_component_1.ProfileComponent,
             soundplayer_component_1.SoundplayerComponent,
             app_component_1.AppComponent,
@@ -148,16 +231,16 @@ KingModule = __decorate([
             listener_chat_component_1.ListenerChatComponent
         ]
     })
-], KingModule);
-exports.KingModule = KingModule;
+], ListenerModule);
+exports.ListenerModule = ListenerModule;
 
 
 /***/ }),
 
-/***/ "./src/app/king/profile/profile.component.css":
-/*!****************************************************!*\
-  !*** ./src/app/king/profile/profile.component.css ***!
-  \****************************************************/
+/***/ "./src/app/listener/profile/profile.component.css":
+/*!********************************************************!*\
+  !*** ./src/app/listener/profile/profile.component.css ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -165,10 +248,10 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 
 /***/ }),
 
-/***/ "./src/app/king/profile/profile.component.html":
-/*!*****************************************************!*\
-  !*** ./src/app/king/profile/profile.component.html ***!
-  \*****************************************************/
+/***/ "./src/app/listener/profile/profile.component.html":
+/*!*********************************************************!*\
+  !*** ./src/app/listener/profile/profile.component.html ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -176,10 +259,10 @@ module.exports = "<div id=\"container_image\" class=\"profile-block\">\n  <img a
 
 /***/ }),
 
-/***/ "./src/app/king/profile/profile.component.ts":
-/*!***************************************************!*\
-  !*** ./src/app/king/profile/profile.component.ts ***!
-  \***************************************************/
+/***/ "./src/app/listener/profile/profile.component.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/listener/profile/profile.component.ts ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -204,8 +287,8 @@ let ProfileComponent = class ProfileComponent {
 ProfileComponent = __decorate([
     core_1.Component({
         selector: 'app-profile',
-        template: __webpack_require__(/*! ./profile.component.html */ "./src/app/king/profile/profile.component.html"),
-        styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/king/profile/profile.component.css")]
+        template: __webpack_require__(/*! ./profile.component.html */ "./src/app/listener/profile/profile.component.html"),
+        styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/listener/profile/profile.component.css")]
     }),
     __metadata("design:paramtypes", [])
 ], ProfileComponent);
@@ -214,10 +297,10 @@ exports.ProfileComponent = ProfileComponent;
 
 /***/ }),
 
-/***/ "./src/app/king/soundplayer/soundplayer.component.css":
-/*!************************************************************!*\
-  !*** ./src/app/king/soundplayer/soundplayer.component.css ***!
-  \************************************************************/
+/***/ "./src/app/listener/soundplayer/soundplayer.component.css":
+/*!****************************************************************!*\
+  !*** ./src/app/listener/soundplayer/soundplayer.component.css ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -225,21 +308,21 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 
 /***/ }),
 
-/***/ "./src/app/king/soundplayer/soundplayer.component.html":
-/*!*************************************************************!*\
-  !*** ./src/app/king/soundplayer/soundplayer.component.html ***!
-  \*************************************************************/
+/***/ "./src/app/listener/soundplayer/soundplayer.component.html":
+/*!*****************************************************************!*\
+  !*** ./src/app/listener/soundplayer/soundplayer.component.html ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n\n  <iframe id='paysonContainer' src=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
+module.exports = "<div>\n\n  <iframe id='paysonContainer' [src]=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
-/***/ "./src/app/king/soundplayer/soundplayer.component.ts":
-/*!***********************************************************!*\
-  !*** ./src/app/king/soundplayer/soundplayer.component.ts ***!
-  \***********************************************************/
+/***/ "./src/app/listener/soundplayer/soundplayer.component.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/listener/soundplayer/soundplayer.component.ts ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -258,17 +341,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 let SoundplayerComponent = class SoundplayerComponent {
     constructor() {
-        // videos: any[] = [
-        //   {
-        //     title: 'mazda',
-        //     video: 'https://www.youtube.com/watch?v=Z71tcJtgfN8'
-        //   },
-        //   {
-        //     title: 'honda',
-        //     video: 'https://www.youtube.com/watch?v=B4iz-VVap1w'
-        //   }
-        // ]
-        this.video = 'https://www.youtube.com/watch?v=Z71tcJtgfN8';
+        this.videos = [
+            {
+                title: 'mazda',
+                video: 'https://www.youtube.com/embed/3lX50Lh2Iec'
+            },
+            {
+                title: 'honda',
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ'
+            }
+        ];
+        this.video = this.videos[0].video;
     }
     ngOnInit() {
     }
@@ -276,8 +359,8 @@ let SoundplayerComponent = class SoundplayerComponent {
 SoundplayerComponent = __decorate([
     core_1.Component({
         selector: 'app-soundplayer',
-        template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/king/soundplayer/soundplayer.component.html"),
-        styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/king/soundplayer/soundplayer.component.css")]
+        template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/listener/soundplayer/soundplayer.component.html"),
+        styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/listener/soundplayer/soundplayer.component.css")]
     }),
     __metadata("design:paramtypes", [])
 ], SoundplayerComponent);
@@ -286,10 +369,10 @@ exports.SoundplayerComponent = SoundplayerComponent;
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/app.component.css":
-/*!***********************************************!*\
-  !*** ./src/app/king/tokbox/app.component.css ***!
-  \***********************************************/
+/***/ "./src/app/listener/tokbox/app.component.css":
+/*!***************************************************!*\
+  !*** ./src/app/listener/tokbox/app.component.css ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -297,10 +380,10 @@ module.exports = "app-publisher, app-subscriber {\n  display: block;\n  float: l
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/app.component.html":
-/*!************************************************!*\
-  !*** ./src/app/king/tokbox/app.component.html ***!
-  \************************************************/
+/***/ "./src/app/listener/tokbox/app.component.html":
+/*!****************************************************!*\
+  !*** ./src/app/listener/tokbox/app.component.html ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -308,10 +391,10 @@ module.exports = "<h1>{{title}}</h1>\n<div *ngIf=\"session\">\n  <!-- <app-publi
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/app.component.ts":
-/*!**********************************************!*\
-  !*** ./src/app/king/tokbox/app.component.ts ***!
-  \**********************************************/
+/***/ "./src/app/listener/tokbox/app.component.ts":
+/*!**************************************************!*\
+  !*** ./src/app/listener/tokbox/app.component.ts ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -328,7 +411,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/king/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/listener/tokbox/opentok.service.ts");
 let AppComponent = class AppComponent {
     constructor(ref, opentokService) {
         this.ref = ref;
@@ -362,8 +445,8 @@ let AppComponent = class AppComponent {
 AppComponent = __decorate([
     core_1.Component({
         selector: 'app-tokbox',
-        template: __webpack_require__(/*! ./app.component.html */ "./src/app/king/tokbox/app.component.html"),
-        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/king/tokbox/app.component.css")],
+        template: __webpack_require__(/*! ./app.component.html */ "./src/app/listener/tokbox/app.component.html"),
+        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/listener/tokbox/app.component.css")],
         providers: [opentok_service_1.OpentokService]
     }),
     __metadata("design:paramtypes", [core_1.ChangeDetectorRef, opentok_service_1.OpentokService])
@@ -373,10 +456,10 @@ exports.AppComponent = AppComponent;
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/opentok.service.ts":
-/*!************************************************!*\
-  !*** ./src/app/king/tokbox/opentok.service.ts ***!
-  \************************************************/
+/***/ "./src/app/listener/tokbox/opentok.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/listener/tokbox/opentok.service.ts ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -438,10 +521,10 @@ exports.OpentokService = OpentokService;
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/publisher/publisher.component.css":
-/*!***************************************************************!*\
-  !*** ./src/app/king/tokbox/publisher/publisher.component.css ***!
-  \***************************************************************/
+/***/ "./src/app/listener/tokbox/publisher/publisher.component.css":
+/*!*******************************************************************!*\
+  !*** ./src/app/listener/tokbox/publisher/publisher.component.css ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -449,10 +532,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/publisher/publisher.component.html":
-/*!****************************************************************!*\
-  !*** ./src/app/king/tokbox/publisher/publisher.component.html ***!
-  \****************************************************************/
+/***/ "./src/app/listener/tokbox/publisher/publisher.component.html":
+/*!********************************************************************!*\
+  !*** ./src/app/listener/tokbox/publisher/publisher.component.html ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -460,10 +543,10 @@ module.exports = "<div [ngClass]=\"{'publishing': publishing}\" #publisherDiv></
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/publisher/publisher.component.ts":
-/*!**************************************************************!*\
-  !*** ./src/app/king/tokbox/publisher/publisher.component.ts ***!
-  \**************************************************************/
+/***/ "./src/app/listener/tokbox/publisher/publisher.component.ts":
+/*!******************************************************************!*\
+  !*** ./src/app/listener/tokbox/publisher/publisher.component.ts ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -480,7 +563,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/king/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/listener/tokbox/opentok.service.ts");
 const publish = () => {
 };
 let PublisherComponent = class PublisherComponent {
@@ -520,8 +603,8 @@ __decorate([
 PublisherComponent = __decorate([
     core_1.Component({
         selector: 'app-publisher',
-        template: __webpack_require__(/*! ./publisher.component.html */ "./src/app/king/tokbox/publisher/publisher.component.html"),
-        styles: [__webpack_require__(/*! ./publisher.component.css */ "./src/app/king/tokbox/publisher/publisher.component.css")]
+        template: __webpack_require__(/*! ./publisher.component.html */ "./src/app/listener/tokbox/publisher/publisher.component.html"),
+        styles: [__webpack_require__(/*! ./publisher.component.css */ "./src/app/listener/tokbox/publisher/publisher.component.css")]
     }),
     __metadata("design:paramtypes", [opentok_service_1.OpentokService])
 ], PublisherComponent);
@@ -530,10 +613,10 @@ exports.PublisherComponent = PublisherComponent;
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/subscriber/subscriber.component.css":
-/*!*****************************************************************!*\
-  !*** ./src/app/king/tokbox/subscriber/subscriber.component.css ***!
-  \*****************************************************************/
+/***/ "./src/app/listener/tokbox/subscriber/subscriber.component.css":
+/*!*********************************************************************!*\
+  !*** ./src/app/listener/tokbox/subscriber/subscriber.component.css ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -541,10 +624,10 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/subscriber/subscriber.component.html":
-/*!******************************************************************!*\
-  !*** ./src/app/king/tokbox/subscriber/subscriber.component.html ***!
-  \******************************************************************/
+/***/ "./src/app/listener/tokbox/subscriber/subscriber.component.html":
+/*!**********************************************************************!*\
+  !*** ./src/app/listener/tokbox/subscriber/subscriber.component.html ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -552,10 +635,10 @@ module.exports = "<div #subscriberDiv></div>\n"
 
 /***/ }),
 
-/***/ "./src/app/king/tokbox/subscriber/subscriber.component.ts":
-/*!****************************************************************!*\
-  !*** ./src/app/king/tokbox/subscriber/subscriber.component.ts ***!
-  \****************************************************************/
+/***/ "./src/app/listener/tokbox/subscriber/subscriber.component.ts":
+/*!********************************************************************!*\
+  !*** ./src/app/listener/tokbox/subscriber/subscriber.component.ts ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -599,8 +682,8 @@ __decorate([
 SubscriberComponent = __decorate([
     core_1.Component({
         selector: 'app-subscriber',
-        template: __webpack_require__(/*! ./subscriber.component.html */ "./src/app/king/tokbox/subscriber/subscriber.component.html"),
-        styles: [__webpack_require__(/*! ./subscriber.component.css */ "./src/app/king/tokbox/subscriber/subscriber.component.css")]
+        template: __webpack_require__(/*! ./subscriber.component.html */ "./src/app/listener/tokbox/subscriber/subscriber.component.html"),
+        styles: [__webpack_require__(/*! ./subscriber.component.css */ "./src/app/listener/tokbox/subscriber/subscriber.component.css")]
     }),
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
@@ -609,93 +692,10 @@ exports.SubscriberComponent = SubscriberComponent;
 
 /***/ }),
 
-/***/ "./src/app/listener-chat/listener-chat.component.css":
-/*!***********************************************************!*\
-  !*** ./src/app/listener-chat/listener-chat.component.css ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/listener-chat/listener-chat.component.html":
-/*!************************************************************!*\
-  !*** ./src/app/listener-chat/listener-chat.component.html ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
-
-/***/ }),
-
-/***/ "./src/app/listener-chat/listener-chat.component.ts":
-/*!**********************************************************!*\
-  !*** ./src/app/listener-chat/listener-chat.component.ts ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const chat_service_1 = __webpack_require__(/*! ../chat.service */ "./src/app/chat.service.ts");
-let ListenerChatComponent = class ListenerChatComponent {
-    constructor(chatService) {
-        this.chatService = chatService;
-        this.messageToSend = '';
-        this.values = '';
-        this.chatMessages = [];
-        this.chatService.receiveMessages()
-            .subscribe(data => {
-            if (this.chatMessages.length > 10) {
-                this.chatMessages.pop();
-            }
-            this.chatMessages.unshift(data);
-        });
-    }
-    ngOnInit() {
-        this.chatService.createRoom('123ween23');
-    }
-    sendChatMessage() {
-        const { messageToSend } = this;
-        this.chatService.sendMessage(messageToSend);
-        this.messageToSend = "";
-    }
-    getMessage() {
-        this.chatService.receiveMessages()
-            .subscribe(data => console.log(data));
-    }
-};
-ListenerChatComponent = __decorate([
-    core_1.Component({
-        selector: 'app-listener-chat',
-        template: __webpack_require__(/*! ./listener-chat.component.html */ "./src/app/listener-chat/listener-chat.component.html"),
-        styles: [__webpack_require__(/*! ./listener-chat.component.css */ "./src/app/listener-chat/listener-chat.component.css")]
-    }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
-], ListenerChatComponent);
-exports.ListenerChatComponent = ListenerChatComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/youtube.pipe.ts":
-/*!*********************************!*\
-  !*** ./src/app/youtube.pipe.ts ***!
-  \*********************************/
+/***/ "./src/app/pipes/youtube.pipe.ts":
+/*!***************************************!*\
+  !*** ./src/app/pipes/youtube.pipe.ts ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -733,4 +733,4 @@ exports.YoutubePipe = YoutubePipe;
 /***/ })
 
 }]);
-//# sourceMappingURL=app-king-king-module.js.map
+//# sourceMappingURL=app-listener-listener-module.js.map

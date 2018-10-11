@@ -2,11 +2,11 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 
-import {KingComponent} from './king.component';
+import {ListenerComponent} from './listener.component';
 
 
 const routes:Routes=[
-    {path:'',component: KingComponent},
+    {path:'',component: ListenerComponent},
 ]
 
 
@@ -15,4 +15,4 @@ const routes:Routes=[
     exports:[RouterModule]
 })
 
-export class KingRoutingModule{}
+export class ListenerRoutingModule{}
