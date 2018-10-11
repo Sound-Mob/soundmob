@@ -50,7 +50,7 @@ ul {
     width: auto;
     height: 350px;
     overflow: hidden;
-    /* background-color: black; */
+    background-color: black;
 }
 
 #main_image{
@@ -238,6 +238,8 @@ font-weight: 300;
 }
 
 .breadcrumb {
+      width: 100%;
+      display: block;
       background-color: white;
 }
 

@@ -581,7 +581,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n        </div>\n        <div class=\"col-md-4\" align=\"center\">\n          <h3>\n            Sound Mob\n          </h3><img alt=\"Bootstrap Image Preview\" src=\"https://operationspark.org/assets/images/Robot-Mascot.png\"\n            height=\"350\" />\n          <br>\n          <br>\n          <button type=\"button\" class=\"btn btn-success\" routerLink=\"/posts\" routerLinkActive=\"active\">\n            Button\n          </button>\n        </div>\n        <div class=\"col-md-4\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n        </div>\n        <div class=\"col-md-4\" align=\"center\">\n          <h3>\n            Sound Mob\n          </h3><img alt=\"Bootstrap Image Preview\" src=\"https://operationspark.org/assets/images/Robot-Mascot.png\"\n            height=\"350\" />\n          <br>\n          <br>\n          <button type=\"button\" class=\"btn btn-success\" routerLink=\"/posts\" routerLinkActive=\"active\">\n            <a href=\"/auth\">Sign In with Google</a>\n          </button>\n        </div>\n        <div class=\"col-md-4\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -620,10 +620,12 @@ let LandingComponent = class LandingComponent {
         // }) 
     }
     login() {
-        console.log('yup');
-        // window.location.href="/auth"
-        this.http.get('/auth')
-            .subscribe(data => console.log(data));
+        //   console.log('yup');
+        // // window.location.href="/auth"
+        //   this.http.get('/auth')
+        //   .subscribe(
+        //     data => console.log(data)
+        //   )
         // window.open('/api/login', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
     }
 };

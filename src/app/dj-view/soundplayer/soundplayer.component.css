@@ -15,3 +15,9 @@
     width: auto;
     display: block;
 }
+
+#soundboard-button{
+    background-color: rgb(0, 0, 0, 0.10);
+    padding: 1em;
+    margin: 1em;
+}

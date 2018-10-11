@@ -53,7 +53,7 @@ module.exports = "#listenertok {\n  display: none;\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<<<<<<< HEAD\n<router-outlet></router-outlet>\n<app-profile></app-profile>\n<app-soundplayer></app-soundplayer>\n<app-listener-chat></app-listener-chat>\n<app-tokbox id=\"listenertok\"></app-tokbox>\n=======\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n\n    </div>\n\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-comments></app-comments>\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>\n>>>>>>> ffd478a0429cd77bd8e40bc5c1a16b2eac35ae2e\n"
+module.exports = "<router-outlet></router-outlet>\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
