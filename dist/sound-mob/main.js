@@ -620,9 +620,13 @@ let LandingComponent = class LandingComponent {
         // }) 
     }
     login() {
-        console.log('yup');
-        this.http.get('/auth')
-            .subscribe(data => console.log(data));
+        //   console.log('yup');
+        // // window.location.href="/auth"
+        //   this.http.get('/auth')
+        //   .subscribe(
+        //     data => console.log(data)
+        //   )
+        // window.open('/api/login', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
     }
 };
 LandingComponent = __decorate([

@@ -53,11 +53,7 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-<<<<<<< HEAD
 module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n\n    </div>\n\n    <div class=\"col-sm-8\">\n\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
-=======
-module.exports = "<!-- <h1 *ngIf=\"show\" else elseBlock>Loading...</h1>\n<p>{{data | json}}</p>\n\n<ul #elseBlock>\n  <li *ngFor=\"let person of data\">{{person}}</li>\n</ul> -->\n\n\n\n<router-outlet></router-outlet>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n        </div>\n        <div class=\"col-md-4\" align=\"center\">\n          <br>\n          pass in the profiles here\n          <br>\n          <button routerLink=\"/dj-view\">Create Station</button>\n        </div>\n        <div class=\"col-md-4\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
->>>>>>> 411978a1645eac18bc6116dd2230e6468831ee88
 
 /***/ }),
 

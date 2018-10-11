@@ -539,11 +539,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/styles.css */"./src/styles.css");
-=======
-module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/styles.css */"./src/styles.css");
->>>>>>> 411978a1645eac18bc6116dd2230e6468831ee88
 
 
 /***/ })
