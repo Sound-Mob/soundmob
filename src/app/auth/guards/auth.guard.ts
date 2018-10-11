@@ -12,8 +12,7 @@ export class AuthGuard implements CanActivate {
     private auth: AuthService,
     private router: Router
   ) { }
-
-  canActivate(
+    canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       //redirect and return false
