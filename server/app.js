@@ -136,7 +136,7 @@ io.on('connection', (socket) => {
         console.log(room, 'in join room')
         io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
       }
-    }); 
+    });
   });
 
   // listen for username
@@ -156,7 +156,7 @@ io.on('connection', (socket) => {
     io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
     // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
-  
+
   // listen for users to leave
   socket.on('disconnect',  (data) => {
     // console.log(users, socket.name);

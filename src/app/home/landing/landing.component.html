@@ -1,19 +1,25 @@
 <router-outlet></router-outlet>
 
-<div>
-  <img src="https://operationspark.org/assets/images/Robot-Mascot.png" alt="hello">
-</div>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <button href="#" class="btn btn-secondary" (click)="test()">Button</button>
-      <button href="#" class="btn btn-secondary" (click)="login()">Login</button>
-      <a href="/auth">Sign In with Google</a>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4" align="center">
+          <h3>
+            Sound Mob
+          </h3><img alt="Bootstrap Image Preview" src="https://operationspark.org/assets/images/Robot-Mascot.png"
+            height="350" />
+          <br>
+          <br>
+          <button type="button" class="btn btn-success" routerLink="/posts" routerLinkActive="active">
+            Button
+          </button>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- <div>
-  <button (click)="login()">Login</button>
-</div> -->
-

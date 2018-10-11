@@ -13,7 +13,7 @@ export class PostsComponent implements OnInit {
   lastName = '';
   show: Boolean;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     // console.log('yupppy');
@@ -26,17 +26,7 @@ export class PostsComponent implements OnInit {
         }
       );
   }
-
-
-  // tester(){
-  //   console.log('yupppy');
-  //   return this.http.get('/tester')
-  //     .subscribe(
-  //       function(data) {
-  //         console.log(data);
-  //         this.data = data;
-  //         this.show = false
-  //       } 
-  //     );
-  // }
 }
+
+
+
