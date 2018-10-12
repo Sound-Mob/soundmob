@@ -53,7 +53,7 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n\n    </div>\n\n    <div class=\"col-sm-8\">\n\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
+module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n      <ul *ngFor=\"let dj of activeDj.djs\">\n        <li>\n          <img src={{dj.photo}}>\n          <a routerLink=\"/listener\" routerLinkActive=\"active\">\n          <p>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n          <p>{{dj.name.id}}</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-8\">\n\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -83,14 +83,11 @@ let FeaturedComponent = class FeaturedComponent {
     constructor(http, djList) {
         this.http = http;
         this.djList = djList;
-        this.data = [];
-        this.firstName = '';
-        this.lastName = '';
     }
     ngOnInit() {
         this.djList.liveDjReq();
         this.djList.liveDj()
-            .subscribe(data => console.log(data));
+            .subscribe((data) => this.activeDj = data);
     }
 };
 FeaturedComponent = __decorate([
