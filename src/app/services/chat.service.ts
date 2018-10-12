@@ -32,5 +32,9 @@ export class ChatService {
     return observable;
   }
 
+  joinRoom(djId) {
+    this.socket.emit('roomroute', djId)
+  }
+
 
 }

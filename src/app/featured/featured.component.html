@@ -9,9 +9,8 @@
       <ul *ngFor="let dj of activeDj.djs">
         <li>
           <img src={{dj.photo}}>
-          <a routerLink="/listener" routerLinkActive="active">
-          <p>{{dj.name.givenName}} {{dj.name.familyName}}</p>
-          <p>{{dj.name.id}}</p>
+          <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
+          <p id={{dj.id}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
           </a>
         </li>
       </ul>

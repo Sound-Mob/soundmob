@@ -27,7 +27,7 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chatService.createRoom('123ween23');
+    this.chatService.createRoom("hey");
   }
 
 
