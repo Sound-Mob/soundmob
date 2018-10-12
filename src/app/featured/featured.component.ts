@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { HttpHeaders } from '@angular/common/http'
 import { DjlistService } from "../services/djlist.service";
 import { ChatService } from "../services/chat.service";
+import { Socket } from "net";
 
 @Component({
   selector: "app-posts",
@@ -11,6 +12,7 @@ import { ChatService } from "../services/chat.service";
 })
 export class FeaturedComponent implements OnInit {
   activeDj: Object;
+  prop: string;
 
   
 
@@ -26,8 +28,9 @@ export class FeaturedComponent implements OnInit {
   }
 
   joinDj(event){
-    this.djJoin.joinRoom(event.target.id);
-    console.log(event.target.id, " google id");
+    let sockAndTok = event.target.id.split("---")
+    this.djJoin.joinRoom(sockAndTok[0]);
+    console.log(sockAndTok, " google id");
   }
 
 }
