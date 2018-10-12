@@ -12,7 +12,7 @@ export class DjlistService {
   constructor() { }
 
   liveDj() {
-    let observable = new Observable(observer => {
+    let observable = new Observable<{djs:Object}>(observer => {
       this.socket.on('djList', (data) => {
         console.log(data);
         observer.next(data);

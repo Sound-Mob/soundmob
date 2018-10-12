@@ -9,23 +9,21 @@ import { DjlistService } from "../services/djlist.service";
   styleUrls: ["./featured.component.css"]
 })
 export class FeaturedComponent implements OnInit {
-  data = [];
-  firstName = '';
-  lastName = '';
-  show: Boolean;
+  activeDj: Object;
+  djs;
+
+  
 
   constructor(private http: HttpClient, private djList: DjlistService) {
     
-   }
-   
-   
-   ngOnInit() {
-     this.djList.liveDjReq()
+  }
 
-     this.djList.liveDj()
-       .subscribe(data => console.log(data));
+  ngOnInit(){
+    this.djList.liveDjReq();
+
+    this.djList.liveDj()
+      .subscribe((data) => this.activeDj = data
+
+
   }
 }
-
-
-
