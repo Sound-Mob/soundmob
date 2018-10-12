@@ -9,13 +9,14 @@ import { HomeComponent } from "./home/home.component";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { LandingComponent } from './home/landing/landing.component';
-import { LoginComponent } from './home/login/login.component';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { AdminGuard } from './auth/guards/admin.guard';
-import { ChatService } from "./chat.service";
-import { OpentokService } from './opentok.service';
+import { ChatService } from "./services/chat.service";
+import { OpentokService } from './services/opentok.service';
+// import { YoutubePipe } from './youtube.pipe';
+
 
 
 
@@ -58,6 +59,7 @@ import { OpentokService } from './opentok.service';
     AppComponent,
     HomeComponent,
     LandingComponent,
+    // YoutubePipe,
   ],
   imports: [
     BrowserModule,

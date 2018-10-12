@@ -7,12 +7,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./soundplayer.component.css']
 })
 export class SoundplayerComponent implements OnInit {
+ 
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-
-   
 
   }
 

@@ -24,9 +24,9 @@ export class LandingComponent implements OnInit {
   }
 
   login() {
-    console.log('yup');
-    // window.location.href="/auth"
-    //  this.http.get('/auth')
+    //   console.log('yup');
+    // // window.location.href="/auth"
+    //   this.http.get('/auth')
     //   .subscribe(
     //     data => console.log(data)
     //   )

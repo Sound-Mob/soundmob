@@ -147,10 +147,15 @@ io.on('connection', (socket) => {
   socket.on('chat message',  (msg) => {
     const room = socket.rooms[socket.id];
     console.log(room, 'in chat')
-    io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
+    io.sockets.emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
+    // io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
     // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
 
+  // listen for sound request
+  socket.on('soundEmit', (data) => {
+    io.sockets.emit('soundRelay', data);
+  });
   // listen for users to leave
   socket.on('disconnect',  (data) => {
     // console.log(users, socket.name);
@@ -224,6 +229,7 @@ io.on('connection', (socket) => {
 });
 // session serializatoin
 passport.serializeUser((user, done) => {
+  console.log(user, done)
   done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
 });
