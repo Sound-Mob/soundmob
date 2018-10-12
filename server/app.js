@@ -7,10 +7,13 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-
+const OpenTok = require('opentok');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const config = require('./config');
+const { TOKEN } = config;
+const { API_KEY } = config;
 
 const authRoutes = require('./routes/auth-routes');
 
@@ -102,8 +105,7 @@ io.on('connection', (socket) => {
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
     socket.admin = true;
-    // add new dj to active dj list
-    djs.push({name: name, id: socket.id, photo: value });
+    
     io.sockets.emit('starttokbox');
     
     // sending dj room to client
@@ -113,8 +115,28 @@ io.on('connection', (socket) => {
     //   users.push(socket.name);
     //   io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
     // }
-   
+    
+    // make tok session
+    opentok = new OpenTok(API_KEY, 'd32d357fe3e5776a240d0a32cbb9edf5765f7405');
+    
+    var sessionId;
+    opentok.createSession({ mediaMode: "routed" }, (error, session) => {
+      if (error) {
+        console.log("Error creating session:", error)
+      } else {
+        sessionId = session.sessionId;
+        console.log("Session ID: " + sessionId);
+        console.log(session, " session")
+        let token = opentok.generateToken(sessionId);
+        io.sockets.emit('tokSession', sessionId, token);
+        // add new dj to active dj list
+        djs.push({ name, id: socket.id, photo: value, tokSession: sessionId });
+      }
+    });
   });
+
+ 
+
   const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
