@@ -26,18 +26,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.socket.on('tokSession', (data)=>{
-      console.log("tok heard", data);
-      this.sessionId = data;
-      this.fireSession(this.sessionId)
+    this.socket.on('tokSession', (sessionId, token)=>{
+      console.log("tok heard", sessionId);
+      this.sessionId = sessionId;
+      this.fireSession(this.sessionId, token)
     })
   }
   
-  fireSession(sessionId){
+  fireSession(sessionId, token){
     console.log(config, " in fire")
     console.log(sessionId, " in fire")
     const { API_KEY } = config;
-    this.opentokService.initSession(API_KEY ,sessionId)
+    console.log(token, " TOKEN in fire session")
+    this.opentokService.initSession(API_KEY ,sessionId, token)
       .then((sessionId: any) => {
         console.log(" in fire session callback")
         this.session = sessionId;

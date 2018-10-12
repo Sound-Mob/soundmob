@@ -16,14 +16,16 @@ export class OpentokService {
     return OT;
   }
   
-  initSession(apikey, sessionId) {
+  initSession(apikey, sessionId, token) {
     console.log(sessionId, " above conditinoal")
+    
       if (sessionId) {
-        console.log(sessionId, " in init sessino")
+        console.log(token, " token in init sessino")
         this.session = OT.initSession(apikey, sessionId);
-        this.token = config.TOKEN;
+        this.token = token;
         return Promise.resolve(this.session);
       } else {
+        " in the else of init session"
         return fetch(config.SAMPLE_SERVER_BASE_URL + '/session')
           .then((data) => data.json())
           .then((json) => {

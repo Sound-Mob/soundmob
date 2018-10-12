@@ -115,8 +115,10 @@ io.on('connection', (socket) => {
     //   users.push(socket.name);
     //   io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
     // }
+    
     // make tok session
     opentok = new OpenTok(API_KEY, 'd32d357fe3e5776a240d0a32cbb9edf5765f7405');
+    
     var sessionId;
     opentok.createSession({ mediaMode: "routed" }, (error, session) => {
       if (error) {
@@ -124,7 +126,9 @@ io.on('connection', (socket) => {
       } else {
         sessionId = session.sessionId;
         console.log("Session ID: " + sessionId);
-        io.sockets.emit('tokSession', sessionId);
+        console.log(session, " session")
+        let token = opentok.generateToken(sessionId);
+        io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
         djs.push({ name, id: socket.id, photo: value, tokSession: sessionId });
       }
