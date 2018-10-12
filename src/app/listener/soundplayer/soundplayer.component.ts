@@ -8,18 +8,18 @@ import { Component, OnInit,} from '@angular/core';
 })
 export class SoundplayerComponent implements OnInit {
 
-  // videos: any[] = [
-  //   {
-  //     title: 'mazda',
-  //     video: 'https://www.youtube.com/watch?v=Z71tcJtgfN8'
-  //   },
-  //   {
-  //     title: 'honda',
-  //     video: 'https://www.youtube.com/watch?v=B4iz-VVap1w'
-  //   }
-  // ]
+  videos: any[] = [
+    {
+      title: 'mazda',
+      video: 'https://www.youtube.com/embed/3lX50Lh2Iec'
+    },
+    {
+      title: 'honda',
+      video: 'https://www.youtube.com/embed/KgtizhlbIOQ'
+    }
+  ];
 
-  video: string = 'https://www.youtube.com/watch?v=Z71tcJtgfN8'
+  video: string = this.videos[0].video;
 
   constructor() {
   }

@@ -53,7 +53,7 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n\n    </div>\n\n    <div class=\"col-sm-8\">\n\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
+module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n      <ul *ngFor=\"let dj of activeDj.djs\">\n        <li>\n          <img src={{dj.photo}}>\n          <a routerLink=\"/listener\" routerLinkActive=\"active\">\n          <p>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n          <p>{{dj.name.id}}</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-8\">\n\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -78,20 +78,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const djlist_service_1 = __webpack_require__(/*! ../services/djlist.service */ "./src/app/services/djlist.service.ts");
 let FeaturedComponent = class FeaturedComponent {
-    constructor(http) {
+    constructor(http, djList) {
         this.http = http;
-        this.data = [];
-        this.firstName = '';
-        this.lastName = '';
+        this.djList = djList;
     }
     ngOnInit() {
-        // console.log('yupppy');
-        return this.http.get('/api/api')
-            .subscribe((data) => {
-            console.log(data);
-            this.data.push(data[0]);
-        });
+        this.djList.liveDjReq();
+        this.djList.liveDj()
+            .subscribe((data) => this.activeDj = data);
     }
 };
 FeaturedComponent = __decorate([
@@ -100,7 +96,7 @@ FeaturedComponent = __decorate([
         template: __webpack_require__(/*! ./featured.component.html */ "./src/app/featured/featured.component.html"),
         styles: [__webpack_require__(/*! ./featured.component.css */ "./src/app/featured/featured.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient])
+    __metadata("design:paramtypes", [http_1.HttpClient, djlist_service_1.DjlistService])
 ], FeaturedComponent);
 exports.FeaturedComponent = FeaturedComponent;
 
@@ -136,6 +132,57 @@ FeaturedModule = __decorate([
     })
 ], FeaturedModule);
 exports.FeaturedModule = FeaturedModule;
+
+
+/***/ }),
+
+/***/ "./src/app/services/djlist.service.ts":
+/*!********************************************!*\
+  !*** ./src/app/services/djlist.service.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+let DjlistService = class DjlistService {
+    constructor() {
+        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+    }
+    liveDj() {
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('djList', (data) => {
+                console.log(data);
+                observer.next(data);
+            });
+        });
+        return observable;
+    }
+    liveDjReq() {
+        console.log("request made");
+        this.socket.emit('djListReq');
+    }
+};
+DjlistService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [])
+], DjlistService);
+exports.DjlistService = DjlistService;
 
 
 /***/ })

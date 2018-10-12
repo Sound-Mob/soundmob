@@ -315,7 +315,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n\n  <iframe id='paysonContainer' src=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
+module.exports = "<div>\n\n  <iframe id='paysonContainer' [src]=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -341,17 +341,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 let SoundplayerComponent = class SoundplayerComponent {
     constructor() {
-        // videos: any[] = [
-        //   {
-        //     title: 'mazda',
-        //     video: 'https://www.youtube.com/watch?v=Z71tcJtgfN8'
-        //   },
-        //   {
-        //     title: 'honda',
-        //     video: 'https://www.youtube.com/watch?v=B4iz-VVap1w'
-        //   }
-        // ]
-        this.video = 'https://www.youtube.com/watch?v=Z71tcJtgfN8';
+        this.videos = [
+            {
+                title: 'mazda',
+                video: 'https://www.youtube.com/embed/3lX50Lh2Iec'
+            },
+            {
+                title: 'honda',
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ'
+            }
+        ];
+        this.video = this.videos[0].video;
     }
     ngOnInit() {
     }
