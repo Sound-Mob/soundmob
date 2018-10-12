@@ -10,7 +10,6 @@ import { DjlistService } from "../services/djlist.service";
 })
 export class FeaturedComponent implements OnInit {
   activeDj: Object;
-  djs;
 
   
 
@@ -22,8 +21,6 @@ export class FeaturedComponent implements OnInit {
     this.djList.liveDjReq();
 
     this.djList.liveDj()
-      .subscribe((data) => this.activeDj = data
-
-
+      .subscribe((data) => this.activeDj = data);
   }
 }
