@@ -110,8 +110,6 @@ io.on('connection', (socket) => {
       socket.admin = true;
       // add new dj to active dj list
       djs.push({name: name, id: user, photo: value });
-      
-      // console.log(playlistStartTime, 'in newroom')
       io.sockets.emit('starttokbox');
       // reassign socket room at id to room arg
       socket.rooms[socket.id] = socket.rooms[room];
@@ -127,7 +125,6 @@ io.on('connection', (socket) => {
   const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
-    // console.log(id);
     searchDetails(token, id).then(({ items }) => {
       console.log(items);
       const durationArray = items[0].contentDetails.duration.split('');
