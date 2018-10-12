@@ -58,7 +58,6 @@ let ListenerChatComponent = class ListenerChatComponent {
         });
     }
     ngOnInit() {
-        this.chatService.createRoom('123ween23');
     }
     sendChatMessage() {
         const { messageToSend } = this;

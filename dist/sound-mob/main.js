@@ -631,6 +631,9 @@ let ChatService = class ChatService {
         });
         return observable;
     }
+    joinRoom(djId) {
+        this.socket.emit('roomroute', djId);
+    }
 };
 ChatService = __decorate([
     core_1.Injectable({

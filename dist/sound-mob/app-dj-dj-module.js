@@ -58,7 +58,7 @@ let ChatComponent = class ChatComponent {
         });
     }
     ngOnInit() {
-        this.chatService.createRoom('123ween23');
+        this.chatService.createRoom("hey");
     }
     sendChatMessage() {
         const { messageToSend } = this;
