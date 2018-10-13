@@ -71,6 +71,17 @@ app.use('/auth', authRoutes);
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
+//create dj routes
+app.get('/djView', (req,res) => {
+  const id = req.session.passport.user
+  getUserById(id).then(data=>{
+    let body = data[0];
+    body.photo =req.session.photo;
+    res.send(body);
+  })
+
+})
+
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
   let body;
