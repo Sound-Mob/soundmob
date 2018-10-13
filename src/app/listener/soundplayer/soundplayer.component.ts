@@ -15,7 +15,7 @@ export class SoundplayerComponent implements OnInit {
     },
     {
       title: 'honda',
-      video: 'https://www.youtube.com/embed/KgtizhlbIOQ'
+      video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
     }
   ];
 

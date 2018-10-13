@@ -625,8 +625,22 @@ let ChatService = class ChatService {
         });
         return observable;
     }
-    joinRoom(djId) {
-        this.socket.emit('roomroute', djId);
+    getDjInfo() {
+        this.socket.emit('getDjInfo');
+    }
+    receiveDjInfo() {
+        console.log('recieved info');
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('startlistener', (djInfo) => {
+                console.log(djInfo);
+                observer.next(djInfo);
+            });
+        });
+        console.log(observable);
+        return observable;
+    }
+    joinRoom(djInfo) {
+        this.socket.emit('roomroute', djInfo);
     }
 };
 ChatService = __decorate([
@@ -662,21 +676,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
 const config_1 = __webpack_require__(/*! ../config */ "./src/app/config.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 let OpentokService = class OpentokService {
-    constructor() { }
+    constructor(http) {
+        this.http = http;
+    }
     getOT() {
         return OT;
     }
-    initSession() {
-        if (config_1.default.API_KEY && config_1.default.TOKEN && config_1.default.SESSION_ID) {
-            this.session = this.getOT().initSession(config_1.default.API_KEY, config_1.default.SESSION_ID);
-            this.token = config_1.default.TOKEN;
+    initSession(apikey, sessionId, token) {
+        console.log(sessionId, " above conditinoal");
+        if (sessionId) {
+            console.log(token, " token in init sessino");
+            this.session = OT.initSession(apikey, sessionId);
+            this.token = token;
             return Promise.resolve(this.session);
         }
         else {
+            " in the else of init session";
             return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
                 .then((data) => data.json())
                 .then((json) => {
+                this.session = this.getOT().initSession(json.apiKey, json.sessionId);
                 this.token = json.token;
                 return this.session;
             });
@@ -697,7 +718,7 @@ let OpentokService = class OpentokService {
 };
 OpentokService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [http_1.HttpClient])
 ], OpentokService);
 exports.OpentokService = OpentokService;
 

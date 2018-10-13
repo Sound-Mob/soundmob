@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { OpentokService } from './opentok.service';
+import { OpentokService } from '../../services/opentok.service';
 import * as OT from '@opentok/client';
 import { Observable } from 'rxjs'
 import * as io from 'socket.io-client'
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit () {
     this.socket.on('tokSession', (sessionId, token)=>{
-      console.log("tok heard", sessionId);
+     
       this.sessionId = sessionId;
       this.fireSession(this.sessionId, token)
     })
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     console.log(token, " TOKEN in fire session")
     this.opentokService.initSession(API_KEY ,sessionId, token)
       .then((sessionId: any) => {
-        console.log(" in fire session callback")
+      
         this.session = sessionId;
         
         this.session.on('streamCreated', (event) => {
