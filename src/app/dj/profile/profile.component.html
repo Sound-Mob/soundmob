@@ -1,14 +1,14 @@
 <div id="container_image" class="profile-block">
-  <img alt="user-profile-image" class="image-landing blur-me" height="350" id="main_image" src="https://pbs.twimg.com/profile_images/986327929453006848/c5ShdmQS_400x400.jpg" />
+  <img alt="user-profile-image" class="image-landing blur-me" height="350" id="main_image" src={{profile.photo.value}} />
 
   <button type="button" class="btn btn-default back-button" aria-label="Left Align" routerLink="comment">
     <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
   </button>
 
-  <h3 class="user-location">New Orleans</h3>
-  <h1 class="station-name">Yeezy2k18</h1>
+  <h3 class="user-location">{{profile.bio}}</h3>
+  <h1 class="station-name">{{profile.firstname}} {{profile.lasttname}}</h1>
 
-  <img alt="user-profile-image" class="image-landing" id="overlay_image" height="150" src="https://pbs.twimg.com/profile_images/986327929453006848/c5ShdmQS_400x400.jpg" />
+  <img alt="user-profile-image" class="image-landing" id="overlay_image" height="150" src={{profile.photo.value}} />
   <div id="overlay_image_list">
     <br>
     <br>
@@ -19,16 +19,18 @@
         </li>
         <li class="breadcrumb-item">
           <a href="#">Likes</a>
+          <p>{{profile.Followercount}}</p>
         </li>
         <li class="breadcrumb-item">
           <a href="#">Followers</a>
+          <p>{{profile.Followercount}}</p>
         </li>
         <li class="breadcrumb-item">
           <a href="#">Rating</a>
         </li>
-        <li>
-          <button (click)="session()">tester</button>
-        </li>
+        <!-- <li>
+          {{profile | json}}
+        </li> -->
       </ol>
     </nav>
   </div>

@@ -305,6 +305,7 @@ passport.use(new GoogleStrategy({
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
+  console.log(profile)
 // console.log(accessToken);
   const { id } = profile;
   const { name } = profile;

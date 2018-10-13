@@ -8,11 +8,15 @@ import { DjProfileService } from '../../services/dj-profile.service';
 })
 export class ProfileComponent implements OnInit {
 
+  profile: object;
+
   constructor(private djProfileService: DjProfileService) { }
 
   ngOnInit() {
     this.djProfileService.getProfileInfo()
-    .subscribe(profile => console.log(profile, 'in the component'))
+    .subscribe(profile =>{
+      this.profile = profile
+    })
   }
 
   session(){
