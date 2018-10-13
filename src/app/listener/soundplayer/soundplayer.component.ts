@@ -11,7 +11,7 @@ export class SoundplayerComponent implements OnInit {
   videos: any[] = [
     {
       title: 'mazda',
-      video: 'https://www.youtube.com/embed/3lX50Lh2Iec?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
+      video: 'https://www.youtube.com/embed/KgtizhlbIOQ?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
     },
     {
       title: 'honda',
