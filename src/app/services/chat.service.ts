@@ -44,6 +44,7 @@ export class ChatService {
         observer.next(djInfo);
       });
     });
+    console.log(observable)
     return observable;
   }
 

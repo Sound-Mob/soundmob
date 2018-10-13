@@ -27,6 +27,9 @@ const {
   getUserById,
   addSound,
   getSoundsById,
+  addSession,
+  getSessionInfoById,
+  changeSession,
 } = require('./database');
 // hidden keys
 const {
@@ -162,8 +165,23 @@ io.on('connection', (socket) => {
     let room = djInfo[0]
     let tokSession = djInfo[1]
     let tokToken = djInfo[2]
-    console.log(room, "  dj id passed in join room listener");
+    console.log(user, "  google id of listener");
+    // getUserById(user).then(userArr => addSession(tokSession, tokToken, userArr[0].googleid)
+    // .then(()=>console.log("added")))
+    // .catch(error => console.log(error))
 
+
+    getSessionInfoById(user).then((session) => {
+      if (!session.length) {
+        addSession(tokSession, tokToken, user)
+        .then(()=>console.log("added"))
+        .catch(error => console.log(error));
+      } else {
+        changeSession(tokSession, tokToken, user)
+        .then(()=>console.log("changed"))
+        .catch(err => console.log(err));
+      }
+    }).catch((error)=>console.log(error, " in get session"));
     socket.tokToken = tokToken
     socket.tokSession = tokSession
 
@@ -179,7 +197,7 @@ io.on('connection', (socket) => {
       // calculate difference between listener start and playlist start
       listenerStartTime = minsInSeconds + seconds;
       timeInPlaylist = listenerStartTime - playlistStartTime;
-      io.sockets.emit('startlistener', {timeInPlaylist, tokSession, tokToken});
+      // io.sockets.emit('startlistener', {timeInPlaylist, tokSession, tokToken});
     }
     getStartTime();
     // socket joins that room
@@ -203,8 +221,11 @@ io.on('connection', (socket) => {
 
   // listen for djInfo
   socket.on('getDjInfo', () => {
-    // sends dj info to chat service
-    io.sockets.emit('startlistener', 'hey')
+    getSessionInfoById(user).then((sessionInfo)=>{
+      // sends dj info to chat service
+      io.sockets.emit('startlistener', sessionInfo);
+    });
+    
   });
 
   // listen for chat message

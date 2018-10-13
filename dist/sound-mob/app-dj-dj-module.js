@@ -503,7 +503,6 @@ let AppComponent = class AppComponent {
     }
     ngOnInit() {
         this.socket.on('tokSession', (sessionId, token) => {
-            console.log("tok heard", sessionId);
             this.sessionId = sessionId;
             this.fireSession(this.sessionId, token);
         });
@@ -515,7 +514,6 @@ let AppComponent = class AppComponent {
         console.log(token, " TOKEN in fire session");
         this.opentokService.initSession(API_KEY, sessionId, token)
             .then((sessionId) => {
-            console.log(" in fire session callback");
             this.session = sessionId;
             this.session.on('streamCreated', (event) => {
                 this.streams.push(event.stream);

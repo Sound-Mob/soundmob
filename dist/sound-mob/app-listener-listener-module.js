@@ -343,11 +343,11 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.videos = [
             {
                 title: 'mazda',
-                video: 'https://www.youtube.com/embed/3lX50Lh2Iec'
+                video: 'https://www.youtube.com/embed/3lX50Lh2Iec?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             },
             {
                 title: 'honda',
-                video: 'https://www.youtube.com/embed/KgtizhlbIOQ'
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             }
         ];
         this.video = this.videos[0].video;
@@ -410,6 +410,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const config_js_1 = __webpack_require__(/*! ../../config.js */ "./src/app/config.js");
 const opentok_service_1 = __webpack_require__(/*! ../../services/opentok.service */ "./src/app/services/opentok.service.ts");
 const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let AppComponent = class AppComponent {
@@ -420,35 +421,42 @@ let AppComponent = class AppComponent {
         this.title = 'Angular Basic Video Chat';
         this.streams = [];
         this.changeDetectorRef = ref;
-        this.chatService.receiveDjInfo().subscribe(djInfo => {
-            this.tokSession = djInfo.tokSession;
-            this.tokToken = djInfo.tokToken;
-            console.log(this.tokToken, this.tokSession, 'these the session');
-        });
     }
     ngOnInit() {
+        this.chatService.receiveDjInfo().subscribe(djInfo => {
+            // console.log(djInfo, " in observable in listener component")
+            this.tokSession = djInfo[0].sessionid;
+            this.tokToken = djInfo[0].sessiontoken;
+            this.fireSession(djInfo[0].sessionid, djInfo[0].sessiontoken);
+            // console.log(this.tokToken, this.tokSession, 'these the session')
+        });
         this.chatService.getDjInfo();
     }
-    ngAfterViewInit() {
-        // this.opentokService.initSession().then((session: OT.Session) => {
-        //   this.session = session;
-        //   this.session.on('streamCreated', (event) => {
-        //     this.streams.push(event.stream);
-        //     this.changeDetectorRef.detectChanges();
-        //   });
-        //   this.session.on('streamDestroyed', (event) => {
-        //     const idx = this.streams.indexOf(event.stream);
-        //     if (idx > -1) {
-        //       this.streams.splice(idx, 1);
-        //       this.changeDetectorRef.detectChanges();
-        //     }
-        //   });
-        // })
-        // .then(() => this.opentokService.connect())
-        // .catch((err) => {
-        //   console.error(err);
-        //   alert('Unable to connect. Make sure you have updated the config.ts file with your OpenTok details.');
-        // });
+    fireSession(sessionId, token) {
+        // console.log(sessionId, " in fire")
+        const { API_KEY } = config_js_1.default;
+        // console.log(token, " TOKEN in fire session")
+        this.opentokService.initSession(API_KEY, sessionId, token)
+            .then((sessionId) => {
+            // console.log(sessionId, " in fire session callback")
+            this.session = sessionId;
+            this.session.on('streamCreated', (event) => {
+                this.streams.push(event.stream);
+                this.changeDetectorRef.detectChanges();
+            });
+            this.session.on('streamDestroyed', (event) => {
+                const idx = this.streams.indexOf(event.stream);
+                if (idx > -1) {
+                    this.streams.splice(idx, 1);
+                    this.changeDetectorRef.detectChanges();
+                }
+            });
+        })
+            .then(() => this.opentokService.connect())
+            .catch((err) => {
+            console.error(err);
+            alert('Unable to connect. Make sure you have updated the config.ts file with your OpenTok details.');
+        });
     }
 };
 AppComponent = __decorate([
