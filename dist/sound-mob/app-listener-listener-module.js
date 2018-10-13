@@ -343,11 +343,11 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.videos = [
             {
                 title: 'mazda',
-                video: 'https://www.youtube.com/embed/3lX50Lh2Iec'
+                video: 'https://www.youtube.com/embed/3lX50Lh2Iec?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             },
             {
                 title: 'honda',
-                video: 'https://www.youtube.com/embed/KgtizhlbIOQ'
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             }
         ];
         this.video = this.videos[0].video;
