@@ -5,12 +5,13 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "express": "nodemon server/app.js",
-    "buildProd": "ng build && nodemon server/app.js",
+    "fiberBoys": "ng build && nodemon server/app.js",
     "build": "ng build --watch",
     "lint": "eslint",
     "e2e": "ng e2e",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "testDeploy": "ng build && node server/app.js"
   },
   "private": true,
   "dependencies": {

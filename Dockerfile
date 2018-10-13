@@ -7,6 +7,8 @@ WORKDIR /usr/src/app
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PORT 80
+ENV NODE_ENV production
 
 # install and cache app dependencies
 COPY package.json /usr/src/app/package.json
@@ -18,12 +20,12 @@ RUN npm install -g @angular/cli@6.2.3
 COPY . /usr/src/app
 
 # expose port that app runs on for the world
-EXPOSE 8080
+EXPOSE 80
 
 
 # start app
 #CMD ng serve --proxy-config proxy.conf.json --host 0.0.0.0 node server/app.js
-CMD ng serve --host 0.0.0.0
+CMD npm run testDeploy
 
 
 # us.gcr.io/sound-mob12282/soundmob:1.0

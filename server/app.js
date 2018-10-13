@@ -70,6 +70,11 @@ app.use(express.static('dist/sound-mob'));
 //   res.sendFile(path.join(__dirname, 'index.html'));
 
 // });
+
+const portParty = process.env.PORT || 3000;
+app.set('port', portParty);
+
+
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
   let body;
@@ -117,9 +122,9 @@ io.on('connection', (socket) => {
     // io.sockets.emit('startlistener', timeInPlaylist);
     console.log({ listenerStartTime }, 'in join roomroute');
     console.log({ timeInPlaylist }, 'in join roomroute');
-    
+
     io.sockets.to(`${socket.id}`).emit('startlistener', timeInPlaylist);
-    
+
     // console.log(listenerStartTime, "listen start time")
     // socket joins that room
     socket.join(room, () => {
@@ -130,7 +135,7 @@ io.on('connection', (socket) => {
       if (socket.name) {
         users.push(socket.name);
         console.log(room, 'in join room');
-        io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
+        io.sockets.in(room).emit('new_user', { users, name: socket.name });
       }
     });
   });
@@ -146,21 +151,23 @@ io.on('connection', (socket) => {
   });
 
   // listen for chat message
-  socket.on('chat message',  (msg) => {
+  socket.on('chat message', (msg) => {
     const room = socket.rooms[socket.id];
-    console.log(room, 'in chat')
-    io.sockets.emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
+    console.log(room, 'in chat');
+    io.sockets.emit('chat message', {
+      message: msg, userName: givenName, lastName: familyName, id: user,
+    });
     // io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
     // io.sockets.emit('chat message', {message: msg, userName: socket.name});
   });
 
   // listen for users to leave
-  socket.on('disconnect',  (data) => {
+  socket.on('disconnect', (data) => {
     // console.log(users, socket.name);
     // remove user from users array
     users.splice(users.indexOf(socket.name), 1);
     // emit disconnection
-    io.emit('disconnect', { users: users, name: socket.name });
+    io.emit('disconnect', { users, name: socket.name });
   });
 
   // MAKE ROOM LISTENER -- listen for new room
@@ -176,7 +183,7 @@ io.on('connection', (socket) => {
 
       if (socket.name) {
         users.push(socket.name);
-        io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
+        io.sockets.in(room).emit('new_user', { users, name: socket.name });
       }
     });
   });
@@ -217,9 +224,9 @@ io.on('connection', (socket) => {
     // get sound from database
     getSoundsById(3)
       .then((sound) => {
-      // console.log(sound);
-      // emit voice stream data to all sockets
-      // socket.emit('voice', sounds[0]);
+        // console.log(sound);
+        // emit voice stream data to all sockets
+        // socket.emit('voice', sounds[0]);
         socket.emit('voice', stream.blob);
       }).catch(err => console.error(err));
     // emit voice stream data to all sockets
@@ -227,7 +234,7 @@ io.on('connection', (socket) => {
 });
 // session serializatoin
 passport.serializeUser((user, done) => {
-  console.log(user, done)
+  console.log(user, done);
   done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
 });
@@ -239,10 +246,19 @@ passport.deserializeUser((id, done) => {
   }).catch(err => console.error(err));
 });
 // session entry
+
+// set the callback url to the default website IF we are in production
+// else the callback is the localhost
+let googleCallbackURL = 'http://soundmob.net/auth/google/callback';
+if (process.env.NODE_ENV !== 'production') {
+  googleCallbackURL = 'http://localhost:3000/auth/google/callback';
+}
+
+
 passport.use(new GoogleStrategy({
   clientID: ClientID,
   clientSecret: ClientSecret,
-  callbackURL: '/auth/google/callback',
+  callbackURL: googleCallbackURL,
   passReqToCallback: true,
 },
 (req, accessToken, refreshToken, profile, done) => {
@@ -250,7 +266,7 @@ passport.use(new GoogleStrategy({
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
-console.log(accessToken);
+  console.log(accessToken);
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
@@ -274,9 +290,10 @@ console.log(accessToken);
   }).catch(err => console.error(err, 'this should hit'));
 }));
 
-server.listen(3000, () => {
-  console.log('on 3000');
+server.listen(portParty, () => {
+  console.log(`running on ${app.get('port')}`);
 });
+
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));
 
