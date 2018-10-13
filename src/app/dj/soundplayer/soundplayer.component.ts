@@ -22,6 +22,7 @@ export class SoundplayerComponent implements OnInit {
 
    }
    onClick(event) {
+     console.log(event.target.id);
      this.soundBite.soundEmit(event.target.id);
     
    }

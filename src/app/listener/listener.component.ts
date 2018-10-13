@@ -18,15 +18,11 @@ sound:string = '';
   }
 
   ngOnInit() {
-<<<<<<< HEAD
     this.soundBoard.soundReceive()
     .subscribe(data => {
       console.log('it hits')
      this.sound = data.toString();
     })
-=======
-    
->>>>>>> ce4d05c71e30153c9abb2b266fe6aacd0dc1c49a
   }
 
 }
