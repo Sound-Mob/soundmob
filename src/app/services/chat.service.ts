@@ -32,5 +32,25 @@ export class ChatService {
     return observable;
   }
 
+  getDjInfo(){
+    this.socket.emit('getDjInfo')
+  }
+
+  receiveDjInfo() {
+    console.log('recieved info')
+    let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string}>(observer => {
+      this.socket.on('startlistener', (djInfo) => {
+        console.log(djInfo);
+        observer.next(djInfo);
+      });
+    });
+    console.log(observable)
+    return observable;
+  }
+
+  joinRoom(djInfo) {
+    this.socket.emit('roomroute', djInfo)
+  }
+
 
 }

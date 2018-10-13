@@ -28,7 +28,6 @@ export class ListenerChatComponent implements OnInit {
   }
 
 ngOnInit() {
-  this.chatService.createRoom('123ween23');
 }
 
 
