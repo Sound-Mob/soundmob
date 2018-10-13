@@ -489,7 +489,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+<<<<<<< HEAD
 const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/dj/tokbox/opentok.service.ts");
+=======
+const opentok_service_1 = __webpack_require__(/*! ../../services/opentok.service */ "./src/app/services/opentok.service.ts");
+>>>>>>> 8f72f105b53cf5fb8644bdec7f5f6f6d4c5364e4
 const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 const config_js_1 = __webpack_require__(/*! ../../config.js */ "./src/app/config.js");
 let AppComponent = class AppComponent {
@@ -551,6 +555,7 @@ exports.AppComponent = AppComponent;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./src/app/dj/tokbox/opentok.service.ts":
 /*!**********************************************!*\
   !*** ./src/app/dj/tokbox/opentok.service.ts ***!
@@ -622,6 +627,8 @@ exports.OpentokService = OpentokService;
 
 /***/ }),
 
+=======
+>>>>>>> 8f72f105b53cf5fb8644bdec7f5f6f6d4c5364e4
 /***/ "./src/app/dj/tokbox/publisher/publisher.component.css":
 /*!*************************************************************!*\
   !*** ./src/app/dj/tokbox/publisher/publisher.component.css ***!
@@ -664,7 +671,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/dj/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ../../../services/opentok.service */ "./src/app/services/opentok.service.ts");
 const publish = () => {
 };
 let PublisherComponent = class PublisherComponent {
