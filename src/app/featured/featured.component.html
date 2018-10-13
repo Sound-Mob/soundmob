@@ -10,7 +10,8 @@
         <li>
           <img src={{dj.photo}}>
           <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
-          <p id={{dj.id}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
+          <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
+
           </a>
         </li>
       </ul>

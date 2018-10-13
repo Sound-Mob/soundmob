@@ -21,10 +21,21 @@ module.exports = {
   createUser: (googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive) => {
     return db.any('INSERT INTO users (googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive]);
   },
+  
   // adds a sound to samples collection
   addSound: (sample, id) => {
     return db.any('INSERT INTO soundsamples (binarydata, ownerid) VALUES ($1, $2)', [sample, id]);
   },
+  // adds session info to session collection
+  addSession: (sessionid, sessiontoken, googleid) => {
+    return db.any('INSERT INTO sessions (sessionid, sessiontoken, googleid) VALUES ($1, $2, $3)', [sessionid, sessiontoken, googleid]);
+  },
+  // update tok session info for listener
+  changeSession: (sessionid, sessiontoken, googleid) => {
+    return db.any('UPDATE sessions SET sessionid = ($1), sessiontoken = ($2) WHERE googleid = ($3)', [sessionid, sessiontoken, googleid]);
+  },
+  // fetch tok session info of listener
+  getSessionInfoById: id => db.any('SELECT * FROM sessions WHERE googleid = $1', id),
   // select and return users
   getUsers: () => {
   return  db.any('SELECT * FROM users')

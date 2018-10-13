@@ -58,7 +58,6 @@ let ListenerChatComponent = class ListenerChatComponent {
         });
     }
     ngOnInit() {
-        this.chatService.createRoom('123ween23');
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -315,7 +314,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n\n  <iframe id='paysonContainer' [src]=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
+module.exports = "<div>\n\n  <iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -344,11 +343,11 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.videos = [
             {
                 title: 'mazda',
-                video: 'https://www.youtube.com/embed/3lX50Lh2Iec'
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             },
             {
                 title: 'honda',
-                video: 'https://www.youtube.com/embed/KgtizhlbIOQ'
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             }
         ];
         this.video = this.videos[0].video;
@@ -411,18 +410,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/listener/tokbox/opentok.service.ts");
+const config_js_1 = __webpack_require__(/*! ../../config.js */ "./src/app/config.js");
+const opentok_service_1 = __webpack_require__(/*! ../../services/opentok.service */ "./src/app/services/opentok.service.ts");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let AppComponent = class AppComponent {
-    constructor(ref, opentokService) {
+    constructor(ref, opentokService, chatService) {
         this.ref = ref;
         this.opentokService = opentokService;
+        this.chatService = chatService;
         this.title = 'Angular Basic Video Chat';
         this.streams = [];
         this.changeDetectorRef = ref;
     }
     ngOnInit() {
-        this.opentokService.initSession().then((session) => {
-            this.session = session;
+        this.chatService.receiveDjInfo().subscribe(djInfo => {
+            // console.log(djInfo, " in observable in listener component")
+            this.tokSession = djInfo[0].sessionid;
+            this.tokToken = djInfo[0].sessiontoken;
+            this.fireSession(djInfo[0].sessionid, djInfo[0].sessiontoken);
+            // console.log(this.tokToken, this.tokSession, 'these the session')
+        });
+        this.chatService.getDjInfo();
+    }
+    fireSession(sessionId, token) {
+        // console.log(sessionId, " in fire")
+        const { API_KEY } = config_js_1.default;
+        // console.log(token, " TOKEN in fire session")
+        this.opentokService.initSession(API_KEY, sessionId, token)
+            .then((sessionId) => {
+            // console.log(sessionId, " in fire session callback")
+            this.session = sessionId;
             this.session.on('streamCreated', (event) => {
                 this.streams.push(event.stream);
                 this.changeDetectorRef.detectChanges();
@@ -449,74 +466,11 @@ AppComponent = __decorate([
         styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/listener/tokbox/app.component.css")],
         providers: [opentok_service_1.OpentokService]
     }),
-    __metadata("design:paramtypes", [core_1.ChangeDetectorRef, opentok_service_1.OpentokService])
+    __metadata("design:paramtypes", [core_1.ChangeDetectorRef,
+        opentok_service_1.OpentokService,
+        chat_service_1.ChatService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/listener/tokbox/opentok.service.ts":
-/*!****************************************************!*\
-  !*** ./src/app/listener/tokbox/opentok.service.ts ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
-const config_1 = __webpack_require__(/*! ../../config */ "./src/app/config.js");
-let OpentokService = class OpentokService {
-    constructor() { }
-    getOT() {
-        return OT;
-    }
-    initSession() {
-        if (config_1.default.API_KEY && config_1.default.TOKEN && config_1.default.SESSION_ID) {
-            this.session = OT.initSession(config_1.default.API_KEY, config_1.default.SESSION_ID);
-            this.token = config_1.default.TOKEN;
-            return Promise.resolve(this.session);
-        }
-        else {
-            return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
-                .then((data) => data.json())
-                .then((json) => {
-                this.session = this.getOT().initSession(json.apiKey, json.sessionId);
-                this.token = json.token;
-                return this.session;
-            });
-        }
-    }
-    connect() {
-        return new Promise((resolve, reject) => {
-            this.session.connect(this.token, (err) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(this.session);
-                }
-            });
-        });
-    }
-};
-OpentokService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [])
-], OpentokService);
-exports.OpentokService = OpentokService;
 
 
 /***/ }),
@@ -563,7 +517,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const opentok_service_1 = __webpack_require__(/*! ../opentok.service */ "./src/app/listener/tokbox/opentok.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ../../../services/opentok.service */ "./src/app/services/opentok.service.ts");
 const publish = () => {
 };
 let PublisherComponent = class PublisherComponent {

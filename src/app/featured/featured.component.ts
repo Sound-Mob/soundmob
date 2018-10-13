@@ -11,6 +11,7 @@ import { ChatService } from "../services/chat.service";
 })
 export class FeaturedComponent implements OnInit {
   activeDj: Object;
+  prop: string;
 
   
 
@@ -26,8 +27,10 @@ export class FeaturedComponent implements OnInit {
   }
 
   joinDj(event){
-    this.djJoin.joinRoom(event.target.id);
-    console.log(event.target.id, " google id");
+    let sockAndTok = event.target.id.split("---")
+    this.djJoin.joinRoom(sockAndTok);
+    // console.log(sockAndTok, " google id");
+
   }
 
 }

@@ -2,33 +2,38 @@ import { Injectable } from '@angular/core';
 
 import * as OT from '@opentok/client';
 import config from '../config';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class OpentokService {
-
+  sessionId: object
   session: OT.Session;
   token: string;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getOT() {
     return OT;
   }
-
-  initSession() {
-    if (config.API_KEY && config.TOKEN && config.SESSION_ID) {
-      this.session = this.getOT().initSession(config.API_KEY, config.SESSION_ID);
-      this.token = config.TOKEN;
-      return Promise.resolve(this.session);
-    } else {
-      return fetch(config.SAMPLE_SERVER_BASE_URL + '/session')
-        .then((data) => data.json())
-        .then((json) => {
-          this.session = this.getOT().initSession(json.apiKey, json.sessionId);
-          this.token = json.token;
-          return this.session;
-        });
-    }
+  
+  initSession(apikey, sessionId, token) {
+    console.log(sessionId, " above conditinoal")
+    
+      if (sessionId) {
+        console.log(token, " token in init sessino")
+        this.session = OT.initSession(apikey, sessionId);
+        this.token = token;
+        return Promise.resolve(this.session);
+      } else {
+        " in the else of init session"
+        return fetch(config.SAMPLE_SERVER_BASE_URL + '/session')
+          .then((data) => data.json())
+          .then((json) => {
+            this.session = this.getOT().initSession(json.apiKey, json.sessionId);
+            this.token = json.token;
+            return this.session;
+          });
+      }
   }
 
   connect() {

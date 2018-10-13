@@ -1,5 +1,5 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input } from '@angular/core';
-import { OpentokService } from '../opentok.service';
+import { OpentokService } from '../../../services/opentok.service';
 
 const publish = () => {
 

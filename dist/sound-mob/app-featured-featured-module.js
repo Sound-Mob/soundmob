@@ -53,7 +53,7 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n      <ul *ngFor=\"let dj of activeDj.djs\">\n        <li>\n          <img src={{dj.photo}}>\n          <a routerLink=\"/listener\" routerLinkActive=\"active\">\n          <p>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n          <p>{{dj.name.id}}</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-8\">\n\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
+module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n      <ul *ngFor=\"let dj of activeDj.djs\">\n        <li>\n          <img src={{dj.photo}}>\n          <a routerLink=\"/listener\" routerLinkActive=\"active\" (click)=\"joinDj($event)\">\n          <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-8\">\n\n    </div>\n\n    <div class=\"col-sm-2\">\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -79,15 +79,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 const djlist_service_1 = __webpack_require__(/*! ../services/djlist.service */ "./src/app/services/djlist.service.ts");
+const chat_service_1 = __webpack_require__(/*! ../services/chat.service */ "./src/app/services/chat.service.ts");
 let FeaturedComponent = class FeaturedComponent {
-    constructor(http, djList) {
+    constructor(http, djList, djJoin) {
         this.http = http;
         this.djList = djList;
+        this.djJoin = djJoin;
     }
     ngOnInit() {
         this.djList.liveDjReq();
         this.djList.liveDj()
             .subscribe((data) => this.activeDj = data);
+    }
+    joinDj(event) {
+        let sockAndTok = event.target.id.split("---");
+        this.djJoin.joinRoom(sockAndTok);
+        // console.log(sockAndTok, " google id");
     }
 };
 FeaturedComponent = __decorate([
@@ -96,7 +103,7 @@ FeaturedComponent = __decorate([
         template: __webpack_require__(/*! ./featured.component.html */ "./src/app/featured/featured.component.html"),
         styles: [__webpack_require__(/*! ./featured.component.css */ "./src/app/featured/featured.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient, djlist_service_1.DjlistService])
+    __metadata("design:paramtypes", [http_1.HttpClient, djlist_service_1.DjlistService, chat_service_1.ChatService])
 ], FeaturedComponent);
 exports.FeaturedComponent = FeaturedComponent;
 
