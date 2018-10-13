@@ -58,7 +58,6 @@ let ListenerChatComponent = class ListenerChatComponent {
         });
     }
     ngOnInit() {
-        this.chatService.createRoom('123ween23');
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -315,7 +314,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n\n  <iframe id='paysonContainer' [src]=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
+module.exports = "<div>\n\n  <iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n\n\n  <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -344,7 +343,7 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.videos = [
             {
                 title: 'mazda',
-                video: 'https://www.youtube.com/embed/3lX50Lh2Iec'
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             },
             {
                 title: 'honda',
