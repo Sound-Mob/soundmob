@@ -58,7 +58,7 @@ let ChatComponent = class ChatComponent {
         });
     }
     ngOnInit() {
-        this.chatService.createRoom('123ween23');
+        this.chatService.createRoom("hey");
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -490,17 +490,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/dj/tokbox/opentok.service.ts");
+const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+const config_js_1 = __webpack_require__(/*! ../../config.js */ "./src/app/config.js");
 let AppComponent = class AppComponent {
     constructor(ref, opentokService) {
         this.ref = ref;
         this.opentokService = opentokService;
         this.title = 'Angular Basic Video Chat';
         this.streams = [];
+        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
         this.changeDetectorRef = ref;
     }
     ngOnInit() {
-        this.opentokService.initSession().then((session) => {
-            this.session = session;
+        this.socket.on('tokSession', (sessionId, token) => {
+            console.log("tok heard", sessionId);
+            this.sessionId = sessionId;
+            this.fireSession(this.sessionId, token);
+        });
+    }
+    fireSession(sessionId, token) {
+        console.log(config_js_1.default, " in fire");
+        console.log(sessionId, " in fire");
+        const { API_KEY } = config_js_1.default;
+        console.log(token, " TOKEN in fire session");
+        this.opentokService.initSession(API_KEY, sessionId, token)
+            .then((sessionId) => {
+            console.log(" in fire session callback");
+            this.session = sessionId;
             this.session.on('streamCreated', (event) => {
                 this.streams.push(event.stream);
                 this.changeDetectorRef.detectChanges();
@@ -527,7 +543,8 @@ AppComponent = __decorate([
         styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/dj/tokbox/app.component.css")],
         providers: [opentok_service_1.OpentokService]
     }),
-    __metadata("design:paramtypes", [core_1.ChangeDetectorRef, opentok_service_1.OpentokService])
+    __metadata("design:paramtypes", [core_1.ChangeDetectorRef,
+        opentok_service_1.OpentokService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 
@@ -556,18 +573,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
 const config_1 = __webpack_require__(/*! ../../config */ "./src/app/config.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 let OpentokService = class OpentokService {
-    constructor() { }
+    constructor(http) {
+        this.http = http;
+    }
     getOT() {
         return OT;
     }
-    initSession() {
-        if (config_1.default.API_KEY && config_1.default.TOKEN && config_1.default.SESSION_ID) {
-            this.session = OT.initSession(config_1.default.API_KEY, config_1.default.SESSION_ID);
-            this.token = config_1.default.TOKEN;
+    initSession(apikey, sessionId, token) {
+        console.log(sessionId, " above conditinoal");
+        if (sessionId) {
+            console.log(token, " token in init sessino");
+            this.session = OT.initSession(apikey, sessionId);
+            this.token = token;
             return Promise.resolve(this.session);
         }
         else {
+            " in the else of init session";
             return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
                 .then((data) => data.json())
                 .then((json) => {
@@ -592,7 +615,7 @@ let OpentokService = class OpentokService {
 };
 OpentokService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [http_1.HttpClient])
 ], OpentokService);
 exports.OpentokService = OpentokService;
 
