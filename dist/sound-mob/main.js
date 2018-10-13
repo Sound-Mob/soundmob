@@ -438,10 +438,7 @@ __webpack_require__.r(__webpack_exports__);
   SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg'
 });
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 8f72f105b53cf5fb8644bdec7f5f6f6d4c5364e4
 /***/ }),
 
 /***/ "./src/app/home/home.component.css":
@@ -628,10 +625,6 @@ let ChatService = class ChatService {
         });
         return observable;
     }
-<<<<<<< HEAD
-    joinRoom(djId) {
-        this.socket.emit('roomroute', djId);
-=======
     getDjInfo() {
         this.socket.emit('getDjInfo');
     }
@@ -643,11 +636,11 @@ let ChatService = class ChatService {
                 observer.next(djInfo);
             });
         });
+        console.log(observable);
         return observable;
     }
     joinRoom(djInfo) {
         this.socket.emit('roomroute', djInfo);
->>>>>>> 8f72f105b53cf5fb8644bdec7f5f6f6d4c5364e4
     }
 };
 ChatService = __decorate([
@@ -704,6 +697,7 @@ let OpentokService = class OpentokService {
             return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
                 .then((data) => data.json())
                 .then((json) => {
+                this.session = this.getOT().initSession(json.apiKey, json.sessionId);
                 this.token = json.token;
                 return this.session;
             });

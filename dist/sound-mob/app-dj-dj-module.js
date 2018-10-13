@@ -489,11 +489,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-<<<<<<< HEAD
-const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/dj/tokbox/opentok.service.ts");
-=======
 const opentok_service_1 = __webpack_require__(/*! ../../services/opentok.service */ "./src/app/services/opentok.service.ts");
->>>>>>> 8f72f105b53cf5fb8644bdec7f5f6f6d4c5364e4
 const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 const config_js_1 = __webpack_require__(/*! ../../config.js */ "./src/app/config.js");
 let AppComponent = class AppComponent {
@@ -507,7 +503,6 @@ let AppComponent = class AppComponent {
     }
     ngOnInit() {
         this.socket.on('tokSession', (sessionId, token) => {
-            console.log("tok heard", sessionId);
             this.sessionId = sessionId;
             this.fireSession(this.sessionId, token);
         });
@@ -519,7 +514,6 @@ let AppComponent = class AppComponent {
         console.log(token, " TOKEN in fire session");
         this.opentokService.initSession(API_KEY, sessionId, token)
             .then((sessionId) => {
-            console.log(" in fire session callback");
             this.session = sessionId;
             this.session.on('streamCreated', (event) => {
                 this.streams.push(event.stream);
@@ -555,80 +549,6 @@ exports.AppComponent = AppComponent;
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ "./src/app/dj/tokbox/opentok.service.ts":
-/*!**********************************************!*\
-  !*** ./src/app/dj/tokbox/opentok.service.ts ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
-const config_1 = __webpack_require__(/*! ../../config */ "./src/app/config.js");
-const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-let OpentokService = class OpentokService {
-    constructor(http) {
-        this.http = http;
-    }
-    getOT() {
-        return OT;
-    }
-    initSession(apikey, sessionId, token) {
-        console.log(sessionId, " above conditinoal");
-        if (sessionId) {
-            console.log(token, " token in init sessino");
-            this.session = OT.initSession(apikey, sessionId);
-            this.token = token;
-            return Promise.resolve(this.session);
-        }
-        else {
-            " in the else of init session";
-            return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
-                .then((data) => data.json())
-                .then((json) => {
-                this.session = this.getOT().initSession(json.apiKey, json.sessionId);
-                this.token = json.token;
-                return this.session;
-            });
-        }
-    }
-    connect() {
-        return new Promise((resolve, reject) => {
-            this.session.connect(this.token, (err) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(this.session);
-                }
-            });
-        });
-    }
-};
-OpentokService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.HttpClient])
-], OpentokService);
-exports.OpentokService = OpentokService;
-
-
-/***/ }),
-
-=======
->>>>>>> 8f72f105b53cf5fb8644bdec7f5f6f6d4c5364e4
 /***/ "./src/app/dj/tokbox/publisher/publisher.component.css":
 /*!*************************************************************!*\
   !*** ./src/app/dj/tokbox/publisher/publisher.component.css ***!
