@@ -7,9 +7,14 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const path = require('path');
+
+const https = require('https');
 
 const app = express();
-const server = require('http').createServer(app);
+
+
+const server = https.createServer(app);
 const io = require('socket.io')(server);
 
 const authRoutes = require('./routes/auth-routes');
@@ -62,6 +67,7 @@ io.use((socket, next) => {
   mill(socket.request, {}, next);
 });
 app.use('/auth', authRoutes);
+
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
@@ -78,6 +84,9 @@ app.get('/test', (req, res) => {
       body = data;
       res.send(body);
     });
+});
+app.get('/feature', (req, res) => {
+  res.render(path.join(__dirname, '../dist/sound-mob/app-featured-featured-module'));
 });
 app.get('/tester', (req, res) => {
   res.json(userobject);
