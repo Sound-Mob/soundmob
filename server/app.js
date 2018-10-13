@@ -130,7 +130,7 @@ io.on('connection', (socket) => {
         let token = opentok.generateToken(sessionId);
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
-        djs.push({ name, id: socket.id, photo: value, tokSession: sessionId });
+        djs.push({ name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token });
       }
     });
   });
