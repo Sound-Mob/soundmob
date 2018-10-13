@@ -8,17 +8,17 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"../app/dj-view/dj-view.module": [
-		"./src/app/dj-view/dj-view.module.ts",
-		"app-dj-view-dj-view-module"
+	"../app/dj/dj.module": [
+		"./src/app/dj/dj.module.ts",
+		"app-dj-dj-module"
 	],
-	"../app/king/king.module": [
-		"./src/app/king/king.module.ts",
-		"app-king-king-module"
+	"../app/featured/featured.module": [
+		"./src/app/featured/featured.module.ts",
+		"app-featured-featured-module"
 	],
-	"../app/posts/posts.module": [
-		"./src/app/posts/posts.module.ts",
-		"app-posts-posts-module"
+	"../app/listener/listener.module": [
+		"./src/app/listener/listener.module.ts",
+		"app-listener-listener-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -69,23 +69,18 @@ const routes = [
         component: landing_component_1.LandingComponent,
     },
     {
-        path: "posts",
-        loadChildren: "../app/posts/posts.module#PostsModule",
+        path: "featured",
+        loadChildren: "../app/featured/featured.module#FeaturedModule",
         canActivate: [admin_guard_1.AdminGuard]
     },
     {
-        path: "posts",
-        loadChildren: "../app/posts/posts.module#PostsModule",
+        path: "listener",
+        loadChildren: "../app/listener/listener.module#ListenerModule",
         canActivate: [admin_guard_1.AdminGuard]
     },
     {
-        path: "king",
-        loadChildren: "../app/king/king.module#KingModule",
-        canActivate: [admin_guard_1.AdminGuard]
-    },
-    {
-        path: "dj-view",
-        loadChildren: "../app/dj-view/dj-view.module#DjViewModule",
+        path: "dj",
+        loadChildren: "../app/dj/dj.module#DjModule",
         canActivate: [admin_guard_1.AdminGuard]
     }
 ];
@@ -121,7 +116,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/posts\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/king\" routerLinkActive=\"active\">Listener</a>\n\n<a routerLink=\"/dj-view\" routerLinkActive=\"active\">Dj</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n\n<a routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
 
 /***/ }),
 
@@ -188,8 +183,8 @@ const landing_component_1 = __webpack_require__(/*! ./home/landing/landing.compo
 const auth_service_1 = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
 const auth_guard_1 = __webpack_require__(/*! ./auth/guards/auth.guard */ "./src/app/auth/guards/auth.guard.ts");
 const admin_guard_1 = __webpack_require__(/*! ./auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
-const chat_service_1 = __webpack_require__(/*! ./chat.service */ "./src/app/chat.service.ts");
-const opentok_service_1 = __webpack_require__(/*! ./opentok.service */ "./src/app/opentok.service.ts");
+const chat_service_1 = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
+const opentok_service_1 = __webpack_require__(/*! ./services/opentok.service */ "./src/app/services/opentok.service.ts");
 // import { YoutubePipe } from './youtube.pipe';
 //angular material components
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -427,61 +422,6 @@ exports.AuthGuard = AuthGuard;
 
 /***/ }),
 
-/***/ "./src/app/chat.service.ts":
-/*!*********************************!*\
-  !*** ./src/app/chat.service.ts ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-let ChatService = class ChatService {
-    constructor() {
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
-    }
-    createRoom(googleId) {
-        this.socket.emit('newroom', googleId);
-    }
-    sendMessage(data) {
-        // console.log(data)
-        // console.log("hehehehee")
-        // console.log(this.socket.request, " in request");
-        this.socket.emit('chat message', data);
-    }
-    receiveMessages() {
-        let observable = new rxjs_1.Observable(observer => {
-            this.socket.on('chat message', (data) => {
-                observer.next(data);
-            });
-        });
-        return observable;
-    }
-};
-ChatService = __decorate([
-    core_1.Injectable({
-        providedIn: 'root'
-    }),
-    __metadata("design:paramtypes", [])
-], ChatService);
-exports.ChatService = ChatService;
-
-
-/***/ }),
-
 /***/ "./src/app/config.js":
 /*!***************************!*\
   !*** ./src/app/config.js ***!
@@ -495,7 +435,7 @@ __webpack_require__.r(__webpack_exports__);
   SAMPLE_SERVER_BASE_URL: 'http://localhost:3000',
   TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9',
   API_KEY: '46194612',
-  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
+  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg'
 });
 
 
@@ -642,10 +582,82 @@ exports.LandingComponent = LandingComponent;
 
 /***/ }),
 
-/***/ "./src/app/opentok.service.ts":
-/*!************************************!*\
-  !*** ./src/app/opentok.service.ts ***!
-  \************************************/
+/***/ "./src/app/services/chat.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/services/chat.service.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+let ChatService = class ChatService {
+    constructor() {
+        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+    }
+    createRoom(googleId) {
+        this.socket.emit('newroom', googleId);
+    }
+    sendMessage(data) {
+        // console.log(data)
+        // console.log("hehehehee")
+        // console.log(this.socket.request, " in request");
+        this.socket.emit('chat message', data);
+    }
+    receiveMessages() {
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('chat message', (data) => {
+                observer.next(data);
+            });
+        });
+        return observable;
+    }
+    getDjInfo() {
+        this.socket.emit('getDjInfo');
+    }
+    receiveDjInfo() {
+        console.log('recieved info');
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('startlistener', (djInfo) => {
+                console.log(djInfo);
+                observer.next(djInfo);
+            });
+        });
+        console.log(observable);
+        return observable;
+    }
+    joinRoom(djInfo) {
+        this.socket.emit('roomroute', djInfo);
+    }
+};
+ChatService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [])
+], ChatService);
+exports.ChatService = ChatService;
+
+
+/***/ }),
+
+/***/ "./src/app/services/opentok.service.ts":
+/*!*********************************************!*\
+  !*** ./src/app/services/opentok.service.ts ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -663,19 +675,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const OT = __webpack_require__(/*! @opentok/client */ "./node_modules/@opentok/client/dist/js/opentok.js");
-const config_1 = __webpack_require__(/*! ./config */ "./src/app/config.js");
+const config_1 = __webpack_require__(/*! ../config */ "./src/app/config.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 let OpentokService = class OpentokService {
-    constructor() { }
+    constructor(http) {
+        this.http = http;
+    }
     getOT() {
         return OT;
     }
-    initSession() {
-        if (config_1.default.API_KEY && config_1.default.TOKEN && config_1.default.SESSION_ID) {
-            this.session = this.getOT().initSession(config_1.default.API_KEY, config_1.default.SESSION_ID);
-            this.token = config_1.default.TOKEN;
+    initSession(apikey, sessionId, token) {
+        console.log(sessionId, " above conditinoal");
+        if (sessionId) {
+            console.log(token, " token in init sessino");
+            this.session = OT.initSession(apikey, sessionId);
+            this.token = token;
             return Promise.resolve(this.session);
         }
         else {
+            " in the else of init session";
             return fetch(config_1.default.SAMPLE_SERVER_BASE_URL + '/session')
                 .then((data) => data.json())
                 .then((json) => {
@@ -700,7 +718,7 @@ let OpentokService = class OpentokService {
 };
 OpentokService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [http_1.HttpClient])
 ], OpentokService);
 exports.OpentokService = OpentokService;
 
@@ -765,7 +783,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
 
 
 /***/ }),

@@ -7,10 +7,13 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-
+const OpenTok = require('opentok');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const config = require('./config');
+const { TOKEN } = config;
+const { API_KEY } = config;
 
 const authRoutes = require('./routes/auth-routes');
 
@@ -24,6 +27,9 @@ const {
   getUserById,
   addSound,
   getSoundsById,
+  addSession,
+  getSessionInfoById,
+  changeSession,
 } = require('./database');
 // hidden keys
 const {
@@ -89,6 +95,8 @@ app.get('/tester', (req, res) => {
 });
 // if we want to keep track of users in room
 const users = [];
+// keeping track of djs
+const djs = [];
 // keeping track of what time playlist starts
 let playlistStartTime = '';
 // keeping track of what time a listener joins
@@ -100,6 +108,8 @@ let songDuration;
 
 // on connection
 io.on('connection', (socket) => {
+  const { photo } = socket.request.session;
+  const { value } = photo;
   const { name } = socket.request.session;
   const { user } = socket.request.session.passport;
   const { givenName } = name;
@@ -136,6 +146,36 @@ io.on('connection', (socket) => {
         users.push(socket.name);
         console.log(room, 'in join room');
         io.sockets.in(room).emit('new_user', { users, name: socket.name });
+  
+  // MAKE ROOM LISTENER -- listen for new room
+  socket.on('newroom', (room) => {
+    socket.admin = true;
+    
+    io.sockets.emit('starttokbox');
+    
+    // sending dj room to client
+    io.sockets.emit('activeDj', socket.rooms[socket.id]);
+    // keep track of users in room
+    // if (socket.name) {
+    //   users.push(socket.name);
+    //   io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
+    // }
+    
+    // make tok session
+    opentok = new OpenTok(API_KEY, 'd32d357fe3e5776a240d0a32cbb9edf5765f7405');
+    
+    var sessionId;
+    opentok.createSession({ mediaMode: "routed" }, (error, session) => {
+      if (error) {
+        console.log("Error creating session:", error)
+      } else {
+        sessionId = session.sessionId;
+        console.log("Session ID: " + sessionId);
+        console.log(session, " session")
+        let token = opentok.generateToken(sessionId);
+        io.sockets.emit('tokSession', sessionId, token);
+        // add new dj to active dj list
+        djs.push({ name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token });
       }
     });
   });
@@ -187,12 +227,11 @@ io.on('connection', (socket) => {
       }
     });
   });
+ 
   const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
-    // console.log(id);
     searchDetails(token, id).then(({ items }) => {
-      console.log(items);
       const durationArray = items[0].contentDetails.duration.split('');
       if (durationArray.length <= 4) {
         songDuration = (Number(durationArray[2]));
@@ -206,11 +245,97 @@ io.on('connection', (socket) => {
       const minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
       const seconds = Number(playlistStartTime[6] + playlistStartTime[7]);
       playlistStartTime = minsInSeconds + seconds;
-      console.log({ playlistStartTime });
-      // console.log({ playlistStartTime });
       io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
     }).catch((err) => { console.log(err); });
   });
+  // NEW LISTENER LISTENER -- listen for room id
+  socket.on('roomroute', (djInfo) => {
+    let room = djInfo[0]
+    let tokSession = djInfo[1]
+    let tokToken = djInfo[2]
+    console.log(user, "  google id of listener");
+    // getUserById(user).then(userArr => addSession(tokSession, tokToken, userArr[0].googleid)
+    // .then(()=>console.log("added")))
+    // .catch(error => console.log(error))
+
+
+    getSessionInfoById(user).then((session) => {
+      if (!session.length) {
+        addSession(tokSession, tokToken, user)
+        .then(()=>console.log("added"))
+        .catch(error => console.log(error));
+      } else {
+        changeSession(tokSession, tokToken, user)
+        .then(()=>console.log("changed"))
+        .catch(err => console.log(err));
+      }
+    }).catch((error)=>console.log(error, " in get session"));
+    socket.tokToken = tokToken
+    socket.tokSession = tokSession
+
+
+    console.log(socket.tokToken,'this.tokToken')
+    function getStartTime() {
+      // calculate listener start time
+      listenerStartTime += new Date();
+      listenerStartTime = listenerStartTime.split('');
+      listenerStartTime = listenerStartTime.splice(16, 8);
+      const minsInSeconds = Number(listenerStartTime[3] + listenerStartTime[4]) * 60;
+      const seconds = Number(listenerStartTime[6] + listenerStartTime[7]);
+      // calculate difference between listener start and playlist start
+      listenerStartTime = minsInSeconds + seconds;
+      timeInPlaylist = listenerStartTime - playlistStartTime;
+      // io.sockets.emit('startlistener', {timeInPlaylist, tokSession, tokToken});
+    }
+    getStartTime();
+    // socket joins that room
+    socket.join(room, ()=>{
+      socket.rooms[socket.id] = room;
+    });
+    // if we want to keep track of users in room
+    // if (socket.name) {
+    //   users.push(socket.name);
+    //   console.log(room, 'in join room');
+    //   io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
+    // }
+  // });
+  });
+
+  // listen for username
+  socket.on('userid', (name) => {
+    // socket joins that room
+    socket.name = name;
+  });
+
+  // listen for djInfo
+  socket.on('getDjInfo', () => {
+    getSessionInfoById(user).then((sessionInfo)=>{
+      // sends dj info to chat service
+      io.sockets.emit('startlistener', sessionInfo);
+    });
+    
+  });
+
+  // listen for chat message
+  socket.on('chat message',  (msg) => {
+    const room = socket.rooms[socket.id];
+    io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
+  });
+
+  // listen for active DJs request
+  socket.on('djListReq', () =>{
+    io.sockets.emit('djList', {djs});
+  })
+
+  // listen for users to leave
+  socket.on('disconnect',  (data) => {
+    // remove user from users array
+    users.splice(users.indexOf(socket.name), 1);
+    // emit disconnection
+    io.emit('disconnect', { users: users, name: socket.name });
+  });
+
+  
   // tell socket to listen for a 'sample' event
   socket.on('sample', (stream) => {
     // console.log(stream.blob);     // save sound to
@@ -235,12 +360,13 @@ io.on('connection', (socket) => {
 // session serializatoin
 passport.serializeUser((user, done) => {
   console.log(user, done);
+  // console.log(user, done)
   done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 passport.deserializeUser((id, done) => {
-  console.log(id);
+  // console.log(id);
   getUserById(id).then((user) => {
     done(null, user);
   }).catch(err => console.error(err));
@@ -266,7 +392,6 @@ passport.use(new GoogleStrategy({
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
-  console.log(accessToken);
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;

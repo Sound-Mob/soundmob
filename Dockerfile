@@ -14,13 +14,14 @@ ENV NODE_ENV production
 COPY package.json /usr/src/app/package.json
 RUN npm install
 RUN npm install -g @angular/cli@6.2.3
-#RUN npm install -g ajv@^6.0.0
 
 # add app
 COPY . /usr/src/app
 
 # expose port that app runs on for the world
 EXPOSE 80
+
+
 
 
 # start app
