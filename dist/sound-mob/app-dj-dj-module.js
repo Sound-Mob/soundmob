@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
 
 /***/ }),
 
@@ -49,6 +49,16 @@ let ChatComponent = class ChatComponent {
         this.messageToSend = '';
         this.values = '';
         this.chatMessages = [];
+        this.videos = [
+            {
+                title: 'mazda',
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
+            },
+            {
+                title: 'honda',
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
+            }
+        ];
         this.chatService.receiveMessages()
             .subscribe(data => {
             if (this.chatMessages.length > 10) {
@@ -56,9 +66,19 @@ let ChatComponent = class ChatComponent {
             }
             this.chatMessages.unshift(data);
         });
+        this.chatService.receiveSongs()
+            .subscribe(songs => {
+            this.songs = songs;
+        });
+    }
+    startCast() {
+        // this.video = this.videos[0].video;
+        this.video = `https://www.youtube.com/embed/${this.songs[0]}?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
+        console.log("started");
     }
     ngOnInit() {
         this.chatService.createRoom("hey");
+        this.chatService.selectPlaylist('iddoeooe');
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -158,6 +178,7 @@ const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src
 const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/dj/tokbox/subscriber/subscriber.component.ts");
 const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj/tokbox/publisher/publisher.component.ts");
 const chat_component_1 = __webpack_require__(/*! ./chat/chat.component */ "./src/app/dj/chat/chat.component.ts");
+const youtube_pipe_1 = __webpack_require__(/*! ../pipes/youtube.pipe */ "./src/app/pipes/youtube.pipe.ts");
 let DjModule = class DjModule {
 };
 DjModule = __decorate([
@@ -175,7 +196,8 @@ DjModule = __decorate([
             app_component_1.AppComponent,
             subscriber_component_1.SubscriberComponent,
             publisher_component_1.PublisherComponent,
-            chat_component_1.ChatComponent
+            chat_component_1.ChatComponent,
+            youtube_pipe_1.YoutubePipe,
         ],
         providers: [opentok_service_1.OpentokService]
     })
@@ -389,7 +411,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n<nav>\n  <ol class=\"breadcrumb\">\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Like</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Follow</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Rate</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Suggest Tracks</a>\n    </li>\n  </ol>\n</nav>\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <h3 class=\"text-center\">\n        h3. Lorem ipsum dolor sit amet.\n      </h3>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg btn-block\">\n        <span>NameofSound</span>\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n<nav>\n  <ol class=\"breadcrumb\">\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Like</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Follow</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Rate</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Suggest Tracks</a>\n    </li>\n  </ol>\n</nav>\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <h3 class=\"text-center\">\n        h3. Lorem ipsum dolor sit amet.\n      </h3>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg btn-block\">\n        <span>NameofSound</span>\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 

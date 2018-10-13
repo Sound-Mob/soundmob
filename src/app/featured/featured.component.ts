@@ -30,7 +30,7 @@ export class FeaturedComponent implements OnInit {
     let sockAndTok = event.target.id.split("---")
     this.djJoin.joinRoom(sockAndTok);
     // console.log(sockAndTok, " google id");
-
+    
   }
 
 }

@@ -128,8 +128,7 @@ io.on('connection', (socket) => {
         console.log("Error creating session:", error)
       } else {
         sessionId = session.sessionId;
-        console.log("Session ID: " + sessionId);
-        console.log(session, " session")
+        let songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
         let token = opentok.generateToken(sessionId);
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
@@ -138,7 +137,12 @@ io.on('connection', (socket) => {
     });
   });
 
- 
+ // choose playlist listener
+ socket.on('djSelectsPlaylist', (playlistId) => {
+   console.log(playlistId, " playlistId");
+   let songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
+   io.sockets.emit('songList', songIds);
+ })
 
   const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
@@ -165,6 +169,7 @@ io.on('connection', (socket) => {
     let room = djInfo[0]
     let tokSession = djInfo[1]
     let tokToken = djInfo[2]
+    let songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
     console.log(user, "  google id of listener");
     // getUserById(user).then(userArr => addSession(tokSession, tokToken, userArr[0].googleid)
     // .then(()=>console.log("added")))

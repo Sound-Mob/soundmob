@@ -52,5 +52,20 @@ export class ChatService {
     this.socket.emit('roomroute', djInfo)
   }
 
+  selectPlaylist(playlistId) {
+    this.socket.emit('djSelectsPlaylist', playlistId);
+  }
+
+  receiveSongs() {
+    console.log('recieved songs')
+    let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string }>(observer => {
+      this.socket.on('songList', (songs) => {
+        console.log(songs);
+        observer.next(songs);
+      });
+    });
+    console.log(observable)
+    return observable;
+  }
 
 }

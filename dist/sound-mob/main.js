@@ -10,6 +10,7 @@
 var map = {
 	"../app/dj/dj.module": [
 		"./src/app/dj/dj.module.ts",
+		"common",
 		"app-dj-dj-module"
 	],
 	"../app/featured/featured.module": [
@@ -18,6 +19,7 @@ var map = {
 	],
 	"../app/listener/listener.module": [
 		"./src/app/listener/listener.module.ts",
+		"common",
 		"app-listener-listener-module"
 	]
 };
@@ -30,7 +32,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return __webpack_require__.e(ids[1]).then(function() {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
 		var id = ids[0];
 		return __webpack_require__.t(id, 7);
 	});
@@ -641,6 +643,20 @@ let ChatService = class ChatService {
     }
     joinRoom(djInfo) {
         this.socket.emit('roomroute', djInfo);
+    }
+    selectPlaylist(playlistId) {
+        this.socket.emit('djSelectsPlaylist', playlistId);
+    }
+    receiveSongs() {
+        console.log('recieved songs');
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('songList', (songs) => {
+                console.log(songs);
+                observer.next(songs);
+            });
+        });
+        console.log(observable);
+        return observable;
     }
 };
 ChatService = __decorate([
