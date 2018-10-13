@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { OpentokService } from './opentok.service';
+import { OpentokService } from '../../services/opentok.service';
 import * as OT from '@opentok/client';
 import { Observable } from 'rxjs'
 import * as io from 'socket.io-client'
