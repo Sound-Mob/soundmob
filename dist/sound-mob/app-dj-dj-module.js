@@ -63,25 +63,27 @@ let ChatComponent = class ChatComponent {
         });
         this.chatService.djGetSongDetails()
             .subscribe(details => {
-            console.log(details, " details");
             this.playlistStartTime = details.playlistStartTime;
             this.songDuration = details.songDuration;
-            console.log(details.songDuration);
+            setTimeout(() => {
+                this.castContinue();
+            }, details.songDuration);
         });
     }
     // trigger cast on after duration runs
     castContinue() {
-        // this.startCast(1);
+        let time;
+        if (this.songDuration) {
+            time = this.songDuration;
+            console.log(time, " in if yes");
+        }
+        else {
+            time = 6000;
+            console.log(time, " in if no");
+        }
         setTimeout(() => {
             this.startCast();
-            console.log(this.songDuration, "duration in start cast function");
-            console.log(this.count, "count in start cast function");
-            console.log(this.songs, "songs in start cast function");
-        }, 6000);
-        // if (this.songDuration){
-        //   // setTimeout(() => { this.startCast() }, (parseInt(this.songDuration + '1') * 1000));
-        // }
-        // console.log(songDuration, "in continue")
+        }, time * 1000);
         let counter = this.count + 1;
         if (this.songs[counter]) {
             this.count++;
@@ -89,10 +91,8 @@ let ChatComponent = class ChatComponent {
     }
     // start music
     startCast() {
-        this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
+        this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
         this.chatService.djStartCast(this.songs[this.count]);
-        this.castContinue();
-        // this.count++;
     }
     ngOnInit() {
         this.chatService.createRoom("hey");

@@ -715,9 +715,7 @@ let OpentokService = class OpentokService {
         return OT;
     }
     initSession(apikey, sessionId, token) {
-        console.log(sessionId, " above conditinoal");
         if (sessionId) {
-            console.log(token, " token in init sessino");
             this.session = OT.initSession(apikey, sessionId);
             this.token = token;
             return Promise.resolve(this.session);

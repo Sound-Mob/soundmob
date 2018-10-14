@@ -141,7 +141,7 @@ io.on('connection', (socket) => {
  // choose playlist listener
  socket.on('djSelectsPlaylist', (playlistId) => {
    console.log(playlistId, " playlistId");
-   let songIds = ['x38ildLdUeM', '7A1utb0NrHU', 'x38ildLdUeM', 'KgtizhlbIOQ'];
+   let songIds = ['x38ildLdUeM', 'vF1RPI6j7b0', 'x38ildLdUeM', 'KgtizhlbIOQ'];
    io.sockets.emit('songList', songIds);
  })
 
