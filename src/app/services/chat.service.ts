@@ -36,15 +36,31 @@ export class ChatService {
     this.socket.emit('getDjInfo')
   }
 
+  djStartCast(songId){
+    this.socket.emit('startCast', songId);
+  }
+
+  djGetSongDetails(){
+    // console.log('recieved songgg   info')
+    let observable = new Observable<{ playlistStartTime: string, songDuration: string}>(observer => {
+      this.socket.on('castOn', (songInfo) => {
+        // console.log(songInfo);
+        observer.next(songInfo);
+      });
+    });
+    console.log(observable)
+    return observable;
+  }
+
   receiveDjInfo() {
     console.log('recieved info')
     let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string}>(observer => {
       this.socket.on('startlistener', (djInfo) => {
-        console.log(djInfo);
+        // console.log(djInfo);
         observer.next(djInfo);
       });
     });
-    console.log(observable)
+    // console.log(observable)
     return observable;
   }
 

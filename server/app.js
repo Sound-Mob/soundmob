@@ -104,7 +104,8 @@ io.on('connection', (socket) => {
   const { user } = socket.request.session.passport;
   const { givenName } = name;
   const { familyName } = name;
-  
+  const { accessToken} = socket.request.session; 
+  console.log({ accessToken });
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
     socket.admin = true;
@@ -128,7 +129,7 @@ io.on('connection', (socket) => {
         console.log("Error creating session:", error)
       } else {
         sessionId = session.sessionId;
-        let songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
+        let songIds = ['JryGDi6SVQQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
         let token = opentok.generateToken(sessionId);
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
@@ -136,21 +137,25 @@ io.on('connection', (socket) => {
       }
     });
   });
-
+  
  // choose playlist listener
  socket.on('djSelectsPlaylist', (playlistId) => {
    console.log(playlistId, " playlistId");
-   let songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
+   let songIds = ['x38ildLdUeM', '7A1utb0NrHU', 'x38ildLdUeM', 'KgtizhlbIOQ'];
    io.sockets.emit('songList', songIds);
  })
 
-  const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
+  // const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
-    searchDetails(token, id).then(({ items }) => {
+    console.log(id, " id in startCast before get details from youtube")
+    searchDetails(accessToken, id).then(({ items }) => {
+      console.log(items[0].contentDetails.duration, "duration")
       const durationArray = items[0].contentDetails.duration.split('');
       if (durationArray.length <= 4) {
         songDuration = (Number(durationArray[2]));
+      } else if (durationArray.length === 5) {
+        songDuration = (Number(durationArray[2] + durationArray[3]));
       } else {
         songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
       }
@@ -161,7 +166,7 @@ io.on('connection', (socket) => {
       const minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
       const seconds = Number(playlistStartTime[6] + playlistStartTime[7]);
       playlistStartTime = minsInSeconds + seconds;
-      io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
+      io.sockets.emit('castOn', {playlistStartTime, songDuration });
     }).catch((err) => { console.log(err); });
   });
   // NEW LISTENER LISTENER -- listen for room id

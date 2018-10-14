@@ -46,19 +46,10 @@ const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ 
 let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
+        this.count = 0;
         this.messageToSend = '';
         this.values = '';
         this.chatMessages = [];
-        this.videos = [
-            {
-                title: 'mazda',
-                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
-            },
-            {
-                title: 'honda',
-                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
-            }
-        ];
         this.chatService.receiveMessages()
             .subscribe(data => {
             if (this.chatMessages.length > 10) {
@@ -70,11 +61,38 @@ let ChatComponent = class ChatComponent {
             .subscribe(songs => {
             this.songs = songs;
         });
+        this.chatService.djGetSongDetails()
+            .subscribe(details => {
+            console.log(details, " details");
+            this.playlistStartTime = details.playlistStartTime;
+            this.songDuration = details.songDuration;
+            console.log(details.songDuration);
+        });
     }
+    // trigger cast on after duration runs
+    castContinue() {
+        // this.startCast(1);
+        setTimeout(() => {
+            this.startCast();
+            console.log(this.songDuration, "duration in start cast function");
+            console.log(this.count, "count in start cast function");
+            console.log(this.songs, "songs in start cast function");
+        }, 6000);
+        // if (this.songDuration){
+        //   // setTimeout(() => { this.startCast() }, (parseInt(this.songDuration + '1') * 1000));
+        // }
+        // console.log(songDuration, "in continue")
+        let counter = this.count + 1;
+        if (this.songs[counter]) {
+            this.count++;
+        }
+    }
+    // start music
     startCast() {
-        // this.video = this.videos[0].video;
-        this.video = `https://www.youtube.com/embed/${this.songs[0]}?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
-        console.log("started");
+        this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
+        this.chatService.djStartCast(this.songs[this.count]);
+        this.castContinue();
+        // this.count++;
     }
     ngOnInit() {
         this.chatService.createRoom("hey");
@@ -530,10 +548,7 @@ let AppComponent = class AppComponent {
         });
     }
     fireSession(sessionId, token) {
-        console.log(config_js_1.default, " in fire");
-        console.log(sessionId, " in fire");
         const { API_KEY } = config_js_1.default;
-        console.log(token, " TOKEN in fire session");
         this.opentokService.initSession(API_KEY, sessionId, token)
             .then((sessionId) => {
             this.session = sessionId;

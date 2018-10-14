@@ -630,15 +630,29 @@ let ChatService = class ChatService {
     getDjInfo() {
         this.socket.emit('getDjInfo');
     }
+    djStartCast(songId) {
+        this.socket.emit('startCast', songId);
+    }
+    djGetSongDetails() {
+        // console.log('recieved songgg   info')
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('castOn', (songInfo) => {
+                // console.log(songInfo);
+                observer.next(songInfo);
+            });
+        });
+        console.log(observable);
+        return observable;
+    }
     receiveDjInfo() {
         console.log('recieved info');
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('startlistener', (djInfo) => {
-                console.log(djInfo);
+                // console.log(djInfo);
                 observer.next(djInfo);
             });
         });
-        console.log(observable);
+        // console.log(observable)
         return observable;
     }
     joinRoom(djInfo) {

@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
       // console.log(djInfo, " in observable in listener component")
       this.tokSession = djInfo[0].sessionid
       this.tokToken = djInfo[0].sessiontoken
-      console.log(djInfo);
+     
       this.fireSession(djInfo[0].sessionid, djInfo[0].sessiontoken)
       // console.log(this.tokToken, this.tokSession, 'these the session')
     })
