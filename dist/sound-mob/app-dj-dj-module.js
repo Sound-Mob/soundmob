@@ -63,7 +63,7 @@ let ChatComponent = class ChatComponent {
         });
         this.chatService.djGetSongDetails()
             .subscribe(details => {
-            this.playlistStartTime = details.playlistStartTime;
+            this.songStartTime = details.songStartTime;
             this.songDuration = details.songDuration;
             setTimeout(() => {
                 this.castContinue();

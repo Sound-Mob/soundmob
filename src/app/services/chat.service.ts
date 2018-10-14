@@ -42,7 +42,7 @@ export class ChatService {
 
   djGetSongDetails(){
     // console.log('recieved songgg   info')
-    let observable = new Observable<{ playlistStartTime: string, songDuration: string}>(observer => {
+    let observable = new Observable<{ songStartTime: string, songDuration: string}>(observer => {
       this.socket.on('castOn', (songInfo) => {
         // console.log(songInfo);
         observer.next(songInfo);

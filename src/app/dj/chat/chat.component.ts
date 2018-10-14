@@ -11,7 +11,7 @@ import { ChatService } from 'src/app/services/chat.service';
 export class ChatComponent implements OnInit {
   count: number = 0;
   songs: object;
-  playlistStartTime: string;
+  songStartTime: string;
   songDuration: string;
   messageToSend: string = '';
   values = '';
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit {
     })
     this.chatService.djGetSongDetails()
     .subscribe(details => {
-      this.playlistStartTime = details.playlistStartTime;
+      this.songStartTime = details.songStartTime;
       this.songDuration = details.songDuration;
       setTimeout(()=>{
         this.castContinue();

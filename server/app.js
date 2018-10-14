@@ -30,6 +30,9 @@ const {
   addSession,
   getSessionInfoById,
   changeSession,
+  createDjSongSession,
+  getDjSongById,
+  changeDjSong,
 } = require('./database');
 // hidden keys
 const {
@@ -88,7 +91,7 @@ const users = [];
 // keeping track of djs
 const djs = [];
 // keeping track of what time playlist starts
-let playlistStartTime = '';
+let songStartTime = '';
 // keeping track of what time a listener joins
 let listenerStartTime = '';
 // keeping track of difference between playlist start and listener start
@@ -148,7 +151,7 @@ io.on('connection', (socket) => {
   // const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
-    console.log(id, " id in startCast before get details from youtube")
+    // console.log(id, " id in startCast before get details from youtube")
     searchDetails(accessToken, id).then(({ items }) => {
       console.log(items[0].contentDetails.duration, "duration")
       const durationArray = items[0].contentDetails.duration.split('');
@@ -160,13 +163,25 @@ io.on('connection', (socket) => {
         songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
       }
       // calculate playlist start time
-      playlistStartTime += new Date();
-      playlistStartTime = playlistStartTime.split('');
-      playlistStartTime = playlistStartTime.splice(16, 8);
-      const minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
-      const seconds = Number(playlistStartTime[6] + playlistStartTime[7]);
-      playlistStartTime = minsInSeconds + seconds;
-      io.sockets.emit('castOn', {playlistStartTime, songDuration });
+      songStartTime += new Date();
+      songStartTime = songStartTime.split('');
+      songStartTime = songStartTime.splice(16, 8);
+      const minsInSeconds = Number(songStartTime[3] + songStartTime[4]) * 60;
+      const seconds = Number(songStartTime[6] + songStartTime[7]);
+      songStartTime = minsInSeconds + seconds;
+      getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
+        console.log(songinfo);
+        if (!songinfo.length) {
+          createDjSongSession(id, songStartTime, songDuration, socket.rooms[socket.id])
+            .then(() => console.log("added"))
+            .catch(error => console.log(error));
+        } else {
+          changeDjSong(id, songStartTime, songDuration, socket.rooms[socket.id])
+            .then(() => console.log("changed"))
+            .catch(err => console.log(err));
+        }
+      }).catch((er)=> console.log(er)); 
+      io.sockets.emit('castOn', {songStartTime, songDuration });
     }).catch((err) => { console.log(err); });
   });
   // NEW LISTENER LISTENER -- listen for room id
@@ -206,13 +221,17 @@ io.on('connection', (socket) => {
       const seconds = Number(listenerStartTime[6] + listenerStartTime[7]);
       // calculate difference between listener start and playlist start
       listenerStartTime = minsInSeconds + seconds;
-      timeInPlaylist = listenerStartTime - playlistStartTime;
+      timeInPlaylist = listenerStartTime - songStartTime;
       // io.sockets.emit('startlistener', {timeInPlaylist, tokSession, tokToken});
     }
+    
     getStartTime();
     // socket joins that room
     socket.join(room, ()=>{
       socket.rooms[socket.id] = room;
+      getDjSongById(room).then((songinfo) => {
+        console.log(songinfo, " in listener grab")
+      }).catch((error) => console.log(error));
     });
     // if we want to keep track of users in room
     // if (socket.name) {
