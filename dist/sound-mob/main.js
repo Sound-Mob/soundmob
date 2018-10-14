@@ -641,6 +641,9 @@ let ChatService = class ChatService {
     joinRoom(djInfo) {
         this.socket.emit('roomroute', djInfo);
     }
+    djInfoReq() {
+        this.socket.emit('djInfoReq');
+    }
 };
 ChatService = __decorate([
     core_1.Injectable({

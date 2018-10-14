@@ -92,7 +92,9 @@ let FeaturedComponent = class FeaturedComponent {
             .subscribe((data) => this.activeDj = data);
     }
     joinDj(event) {
+        console.log(event.target, 'thisthe event log');
         let sockAndTok = event.target.id.split("---");
+        this.http.post('/profileInfo', { sockAndTok });
         this.djJoin.joinRoom(sockAndTok);
         // console.log(sockAndTok, " google id");
     }
@@ -172,7 +174,6 @@ let DjlistService = class DjlistService {
     liveDj() {
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('djList', (data) => {
-                console.log(data);
                 observer.next(data);
             });
         });

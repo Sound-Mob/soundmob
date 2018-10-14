@@ -82,6 +82,7 @@ app.get('/djView', (req,res) => {
 
 })
 
+
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
   let body;
@@ -106,6 +107,8 @@ let listenerStartTime = '';
 let timeInPlaylist = '';
 // keeping track of song duration
 let songDuration;
+
+let selectedDj;
 
 // on connection
 io.on('connection', (socket) => {
@@ -136,11 +139,11 @@ io.on('connection', (socket) => {
     var sessionId;
     opentok.createSession({ mediaMode: "routed" }, (error, session) => {
       if (error) {
-        console.log("Error creating session:", error)
+        // console.log("Error creating session:", error)
       } else {
         sessionId = session.sessionId;
-        console.log("Session ID: " + sessionId);
-        console.log(session, " session")
+        // console.log("Session ID: " + sessionId);
+        // console.log(session, " session")
         let token = opentok.generateToken(sessionId);
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
@@ -173,10 +176,10 @@ io.on('connection', (socket) => {
   });
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (djInfo) => {
-    let room = djInfo[0]
+    selectedDj = djInfo[0]
     let tokSession = djInfo[1]
     let tokToken = djInfo[2]
-    console.log(user, "  google id of listener");
+    // console.log(user, "  google id of listener");
     // getUserById(user).then(userArr => addSession(tokSession, tokToken, userArr[0].googleid)
     // .then(()=>console.log("added")))
     // .catch(error => console.log(error))
@@ -224,6 +227,10 @@ io.on('connection', (socket) => {
   // });
   });
 
+  app.get('/profileInfo', (req, res) => {
+  console.log(req, 'this a req with profile info')
+  res.send(selectedDj);
+})
   // listen for username
   socket.on('userid', (name) => {
     // socket joins that room
@@ -238,6 +245,13 @@ io.on('connection', (socket) => {
     });
     
   });
+
+  // listen for gjinfo in the listner profile component
+  socket.on('djInfoReq', () => {
+    //get info on selected dj
+
+    //send info on selected dj
+  })
 
   // listen for chat message
   socket.on('chat message',  (msg) => {
