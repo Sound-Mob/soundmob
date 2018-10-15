@@ -10,6 +10,7 @@
 var map = {
 	"../app/dj/dj.module": [
 		"./src/app/dj/dj.module.ts",
+		"common",
 		"app-dj-dj-module"
 	],
 	"../app/featured/featured.module": [
@@ -18,6 +19,7 @@ var map = {
 	],
 	"../app/listener/listener.module": [
 		"./src/app/listener/listener.module.ts",
+		"common",
 		"app-listener-listener-module"
 	]
 };
@@ -30,7 +32,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return __webpack_require__.e(ids[1]).then(function() {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
 		var id = ids[0];
 		return __webpack_require__.t(id, 7);
 	});
@@ -438,7 +440,6 @@ __webpack_require__.r(__webpack_exports__);
   SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
 });
 
-
 /***/ }),
 
 /***/ "./src/app/home/home.component.css":
@@ -642,6 +643,9 @@ let ChatService = class ChatService {
     joinRoom(djInfo) {
         this.socket.emit('roomroute', djInfo);
     }
+    djInfoReq() {
+        this.socket.emit('djInfoReq');
+    }
 };
 ChatService = __decorate([
     core_1.Injectable({
@@ -783,7 +787,11 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/main.ts */"./src/main.ts");
+=======
+module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
+>>>>>>> 1066b47eb7e42a4c18cec58a471ea74e5e8ef0cc
 
 
 /***/ }),

@@ -1,4 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
+import { SoundBoardService } from '../services/sound-board.service';
 
 
 @Component({
@@ -7,17 +8,21 @@ import { Component, OnInit,Input } from '@angular/core';
   styleUrls: ['./listener.component.css']
 })
 export class ListenerComponent implements OnInit {
-
+sound:string = '';
   @Input() sai:'sai';
 
 
 
 
-  constructor() {
+  constructor(private soundBoard: SoundBoardService) {
   }
 
   ngOnInit() {
-    
+    this.soundBoard.soundReceive()
+    .subscribe(data => {
+      console.log('it hits')
+     this.sound = data.toString();
+    })
   }
 
 }

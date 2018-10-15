@@ -46,35 +46,14 @@
 
     <div class="col-md-4">
 
-      <button type="button" id="soundboard-button" class="btn btn-outline-secondary btn-lg btn-block">
-        NameofSound
+      <button *ngFor="let sound of sounds" (click)='onClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
+        {{sound.name}}
       </button>
-    </div>
-    <div class="col-md-4">
-
-      <button type="button" id="soundboard-button" class="btn btn-outline-secondary btn-lg btn-block">
-        NameofSound
-      </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-
-      <button type="button" id="soundboard-button" class="btn btn-block btn-outline-secondary btn-lg btn-block">
-        <span>NameofSound</span>
-      </button>
-    </div>
-    <div class="col-md-4">
-
-      <button type="button" id="soundboard-button" class="btn btn-outline-secondary btn-lg btn-block">
-        NameofSound
-      </button>
-    </div>
-    <div class="col-md-4">
-
-      <button type="button" id="soundboard-button" class="btn btn-outline-secondary btn-lg btn-block">
-        NameofSound
-      </button>
+      <!-- <button (click)='onClick($event)' type="button" id={{items.items[1].mediaLink}} class="btn btn-outline-secondary btn-lg btn-block">
+        {{items.items[1].name}}
+      </button> -->
+     
+     
     </div>
   </div>
 </div>

@@ -5471,7 +5471,11 @@ window.global = window;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/polyfills.ts */"./src/polyfills.ts");
+=======
+module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/polyfills.ts */"./src/polyfills.ts");
+>>>>>>> 1066b47eb7e42a4c18cec58a471ea74e5e8ef0cc
 
 
 /***/ })

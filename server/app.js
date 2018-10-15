@@ -7,15 +7,15 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const path = require('path');
 const OpenTok = require('opentok');
+const https = require('http');
 
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-const config = require('./config');
 
-const { TOKEN } = config;
-const { API_KEY } = config;
+
+const server = https.createServer(app);
+const io = require('socket.io')(server);
 
 const authRoutes = require('./routes/auth-routes');
 
@@ -39,6 +39,8 @@ const {
   ClientID,
   ClientSecret,
   RedirectURL,
+  TOKEN,
+  API_KEY,
 } = require('./config.js');
 //  api methods
 const {
@@ -70,17 +72,20 @@ io.use((socket, next) => {
   mill(socket.request, {}, next);
 });
 app.use('/auth', authRoutes);
+
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
-// ///test handlers
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'index.html'));
+//create dj routes
+app.get('/djView', (req, res) => {
+  const id = req.session.passport.user
+  getUserById(id).then(data => {
+    let body = data[0];
+    body.photo = req.session.photo;
+    res.send(body);
+  })
 
-// });
-
-// const portParty = process.env.PORT || 3000;
-app.set('port', process.env.PORT);
+})
 
 
 app.get('/test', (req, res) => {
@@ -91,6 +96,9 @@ app.get('/test', (req, res) => {
       body = data;
       res.send(body);
     });
+});
+app.get('/feature', (req, res) => {
+  res.render(path.join(__dirname, '../dist/sound-mob/app-featured-featured-module'));
 });
 app.get('/tester', (req, res) => {
   res.json(userobject);
@@ -107,6 +115,8 @@ let listenerStartTime = '';
 let timeInPlaylist = '';
 // keeping track of song duration
 let songDuration;
+
+let selectedDj;
 
 // on connection
 io.on('connection', (socket) => {
@@ -138,11 +148,12 @@ io.on('connection', (socket) => {
     let sessionId;
     opentok.createSession({ mediaMode: 'routed' }, (error, session) => {
       if (error) {
-        console.log('Error creating session:', error);
+        // console.log("Error creating session:", error)
       } else {
         sessionId = session.sessionId;
-        const songIds = ['JryGDi6SVQQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
-        const token = opentok.generateToken(sessionId);
+        // console.log("Session ID: " + sessionId);
+        // console.log(session, " session")
+        let token = opentok.generateToken(sessionId);
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
         djs.push({
@@ -152,11 +163,36 @@ io.on('connection', (socket) => {
     });
   });
 
-  // choose playlist listener
-  socket.on('djSelectsPlaylist', (playlistId) => {
-    console.log(playlistId, ' playlistId');
-    const songIds = ['x38ildLdUeM', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
-    io.sockets.emit('songList', songIds);
+  // listen for username
+  socket.on('userid', (name) => {
+    // socket joins that room
+    socket.name = name;
+  });
+
+  socket.on('chatter', (msg) => {
+    console.log(msg);
+  });
+
+  // listen for chat message
+  socket.on('chat message', (msg) => {
+    const room = socket.rooms[socket.id];
+    console.log(room, 'in chat')
+    io.sockets.emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user });
+    // io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
+    // io.sockets.emit('chat message', {message: msg, userName: socket.name});
+  });
+
+  // listen for sound request
+  socket.on('soundEmit', (data) => {
+    io.sockets.emit('soundRelay', data);
+  });
+  // listen for users to leave
+  socket.on('disconnect', (data) => {
+    // console.log(users, socket.name);
+    // remove user from users array
+    users.splice(users.indexOf(socket.name), 1);
+    // emit disconnection
+    io.emit('disconnect', { users: users, name: socket.name });
   });
 
   // const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
@@ -184,11 +220,10 @@ io.on('connection', (socket) => {
   });
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (djInfo) => {
-    const room = djInfo[0];
-    const tokSession = djInfo[1];
-    const tokToken = djInfo[2];
-    const songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
-    console.log(user, '  google id of listener');
+    selectedDj = djInfo[0]
+    let tokSession = djInfo[1]
+    let tokToken = djInfo[2]
+    // console.log(user, "  google id of listener");
     // getUserById(user).then(userArr => addSession(tokSession, tokToken, userArr[0].googleid)
     // .then(()=>console.log("added")))
     // .catch(error => console.log(error))
@@ -236,6 +271,7 @@ io.on('connection', (socket) => {
     // });
   });
 
+
   // listen for username
   socket.on('userid', (name) => {
     // socket joins that room
@@ -249,6 +285,13 @@ io.on('connection', (socket) => {
       io.sockets.emit('startlistener', sessionInfo);
     });
   });
+
+  // listen for gjinfo in the listner profile component
+  socket.on('djInfoReq', () => {
+    //get info on selected dj
+
+    //send info on selected dj
+  })
 
   // listen for chat message
   socket.on('chat message', (msg) => {
@@ -316,34 +359,35 @@ passport.use(new GoogleStrategy({
   callbackURL: googleCallbackURL,
   passReqToCallback: true,
 },
-(req, accessToken, refreshToken, profile, done) => {
-  // console.log(accessToken)
-  req.session.accessToken = accessToken;
-  req.session.name = profile.name;
-  req.session.photo = profile.photos[0];
-  // console.log(accessToken);
-  const { id } = profile;
-  const { name } = profile;
-  const { givenName } = name;
-  const { familyName } = name;
-  const bio = 'Loray NC';
-  const samples = 'binary';
-  const savedplaylists = 'urls';
-  const followercount = 12;
-  const followingcount = 2;
-  getUserById(profile.id).then((user) => {
-    if (user.length === 1) {
-      user[0].name = profile.name;
-      done(null, user[0]);
-    } else {
-      createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
-        .then((newUser) => {
-          console.log(newUser);
-          done(null, newUser);
-        }).catch(err => console.error(err));
-    }
-  }).catch(err => console.error(err, 'this should hit'));
-}));
+  (req, accessToken, refreshToken, profile, done) => {
+
+    req.session.accessToken = accessToken;
+    req.session.name = profile.name;
+    req.session.photo = profile.photos[0];
+    console.log(profile)
+    // console.log(accessToken);
+    const { id } = profile;
+    const { name } = profile;
+    const { givenName } = name;
+    const { familyName } = name;
+    const bio = 'Loray NC';
+    const samples = 'binary';
+    const savedplaylists = 'urls';
+    const followercount = 12;
+    const followingcount = 2;
+    getUserById(profile.id).then((user) => {
+      if (user.length === 1) {
+        user[0].name = profile.name;
+        done(null, user[0]);
+      } else {
+        createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
+          .then((newUser) => {
+            console.log(newUser);
+            done(null, newUser);
+          }).catch(err => console.error(err));
+      }
+    }).catch(err => console.error(err, 'this should hit'));
+  }));
 
 
 server.listen(80, () => {
