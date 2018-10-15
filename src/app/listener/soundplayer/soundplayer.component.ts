@@ -29,7 +29,7 @@ export class SoundplayerComponent implements OnInit {
       .subscribe(songinfo => {
        
         let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
-        // console.log(startAt, " start time ready for vid");
+        console.log(startAt, " start time ready for vid");
         this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
         
       })
