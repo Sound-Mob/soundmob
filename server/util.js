@@ -83,9 +83,9 @@ module.exports = {
     };
     return rp(options);
   },
-  playlistIDs: (token) => {
+  playlistIDs: (token, id) => {
     const options = {
-      uri: 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=PLR4epTa34lZzzIbqRVWGRdtbpB_UlvMdl',
+      uri: `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${id}`,
       headers: {
         'User-Agent': 'Request-Promise',
         Authorization: `Bearer ${token}`,

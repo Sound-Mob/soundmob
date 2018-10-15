@@ -664,7 +664,7 @@ let ChatService = class ChatService {
         console.log('recieved songs');
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('songList', (songs) => {
-                console.log(songs);
+                // console.log(songs);
                 observer.next(songs);
             });
         });
@@ -675,15 +675,18 @@ let ChatService = class ChatService {
         // console.log('recieved songgg   info')
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('currentSong', (songInfo) => {
-                console.log(songInfo, " in  listen get song deets");
+                console.log(songInfo, " songinfo in listener receiver");
                 observer.next(songInfo);
             });
         });
-        console.log(observable);
+        // console.log(observable)
         return observable;
     }
     listenerGetSongDetails() {
         this.socket.emit("listenerGetCurrentSong");
+    }
+    djInfoReq() {
+        this.socket.emit('djInfoReq');
     }
 };
 ChatService = __decorate([
