@@ -253,8 +253,7 @@ io.on('connection', (socket) => {
     }
     getStartTime();
     // socket joins that room
-    socket.join(room, ()=>{
-      socket.rooms[socket.id] = room;
+    socket.join(room, ()=>{ç
     });
     // if we want to keep track of users in room
     // if (socket.name) {
