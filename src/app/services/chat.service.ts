@@ -96,7 +96,10 @@ export class ChatService {
     return observable;
   }
   listenerGetSongDetails(){
-    this.socket.emit("listenerGetCurrentSong")
+    this.socket.emit("listenerGetCurrentSong"); 
+  }
+    djInfoReq(){
+    this.socket.emit('djInfoReq')
   }
 
 }

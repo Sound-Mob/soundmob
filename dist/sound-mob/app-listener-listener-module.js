@@ -290,6 +290,8 @@ let ProfileComponent = class ProfileComponent {
     constructor() { }
     ngOnInit() {
     }
+    profile() {
+    }
 };
 ProfileComponent = __decorate([
     core_1.Component({

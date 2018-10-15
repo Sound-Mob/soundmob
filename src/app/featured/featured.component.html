@@ -6,23 +6,21 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-2">
+    </div>
+    
+    <div class="col-sm-8">
       <ul *ngFor="let dj of activeDj.djs">
         <li>
           <img src={{dj.photo}}>
           <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
           <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
-
           </a>
         </li>
       </ul>
     </div>
 
-    <div class="col-sm-8">
-
-    </div>
-
     <div class="col-sm-2">
-
+      <button routerLink="/dj">Create Station</button>
     </div>
   </div>
 </div>

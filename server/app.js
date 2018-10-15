@@ -79,6 +79,18 @@ app.use('/auth', authRoutes);
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
+//create dj routes
+app.get('/djView', (req,res) => {
+  const id = req.session.passport.user
+  getUserById(id).then(data=>{
+    let body = data[0];
+    body.photo =req.session.photo;
+    res.send(body);
+  })
+
+})
+
+
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
   let body;
@@ -106,6 +118,8 @@ let listenerStartTime = '';
 let startAt;
 // keeping track of song duration
 let songDuration;
+
+let selectedDj;
 
 // on connection
 io.on('connection', (socket) => {
@@ -137,7 +151,7 @@ io.on('connection', (socket) => {
     var sessionId;
     opentok.createSession({ mediaMode: "routed" }, (error, session) => {
       if (error) {
-        console.log("Error creating session:", error)
+        // console.log("Error creating session:", error)
       } else {
         sessionId = session.sessionId;
         let songIds = ['JryGDi6SVQQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
@@ -212,7 +226,7 @@ io.on('connection', (socket) => {
   }
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (djInfo) => {
-    let room = djInfo[0]
+    selectedDj = djInfo[0]
     let tokSession = djInfo[1]
     let tokToken = djInfo[2]
     let songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
@@ -259,6 +273,13 @@ io.on('connection', (socket) => {
     });
     
   });
+
+  // listen for gjinfo in the listner profile component
+  socket.on('djInfoReq', () => {
+    //get info on selected dj
+
+    //send info on selected dj
+  })
 
   // listen for chat message
   socket.on('chat message',  (msg) => {
@@ -326,6 +347,7 @@ passport.use(new GoogleStrategy({
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
+  console.log(profile)
 // console.log(accessToken);
   const { id } = profile;
   const { name } = profile;

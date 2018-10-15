@@ -686,6 +686,9 @@ let ChatService = class ChatService {
     listenerGetSongDetails() {
         this.socket.emit("listenerGetCurrentSong");
     }
+    djInfoReq() {
+        this.socket.emit('djInfoReq');
+    }
 };
 ChatService = __decorate([
     core_1.Injectable({
