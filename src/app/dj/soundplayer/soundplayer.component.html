@@ -23,22 +23,12 @@
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-      <h3 class="text-center">
-        h3. Lorem ipsum dolor sit amet.
-      </h3>
-    </div>
-    <div class="col-md-2">
-    </div>
-
   </div>
 
   <div class="row">
     <div class="col-md-4">
 
-      <button type="button" id="soundboard-button" class="btn btn-block btn-outline-secondary btn-lg" *ngFor="let item of soundBoardMediaInformation">
+      <button type="button" id="soundboard-button" class="btn btn-lg btn-danger center-block" *ngFor="let item of soundBoardMediaInformation">
         {{item.name}}
         Hello
       </button>
@@ -46,14 +36,12 @@
 
     <div class="col-md-4">
 
-      <button *ngFor="let sound of sounds" (click)='onClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
+      <button *ngFor="let sound of sounds" (click)='onClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-lg btn-danger center-block">
         {{sound.name}}
       </button>
       <!-- <button (click)='onClick($event)' type="button" id={{items.items[1].mediaLink}} class="btn btn-outline-secondary btn-lg btn-block">
         {{items.items[1].name}}
       </button> -->
-     
-     
     </div>
   </div>
 </div>
