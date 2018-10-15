@@ -463,9 +463,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const sound_board_service_1 = __webpack_require__(/*! ../../services/sound-board.service */ "./src/app/services/sound-board.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor(http) {
+    constructor(http, soundBite) {
         this.http = http;
+        this.soundBite = soundBite;
+        this.sounds = [];
         this.soundBoardMediaInformation = [];
     }
     ngOnInit() {
@@ -493,7 +496,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/dj/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/dj/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient])
+    __metadata("design:paramtypes", [http_1.HttpClient, sound_board_service_1.SoundBoardService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 
