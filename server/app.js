@@ -86,7 +86,11 @@ app.get('/test', (req, res) => {
 app.get('/tester', (req, res) => {
   res.json(userobject);
 });
-
+// if we want to keep track of users in room
+const users = [];
+// keeping track of djs
+const djs = [];
+// keeping track of what time playlist starts
 
 // on connection
 io.on('connection', (socket) => {
@@ -98,11 +102,6 @@ io.on('connection', (socket) => {
   const { familyName } = name;
   const { accessToken} = socket.request.session; 
   // console.log({ accessToken });
-  // if we want to keep track of users in room
-  const users = [];
-  // keeping track of djs
-  const djs = [];
-  // keeping track of what time playlist starts
   let songStartTime = '';
   // keeping track of what time a listener joins
   let listenerStartTime = '';
@@ -110,7 +109,6 @@ io.on('connection', (socket) => {
   let timeInPlaylist = '';
   // keeping track of song duration
   let songDuration;
-
 
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
