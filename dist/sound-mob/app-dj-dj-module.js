@@ -429,7 +429,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n<nav>\n  <ol class=\"breadcrumb\">\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Like</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Follow</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Rate</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Suggest Tracks</a>\n    </li>\n  </ol>\n</nav>\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <h3 class=\"text-center\">\n        h3. Lorem ipsum dolor sit amet.\n      </h3>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg btn-block\">\n        <span>NameofSound</span>\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n<nav>\n  <ol class=\"breadcrumb\">\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Like</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Follow</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Rate</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Suggest Tracks</a>\n    </li>\n  </ol>\n</nav>\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <h3 class=\"text-center\">\n        h3. Lorem ipsum dolor sit amet.\n      </h3>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button *ngFor=\"let sound of sounds\" (click)='onClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{sound.name}}\n      </button>\n      <!-- <button (click)='onClick($event)' type=\"button\" id={{items.items[1].mediaLink}} class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{items.items[1].name}}\n      </button> -->\n     \n     \n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -454,24 +454,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const sound_board_service_1 = __webpack_require__(/*! ../../services/sound-board.service */ "./src/app/services/sound-board.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor(http) {
+    constructor(http, soundBite) {
         this.http = http;
+        this.soundBite = soundBite;
         this.soundBoardMediaInformation = [];
+        this.sounds = [];
     }
     ngOnInit() {
-        // this.http.get('/test')
-        //   .subscribe(({ items }) => {
-        //     console.log(items);
-        //     // let { items } = data;
-        //     return items.map(item => (
-        //       this.soundBoardMediaInformation.push({
-        //         name: item.name,
-        //         mediaLink: item.mediaLink
-        //       })
-        //     ));
-        //   });
-        // console.log(this.soundBoardMediaInformation);
+        return this.http.get('/test')
+            .subscribe((items) => {
+            //  console.log(items);
+            this.items = items;
+            // return items.items.map(item => ({ name: item.name,mediaLink: item.mediaLink }));
+            this.buttonMaker();
+        });
+    }
+    onClick(event) {
+        //  console.log(event.target.id);
+        this.soundBite.soundEmit(event.target.id);
+    }
+    buttonMaker() {
+        this.items.items.map((item) => {
+            this.sounds.push({ name: item.name, mediaLink: item.mediaLink });
+        });
     }
 };
 SoundplayerComponent = __decorate([
@@ -480,7 +487,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/dj/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/dj/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient])
+    __metadata("design:paramtypes", [http_1.HttpClient, sound_board_service_1.SoundBoardService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 
