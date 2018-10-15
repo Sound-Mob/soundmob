@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from '@angular/common/http'
-import { HttpHeaders } from '@angular/common/http'
+import { HttpClient } from "@angular/common/http"
+
 import { DjlistService } from "../services/djlist.service";
 import { ChatService } from "../services/chat.service";
 
@@ -27,10 +27,15 @@ export class FeaturedComponent implements OnInit {
   }
 
   joinDj(event){
+    console.log(event.target, 'thisthe event log')
     let sockAndTok = event.target.id.split("---")
+
     this.djJoin.joinRoom(sockAndTok);
     // console.log(sockAndTok, " google id");
-
+<<<<<<< HEAD
+=======
+    
+>>>>>>> b3cf1a35ef19e7c434cd65b1500c221c1d42c705
   }
 
 }

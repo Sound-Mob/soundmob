@@ -135,7 +135,7 @@ module.exports = "#listenertok {\n  display: none;\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n<audio autoplay [src]=\"sound | youtube \"></audio>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -159,10 +159,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const sound_board_service_1 = __webpack_require__(/*! ../services/sound-board.service */ "./src/app/services/sound-board.service.ts");
 let ListenerComponent = class ListenerComponent {
-    constructor() {
+    constructor(soundBoard) {
+        this.soundBoard = soundBoard;
+        this.sound = '';
     }
     ngOnInit() {
+        this.soundBoard.soundReceive()
+            .subscribe(data => {
+            console.log('it hits');
+            this.sound = data.toString();
+        });
     }
 };
 __decorate([
@@ -175,7 +183,7 @@ ListenerComponent = __decorate([
         template: __webpack_require__(/*! ./listener.component.html */ "./src/app/listener/listener.component.html"),
         styles: [__webpack_require__(/*! ./listener.component.css */ "./src/app/listener/listener.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [sound_board_service_1.SoundBoardService])
 ], ListenerComponent);
 exports.ListenerComponent = ListenerComponent;
 
@@ -282,6 +290,8 @@ let ProfileComponent = class ProfileComponent {
     constructor() { }
     ngOnInit() {
     }
+    profile() {
+    }
 };
 ProfileComponent = __decorate([
     core_1.Component({
@@ -338,21 +348,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor() {
+    constructor(chatService) {
+        this.chatService = chatService;
         this.videos = [
             {
                 title: 'mazda',
-                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             },
             {
                 title: 'honda',
                 video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             }
         ];
-        this.video = this.videos[0].video;
+        this.chatService.listenerReceiveSongDetails()
+            .subscribe(songinfo => {
+            let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
+            console.log(startAt, " start time ready for vid");
+            this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
+        });
     }
     ngOnInit() {
+        this.chatService.listenerGetSongDetails();
     }
 };
 SoundplayerComponent = __decorate([
@@ -361,7 +379,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/listener/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/listener/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 
@@ -646,10 +664,10 @@ exports.SubscriberComponent = SubscriberComponent;
 
 /***/ }),
 
-/***/ "./src/app/pipes/youtube.pipe.ts":
-/*!***************************************!*\
-  !*** ./src/app/pipes/youtube.pipe.ts ***!
-  \***************************************/
+/***/ "./src/app/services/sound-board.service.ts":
+/*!*************************************************!*\
+  !*** ./src/app/services/sound-board.service.ts ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -666,22 +684,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const platform_browser_1 = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
-let YoutubePipe = class YoutubePipe {
-    constructor(dom) {
-        this.dom = dom;
+const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+let SoundBoardService = class SoundBoardService {
+    constructor() {
+        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
     }
-    transform(value, args) {
-        return this.dom.bypassSecurityTrustResourceUrl(value);
+    soundEmit(sound) {
+        this.socket.emit('soundEmit', sound);
+    }
+    soundReceive() {
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('soundRelay', (data) => {
+                observer.next(data);
+            });
+        });
+        return observable;
     }
 };
-YoutubePipe = __decorate([
-    core_1.Pipe({
-        name: 'youtube'
+SoundBoardService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
     }),
-    __metadata("design:paramtypes", [platform_browser_1.DomSanitizer])
-], YoutubePipe);
-exports.YoutubePipe = YoutubePipe;
+    __metadata("design:paramtypes", [])
+], SoundBoardService);
+exports.SoundBoardService = SoundBoardService;
 
 
 /***/ })

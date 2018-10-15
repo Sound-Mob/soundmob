@@ -10,6 +10,7 @@
 var map = {
 	"../app/dj/dj.module": [
 		"./src/app/dj/dj.module.ts",
+		"common",
 		"app-dj-dj-module"
 	],
 	"../app/featured/featured.module": [
@@ -18,6 +19,7 @@ var map = {
 	],
 	"../app/listener/listener.module": [
 		"./src/app/listener/listener.module.ts",
+		"common",
 		"app-listener-listener-module"
 	]
 };
@@ -30,7 +32,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return __webpack_require__.e(ids[1]).then(function() {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
 		var id = ids[0];
 		return __webpack_require__.t(id, 7);
 	});
@@ -627,19 +629,61 @@ let ChatService = class ChatService {
     getDjInfo() {
         this.socket.emit('getDjInfo');
     }
-    receiveDjInfo() {
-        console.log('recieved info');
+    djStartCast(songId) {
+        this.socket.emit('startCast', songId);
+    }
+    djGetSongDetails() {
+        // console.log('recieved songgg   info')
         let observable = new rxjs_1.Observable(observer => {
-            this.socket.on('startlistener', (djInfo) => {
-                console.log(djInfo);
-                observer.next(djInfo);
+            this.socket.on('castOn', (songInfo) => {
+                // console.log(songInfo);
+                observer.next(songInfo);
             });
         });
         console.log(observable);
         return observable;
     }
+    receiveDjInfo() {
+        console.log('recieved info');
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('startlistener', (djInfo) => {
+                // console.log(djInfo);
+                observer.next(djInfo);
+            });
+        });
+        // console.log(observable)
+        return observable;
+    }
     joinRoom(djInfo) {
         this.socket.emit('roomroute', djInfo);
+    }
+    selectPlaylist(playlistId) {
+        this.socket.emit('djSelectsPlaylist', playlistId);
+    }
+    receiveSongs() {
+        console.log('recieved songs');
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('songList', (songs) => {
+                console.log(songs);
+                observer.next(songs);
+            });
+        });
+        console.log(observable);
+        return observable;
+    }
+    listenerReceiveSongDetails() {
+        // console.log('recieved songgg   info')
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('currentSong', (songInfo) => {
+                console.log(songInfo, " in  listen get song deets");
+                observer.next(songInfo);
+            });
+        });
+        console.log(observable);
+        return observable;
+    }
+    listenerGetSongDetails() {
+        this.socket.emit("listenerGetCurrentSong");
     }
 };
 ChatService = __decorate([
@@ -684,9 +728,7 @@ let OpentokService = class OpentokService {
         return OT;
     }
     initSession(apikey, sessionId, token) {
-        console.log(sessionId, " above conditinoal");
         if (sessionId) {
-            console.log(token, " token in init sessino");
             this.session = OT.initSession(apikey, sessionId);
             this.token = token;
             return Promise.resolve(this.session);

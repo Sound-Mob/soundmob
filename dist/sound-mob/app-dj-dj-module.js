@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
 
 /***/ }),
 
@@ -46,6 +46,7 @@ const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ 
 let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
+        this.count = 0;
         this.messageToSend = '';
         this.values = '';
         this.chatMessages = [];
@@ -56,9 +57,46 @@ let ChatComponent = class ChatComponent {
             }
             this.chatMessages.unshift(data);
         });
+        this.chatService.receiveSongs()
+            .subscribe(songs => {
+            this.songs = songs;
+        });
+        this.chatService.djGetSongDetails()
+            .subscribe(details => {
+            this.songStartTime = details.songStartTime;
+            this.songDuration = details.songDuration;
+            setTimeout(() => {
+                this.castContinue();
+            }, details.songDuration);
+        });
+    }
+    // trigger cast on after duration runs
+    castContinue() {
+        let time;
+        if (this.songDuration) {
+            time = this.songDuration;
+            console.log(time, " in if yes");
+        }
+        else {
+            time = 6000;
+            console.log(time, " in if no");
+        }
+        setTimeout(() => {
+            this.startCast();
+        }, time * 1000);
+        let counter = this.count + 1;
+        if (this.songs[counter]) {
+            this.count++;
+        }
+    }
+    // start music
+    startCast() {
+        this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
+        this.chatService.djStartCast(this.songs[this.count]);
     }
     ngOnInit() {
         this.chatService.createRoom("hey");
+        this.chatService.selectPlaylist('iddoeooe');
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -158,6 +196,7 @@ const app_component_1 = __webpack_require__(/*! ./tokbox/app.component */ "./src
 const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subscriber.component */ "./src/app/dj/tokbox/subscriber/subscriber.component.ts");
 const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj/tokbox/publisher/publisher.component.ts");
 const chat_component_1 = __webpack_require__(/*! ./chat/chat.component */ "./src/app/dj/chat/chat.component.ts");
+const youtube_pipe_1 = __webpack_require__(/*! ../pipes/youtube.pipe */ "./src/app/pipes/youtube.pipe.ts");
 let DjModule = class DjModule {
 };
 DjModule = __decorate([
@@ -175,7 +214,8 @@ DjModule = __decorate([
             app_component_1.AppComponent,
             subscriber_component_1.SubscriberComponent,
             publisher_component_1.PublisherComponent,
-            chat_component_1.ChatComponent
+            chat_component_1.ChatComponent,
+            youtube_pipe_1.YoutubePipe,
         ],
         providers: [opentok_service_1.OpentokService]
     })
@@ -263,7 +303,7 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src=\"https://pbs.twimg.com/profile_images/986327929453006848/c5ShdmQS_400x400.jpg\" />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">New Orleans</h3>\n  <h1 class=\"station-name\">Yeezy2k18</h1>\n\n  <img alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src=\"https://pbs.twimg.com/profile_images/986327929453006848/c5ShdmQS_400x400.jpg\" />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n      </ol>\n    </nav>\n  </div>\n</div>"
+module.exports = "<div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src={{profile.photo.value}} />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">{{profile.bio}}</h3>\n  <h1 class=\"station-name\">{{profile.firstname}} {{profile.lasttname}}</h1>\n\n  <img alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src={{profile.photo.value}} />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n        <!-- <li>\n          {{profile | json}}\n        </li> -->\n      </ol>\n    </nav>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -287,9 +327,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const dj_profile_service_1 = __webpack_require__(/*! ../../services/dj-profile.service */ "./src/app/services/dj-profile.service.ts");
 let ProfileComponent = class ProfileComponent {
-    constructor() { }
+    constructor(djProfileService) {
+        this.djProfileService = djProfileService;
+    }
     ngOnInit() {
+        this.djProfileService.getProfileInfo()
+            .subscribe(profile => {
+            this.profile = profile;
+        });
+    }
+    session() {
     }
 };
 ProfileComponent = __decorate([
@@ -298,7 +347,7 @@ ProfileComponent = __decorate([
         template: __webpack_require__(/*! ./profile.component.html */ "./src/app/dj/profile/profile.component.html"),
         styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/dj/profile/profile.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [dj_profile_service_1.DjProfileService])
 ], ProfileComponent);
 exports.ProfileComponent = ProfileComponent;
 
@@ -389,7 +438,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n<nav>\n  <ol class=\"breadcrumb\">\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Like</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Follow</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Rate</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Suggest Tracks</a>\n    </li>\n  </ol>\n</nav>\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <h3 class=\"text-center\">\n        h3. Lorem ipsum dolor sit amet.\n      </h3>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg btn-block\">\n        <span>NameofSound</span>\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        NameofSound\n      </button>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n<nav>\n  <ol class=\"breadcrumb\">\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Like</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Follow</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Rate</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Suggest Tracks</a>\n    </li>\n  </ol>\n</nav>\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <h3 class=\"text-center\">\n        h3. Lorem ipsum dolor sit amet.\n      </h3>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button *ngFor=\"let sound of sounds\" (click)='onClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{sound.name}}\n      </button>\n      <!-- <button (click)='onClick($event)' type=\"button\" id={{items.items[1].mediaLink}} class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{items.items[1].name}}\n      </button> -->\n     \n     \n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -420,18 +469,22 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.soundBoardMediaInformation = [];
     }
     ngOnInit() {
-        // this.http.get('/test')
-        //   .subscribe(({ items }) => {
-        //     console.log(items);
-        //     // let { items } = data;
-        //     return items.map(item => (
-        //       this.soundBoardMediaInformation.push({
-        //         name: item.name,
-        //         mediaLink: item.mediaLink
-        //       })
-        //     ));
-        //   });
-        // console.log(this.soundBoardMediaInformation);
+        return this.http.get('/test')
+            .subscribe((items) => {
+            console.log(items);
+            this.items = items;
+            // return items.items.map(item => ({ name: item.name,mediaLink: item.mediaLink }));
+            this.buttonMaker();
+        });
+    }
+    onClick(event) {
+        console.log(event.target.id);
+        this.soundBite.soundEmit(event.target.id);
+    }
+    buttonMaker() {
+        this.items.items.map((item) => {
+            this.sounds.push({ name: item.name, mediaLink: item.mediaLink });
+        });
     }
 };
 SoundplayerComponent = __decorate([
@@ -508,10 +561,7 @@ let AppComponent = class AppComponent {
         });
     }
     fireSession(sessionId, token) {
-        console.log(config_js_1.default, " in fire");
-        console.log(sessionId, " in fire");
         const { API_KEY } = config_js_1.default;
-        console.log(token, " TOKEN in fire session");
         this.opentokService.initSession(API_KEY, sessionId, token)
             .then((sessionId) => {
             this.session = sessionId;
@@ -717,6 +767,46 @@ SubscriberComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
 exports.SubscriberComponent = SubscriberComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/services/dj-profile.service.ts":
+/*!************************************************!*\
+  !*** ./src/app/services/dj-profile.service.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+let DjProfileService = class DjProfileService {
+    constructor(http) {
+        this.http = http;
+    }
+    getProfileInfo() {
+        return this.http.get('/djView');
+    }
+};
+DjProfileService = __decorate([
+    core_1.Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [http_1.HttpClient])
+], DjProfileService);
+exports.DjProfileService = DjProfileService;
 
 
 /***/ })

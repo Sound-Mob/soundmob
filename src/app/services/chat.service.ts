@@ -36,15 +36,31 @@ export class ChatService {
     this.socket.emit('getDjInfo')
   }
 
+  djStartCast(songId){
+    this.socket.emit('startCast', songId);
+  }
+
+  djGetSongDetails(){
+    // console.log('recieved songgg   info')
+    let observable = new Observable<{ songStartTime: string, songDuration: string}>(observer => {
+      this.socket.on('castOn', (songInfo) => {
+        // console.log(songInfo);
+        observer.next(songInfo);
+      });
+    });
+    console.log(observable)
+    return observable;
+  }
+
   receiveDjInfo() {
     console.log('recieved info')
     let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string}>(observer => {
       this.socket.on('startlistener', (djInfo) => {
-        console.log(djInfo);
+        // console.log(djInfo);
         observer.next(djInfo);
       });
     });
-    console.log(observable)
+    // console.log(observable)
     return observable;
   }
 
@@ -52,5 +68,35 @@ export class ChatService {
     this.socket.emit('roomroute', djInfo)
   }
 
+  selectPlaylist(playlistId) {
+    this.socket.emit('djSelectsPlaylist', playlistId);
+  }
+
+  receiveSongs() {
+    console.log('recieved songs')
+    let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string }>(observer => {
+      this.socket.on('songList', (songs) => {
+        console.log(songs);
+        observer.next(songs);
+      });
+    });
+    console.log(observable)
+    return observable;
+  }
+
+  listenerReceiveSongDetails() {
+    // console.log('recieved songgg   info')
+    let observable = new Observable<{ songid: string, starttime: string, duration: string }>(observer => {
+      this.socket.on('currentSong', (songInfo) => {
+        console.log(songInfo, " in  listen get song deets");
+        observer.next(songInfo);
+      });
+    });
+    console.log(observable)
+    return observable;
+  }
+  listenerGetSongDetails(){
+    this.socket.emit("listenerGetCurrentSong")
+  }
 
 }
