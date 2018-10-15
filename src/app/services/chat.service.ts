@@ -84,4 +84,19 @@ export class ChatService {
     return observable;
   }
 
+  listenerReceiveSongDetails() {
+    // console.log('recieved songgg   info')
+    let observable = new Observable<{ songid: string, starttime: string, duration: string }>(observer => {
+      this.socket.on('currentSong', (songInfo) => {
+        console.log(songInfo, " in  listen get song deets");
+        observer.next(songInfo);
+      });
+    });
+    console.log(observable)
+    return observable;
+  }
+  listenerGetSongDetails(){
+    this.socket.emit("listenerGetCurrentSong")
+  }
+
 }

@@ -672,6 +672,20 @@ let ChatService = class ChatService {
         console.log(observable);
         return observable;
     }
+    listenerReceiveSongDetails() {
+        // console.log('recieved songgg   info')
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('currentSong', (songInfo) => {
+                console.log(songInfo, " in  listen get song deets");
+                observer.next(songInfo);
+            });
+        });
+        console.log(observable);
+        return observable;
+    }
+    listenerGetSongDetails() {
+        this.socket.emit("listenerGetCurrentSong");
+    }
 };
 ChatService = __decorate([
     core_1.Injectable({

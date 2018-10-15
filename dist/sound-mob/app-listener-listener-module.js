@@ -338,8 +338,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor() {
+    constructor(chatService) {
+        this.chatService = chatService;
         this.videos = [
             {
                 title: 'mazda',
@@ -350,9 +352,15 @@ let SoundplayerComponent = class SoundplayerComponent {
                 video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             }
         ];
-        this.video = this.videos[0].video;
+        this.chatService.listenerReceiveSongDetails()
+            .subscribe(songinfo => {
+            let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
+            // console.log(startAt, " start time ready for vid");
+            this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
+        });
     }
     ngOnInit() {
+        this.chatService.listenerGetSongDetails();
     }
 };
 SoundplayerComponent = __decorate([
@@ -361,7 +369,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/listener/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/listener/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 

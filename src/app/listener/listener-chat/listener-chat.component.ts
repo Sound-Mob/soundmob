@@ -24,10 +24,13 @@ export class ListenerChatComponent implements OnInit {
         this.chatMessages.pop()
       }
     this.chatMessages.unshift(data)
-  })
+    })
+    
+
   }
 
 ngOnInit() {
+  
 }
 
 

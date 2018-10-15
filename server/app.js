@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
   const { givenName } = name;
   const { familyName } = name;
   const { accessToken} = socket.request.session; 
-  console.log({ accessToken });
+  // console.log({ accessToken });
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
     socket.admin = true;
@@ -224,14 +224,13 @@ io.on('connection', (socket) => {
       timeInPlaylist = listenerStartTime - songStartTime;
       // io.sockets.emit('startlistener', {timeInPlaylist, tokSession, tokToken});
     }
-    
+
     getStartTime();
     // socket joins that room
     socket.join(room, ()=>{
       socket.rooms[socket.id] = room;
-      getDjSongById(room).then((songinfo) => {
-        console.log(songinfo, " in listener grab")
-      }).catch((error) => console.log(error));
+      // grab dj song info
+      
     });
     // if we want to keep track of users in room
     // if (socket.name) {
@@ -242,6 +241,14 @@ io.on('connection', (socket) => {
   // });
   });
 
+  // listen for listener request of current song
+  socket.on('listenerGetCurrentSong', ()=>{
+    console.log(socket.rooms[socket.id], " in get current song")
+    getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
+      console.log(songinfo, " in listener grab")
+      io.sockets.emit('currentSong', { songinfo, listenerStartTime });
+    }).catch((error) => console.log(error));
+  })
   // listen for username
   socket.on('userid', (name) => {
     // socket joins that room
