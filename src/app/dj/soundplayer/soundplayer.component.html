@@ -34,7 +34,11 @@
     </div>
 
   </div>
-
+  <div>
+    <button *ngFor="let playlist of playlists"  type="button"  class="btn btn-outline-secondary btn-lg btn-block">
+      {{playlist.name}}
+    </button>
+  </div>
   <div class="row">
     <div class="col-md-4">
 

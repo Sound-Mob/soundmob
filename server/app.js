@@ -90,6 +90,17 @@ app.get('/djView', (req,res) => {
 
 })
 
+// get dj's playlists from youtube
+app.get('/djView/playlist', (req, res)=>{
+
+  const id = req.session.accessToken;
+  console.log({id});
+  playlist(id).then((playlistInfo)=>{
+    // console.log({playlistInfo})
+    res.send(playlistInfo);
+  })
+  // res.sendStatus(200);
+})
 
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;

@@ -10,24 +10,27 @@ export class SoundplayerComponent implements OnInit {
 
   items: any;
   sounds: Array<{ name: string, mediaLink: string }> = [];
+  playlists: Array<{ name: string, id: string }> = [];
 
 
-
-  soundBoardMediaInformation = [];
-
-  items:any;
-  sounds: Array<{name:string, mediaLink: string}> =[];
   
   constructor(private http: HttpClient, private soundBite:SoundBoardService) { }
   ngOnInit() {
-     return this.http.get('/test')
+      this.http.get('/test')
      .subscribe(( items ) => {
       //  console.log(items);
       this.items = items
         // return items.items.map(item => ({ name: item.name,mediaLink: item.mediaLink }));
         this.buttonMaker();
       });
+      this.http.get('/djView/playlist').subscribe((info)=>{
+        console.log(info, " data in dj soundplayer")
+        this.playlists.push(info['items']);
+        info['items'].map((item) => {
+          this.playlists.push({ name: item.snippet.localized.title, id: item.id })
 
+        })
+      })
    }
    onClick(event) {
     //  console.log(event.target.id);
