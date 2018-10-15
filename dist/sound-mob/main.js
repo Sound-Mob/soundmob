@@ -440,6 +440,7 @@ __webpack_require__.r(__webpack_exports__);
   SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg'
 });
 
+
 /***/ }),
 
 /***/ "./src/app/home/home.component.css":
@@ -664,7 +665,7 @@ let ChatService = class ChatService {
         console.log('recieved songs');
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('songList', (songs) => {
-                console.log(songs);
+                // console.log(songs);
                 observer.next(songs);
             });
         });
@@ -675,15 +676,18 @@ let ChatService = class ChatService {
         // console.log('recieved songgg   info')
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('currentSong', (songInfo) => {
-                console.log(songInfo, " in  listen get song deets");
+                console.log(songInfo, " songinfo in listener receiver");
                 observer.next(songInfo);
             });
         });
-        console.log(observable);
+        // console.log(observable)
         return observable;
     }
     listenerGetSongDetails() {
         this.socket.emit("listenerGetCurrentSong");
+    }
+    djInfoReq() {
+        this.socket.emit('djInfoReq');
     }
 };
 ChatService = __decorate([
@@ -824,7 +828,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
 
 
 /***/ }),
