@@ -176,9 +176,16 @@ io.on('connection', (socket) => {
   
  // choose playlist listener
  socket.on('djSelectsPlaylist', (playlistId) => {
-  //  console.log(playlistId, " playlistId");
-   let songIds = ['AE005nZeF-A', 'vF1RPI6j7b0', 'x38ildLdUeM', 'KgtizhlbIOQ'];
+   console.log(playlistId, " playlistId");
+   playlistIDs(accessToken, playlistId).then((data)=>{
+     let songIds = videoIDArray(data.items)
+     console.log({songIds});
    io.sockets.emit('songList', songIds);
+   }).catch((error)=>{
+     console.log(error);
+   })
+  //  let songIds = ['AE005nZeF-A', 'vF1RPI6j7b0', 'x38ildLdUeM', 'KgtizhlbIOQ'];
+   
  })
 
   // listen for sound request

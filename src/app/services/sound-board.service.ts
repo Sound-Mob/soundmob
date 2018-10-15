@@ -11,6 +11,9 @@ export class SoundBoardService {
     this.socket.emit('soundEmit',sound);
    
   }
+  playlistEmit(playlistId){
+    this.socket.emit('djSelectsPlaylist', playlistId)
+  }
   soundReceive() {
   
       let observable = new Observable<{ sound: string}>(observer => {
