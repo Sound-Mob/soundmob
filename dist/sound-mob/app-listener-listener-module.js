@@ -348,21 +348,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor() {
+    constructor(chatService) {
+        this.chatService = chatService;
         this.videos = [
             {
                 title: 'mazda',
-                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
+                video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             },
             {
                 title: 'honda',
                 video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             }
         ];
-        this.video = this.videos[0].video;
+        this.chatService.listenerReceiveSongDetails()
+            .subscribe(songinfo => {
+            let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
+            console.log(startAt, " start time ready for vid");
+            this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
+        });
     }
     ngOnInit() {
+        this.chatService.listenerGetSongDetails();
     }
 };
 SoundplayerComponent = __decorate([
@@ -371,7 +379,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/listener/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/listener/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 
@@ -652,46 +660,6 @@ SubscriberComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
 exports.SubscriberComponent = SubscriberComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/pipes/youtube.pipe.ts":
-/*!***************************************!*\
-  !*** ./src/app/pipes/youtube.pipe.ts ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const platform_browser_1 = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
-let YoutubePipe = class YoutubePipe {
-    constructor(dom) {
-        this.dom = dom;
-    }
-    transform(value, args) {
-        return this.dom.bypassSecurityTrustResourceUrl(value);
-    }
-};
-YoutubePipe = __decorate([
-    core_1.Pipe({
-        name: 'youtube'
-    }),
-    __metadata("design:paramtypes", [platform_browser_1.DomSanitizer])
-], YoutubePipe);
-exports.YoutubePipe = YoutubePipe;
 
 
 /***/ })

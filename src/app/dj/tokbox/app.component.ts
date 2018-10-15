@@ -34,10 +34,9 @@ export class AppComponent implements OnInit {
   }
   
   fireSession(sessionId, token){
-    console.log(config, " in fire")
-    console.log(sessionId, " in fire")
+  
     const { API_KEY } = config;
-    console.log(token, " TOKEN in fire session")
+  
     this.opentokService.initSession(API_KEY ,sessionId, token)
       .then((sessionId: any) => {
       
