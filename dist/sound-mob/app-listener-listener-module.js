@@ -135,7 +135,7 @@ module.exports = "#listenertok {\n  display: none;\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n<audio autoplay [src]=\"sound | youtube \"></audio>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -159,10 +159,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const sound_board_service_1 = __webpack_require__(/*! ../services/sound-board.service */ "./src/app/services/sound-board.service.ts");
 let ListenerComponent = class ListenerComponent {
-    constructor() {
+    constructor(soundBoard) {
+        this.soundBoard = soundBoard;
+        this.sound = '';
     }
     ngOnInit() {
+        this.soundBoard.soundReceive()
+            .subscribe(data => {
+            console.log('it hits');
+            this.sound = data.toString();
+        });
     }
 };
 __decorate([
@@ -175,7 +183,7 @@ ListenerComponent = __decorate([
         template: __webpack_require__(/*! ./listener.component.html */ "./src/app/listener/listener.component.html"),
         styles: [__webpack_require__(/*! ./listener.component.css */ "./src/app/listener/listener.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [sound_board_service_1.SoundBoardService])
 ], ListenerComponent);
 exports.ListenerComponent = ListenerComponent;
 
