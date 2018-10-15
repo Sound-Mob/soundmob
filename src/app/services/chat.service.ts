@@ -52,5 +52,8 @@ export class ChatService {
     this.socket.emit('roomroute', djInfo)
   }
 
+  djInfoReq(){
+    this.socket.emit('djInfoReq')
+  }
 
 }
