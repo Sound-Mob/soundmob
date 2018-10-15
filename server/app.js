@@ -8,10 +8,12 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const OpenTok = require('opentok');
+
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const config = require('./config');
+
 const { TOKEN } = config;
 const { API_KEY } = config;
 
@@ -77,8 +79,8 @@ app.use(express.static('dist/sound-mob'));
 
 // });
 
-const portParty = process.env.PORT || 3000;
-app.set('port', portParty);
+// const portParty = process.env.PORT || 3000;
+app.set('port', process.env.PORT);
 
 
 app.get('/test', (req, res) => {
@@ -114,45 +116,14 @@ io.on('connection', (socket) => {
   const { user } = socket.request.session.passport;
   const { givenName } = name;
   const { familyName } = name;
-  // console.log(socket.request);
-  // NEW LISTENER LISTENER -- listen for room id
-  socket.on('roomroute', (room) => {
-    // calculate listener start time
-    listenerStartTime += new Date();
-    console.log(listenerStartTime);
-    listenerStartTime = listenerStartTime.split('');
-    console.log(listenerStartTime);
-    listenerStartTime = listenerStartTime.splice(16, 8);
-    console.log(listenerStartTime);
-    const minsInSeconds = Number(listenerStartTime[3] + listenerStartTime[4]) * 60;
-    const seconds = Number(listenerStartTime[6] + listenerStartTime[7]);
-    // calculate difference between listener start and playlist start
-    listenerStartTime = minsInSeconds + seconds;
-    timeInPlaylist = listenerStartTime - playlistStartTime;
-    // io.sockets.emit('startlistener', timeInPlaylist);
-    console.log({ listenerStartTime }, 'in join roomroute');
-    console.log({ timeInPlaylist }, 'in join roomroute');
-
-    io.sockets.to(`${socket.id}`).emit('startlistener', timeInPlaylist);
-
-    // console.log(listenerStartTime, "listen start time")
-    // socket joins that room
-    socket.join(room, () => {
-      socket.admin = false;
-      // reassign socket room at id to room arg
-      socket.rooms[socket.id] = socket.rooms[room];
-      // if we want to keep track of users in room
-      if (socket.name) {
-        users.push(socket.name);
-        console.log(room, 'in join room');
-        io.sockets.in(room).emit('new_user', { users, name: socket.name });
-  
+  const { accessToken } = socket.request.session;
+  console.log({ accessToken });
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
     socket.admin = true;
-    
+
     io.sockets.emit('starttokbox');
-    
+
     // sending dj room to client
     io.sockets.emit('activeDj', socket.rooms[socket.id]);
     // keep track of users in room
@@ -160,81 +131,44 @@ io.on('connection', (socket) => {
     //   users.push(socket.name);
     //   io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
     // }
-    
+
     // make tok session
     opentok = new OpenTok(API_KEY, 'd32d357fe3e5776a240d0a32cbb9edf5765f7405');
-    
-    var sessionId;
-    opentok.createSession({ mediaMode: "routed" }, (error, session) => {
+
+    let sessionId;
+    opentok.createSession({ mediaMode: 'routed' }, (error, session) => {
       if (error) {
-        console.log("Error creating session:", error)
+        console.log('Error creating session:', error);
       } else {
         sessionId = session.sessionId;
-        console.log("Session ID: " + sessionId);
-        console.log(session, " session")
-        let token = opentok.generateToken(sessionId);
+        const songIds = ['JryGDi6SVQQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
+        const token = opentok.generateToken(sessionId);
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
-        djs.push({ name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token });
+        djs.push({
+          name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token,
+        });
       }
     });
   });
 
-  // listen for username
-  socket.on('userid', (name) => {
-    // socket joins that room
-    socket.name = name;
+  // choose playlist listener
+  socket.on('djSelectsPlaylist', (playlistId) => {
+    console.log(playlistId, ' playlistId');
+    const songIds = ['x38ildLdUeM', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
+    io.sockets.emit('songList', songIds);
   });
 
-  socket.on('chatter', (msg) => {
-    console.log(msg);
-  });
-
-  // listen for chat message
-  socket.on('chat message', (msg) => {
-    const room = socket.rooms[socket.id];
-    console.log(room, 'in chat');
-    io.sockets.emit('chat message', {
-      message: msg, userName: givenName, lastName: familyName, id: user,
-    });
-    // io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
-    // io.sockets.emit('chat message', {message: msg, userName: socket.name});
-  });
-
-  // listen for users to leave
-  socket.on('disconnect', (data) => {
-    // console.log(users, socket.name);
-    // remove user from users array
-    users.splice(users.indexOf(socket.name), 1);
-    // emit disconnection
-    io.emit('disconnect', { users, name: socket.name });
-  });
-
-  // MAKE ROOM LISTENER -- listen for new room
-  socket.on('newroom', (room) => {
-    console.log('room bay bayyy');
-    socket.join(room, () => {
-      socket.admin = true;
-      // console.log(playlistStartTime, 'in newroom')
-      io.sockets.emit('starttokbox');
-      // reassign socket room at id to room arg
-      socket.rooms[socket.id] = socket.rooms[room];
-      // if we want to keep track of users in room
-
-      if (socket.name) {
-        users.push(socket.name);
-        io.sockets.in(room).emit('new_user', { users, name: socket.name });
-      }
-    });
-  });
- 
-  const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
+  // const token = 'ya29.GlwwBhsv4pbb6v08L1piVywT_GUP0naa1rlxFbKbXfDFXqnLEvXReMCCc_yjC3sBsvYqUG6ZsHERviQu8KtfeOoM5CsF4ztoQmJVH9oJnyVsFqmHWl_UJMHiPJGxtw';
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
-    searchDetails(token, id).then(({ items }) => {
+    searchDetails(accessToken, id).then(({ items }) => {
+      console.log(items[0].contentDetails.duration, 'duration');
       const durationArray = items[0].contentDetails.duration.split('');
       if (durationArray.length <= 4) {
         songDuration = (Number(durationArray[2]));
+      } else if (durationArray.length === 5) {
+        songDuration = (Number(durationArray[2] + durationArray[3]));
       } else {
         songDuration = (Number(durationArray[2]) * 60) + (Number(durationArray[4]) + Number(durationArray[5]));
       }
@@ -245,15 +179,16 @@ io.on('connection', (socket) => {
       const minsInSeconds = Number(playlistStartTime[3] + playlistStartTime[4]) * 60;
       const seconds = Number(playlistStartTime[6] + playlistStartTime[7]);
       playlistStartTime = minsInSeconds + seconds;
-      io.sockets.to(`${socket.id}`).emit('castOn', playlistStartTime, songDuration);
+      io.sockets.emit('castOn', { playlistStartTime, songDuration });
     }).catch((err) => { console.log(err); });
   });
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (djInfo) => {
-    let room = djInfo[0]
-    let tokSession = djInfo[1]
-    let tokToken = djInfo[2]
-    console.log(user, "  google id of listener");
+    const room = djInfo[0];
+    const tokSession = djInfo[1];
+    const tokToken = djInfo[2];
+    const songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
+    console.log(user, '  google id of listener');
     // getUserById(user).then(userArr => addSession(tokSession, tokToken, userArr[0].googleid)
     // .then(()=>console.log("added")))
     // .catch(error => console.log(error))
@@ -262,19 +197,19 @@ io.on('connection', (socket) => {
     getSessionInfoById(user).then((session) => {
       if (!session.length) {
         addSession(tokSession, tokToken, user)
-        .then(()=>console.log("added"))
-        .catch(error => console.log(error));
+          .then(() => console.log('added'))
+          .catch(error => console.log(error));
       } else {
         changeSession(tokSession, tokToken, user)
-        .then(()=>console.log("changed"))
-        .catch(err => console.log(err));
+          .then(() => console.log('changed'))
+          .catch(err => console.log(err));
       }
-    }).catch((error)=>console.log(error, " in get session"));
-    socket.tokToken = tokToken
-    socket.tokSession = tokSession
+    }).catch(error => console.log(error, ' in get session'));
+    socket.tokToken = tokToken;
+    socket.tokSession = tokSession;
 
 
-    console.log(socket.tokToken,'this.tokToken')
+    console.log(socket.tokToken, 'this.tokToken');
     function getStartTime() {
       // calculate listener start time
       listenerStartTime += new Date();
@@ -289,7 +224,7 @@ io.on('connection', (socket) => {
     }
     getStartTime();
     // socket joins that room
-    socket.join(room, ()=>{
+    socket.join(room, () => {
       socket.rooms[socket.id] = room;
     });
     // if we want to keep track of users in room
@@ -298,7 +233,7 @@ io.on('connection', (socket) => {
     //   console.log(room, 'in join room');
     //   io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
     // }
-  // });
+    // });
   });
 
   // listen for username
@@ -309,33 +244,34 @@ io.on('connection', (socket) => {
 
   // listen for djInfo
   socket.on('getDjInfo', () => {
-    getSessionInfoById(user).then((sessionInfo)=>{
+    getSessionInfoById(user).then((sessionInfo) => {
       // sends dj info to chat service
       io.sockets.emit('startlistener', sessionInfo);
     });
-    
   });
 
   // listen for chat message
-  socket.on('chat message',  (msg) => {
+  socket.on('chat message', (msg) => {
     const room = socket.rooms[socket.id];
-    io.sockets.in(room).emit('chat message', { message: msg, userName: givenName, lastName: familyName, id: user});
+    io.sockets.in(room).emit('chat message', {
+      message: msg, userName: givenName, lastName: familyName, id: user,
+    });
   });
 
   // listen for active DJs request
-  socket.on('djListReq', () =>{
-    io.sockets.emit('djList', {djs});
-  })
+  socket.on('djListReq', () => {
+    io.sockets.emit('djList', { djs });
+  });
 
   // listen for users to leave
-  socket.on('disconnect',  (data) => {
+  socket.on('disconnect', (data) => {
     // remove user from users array
     users.splice(users.indexOf(socket.name), 1);
     // emit disconnection
-    io.emit('disconnect', { users: users, name: socket.name });
+    io.emit('disconnect', { users, name: socket.name });
   });
 
-  
+
   // tell socket to listen for a 'sample' event
   socket.on('sample', (stream) => {
     // console.log(stream.blob);     // save sound to
@@ -359,7 +295,6 @@ io.on('connection', (socket) => {
 });
 // session serializatoin
 passport.serializeUser((user, done) => {
-  console.log(user, done);
   // console.log(user, done)
   done(null, user.googleid);
   // where is this user.id going? Are we supposed to access this anywhere?
@@ -371,16 +306,10 @@ passport.deserializeUser((id, done) => {
     done(null, user);
   }).catch(err => console.error(err));
 });
+
+const googleCallbackURL = '/auth/google/callback';
+
 // session entry
-
-// set the callback url to the default website IF we are in production
-// else the callback is the localhost
-let googleCallbackURL = 'http://soundmob.net/auth/google/callback';
-if (process.env.NODE_ENV !== 'production') {
-  googleCallbackURL = 'http://localhost:3000/auth/google/callback';
-}
-
-
 passport.use(new GoogleStrategy({
   clientID: ClientID,
   clientSecret: ClientSecret,
@@ -392,6 +321,7 @@ passport.use(new GoogleStrategy({
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
+  // console.log(accessToken);
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
@@ -415,10 +345,10 @@ passport.use(new GoogleStrategy({
   }).catch(err => console.error(err, 'this should hit'));
 }));
 
-server.listen(portParty, () => {
-  console.log(`running on ${app.get('port')}`);
-});
 
+server.listen(80, () => {
+  console.log('on 80');
+});
 // register the session with its secret id
 // app.use(session({ secret: 'test' }));
 

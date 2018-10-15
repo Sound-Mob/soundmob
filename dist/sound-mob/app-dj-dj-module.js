@@ -420,33 +420,6 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.soundBoardMediaInformation = [];
     }
     ngOnInit() {
-<<<<<<< HEAD:dist/sound-mob/app-dj-view-dj-view-module.js
-        //   this.http.get('/test')
-        //     .subscribe(({ items }) => {
-        //       //console.log(data);
-        //       // let { items } = data;
-        //       return items.map(item => (
-        //         this.soundBoardMediaInformation.push({
-        //           name: item.name,
-        //           mediaLink: item.mediaLink
-        //         })
-        //       ));
-        //     });
-        //   console.log(this.soundBoardMediaInformation);
-=======
-        // this.http.get('/test')
-        //   .subscribe(({ items }) => {
-        //     console.log(items);
-        //     // let { items } = data;
-        //     return items.map(item => (
-        //       this.soundBoardMediaInformation.push({
-        //         name: item.name,
-        //         mediaLink: item.mediaLink
-        //       })
-        //     ));
-        //   });
-        // console.log(this.soundBoardMediaInformation);
->>>>>>> ce4d05c71e30153c9abb2b266fe6aacd0dc1c49a:dist/sound-mob/app-dj-dj-module.js
     }
 };
 SoundplayerComponent = __decorate([

@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 ENV PORT 80
-ENV NODE_ENV production
+# ENV NODEENV production
 
 # install and cache app dependencies
 COPY package.json /usr/src/app/package.json
@@ -20,9 +20,6 @@ COPY . /usr/src/app
 
 # expose port that app runs on for the world
 EXPOSE 80
-
-
-
 
 # start app
 #CMD ng serve --proxy-config proxy.conf.json --host 0.0.0.0 node server/app.js
