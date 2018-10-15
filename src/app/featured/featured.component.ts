@@ -29,7 +29,7 @@ export class FeaturedComponent implements OnInit {
   joinDj(event){
     console.log(event.target, 'thisthe event log')
     let sockAndTok = event.target.id.split("---")
-    this.http.post('/profileInfo', {sockAndTok})
+
     this.djJoin.joinRoom(sockAndTok);
     // console.log(sockAndTok, " google id");
   }

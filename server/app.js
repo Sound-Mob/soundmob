@@ -227,10 +227,7 @@ io.on('connection', (socket) => {
   // });
   });
 
-  app.get('/profileInfo', (req, res) => {
-  console.log(req, 'this a req with profile info')
-  res.send(selectedDj);
-})
+  
   // listen for username
   socket.on('userid', (name) => {
     // socket joins that room
