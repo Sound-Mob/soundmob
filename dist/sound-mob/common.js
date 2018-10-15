@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["common"],{
 
-/***/ "./src/app/services/sound-board.service.ts":
-/*!*************************************************!*\
-  !*** ./src/app/services/sound-board.service.ts ***!
-  \*************************************************/
+/***/ "./src/app/pipes/youtube.pipe.ts":
+/*!***************************************!*\
+  !*** ./src/app/pipes/youtube.pipe.ts ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20,31 +20,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-let SoundBoardService = class SoundBoardService {
-    constructor() {
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+const platform_browser_1 = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+let YoutubePipe = class YoutubePipe {
+    constructor(dom) {
+        this.dom = dom;
     }
-    soundEmit(sound) {
-        this.socket.emit('soundEmit', sound);
-    }
-    soundReceive() {
-        let observable = new rxjs_1.Observable(observer => {
-            this.socket.on('soundRelay', (data) => {
-                observer.next(data);
-            });
-        });
-        return observable;
+    transform(value, args) {
+        return this.dom.bypassSecurityTrustResourceUrl(value);
     }
 };
-SoundBoardService = __decorate([
-    core_1.Injectable({
-        providedIn: 'root'
+YoutubePipe = __decorate([
+    core_1.Pipe({
+        name: 'youtube'
     }),
-    __metadata("design:paramtypes", [])
-], SoundBoardService);
-exports.SoundBoardService = SoundBoardService;
+    __metadata("design:paramtypes", [platform_browser_1.DomSanitizer])
+], YoutubePipe);
+exports.YoutubePipe = YoutubePipe;
 
 
 /***/ })

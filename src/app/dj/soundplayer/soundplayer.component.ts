@@ -7,10 +7,13 @@ import { SoundBoardService } from '../../services/sound-board.service';
   styleUrls: ['./soundplayer.component.css']
 })
 export class SoundplayerComponent implements OnInit {
-  items:any;
-  sounds: Array<{name:string, mediaLink: string}> =[];
+
   
-  constructor(private http: HttpClient, private soundBite:SoundBoardService) { }
+
+  constructor(private http: HttpClient) { }
+
+  soundBoardMediaInformation = [];
+
   ngOnInit() {
      return this.http.get('/test')
      .subscribe(( items ) => {

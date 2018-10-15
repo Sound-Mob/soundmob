@@ -32,6 +32,10 @@ export class FeaturedComponent implements OnInit {
 
     this.djJoin.joinRoom(sockAndTok);
     // console.log(sockAndTok, " google id");
+<<<<<<< HEAD
+=======
+    
+>>>>>>> b3cf1a35ef19e7c434cd65b1500c221c1d42c705
   }
 
 }
