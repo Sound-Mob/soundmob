@@ -144,12 +144,12 @@ io.on('connection', (socket) => {
 
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
-    socket.admin = true;
+    // socket.admin = true;
     
-    io.sockets.emit('starttokbox');
+    // io.sockets.emit('starttokbox');
     
     // sending dj room to client
-    io.sockets.emit('activeDj', socket.rooms[socket.id]);
+    // io.sockets.emit('activeDj', socket.rooms[socket.id]);
     // keep track of users in room
     // if (socket.name) {
     //   users.push(socket.name);
@@ -167,6 +167,7 @@ io.on('connection', (socket) => {
         sessionId = session.sessionId;
         let songIds = ['AE005nZeF-A', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
         let token = opentok.generateToken(sessionId);
+        // make this just go to particular dj
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
         djs.push({ name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token });
@@ -223,9 +224,16 @@ io.on('connection', (socket) => {
             .catch(error => console.log(error));
         } else {
           changeDjSong(id, songStartTime, songDuration, socket.rooms[socket.id])
-            .then(() => console.log("changed in dj song"))
+            .then(() => {
+              
+              songinfo[0].songid = id;
+              console.log(songinfo, "changed in dj song")
+              io.sockets.emit('currentSong', { songinfo, listenerStartTime: songStartTime });
+            })
             .catch(err => console.log(err));
         }
+
+        
       }).catch((er)=> console.log(er)); 
       
     }).catch((err) => { console.log(err); });
