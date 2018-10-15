@@ -140,7 +140,6 @@ io.on('connection', (socket) => {
   const { givenName } = name;
   const { familyName } = name;
   const { accessToken} = socket.request.session; 
- 
 
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
