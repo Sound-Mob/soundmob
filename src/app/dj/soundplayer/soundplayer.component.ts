@@ -8,7 +8,8 @@ import { SoundBoardService } from '../../services/sound-board.service';
 })
 export class SoundplayerComponent implements OnInit {
 
-  
+  items: any;
+  sounds: Array<{ name: string, mediaLink: string }> = [];
 
 
 

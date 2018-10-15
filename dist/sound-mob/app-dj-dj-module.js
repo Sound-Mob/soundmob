@@ -468,6 +468,7 @@ let SoundplayerComponent = class SoundplayerComponent {
     constructor(http, soundBite) {
         this.http = http;
         this.soundBite = soundBite;
+        this.sounds = [];
         this.soundBoardMediaInformation = [];
         this.sounds = [];
     }
