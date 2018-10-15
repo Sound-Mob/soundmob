@@ -34,7 +34,11 @@
     </div>
 
   </div>
-
+  <div>
+    <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"  class="btn btn-outline-secondary btn-lg btn-block">
+      {{playlist.name}}
+    </button>
+  </div>
   <div class="row">
     <div class="col-md-4">
 
@@ -46,7 +50,7 @@
 
     <div class="col-md-4">
 
-      <button *ngFor="let sound of sounds" (click)='onClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
+      <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
         {{sound.name}}
       </button>
       <!-- <button (click)='onClick($event)' type="button" id={{items.items[1].mediaLink}} class="btn btn-outline-secondary btn-lg btn-block">

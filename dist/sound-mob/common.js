@@ -69,6 +69,9 @@ let SoundBoardService = class SoundBoardService {
     soundEmit(sound) {
         this.socket.emit('soundEmit', sound);
     }
+    playlistEmit(playlistId) {
+        this.socket.emit('djSelectsPlaylist', playlistId);
+    }
     soundReceive() {
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('soundRelay', (data) => {
