@@ -1,10 +1,7 @@
 <div class="container">
     <section class="panel panel-info">
-        <div class="panel-heading">
-            Angular (+6) Youtube Player Component
-        </div>
-        <div class="panel-body">
-            <youtube-player [videoId]="id" (ready)="savePlayer($event)" (change)="onStateChange($event)">
+        <div>
+            <youtube-player [videoId]="id" (ready)="savePlayer($event)" (change)="onStateChange($event)" class="youtube-panel-body">
             </youtube-player>
         </div>
     </section>
@@ -15,7 +12,7 @@
             <button type="button" class="btn btn-default" (click)="pauseVideo()">Pause</button>
         </div>
     </div>
-
+    <p>we're not even using this</p>
     <div class="col-md-12">
         <section class="panel panel-success">
             <div class="panel-heading">Player State</div>

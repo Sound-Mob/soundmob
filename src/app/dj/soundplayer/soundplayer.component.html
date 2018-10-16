@@ -1,77 +1,78 @@
 <div class="album-block">
   <img src="https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg" class="img-landing" height="350">
 </div>
-<br>
-<br>
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="#">Like</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="#">Follow</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="#">Rate</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="#">Suggest Tracks</a>
-    </li>
-  </ol>
-</nav>
-<br>
+
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <!-- make this toggleable -->
+      <button class="btn btn-outline-info btn-lg btn-block" (click)='showCasts()'>
+          Select Cast
+      </button>
+      <ul class="list-group" *ngIf="viewedCast">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button" class="btn btn-outline-info btn-lg btn-block">
+            {{playlist.name}}
+          </button>
+        </li>
+      </ul>
+  
+
 <div class="container-fluid">
   <div class="row">
-
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-      <h3 class="text-center">
-        h3. Lorem ipsum dolor sit amet.
-      </h3>
-    </div>
-    <div class="col-md-2">
-    </div>
-
+    <hr>
   </div>
-  <div>
-    <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"  class="btn btn-outline-secondary btn-lg btn-block">
-      {{playlist.name}}
-    </button>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
+  <div id="createPlaylist">
 
-      <button type="button" id="soundboard-button" class="btn btn-block btn-outline-secondary btn-lg" *ngFor="let item of soundBoardMediaInformation">
-        {{item.name}}
-        Hello
-      </button>
+    <button class="btn btn-outline-info btn-lg btn-block" type="button" id="createCast" (click)='openNewCastComponent()'>Create Soundcast</button>
+    
+  
+    <div *ngIf="madeNew">
+    <div *ngIf="wasNamed === false">
+      <button type="button" id="submitCastName" (click)='submitCastName(text)'>Name Cast</button>
+      <input type="text" [(ngModel)]="text" id="input-field" placeholder="Name your soundcast." />
+    </div>
+      <div *ngIf="wasNamed">
+      <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
+      <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
+      <div *ngIf="songSelected === false">
+        <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
+          {{result.name}}
+        </button>
+        </div>
+      </div>
+    </div>
+    </div>
+    <br>
+
+
+    
+    <br>
+    <button type="button" id="addToCast" (click)='addToCast()' class="btn btn-outline-info btn-lg btn-block">Add to Cast</button>
+    <div *ngIf="wasAdded">
+      <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
+      <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
+      <div *ngIf="songSelected === false">
+        <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
+          {{result.name}}
+        </button>
+      </div>
     </div>
 
-    <div class="col-md-4">
-
-      <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
-        {{sound.name}}
+    <div>
+      <button class="btn btn-outline-info btn-lg btn-block" (click)='showSoundboard()'>
+        <h3>SoundBoard</h3>
       </button>
-      <!-- <button (click)='onClick($event)' type="button" id={{items.items[1].mediaLink}} class="btn btn-outline-secondary btn-lg btn-block">
-        {{items.items[1].name}}
-      </button> -->
-     
-     
-    </div>
-  </div>
-</div>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-      
-      <button type="button" class="btn btn-lg btn-danger center-block">
-        Live
-      </button>
-    </div>
-    <div class="col-md-2">
+      <ul class="list-group" *ngIf="viewedBoard">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <!-- <button type="button" class="btn btn-outline-warning btn-block">Warning</button> -->
+          <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
+            {{sound.name}}
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
