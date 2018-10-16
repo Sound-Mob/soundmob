@@ -118,7 +118,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n\n<a routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n<app-navbar></app-navbar>\n\n<div class=\"container\">\n  <router-outlet></router-outlet>\n</div>\n"
 
 /***/ }),
 
@@ -187,6 +187,7 @@ const auth_guard_1 = __webpack_require__(/*! ./auth/guards/auth.guard */ "./src/
 const admin_guard_1 = __webpack_require__(/*! ./auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const chat_service_1 = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
 const opentok_service_1 = __webpack_require__(/*! ./services/opentok.service */ "./src/app/services/opentok.service.ts");
+const navbar_component_1 = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/navbar/navbar.component.ts");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -195,6 +196,7 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             home_component_1.HomeComponent,
             landing_component_1.LandingComponent,
+            navbar_component_1.NavbarComponent,
         ],
         imports: [
             platform_browser_1.BrowserModule,
@@ -443,7 +445,7 @@ exports.HomeComponent = HomeComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n}\n"
+module.exports = "/* .img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n} */\n"
 
 /***/ }),
 
@@ -511,6 +513,66 @@ LandingComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], LandingComponent);
 exports.LandingComponent = LandingComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/navbar/navbar.component.css":
+/*!*********************************************!*\
+  !*** ./src/app/navbar/navbar.component.css ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/navbar/navbar.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/navbar/navbar.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- <nav>\n  <a routerLink=\"/\">Home</a>\n\n  <a routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n\n  <a routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n\n  <a routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n\n</nav> -->\n\n<nav class=\"navbar navbar-expand-lg navbar-light fixed-top\" id=\"mainNav\">\n  <div class=\"container\">\n    <a class=\"navbar-brand\" href=\"index.html\">Soundmob</a>\n    <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\"\n      aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      Menu\n      <i class=\"fas fa-bars\"></i>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">\n      <ul class=\"navbar-nav ml-auto\">\n        <li class=\"nav-item\">\n          <!-- <a class=\"nav-link\" href=\"index.html\">Home</a> -->\n          <a class=\"nav-link\" routerLink=\"/\">Home</a>\n        </li>\n        <li class=\"nav-item\">\n          <!-- <a class=\"nav-link\" href=\"about.html\">About</a> -->\n          <a class=\"nav-link\" routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"post.html\">Sample Post</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"contact.html\">Contact</a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>"
+
+/***/ }),
+
+/***/ "./src/app/navbar/navbar.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/navbar/navbar.component.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let NavbarComponent = class NavbarComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+NavbarComponent = __decorate([
+    core_1.Component({
+        selector: 'app-navbar',
+        template: __webpack_require__(/*! ./navbar.component.html */ "./src/app/navbar/navbar.component.html"),
+        styles: [__webpack_require__(/*! ./navbar.component.css */ "./src/app/navbar/navbar.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], NavbarComponent);
+exports.NavbarComponent = NavbarComponent;
 
 
 /***/ }),
