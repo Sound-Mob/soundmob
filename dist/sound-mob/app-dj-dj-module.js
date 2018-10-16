@@ -630,7 +630,7 @@ let AppComponent = class AppComponent {
         this.opentokService = opentokService;
         this.title = null;
         this.streams = [];
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+        this.socket = io('/', { transports: ['websocket'] });
         this.changeDetectorRef = ref;
     }
     ngOnInit() {

@@ -64,7 +64,7 @@ const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 let SoundBoardService = class SoundBoardService {
     constructor() {
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+        this.socket = io('http://localhost:3000', { transports: ['websocket'] });
     }
     soundEmit(sound) {
         this.socket.emit('soundEmit', sound);

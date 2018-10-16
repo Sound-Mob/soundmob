@@ -7,12 +7,13 @@ import { Observable } from 'rxjs'
 })
 export class DjlistService {
 
-  private socket = io('ws://localhost:3000', { transports: ['websocket'] })
+  // private socket = io(`http://localhost:3000`)
+  private socket = io();
 
   constructor() { }
 
   liveDj() {
-    let observable = new Observable<{djs:Object}>(observer => {
+    let observable = new Observable<{ djs: Object }>(observer => {
       this.socket.on('djList', (data) => {
         observer.next(data);
       });
@@ -22,7 +23,7 @@ export class DjlistService {
 
   liveDjReq() {
     console.log("request made");
-      this.socket.emit('djListReq');
+    this.socket.emit('djListReq');
   }
 
 }
