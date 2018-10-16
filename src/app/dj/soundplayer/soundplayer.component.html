@@ -22,10 +22,10 @@
 <br>
 <div class="container-fluid">
   <div class="row">
-
+    <hr>
   </div>
   <div>
-    <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"  class="btn btn-outline-secondary btn-lg btn-block">
+    <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"  class="btn btn-outline-info btn-lg btn-block">
       {{playlist.name}}
     </button>
   </div>
