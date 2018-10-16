@@ -18,6 +18,7 @@ const server = https.createServer(app);
 const io = require('socket.io')(server);
 
 const authRoutes = require('./routes/auth-routes');
+const djViewRoutes = require('./routes/dj-routes');
 
 // mock data for front end
 const userobject = require('./mockuserdata/object');
@@ -78,50 +79,11 @@ io.use((socket, next) => {
   mill(socket.request, {}, next);
 });
 app.use('/auth', authRoutes);
-
+app.use('/djView', djViewRoutes);
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
 // create dj routes
-app.get('/djView', (req, res) => {
-  const id = req.session.passport.user;
-  getUserById(id).then((data) => {
-    const body = data[0];
-    body.photo = req.session.photo;
-    res.send(body);
-  });
-});
-// get dj's playlists from youtube
-app.get('/djView/playlist', (req, res) => {
-  const id = req.session.accessToken;
-  playlist(id).then((playlistInfo) => {
-    // console.log({playlistInfo})
-    res.send(playlistInfo);
-  });
-  // res.sendStatus(200);
-});
-app.post('/djView/nameCast', (req, res) => {
-  // console.log(req.body);
-  createPlaylist(req.session.accessToken, req.body).then((data) => {
-    // console.log(data);
-    res.send(data);
-  });
-});
-app.post('/djView/searchSong', (req, res) => {
-  // console.log(req.body);
-  searchSong(req.session.accessToken, req.body.song).then((data) => {
-    // console.log(data);
-    res.send(data);
-  });
-});
-app.post('/djView/insertSong', (req, res) => { 
-  insertSong(req.session.accessToken, req.body)
-    .then((data) => {
-      res.send(data);
-    }).catch((error) => {
-    console.log(error);
-    });
-});
 
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
@@ -186,30 +148,27 @@ io.on('connection', (socket) => {
         // make this just go to particular dj
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
-        djs.push({ name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token });
+        djs.push({
+          name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token 
+        });
       }
     });
   });
-  
- // choose playlist listener
- socket.on('djSelectsPlaylist', (playlistId) => {
-   console.log(playlistId, " playlistId");
-   playlistIDs(accessToken, playlistId).then((data)=>{
-     let songIds = videoIDArray(data.items)
-     console.log({songIds});
-   io.sockets.emit('songList', songIds);
-   }).catch((error)=>{
-     console.log(error);
-   })
-  //  let songIds = ['AE005nZeF-A', 'vF1RPI6j7b0', 'x38ildLdUeM', 'KgtizhlbIOQ'];
-   
- })
-
+  // choose playlist listener
+  socket.on('djSelectsPlaylist', (playlistId) => {
+  //  console.log(playlistId, " playlistId");
+    playlistIDs(accessToken, playlistId).then((data) => {
+      const songIds = videoIDArray(data.items);
+      //  console.log({ songIds });
+      io.sockets.emit('songList', songIds);
+    }).catch((error) => {
+      console.log(error);
+    });
+  });
   // listen for sound request
   socket.on('soundEmit', (data) => {
     io.sockets.emit('soundRelay', data);
   });
-  
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
     // console.log(id, " id in startCast before get details from youtube")
