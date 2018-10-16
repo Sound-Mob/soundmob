@@ -383,7 +383,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "input{\n    width: 20rem;\n    height: 2rem;\n    font-size: 1.2rem;\n}"
+module.exports = ""
 
 /***/ }),
 
@@ -445,7 +445,7 @@ exports.HomeComponent = HomeComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* .img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n} */\n"
+module.exports = "#landing{\n  padding: 70px;\n}\n#log-login-btn{\n  padding-left: 30px;\n}"
 
 /***/ }),
 
@@ -456,7 +456,7 @@ module.exports = "/* .img-landing {\n    width: auto;\n    display: block;\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n        </div>\n        <div class=\"col-md-4\" align=\"center\">\n          <h3>\n            Sound Mob\n          </h3><img alt=\"Bootstrap Image Preview\" src=\"https://operationspark.org/assets/images/Robot-Mascot.png\"\n            height=\"350\" />\n          <br>\n          <br>\n          <button type=\"button\" class=\"btn btn-success\" routerLink=\"/posts\" routerLinkActive=\"active\">\n            <a href=\"/auth\">Sign In with Google</a>\n          </button>\n        </div>\n        <div class=\"col-md-4\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\" id=\"landing\">\n      <img alt=\"Bootstrap Image Preview\" src=\"https://operationspark.org/assets/images/Robot-Mascot.png\"\n        height=\"350\" />\n      <br>\n      <br>\n      <button type=\"button\" class=\"btn btn-success col-lg-5 col-md-10 mx-auto\" routerLink=\"/posts\" routerLinkActive=\"active\" id=\"login-btn\">\n        <a href=\"/auth\">Sign In with Google</a>\n      </button>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -535,7 +535,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <nav>\n  <a routerLink=\"/\">Home</a>\n\n  <a routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n\n  <a routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n\n  <a routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n\n</nav> -->\n\n<nav class=\"navbar navbar-expand-lg navbar-light fixed-top\" id=\"mainNav\">\n  <div class=\"container\">\n    <a class=\"navbar-brand\" href=\"index.html\">Soundmob</a>\n    <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\"\n      aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      Menu\n      <i class=\"fas fa-bars\"></i>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">\n      <ul class=\"navbar-nav ml-auto\">\n        <li class=\"nav-item\">\n          <!-- <a class=\"nav-link\" href=\"index.html\">Home</a> -->\n          <a class=\"nav-link\" routerLink=\"/\">Home</a>\n        </li>\n        <li class=\"nav-item\">\n          <!-- <a class=\"nav-link\" href=\"about.html\">About</a> -->\n          <a class=\"nav-link\" routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"post.html\">Sample Post</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"contact.html\">Contact</a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>"
+module.exports = "<!-- <nav>\n  <a routerLink=\"/\">Home</a>\n\n  <a routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n\n  <a routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n\n  <a routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n\n</nav> -->\n\n<nav class=\"navbar navbar-expand-lg navbar-light fixed-top\" id=\"mainNav\">\n  <div class=\"container\">\n    <h3 class=\"navbar-brand\">Soundmob</h3>\n    <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\"\n      aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      Menu\n      <i class=\"fas fa-bars\"></i>\n    </button>\n    <div class=\"collapse navbar-collapse \" id=\"navbarResponsive\">\n      <ul class=\"navbar-nav ml-auto\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/\">Home</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>"
 
 /***/ }),
 

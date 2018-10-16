@@ -243,7 +243,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-profile></app-profile>\n      \n      <app-soundplayer></app-soundplayer>\n      <br>\n      <div>\n        <app-chat></app-chat>\n          <dj-tokbox></dj-tokbox>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n  <app-profile></app-profile>\n  \n  <app-soundplayer></app-soundplayer>\n  <br>\n  <div>\n    <app-chat></app-chat>\n      <dj-tokbox></dj-tokbox>\n  </div>"
 
 /***/ }),
 
@@ -427,7 +427,7 @@ exports.SearchComponent = SearchComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}\n#soundboard-button{\n    background-color: rgb(0, 0, 0, 0.10);\n    padding: 1em;\n    margin: 1em;\n}"
+module.exports = ""
 
 /***/ }),
 
