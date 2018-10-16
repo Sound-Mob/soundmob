@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n\n<button (click)=\"sendChatMessage()\">Send!</button>\n<!-- <button class=\"btun\" (click)=\"getMessage()\">get</button> -->"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n\n    <p>{{message | json}}</p>\n    <p>{{profile | json}}</p>\n\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<!-- <input type=\"text\" [(ngModel)]=\"messageToSend\"> -->\n\n<!-- <button (click)=\"sendChatMessage()\">Send!</button>  -->\n\n\n<div class=\"card border-0 rounded\" style=\"box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 100vh;\">\n\n  <div class=\"card-header p-1 bg-light border border-top-0 border-left-0 border-right-0\" style=\"color: rgba(96, 125, 139,1.0);\">\n\n    <img class=\"rounded float-left\" style=\"width: 50px; height: 50px;\" src=\"https://i.pinimg.com/736x/5c/24/69/5c24695df36eee73abfbdd8274085ecd--cute-anime-guys-anime-boys.jpg\" />\n\n    <h6 class=\"float-left\" style=\"margin: 0px; margin-left: 10px;\"> Yusuf Bulgurcu <i class=\"fa fa-check text-primary\"\n        title=\"Onaylanmış Hesap!\" aria-hidden=\"true\"></i> <br><small> İstanbul, TR </small></h6>\n\n\n  </div>\n\n  <div class=\"card bg-sohbet border-0 m-0 p-0\" style=\"height: 100vh;\">\n    <div id=\"sohbet\" class=\"card border-0 m-0 p-0 position-relative bg-transparent\" style=\"overflow-y: auto; height: 100vh;\" *ngFor=\"let message of chatMessages\">\n      <div *ngIf=\"message.id !== profile.googleid\">\n        <div class=\"balon1 p-2 m-0 position-relative\" data-is=\"You - 3:20 pm\">\n          <a class=\"float-right\">{{message.message}}</a>\n        </div>\n      </div>\n      <div *ngIf=\"message.id === profile.googleid\">\n        <div class=\"balon2 p-2 m-0 position-relative\" data-is=\"Yusuf - 3:22 pm\">\n          <a class=\"float-left sohbet2\">{{message.message}} | shortTime</a>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"w-100 card-footer p-0 bg-light border border-bottom-0 border-left-0 border-right-0\">\n\n    <form class=\"m-0 p-0\" action=\"\" method=\"POST\" autocomplete=\"off\">\n\n      <div class=\"row m-0 p-0\">\n        <div class=\"col-9 m-0 p-1\">\n\n          <!-- <input id=\"text\" class=\"mw-100 border rounded form-control\" type=\"text\" name=\"text\" title=\"Type a message...\"\n            placeholder=\"Type a message...\" required> -->\n            <input id=\"text\" class=\"mw-100 border rounded form-control\" type=\"text\" name=\"text\" title=\"Type a message...\"\n            placeholder=\"Type a message...\" required [(ngModel)]=\"messageToSend\">\n\n        </div>\n        <div class=\"col-3 m-0 p-1\">\n\n          <!-- <button class=\"btn btn-outline-secondary rounded border w-100\" title=\"Gönder!\" style=\"padding-right: 16px;\"><i\n              class=\"fa fa-paper-plane\" aria-hidden=\"true\"></i></button> -->\n          <button class=\"btn btn-outline-secondary rounded border w-100\" title=\"Gönder!\" style=\"padding-right: 16px;\" (click)=\"sendChatMessage()\"><i class=\"fa fa-paper-plane\"\n            aria-hidden=\"true\" ></i>Send!</button>\n\n        </div>\n      </div>\n\n    </form>\n\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -43,9 +43,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ "./src/app/services/chat.service.ts");
+const dj_profile_service_1 = __webpack_require__(/*! src/app/services/dj-profile.service */ "./src/app/services/dj-profile.service.ts");
 let ChatComponent = class ChatComponent {
-    constructor(chatService) {
+    constructor(chatService, djProfileService) {
         this.chatService = chatService;
+        this.djProfileService = djProfileService;
         this.count = 0;
         this.messageToSend = '';
         this.values = '';
@@ -97,6 +99,10 @@ let ChatComponent = class ChatComponent {
     ngOnInit() {
         this.chatService.createRoom("hey");
         this.chatService.selectPlaylist('iddoeooe');
+        this.djProfileService.getProfileInfo()
+            .subscribe(profile => {
+            this.profile = profile;
+        });
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -114,7 +120,7 @@ ChatComponent = __decorate([
         template: __webpack_require__(/*! ./chat.component.html */ "./src/app/dj/chat/chat.component.html"),
         styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/dj/chat/chat.component.css")]
     }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
+    __metadata("design:paramtypes", [chat_service_1.ChatService, dj_profile_service_1.DjProfileService])
 ], ChatComponent);
 exports.ChatComponent = ChatComponent;
 
