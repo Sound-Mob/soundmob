@@ -82,55 +82,46 @@ app.use('/auth', authRoutes);
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
-//create dj routes
-app.get('/djView', (req,res) => {
-  const id = req.session.passport.user
-  getUserById(id).then(data=>{
-    let body = data[0];
-    body.photo =req.session.photo;
+// create dj routes
+app.get('/djView', (req, res) => {
+  const id = req.session.passport.user;
+  getUserById(id).then((data) => {
+    const body = data[0];
+    body.photo = req.session.photo;
     res.send(body);
-  })
-
-})
-
+  });
+});
 // get dj's playlists from youtube
-app.get('/djView/playlist', (req, res)=>{
-
+app.get('/djView/playlist', (req, res) => {
   const id = req.session.accessToken;
-  console.log({id});
-  playlist(id).then((playlistInfo)=>{
+  playlist(id).then((playlistInfo) => {
     // console.log({playlistInfo})
     res.send(playlistInfo);
-  })
+  });
   // res.sendStatus(200);
-})
-
-app.post('/djView/nameCast', (req, res)=>{
+});
+app.post('/djView/nameCast', (req, res) => {
   // console.log(req.body);
-  createPlaylist(req.session.accessToken, req.body).then((data)=>{
+  createPlaylist(req.session.accessToken, req.body).then((data) => {
     // console.log(data);
     res.send(data);
-  })
-  
-})
+  });
+});
 app.post('/djView/searchSong', (req, res) => {
   // console.log(req.body);
   searchSong(req.session.accessToken, req.body.song).then((data) => {
     // console.log(data);
     res.send(data);
-  })
-
-})
-app.post('/djView/insertSong', (req, res)=>{
-  
+  });
+});
+app.post('/djView/insertSong', (req, res) => { 
   insertSong(req.session.accessToken, req.body)
-  .then((data)=>{
-    res.send(data);
-  }).catch((error)=>{
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
     console.log(error);
-  })
-  
-})
+    });
+});
 
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
@@ -169,14 +160,12 @@ io.on('connection', (socket) => {
   const { user } = socket.request.session.passport;
   const { givenName } = name;
   const { familyName } = name;
-  const { accessToken} = socket.request.session; 
+  const { accessToken } = socket.request.session;
 
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
-    // socket.admin = true;
-    
+    // socket.admin = true
     // io.sockets.emit('starttokbox');
-    
     // sending dj room to client
     // io.sockets.emit('activeDj', socket.rooms[socket.id]);
     // keep track of users in room
@@ -184,10 +173,8 @@ io.on('connection', (socket) => {
     //   users.push(socket.name);
     //   io.sockets.in(room).emit('new_user', { users: users, name: socket.name });
     // }
-    
     // make tok session
-    opentok = new OpenTok(API_KEY, 'd32d357fe3e5776a240d0a32cbb9edf5765f7405');
-    
+    opentok = new OpenTok(API_KEY, 'd32d357fe3e5776a240d0a32cbb9edf5765f7405');    
     var sessionId;
     opentok.createSession({ mediaMode: "routed" }, (error, session) => {
       if (error) {
@@ -402,7 +389,6 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 },
 (req, accessToken, refreshToken, profile, done) => {
-  
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
