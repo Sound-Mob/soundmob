@@ -540,10 +540,14 @@ if(false) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/styles.css */"./src/styles.css");
 =======
 module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/styles.css */"./src/styles.css");
 >>>>>>> 1066b47eb7e42a4c18cec58a471ea74e5e8ef0cc
+=======
+module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/styles.css */"./src/styles.css");
+>>>>>>> de82e72e02c1a7807ae59ee1d2ba3ac7be1cb69c
 
 
 /***/ })

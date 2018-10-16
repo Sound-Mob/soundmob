@@ -8,7 +8,7 @@ docker build -t us.gcr.io/sound-mob12282/soundmob .
 docker push us.gcr.io/sound-mob12282/soundmob:latest
 
 # Update running compute engine with newest image
-gcloud compute instances update-container soundmobmachine7 --container-image us.gcr.io/sound-mob12282/soundmob:latest
+gcloud compute instanceslatest update-container soundmobmachine7 --container-image us.gcr.io/sound-mob12282/soundmob:
 
 
 #server.listen change to 80
@@ -18,7 +18,7 @@ gcloud compute instances update-container soundmobmachine7 --container-image us.
 # }
 
 #certbot shit, this will give us a cert that lasts 3 months
-# certbot -d soundmob.net --manual --logs-dir certbot --config-dir certbot --work-dir certbot --server https://acme-v02.api.letsencrypt.org/directory --email jvalamis@gmail.com --preferred-challenges dns certonly
+certbot -d soundmob.net --manual --logs-dir certbot --config-dir certbot --work-dir certbot --server https://acme-v02.api.letsencrypt.org/directory --email jvalamis@gmail.com --preferred-challenges dns certonly
 
 #checking if domain 
 #dig @8.8.8.8 soundmob.systems

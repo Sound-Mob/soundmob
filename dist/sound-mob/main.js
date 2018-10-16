@@ -440,6 +440,7 @@ __webpack_require__.r(__webpack_exports__);
   SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
 });
 
+
 /***/ }),
 
 /***/ "./src/app/home/home.component.css":
@@ -629,19 +630,61 @@ let ChatService = class ChatService {
     getDjInfo() {
         this.socket.emit('getDjInfo');
     }
-    receiveDjInfo() {
-        console.log('recieved info');
+    djStartCast(songId) {
+        this.socket.emit('startCast', songId);
+    }
+    djGetSongDetails() {
+        // console.log('recieved songgg   info')
         let observable = new rxjs_1.Observable(observer => {
-            this.socket.on('startlistener', (djInfo) => {
-                console.log(djInfo);
-                observer.next(djInfo);
+            this.socket.on('castOn', (songInfo) => {
+                // console.log(songInfo);
+                observer.next(songInfo);
             });
         });
         console.log(observable);
         return observable;
     }
+    receiveDjInfo() {
+        console.log('recieved info');
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('startlistener', (djInfo) => {
+                // console.log(djInfo);
+                observer.next(djInfo);
+            });
+        });
+        // console.log(observable)
+        return observable;
+    }
     joinRoom(djInfo) {
         this.socket.emit('roomroute', djInfo);
+    }
+    selectPlaylist(playlistId) {
+        this.socket.emit('djSelectsPlaylist', playlistId);
+    }
+    receiveSongs() {
+        console.log('recieved songs');
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('songList', (songs) => {
+                // console.log(songs);
+                observer.next(songs);
+            });
+        });
+        console.log(observable);
+        return observable;
+    }
+    listenerReceiveSongDetails() {
+        // console.log('recieved songgg   info')
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('currentSong', (songInfo) => {
+                console.log(songInfo, " songinfo in listener receiver");
+                observer.next(songInfo);
+            });
+        });
+        // console.log(observable)
+        return observable;
+    }
+    listenerGetSongDetails() {
+        this.socket.emit("listenerGetCurrentSong");
     }
     djInfoReq() {
         this.socket.emit('djInfoReq');
@@ -689,9 +732,7 @@ let OpentokService = class OpentokService {
         return OT;
     }
     initSession(apikey, sessionId, token) {
-        console.log(sessionId, " above conditinoal");
         if (sessionId) {
-            console.log(token, " token in init sessino");
             this.session = OT.initSession(apikey, sessionId);
             this.token = token;
             return Promise.resolve(this.session);
@@ -788,10 +829,14 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /***/ (function(module, exports, __webpack_require__) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/main.ts */"./src/main.ts");
 =======
 module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
 >>>>>>> 1066b47eb7e42a4c18cec58a471ea74e5e8ef0cc
+=======
+module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
+>>>>>>> de82e72e02c1a7807ae59ee1d2ba3ac7be1cb69c
 
 
 /***/ }),

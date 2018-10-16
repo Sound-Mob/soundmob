@@ -4,7 +4,8 @@
     <p>{{message.message}}</p>
   </li>
 </ul>
-
+<input type="button" value="startCast" (click)="startCast()" />
+<iframe id='paysonContainer' allow="autoplay" [src]="video | youtube"></iframe>
 <input type="text" [(ngModel)]="messageToSend">
 <button (click)="sendChatMessage()">Send!</button>
 <button class="btun" (click)="getMessage()">get</button>

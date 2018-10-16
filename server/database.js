@@ -30,6 +30,16 @@ module.exports = {
   addSession: (sessionid, sessiontoken, googleid) => {
     return db.any('INSERT INTO sessions (sessionid, sessiontoken, googleid) VALUES ($1, $2, $3)', [sessionid, sessiontoken, googleid]);
   },
+  // adds a dj song session to the djsong database
+  createDjSongSession: (songid, starttime, duration, googleid) => {
+    return db.any('INSERT INTO djsonginfo (songid, starttime, duration, googleid) VALUES ($1, $2, $3, $4)', [songid, starttime, duration, googleid]);
+  },
+  // get dj song session in the djsong database
+  getDjSongById: id => db.any('SELECT * FROM djsonginfo WHERE googleid = $1', id),
+  // update dj song
+  changeDjSong: (songid, starttime, duration, googleid) => {
+    return db.any('UPDATE djsonginfo SET songid = ($1), starttime = ($2), duration = ($3) WHERE googleid = ($4)', [songid, starttime, duration, googleid]);
+  },
   // update tok session info for listener
   changeSession: (sessionid, sessiontoken, googleid) => {
     return db.any('UPDATE sessions SET sessionid = ($1), sessiontoken = ($2) WHERE googleid = ($3)', [sessionid, sessiontoken, googleid]);
