@@ -479,13 +479,7 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.searchResults = [];
     }
     ngOnInit() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        return this.http.get('/test')
-=======
         this.http.get('/test')
->>>>>>> de82e72e02c1a7807ae59ee1d2ba3ac7be1cb69c
             .subscribe((items) => {
             //  console.log(items);
             this.items = items;
@@ -570,7 +564,6 @@ let SoundplayerComponent = class SoundplayerComponent {
             // this.sounds.push({ name: item.name, mediaLink: item.mediaLink })
             this.sounds.push({ name: item.name.substring(-4), mediaLink: item.mediaLink });
         });
->>>>>>> 1066b47eb7e42a4c18cec58a471ea74e5e8ef0cc
     }
 };
 SoundplayerComponent = __decorate([
@@ -637,7 +630,7 @@ let AppComponent = class AppComponent {
         this.opentokService = opentokService;
         this.title = null;
         this.streams = [];
-        this.socket = io('ws://localhost', { transports: ['websocket'] });
+        this.socket = io('/', { transports: ['websocket'] });
         this.changeDetectorRef = ref;
     }
     ngOnInit() {

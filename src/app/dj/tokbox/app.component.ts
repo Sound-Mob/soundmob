@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   streams: Array<OT.Stream> = [];
   changeDetectorRef: ChangeDetectorRef;
 
-  private socket = io('/', { transports: ['websocket'] })
+  private socket = io(`http://localhost:3000`)
 
   constructor(private ref: ChangeDetectorRef,
     private opentokService: OpentokService, ) {

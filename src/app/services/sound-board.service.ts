@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class SoundBoardService {
-  private socket = io('/', { transports: ['websocket'] })
+  private socket = io(`http://localhost:3000`)
   constructor() { }
   soundEmit(sound) {
     this.socket.emit('soundEmit', sound);

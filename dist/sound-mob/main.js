@@ -372,6 +372,7 @@ __webpack_require__.r(__webpack_exports__);
   SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
 });
 
+
 /***/ }),
 
 /***/ "./src/app/home/home.component.css":
@@ -539,7 +540,7 @@ const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 let ChatService = class ChatService {
     constructor() {
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+        this.socket = io('http://localhost:3000', { transports: ['websocket'] });
     }
     createRoom(googleId) {
         this.socket.emit('newroom', googleId);
@@ -759,19 +760,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/main.ts */"./src/main.ts");
-=======
-module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
->>>>>>> 1066b47eb7e42a4c18cec58a471ea74e5e8ef0cc
-=======
-module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
->>>>>>> de82e72e02c1a7807ae59ee1d2ba3ac7be1cb69c
-=======
-module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
->>>>>>> 7a56f602a63c8d03115ffccb8a331acfeb64e01d
 
 
 /***/ }),
