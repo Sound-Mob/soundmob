@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
 })
 
 export class SoundBoardService {
-  private socket = io(`http://localhost:3000`)
+  // private socket = io(`http://localhost:3000`)
+
+  private socket = io();
   constructor() { }
   soundEmit(sound) {
     this.socket.emit('soundEmit', sound);
