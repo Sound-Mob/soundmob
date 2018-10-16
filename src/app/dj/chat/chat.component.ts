@@ -69,7 +69,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.createRoom("hey");
-    this.chatService.selectPlaylist('iddoeooe');
+    // this.chatService.selectPlaylist('iddoeooe');
     
   }
 
