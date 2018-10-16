@@ -5473,6 +5473,7 @@ window.global = window;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/polyfills.ts */"./src/polyfills.ts");
 =======
 module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/polyfills.ts */"./src/polyfills.ts");
@@ -5480,6 +5481,9 @@ module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/s
 =======
 module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/polyfills.ts */"./src/polyfills.ts");
 >>>>>>> de82e72e02c1a7807ae59ee1d2ba3ac7be1cb69c
+=======
+module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/polyfills.ts */"./src/polyfills.ts");
+>>>>>>> 7a56f602a63c8d03115ffccb8a331acfeb64e01d
 
 
 /***/ })
