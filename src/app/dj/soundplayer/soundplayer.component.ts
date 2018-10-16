@@ -8,6 +8,12 @@ import { SoundBoardService } from '../../services/sound-board.service';
 })
 export class SoundplayerComponent implements OnInit {
   songSelected: boolean = false;
+  viewedCast: boolean = false;
+  viewedBoard: boolean = false;
+  madeNew: boolean = false;
+  wasAdded: boolean = false;
+  wasNamed: boolean = false;
+
   items: any;
   sounds: Array<{ name: string, mediaLink: string }> = [];
   playlists: Array<{ name: string, id: string }> = [];
@@ -18,7 +24,7 @@ export class SoundplayerComponent implements OnInit {
   constructor(private http: HttpClient, private soundBite:SoundBoardService) { }
   ngOnInit() {
       this.http.get('/test')
-     .subscribe(( items ) => {
+      .subscribe(( items ) => {
       //  console.log(items);
       this.items = items
         // return items.items.map(item => ({ name: item.name,mediaLink: item.mediaLink }));
@@ -32,13 +38,19 @@ export class SoundplayerComponent implements OnInit {
 
         })
       })
-   }
+    }
 
   playlistClick(event) {
     this.soundBite.playlistEmit(event.target.id);
     this.newcastid = event.target.id;
+    this.viewedCast = false;
   }
   openNewCastComponent() {
+    if(this.madeNew === true){
+      this.madeNew = false
+    } else {
+      this.madeNew = true
+    }
     console.log("this will open the entire new cast creator")
   }
   searchSongToCast(song){
@@ -48,6 +60,23 @@ export class SoundplayerComponent implements OnInit {
         return { name: songObj.snippet.title, id: songObj.id.videoId }
       })
     })
+  }
+
+
+  showCasts(){
+    if (this.viewedCast === true) {
+      this.viewedCast = false;
+    } else {
+      this.viewedCast = true;
+    }
+  }
+
+  showSoundboard(){
+    if(this.viewedBoard === true) {
+      this.viewedBoard = false;
+    } else {
+      this.viewedBoard = true;
+    }
   }
 
   songSelect(event){
@@ -60,6 +89,7 @@ export class SoundplayerComponent implements OnInit {
 
   submitCastName(title){
     this.castName = title;
+    this.wasNamed = true;
     this.http.post('djView/nameCast',{title}).subscribe((data)=>{
       this.newcastid = data['id'];
     })
@@ -70,8 +100,13 @@ export class SoundplayerComponent implements OnInit {
     
    }
 
-   addToCast(){
-     console.log("would pop up song search")
+    addToCast(){
+      if (this.wasAdded === true) {
+        this.wasAdded = false;
+      } else {
+        this.wasAdded = true;
+      }
+      console.log("would pop up song search")
    }
    buttonMaker() {
     this.items.items.map((item) => {

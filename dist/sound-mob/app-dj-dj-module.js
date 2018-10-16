@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n\n<button (click)=\"sendChatMessage()\">Send!</button>\n<!-- <button class=\"btun\" (click)=\"getMessage()\">get</button> -->"
 
 /***/ }),
 
@@ -438,7 +438,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <h3>SoundCasts</h3>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n      <hr>\n\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n      <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{result.name}}\n      </button>\n      </div>\n      <hr>\n\n      <div>\n      <h3>SoundBoard</h3>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n      </div>\n\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n    <button type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    <br>\n    <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n    <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()'>Add to Cast</button>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <!-- <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div> -->\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <!-- make this toggleable -->\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showCasts()'>\n          Select Cast\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedCast\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n  \n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n\n    <button class=\"btn btn-outline-info btn-lg btn-block\" type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    \n  \n    <div *ngIf=\"madeNew\">\n    <div *ngIf=\"wasNamed === false\">\n      <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n      <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    </div>\n      <div *ngIf=\"wasNamed\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n        </div>\n      </div>\n    </div>\n    </div>\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()' class=\"btn btn-outline-info btn-lg btn-block\">Add to Cast</button>\n    <div *ngIf=\"wasAdded\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n      </div>\n    </div>\n\n    <div>\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showSoundboard()'>\n        <h3>SoundBoard</h3>\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedBoard\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n\n   "
 
 /***/ }),
 
@@ -469,6 +469,11 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.http = http;
         this.soundBite = soundBite;
         this.songSelected = false;
+        this.viewedCast = false;
+        this.viewedBoard = false;
+        this.madeNew = false;
+        this.wasAdded = false;
+        this.wasNamed = false;
         this.sounds = [];
         this.playlists = [];
         this.searchResults = [];
@@ -492,8 +497,15 @@ let SoundplayerComponent = class SoundplayerComponent {
     playlistClick(event) {
         this.soundBite.playlistEmit(event.target.id);
         this.newcastid = event.target.id;
+        this.viewedCast = false;
     }
     openNewCastComponent() {
+        if (this.madeNew === true) {
+            this.madeNew = false;
+        }
+        else {
+            this.madeNew = true;
+        }
         console.log("this will open the entire new cast creator");
     }
     searchSongToCast(song) {
@@ -504,6 +516,22 @@ let SoundplayerComponent = class SoundplayerComponent {
             });
         });
     }
+    showCasts() {
+        if (this.viewedCast === true) {
+            this.viewedCast = false;
+        }
+        else {
+            this.viewedCast = true;
+        }
+    }
+    showSoundboard() {
+        if (this.viewedBoard === true) {
+            this.viewedBoard = false;
+        }
+        else {
+            this.viewedBoard = true;
+        }
+    }
     songSelect(event) {
         this.songSelected = true;
         this.http.post('/djView/insertSong', { songId: event.target.id, playlistId: this.newcastid })
@@ -513,6 +541,7 @@ let SoundplayerComponent = class SoundplayerComponent {
     }
     submitCastName(title) {
         this.castName = title;
+        this.wasNamed = true;
         this.http.post('djView/nameCast', { title }).subscribe((data) => {
             this.newcastid = data['id'];
         });
@@ -522,6 +551,12 @@ let SoundplayerComponent = class SoundplayerComponent {
         this.soundBite.soundEmit(event.target.id);
     }
     addToCast() {
+        if (this.wasAdded === true) {
+            this.wasAdded = false;
+        }
+        else {
+            this.wasAdded = true;
+        }
         console.log("would pop up song search");
     }
     buttonMaker() {
