@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -18,7 +19,7 @@ export class ChatComponent implements OnInit {
   name: object
   id: string
   chatMessages: Array<{ userName: string, lastName: string, message: string }> = [];
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveMessages()
       .subscribe(data => {
         if (this.chatMessages.length > 10) {
@@ -65,6 +66,11 @@ export class ChatComponent implements OnInit {
   startCast() {
     this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
     this.chatService.djStartCast(this.songs[this.count]);
+    this.http.post('djView/songDetails', {songs: this.songs})
+    .subscribe((data) => {
+      console.log(data, 'in the client');
+    });
+
   }
 
   ngOnInit() {
