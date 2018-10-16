@@ -571,7 +571,7 @@ let AppComponent = class AppComponent {
         this.opentokService = opentokService;
         this.title = 'Angular Basic Video Chat';
         this.streams = [];
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+        this.socket = io('ws://localhost', { transports: ['websocket'] });
         this.changeDetectorRef = ref;
     }
     ngOnInit() {

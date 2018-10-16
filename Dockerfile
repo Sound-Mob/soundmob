@@ -52,3 +52,5 @@ CMD npm run testDeploy
 # gcloud compute instances list
 
 # gcloud compute instances update-container {your-instance-here} --container-image {your-image-here (us.grc.io/whatever)}
+
+

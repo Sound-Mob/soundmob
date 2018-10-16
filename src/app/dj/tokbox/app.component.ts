@@ -9,7 +9,7 @@ import config from '../../config.js'
   selector: 'dj-tokbox',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ OpentokService ]
+  providers: [OpentokService]
 })
 export class AppComponent implements OnInit {
   title = 'Angular Basic Video Chat';
@@ -18,30 +18,30 @@ export class AppComponent implements OnInit {
   streams: Array<OT.Stream> = [];
   changeDetectorRef: ChangeDetectorRef;
 
-  private socket = io('ws://localhost:3000', { transports: ['websocket'] })
+  private socket = io('ws://localhost', { transports: ['websocket'] })
 
   constructor(private ref: ChangeDetectorRef,
-    private opentokService: OpentokService,) {
+    private opentokService: OpentokService, ) {
     this.changeDetectorRef = ref;
   }
 
-  ngOnInit () {
-    this.socket.on('tokSession', (sessionId, token)=>{
-     
+  ngOnInit() {
+    this.socket.on('tokSession', (sessionId, token) => {
+
       this.sessionId = sessionId;
       this.fireSession(this.sessionId, token)
     })
   }
-  
-  fireSession(sessionId, token){
-  
+
+  fireSession(sessionId, token) {
+
     const { API_KEY } = config;
-  
-    this.opentokService.initSession(API_KEY ,sessionId, token)
+
+    this.opentokService.initSession(API_KEY, sessionId, token)
       .then((sessionId: any) => {
-      
+
         this.session = sessionId;
-        
+
         this.session.on('streamCreated', (event) => {
           this.streams.push(event.stream);
           this.changeDetectorRef.detectChanges();

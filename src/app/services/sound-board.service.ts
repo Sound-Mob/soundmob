@@ -5,22 +5,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SoundBoardService {
-  private socket = io('ws://localhost:3000', { transports: ['websocket'] })
+  private socket = io('ws://localhost', { transports: ['websocket'] })
   constructor() { }
   soundEmit(sound) {
-    this.socket.emit('soundEmit',sound);
-   
+    this.socket.emit('soundEmit', sound);
+
   }
-  playlistEmit(playlistId){
+  playlistEmit(playlistId) {
     this.socket.emit('djSelectsPlaylist', playlistId)
   }
   soundReceive() {
-  
-      let observable = new Observable<{ sound: string}>(observer => {
-        this.socket.on('soundRelay', (data) => {
-          observer.next(data);
-        });
+
+    let observable = new Observable<{ sound: string }>(observer => {
+      this.socket.on('soundRelay', (data) => {
+        observer.next(data);
       });
-      return observable;
+    });
+    return observable;
   }
 }
