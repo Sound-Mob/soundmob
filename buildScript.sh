@@ -8,7 +8,7 @@ docker build -t us.gcr.io/sound-mob12282/soundmob .
 docker push us.gcr.io/sound-mob12282/soundmob:latest
 
 # Update running compute engine with newest image
-gcloud compute instanceslatest update-container soundmobmachine7 --container-image us.gcr.io/sound-mob12282/soundmob:
+# gcloud compute instanceslatest update-container soundmobmachine7 --container-image us.gcr.io/sound-mob12282/soundmob:
 
 
 #server.listen change to 80

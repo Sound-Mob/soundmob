@@ -7,7 +7,7 @@ import { Observable } from 'rxjs'
 })
 export class DjlistService {
 
-  private socket = io('ws://localhost', { transports: ['websocket'] })
+  private socket = io('/', { transports: ['websocket'] })
 
   constructor() { }
 
