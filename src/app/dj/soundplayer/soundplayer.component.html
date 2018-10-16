@@ -45,6 +45,8 @@
     <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
       {{result.name}}
     </button>
+    <br>
+    <button type="button" id="addToCast" (click)='addToCast()'>Add to Cast</button>
   </div>
   <div>
     <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"  class="btn btn-outline-secondary btn-lg btn-block">

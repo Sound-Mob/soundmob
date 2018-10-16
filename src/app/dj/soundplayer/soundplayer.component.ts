@@ -13,7 +13,7 @@ export class SoundplayerComponent implements OnInit {
   playlists: Array<{ name: string, id: string }> = [];
   newcastid: string;
   searchResults: Array<{ name: string, id: string }> = [];
-  castName: string:
+  castName: string;
 
   constructor(private http: HttpClient, private soundBite:SoundBoardService) { }
   ngOnInit() {
@@ -36,6 +36,7 @@ export class SoundplayerComponent implements OnInit {
 
   playlistClick(event) {
     this.soundBite.playlistEmit(event.target.id);
+    this.newcastid = event.target.id;
   }
   openNewCastComponent() {
     console.log("this will open the entire new cast creator")
@@ -51,7 +52,7 @@ export class SoundplayerComponent implements OnInit {
 
   songSelect(event){
     console.log(event.target.id);
-    this.http.post('/djView/insertSong', { songId: event.target.id, playlistId: this.newcastid, title: this.castName })
+    this.http.post('/djView/insertSong', { songId: event.target.id, playlistId: this.newcastid})
     .subscribe((data)=>{
       console.log(data);
     })
@@ -67,6 +68,10 @@ export class SoundplayerComponent implements OnInit {
     //  console.log(event.target.id);
      this.soundBite.soundEmit(event.target.id);
     
+   }
+
+   addToCast(){
+     console.log("would pop up song search")
    }
    buttonMaker() {
     this.items.items.map((item) => {
