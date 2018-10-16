@@ -1,4 +1,5 @@
 // server packages/
+require('dotenv').config();
 const express = require('express');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const passport = require('passport');
@@ -46,6 +47,8 @@ const {
   API_KEY,
 } = require('./config.js');
 //  api methods
+
+
 const {
   playlist,
   playlistIDs,
@@ -398,32 +401,32 @@ passport.use(new GoogleStrategy({
   callbackURL: googleCallbackURL,
   passReqToCallback: true,
 },
-  (req, accessToken, refreshToken, profile, done) => {
-    req.session.accessToken = accessToken;
-    req.session.name = profile.name;
-    req.session.photo = profile.photos[0];
-    const { id } = profile;
-    const { name } = profile;
-    const { givenName } = name;
-    const { familyName } = name;
-    const bio = 'Loray NC';
-    const samples = 'binary';
-    const savedplaylists = 'urls';
-    const followercount = 12;
-    const followingcount = 2;
-    getUserById(profile.id).then((user) => {
-      if (user.length === 1) {
-        user[0].name = profile.name;
-        done(null, user[0]);
-      } else {
-        createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
-          .then((newUser) => {
-            // console.log(newUser);
-            done(null, newUser);
-          }).catch(err => console.error(err));
-      }
-    }).catch(err => console.error(err, 'this should hit'));
-  }));
+(req, accessToken, refreshToken, profile, done) => {
+  req.session.accessToken = accessToken;
+  req.session.name = profile.name;
+  req.session.photo = profile.photos[0];
+  const { id } = profile;
+  const { name } = profile;
+  const { givenName } = name;
+  const { familyName } = name;
+  const bio = 'Loray NC';
+  const samples = 'binary';
+  const savedplaylists = 'urls';
+  const followercount = 12;
+  const followingcount = 2;
+  getUserById(profile.id).then((user) => {
+    if (user.length === 1) {
+      user[0].name = profile.name;
+      done(null, user[0]);
+    } else {
+      createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
+        .then((newUser) => {
+          // console.log(newUser);
+          done(null, newUser);
+        }).catch(err => console.error(err));
+    }
+  }).catch(err => console.error(err, 'this should hit'));
+}));
 
 server.listen(port, () => {
   console.log(`running on ${port}`);
