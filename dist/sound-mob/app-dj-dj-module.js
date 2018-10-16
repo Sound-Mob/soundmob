@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n<button (click)=\"sendChatMessage()\">Send!</button>\n<button class=\"btun\" (click)=\"getMessage()\">get</button>"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n\n<button (click)=\"sendChatMessage()\">Send!</button>\n<!-- <button class=\"btun\" (click)=\"getMessage()\">get</button> -->"
 
 /***/ }),
 
@@ -243,7 +243,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n\n    </div>\n\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <!-- <app-comments></app-comments> -->\n      <br>\n      <div>\n        <app-chat></app-chat>\n        <dj-tokbox></dj-tokbox>\n      </div>\n      <div>\n        <button routerLink=\"dj-comment\">comment</button>\n      </div>\n      <div>\n        <button routerLink=\"song-search\">add-song</button>\n      </div>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-profile></app-profile>\n      \n      <app-soundplayer></app-soundplayer>\n      <br>\n      <div>\n        <app-chat></app-chat>\n          <dj-tokbox></dj-tokbox>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -292,7 +292,7 @@ exports.MainComponent = MainComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{\n  background: white;\n}\nnav li {\n  display: inline-block;\n  padding: 10px 5px;\n  padding-bottom: 0px;\n  padding-top: 0px;\n  bottom: 0px;\n  margin-top: 10px;\n}\nul {\n  list-style: none;\n}\n.img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border: 10px;\n    border-color: azure;\n}\n.blur-me {\n  filter: blur(6px) !important;\n    -webkit-filter: blur(6px) !important;\n    -moz-filter: blur(6px) !important;\n    -o-filter: blur(6px) !important;\n    -ms-filter: blur(6px) !important;\n    filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='2') !important; /* IE lte 9\n\n    /* this does the trick */\n    transform: scale(1.2);\n    -ms-transform: scale(1.2); /* IE 9 */\n    -webkit-transform: scale(1.2); \n\n    \n}\n/* profile picture */\n#container_image{\n    position: relative;\n    width: auto;\n    height: 350px;\n    overflow: hidden;\n    background-color: black;\n}\n#main_image{\n    width: 100%;\n    height: 50%;\n}\n#overlay_image{\n    position: absolute;\n    bottom: 75px;\n    left: 50px;\n    width: 150px;\n    height: 150px;\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n#overlay_image_list{\n    position: absolute;\n    left: 200px;\n}\n/* breadcrumb */\n* {\n  margin: 0px auto;\n  text-align:center;\n  padding: 0px;\n  list-style: none;\n  font-family: 'Open Sans';\n}\n.cont_principal {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background: rgb(212,228,239);\nbackground: linear-gradient(to bottom,  rgba(212,228,239,1) 0%,rgba(134,174,204,1) 100%);\nfilter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4e4ef', endColorstr='#86aecc',GradientType=0 );\n\n}\n.cont_breadcrumbs {\n  width: 350px;\n}\n.cont_breadcrumbs_1 {\n  position: relative;\n  width: 100%;\n  float: left;\n  margin: 20px;\n\n}\n.cont_breadcrumbs_1 > ul > li {\n  position: relative;\n  float: left;\n  -webkit-transform: skewX(-15deg);\n          transform: skewX(-15deg);  \n  background-color: #fff;\nbox-shadow: -2px 0px 20px -6px rgba(0,0,0,0.5);\nz-index: 1;\n  width: 70px;\n  margin-left: -50px;\ntransition: all 0.5s;\n}\n.cont_breadcrumbs_1 > ul > li  > a {\n  display: block;\n  padding: 10px;\n  font-size: 20px;\n -webkit-transform: skewX(15deg);\n         transform: skewX(15deg);\n text-decoration:none;\n color: #444;\nfont-weight: 300;\n}\n.cont_breadcrumbs_1 > ul > li:first-child {\n margin-left: 0px;\n}\n.cont_breadcrumbs_1 > ul > li:hover {\n background-color: #CFD8DC;\n}\n.cont_breadcrumbs_1 > ul > li:last-child {\n  background-color: #78909C;\n}\n.cont_breadcrumbs_1 > ul > li:last-child > a {\n  color: #fff;;\n}\n.cont_breadcrumbs_1 > ul:hover > li {\n  margin-left: 0px;\n}\n.cont_breadcrumbs_2 {\n  position: relative;\n  width: 100%;\n  float: left;\n  margin: 20px 20px;\n}\n.cont_breadcrumbs_2 > ol > li {\n  position: relative;\n  float: left;\n  -webkit-transform: skewX(-15deg);\n          transform: skewX(-15deg);  \n  background-color: #fff;\nbox-shadow: -2px 0px 20px -6px rgba(0,0,0,0.5);\nz-index: 1;\ntransition: all 0.5s;\n}\n.cont_breadcrumbs_2 > ol > li:hover {\n background-color: #CFD8DC;\n}\n.cont_breadcrumbs_2 > ul > li  > a {\n  display: block;\n  padding: 10px;\n  font-size: 20px;\n -webkit-transform: skewX(15deg);\n         transform: skewX(15deg);\n text-decoration:none;\n color: #444;\nfont-weight: 300;\n}\n.cont_breadcrumbs_2 > ul > li:last-child {\n  background-color: #78909C;\n  -webkit-transform: skew(0deg);\n          transform: skew(0deg);\nmargin-left: -5px;\n\n}\n.cont_breadcrumbs_2 > ul > li:last-child > a {\n  color: #fff;\n -webkit-transform: skewX(0deg);\n         transform: skewX(0deg);\n}\n.cont_breadcrumbs_3 {\n  position: relative;\n  width: 100%;\n  float: left;\n  margin: 20px 20px;\n}\n.cont_breadcrumbs_3 > ul > li {\n  position: relative;\n  float: left;\n  -webkit-transform: skewX(-15deg);\n          transform: skewX(-15deg);  \n  background-color: #fff;\nz-index: 1;\ntransition: all 0.5s;\nmargin-left: 5px;\n}\n.cont_breadcrumbs_3 > ul > li:hover {\n background-color: #CFD8DC;\n}\n.cont_breadcrumbs_3 > ul > li  > a {\n  display: block;\n  padding: 10px;\n  font-size: 20px;\n -webkit-transform: skewX(15deg);\n         transform: skewX(15deg);\n text-decoration:none;\n color: #444;\nfont-weight: 300;\n}\n.cont_breadcrumbs_3 > ul > li:last-child {\n  background-color: #78909C;\n}\n.cont_breadcrumbs_3 > ul > li:last-child > a {\n  color: #fff; \n\n}\n.breadcrumb {\n      width: 100%;\n      display: block;\n      background-color: white;\n}\n.user-location{\n  position: absolute;\n  color: white;\n  background-color:rgba(0, 0, 0, 0.05);\n  display: block;\n  right: 30px;\n  bottom: 200px;\n  border-radius: 6px;\n  \n}\n.station-name{\n  position: absolute;\n  color:white;\n  background-color:rgba(0, 0, 0, 0.05);\n  display: block;\n  padding: 10 10 10 10;\n  right: 30px;\n  bottom: 275px;\n  border-radius: 2px;\n}\n.back-button{\n  position: absolute;\n  background-color:rgba(0, 0, 0, 0.10);\n  display: block;\n  padding: 10 10 10 10;\n  left: 40px;\n  bottom: 275px;\n  border-radius: 2px;\n}\n\n"
+module.exports = ""
 
 /***/ }),
 
@@ -303,7 +303,7 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src={{profile.photo.value}} />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">{{profile.bio}}</h3>\n  <h1 class=\"station-name\">{{profile.firstname}} {{profile.lasttname}}</h1>\n\n  <img alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src={{profile.photo.value}} />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n        <!-- <li>\n          {{profile | json}}\n        </li> -->\n      </ol>\n    </nav>\n  </div>\n</div>"
+module.exports = "<!-- <div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src={{profile.photo.value}} />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">{{profile.bio}}</h3>\n  <h1 class=\"station-name\">{{profile.firstname}} {{profile.lasttname}}</h1>\n\n  <img id =\"lilpic\"alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src={{profile.photo.value}} />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n        <!-- <li>\n          {{profile | json}}\n        </li> \n      </ol>\n    </nav>\n  </div>\n</div> -->\n<header class=\"masthead\">\n  <div class=\"overlay\"></div>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-lg-8 col-md-10 mx-auto\">\n        <div class=\"site-heading\">\n          <h1>Yeezy2k18</h1>\n          <span class=\"subheading\">New York</span>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>"
 
 /***/ }),
 
@@ -438,7 +438,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n<nav>\n  <ol class=\"breadcrumb\">\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Like</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Follow</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Rate</a>\n    </li>\n    <li class=\"breadcrumb-item\">\n      <a href=\"#\">Suggest Tracks</a>\n    </li>\n  </ol>\n</nav>\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      <h3 class=\"text-center\">\n        h3. Lorem ipsum dolor sit amet.\n      </h3>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-block btn-outline-secondary btn-lg\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button *ngFor=\"let sound of sounds\" (click)='onClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{sound.name}}\n      </button>\n      <!-- <button (click)='onClick($event)' type=\"button\" id={{items.items[1].mediaLink}} class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{items.items[1].name}}\n      </button> -->\n     \n     \n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <!-- make this toggleable -->\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showCasts()'>\n          Select Cast\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedCast\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n  \n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n\n    <button class=\"btn btn-outline-info btn-lg btn-block\" type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    \n  \n    <div *ngIf=\"madeNew\">\n    <div *ngIf=\"wasNamed === false\">\n      <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n      <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    </div>\n      <div *ngIf=\"wasNamed\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n        </div>\n      </div>\n    </div>\n    </div>\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()' class=\"btn btn-outline-info btn-lg btn-block\">Add to Cast</button>\n    <div *ngIf=\"wasAdded\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n      </div>\n    </div>\n\n    <div>\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showSoundboard()'>\n        <h3>SoundBoard</h3>\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedBoard\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -463,27 +463,106 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+const sound_board_service_1 = __webpack_require__(/*! ../../services/sound-board.service */ "./src/app/services/sound-board.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor(http) {
+    constructor(http, soundBite) {
         this.http = http;
-        this.soundBoardMediaInformation = [];
+        this.soundBite = soundBite;
+        this.songSelected = false;
+        this.viewedCast = false;
+        this.viewedBoard = false;
+        this.madeNew = false;
+        this.wasAdded = false;
+        this.wasNamed = false;
+        this.sounds = [];
+        this.playlists = [];
+        this.searchResults = [];
     }
     ngOnInit() {
-        return this.http.get('/test')
+        this.http.get('/test')
             .subscribe((items) => {
-            console.log(items);
+            //  console.log(items);
             this.items = items;
             // return items.items.map(item => ({ name: item.name,mediaLink: item.mediaLink }));
             this.buttonMaker();
         });
+        this.http.get('/djView/playlist').subscribe((info) => {
+            console.log(info, " data in dj soundplayer");
+            this.playlists.push(info['items']);
+            info['items'].map((item) => {
+                this.playlists.push({ name: item.snippet.localized.title, id: item.id });
+            });
+        });
     }
-    onClick(event) {
-        console.log(event.target.id);
+    playlistClick(event) {
+        this.soundBite.playlistEmit(event.target.id);
+        this.newcastid = event.target.id;
+        this.viewedCast = false;
+    }
+    openNewCastComponent() {
+        if (this.madeNew === true) {
+            this.madeNew = false;
+        }
+        else {
+            this.madeNew = true;
+        }
+        console.log("this will open the entire new cast creator");
+    }
+    searchSongToCast(song) {
+        this.http.post('djView/searchSong', { song }).subscribe((data) => {
+            console.log(data);
+            this.searchResults = data['items'].map((songObj) => {
+                return { name: songObj.snippet.title, id: songObj.id.videoId };
+            });
+        });
+    }
+    showCasts() {
+        if (this.viewedCast === true) {
+            this.viewedCast = false;
+        }
+        else {
+            this.viewedCast = true;
+        }
+    }
+    showSoundboard() {
+        if (this.viewedBoard === true) {
+            this.viewedBoard = false;
+        }
+        else {
+            this.viewedBoard = true;
+        }
+    }
+    songSelect(event) {
+        this.songSelected = true;
+        this.http.post('/djView/insertSong', { songId: event.target.id, playlistId: this.newcastid })
+            .subscribe((data) => {
+            console.log(data);
+        });
+    }
+    submitCastName(title) {
+        this.castName = title;
+        this.wasNamed = true;
+        this.http.post('djView/nameCast', { title }).subscribe((data) => {
+            this.newcastid = data['id'];
+        });
+    }
+    soundClick(event) {
+        //  console.log(event.target.id);
         this.soundBite.soundEmit(event.target.id);
+    }
+    addToCast() {
+        if (this.wasAdded === true) {
+            this.wasAdded = false;
+        }
+        else {
+            this.wasAdded = true;
+        }
+        console.log("would pop up song search");
     }
     buttonMaker() {
         this.items.items.map((item) => {
-            this.sounds.push({ name: item.name, mediaLink: item.mediaLink });
+            // this.sounds.push({ name: item.name, mediaLink: item.mediaLink })
+            this.sounds.push({ name: item.name.substring(-4), mediaLink: item.mediaLink });
         });
     }
 };
@@ -493,7 +572,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/dj/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/dj/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient])
+    __metadata("design:paramtypes", [http_1.HttpClient, sound_board_service_1.SoundBoardService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 
@@ -549,7 +628,7 @@ let AppComponent = class AppComponent {
     constructor(ref, opentokService) {
         this.ref = ref;
         this.opentokService = opentokService;
-        this.title = 'Angular Basic Video Chat';
+        this.title = null;
         this.streams = [];
         this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
         this.changeDetectorRef = ref;
@@ -651,7 +730,10 @@ let PublisherComponent = class PublisherComponent {
     }
     ngAfterViewInit() {
         const OT = this.opentokService.getOT();
-        this.publishOptions = { videoSource: null, insertMode: 'append' };
+        this.publishOptions = {
+            videoSource: null, insertMode: 'append', height: "10%",
+            width: "10%"
+        };
         this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, this.publishOptions);
         if (this.session) {
             if (this.session['isConnected']()) {
