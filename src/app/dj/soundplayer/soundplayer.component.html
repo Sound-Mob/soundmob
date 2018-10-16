@@ -34,6 +34,20 @@
     </div>
 
   </div>
+  <div id="createPlaylist">
+    <button type="button" id="createCast" (click)='openNewCastComponent()'>Create Soundcast</button>
+    <br>
+    <button type="button" id="submitCastName" (click)='submitCastName(text)'>Name Cast</button>
+    <input type="text" [(ngModel)]="text" id="input-field" placeholder="Name your soundcast." />
+    <br>
+    <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
+    <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
+    <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
+      {{result.name}}
+    </button>
+    <br>
+    <button type="button" id="addToCast" (click)='addToCast()'>Add to Cast</button>
+  </div>
   <div>
     <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"  class="btn btn-outline-secondary btn-lg btn-block">
       {{playlist.name}}

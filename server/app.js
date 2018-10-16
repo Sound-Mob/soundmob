@@ -53,6 +53,9 @@ const {
   searchDetails,
   searchDetailsArray,
   getSoundBoard,
+  createPlaylist,
+  searchSong,
+  insertSong,
 } = require('./util.js');
 // middlewares
 app.use(cors());
@@ -102,6 +105,33 @@ app.get('/djView/playlist', (req, res)=>{
   // res.sendStatus(200);
 })
 
+app.post('/djView/nameCast', (req, res)=>{
+  // console.log(req.body);
+  createPlaylist(req.session.accessToken, req.body).then((data)=>{
+    // console.log(data);
+    res.send(data);
+  })
+  
+})
+app.post('/djView/searchSong', (req, res) => {
+  // console.log(req.body);
+  searchSong(req.session.accessToken, req.body.song).then((data) => {
+    // console.log(data);
+    res.send(data);
+  })
+
+})
+app.post('/djView/insertSong', (req, res)=>{
+  
+  insertSong(req.session.accessToken, req.body)
+  .then((data)=>{
+    res.send(data);
+  }).catch((error)=>{
+    console.log(error);
+  })
+  
+})
+
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
   let body;
@@ -140,7 +170,6 @@ io.on('connection', (socket) => {
   const { givenName } = name;
   const { familyName } = name;
   const { accessToken} = socket.request.session; 
- 
 
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
@@ -198,7 +227,7 @@ io.on('connection', (socket) => {
   socket.on('startCast', (id) => {
     // console.log(id, " id in startCast before get details from youtube")
     searchDetails(accessToken, id).then(({ items }) => {
-      // console.log(items[0].contentDetails.duration, "duration")
+      console.log(items, "duration")
       const durationArray = items[0].contentDetails.duration.split('');
       if (durationArray.length <= 4) {
         songDuration = (Number(durationArray[2]));
@@ -361,7 +390,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  // console.log(id);
   getUserById(id).then((user) => {
     done(null, user);
   }).catch(err => console.error(err));
@@ -378,8 +406,6 @@ passport.use(new GoogleStrategy({
   req.session.accessToken = accessToken;
   req.session.name = profile.name;
   req.session.photo = profile.photos[0];
-  console.log(profile)
-// console.log(accessToken);
   const { id } = profile;
   const { name } = profile;
   const { givenName } = name;
@@ -406,75 +432,3 @@ passport.use(new GoogleStrategy({
 server.listen(3000, () => {
   console.log('on 3000');
 });
-// register the session with its secret id
-// app.use(session({ secret: 'test' }));
-
-// // routes
-// app.post('/login', (req, res) => {
-//   req.session.email = req.body.email;
-//   res.end('done');
-// });
-
-// app.get('/logged', (req, res) => {
-//   if (req.session.email) {
-//     res.write('<h1>logged</h1>')
-//     res.end();
-//   }
-// });
-// app.get('/api', (req, res) => {
-//   res.json({
-//     message: 'welcome to sound mob'
-//   });
-//   // res.send('it works');
-// });
-
-// const verifyToken = (req, res, next) => {
-//   // get auth header val
-//   const bearerHeader = req.headers['authorization'];
-//   // check if bearer is undefined
-//   if (typeof bearerHeader !== 'undefined') {
-//     // split at the space
-//
-//     const bearer = bearerHeader.split(' ');
-//     // get token from array
-//     const bearerToken = bearer[1];
-//     // set token
-//     req.token = bearerToken;
-//     // next middleware
-//     next();
-//   } else {
-//     // forbidden
-//     res.sendStatus(403);
-//   }
-// };
-
-// app.post('/api/posts', verifyToken, (req, res) => {
-//   jwt.verify(req.token, 'secretkey', (err, authData)=>{
-//     if (err) {
-//       res.sendStatus(403);
-//     } else {
-//       res.json({
-//         message: 'post created...',
-//         authData
-//       });
-//     }
-//   });
-
-// });
-
-// app.post('/api/login', (req, res) => {
-//   // mock user
-//   const user = {
-//     id: 1,
-//     username: 'joey',
-//     email: 'jldela@gmail.com'
-//   };
-//   jwt.sign({user}, 'secretkey', { expiresIn: '30s'}, (err, token)=>{
-//     res.json({
-//       token
-//     });
-//   });
-// });
-
-// format of token
-// Authorization: Bearer <access_token>
