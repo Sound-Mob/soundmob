@@ -243,7 +243,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-profile></app-profile>\n      \n      <app-soundplayer></app-soundplayer>\n      <br>\n      <br>\n      <div>\n        <app-chat></app-chat>\n        <dj-tokbox></dj-tokbox>\n      </div>\n      <div>\n        <button routerLink=\"dj-comment\">comment</button>\n      </div>\n      <div>\n        <button routerLink=\"song-search\">add-song</button>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-profile></app-profile>\n      \n      <app-soundplayer></app-soundplayer>\n      <br>\n      <div>\n        <app-chat></app-chat>\n          <dj-tokbox></dj-tokbox>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -438,7 +438,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <h3>Sound-cast</h3>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          Dapibus ac facilisis in\n        </li>\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          Morbi leo risus\n        </li>\n      </ul>\n      <hr>\n\n      <div *ngFor=\"let playlist of playlists\">\n      <h3>sound-Bowd</h3>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button>\n        </li>\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button>\n        </li>\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button>\n        </li>\n      </ul>\n      </div>\n\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div>\n    <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\"  class=\"btn btn-outline-info btn-lg btn-block\">\n      {{playlist.name}}\n    </button>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n\n      <button type=\"button\" id=\"soundboard-button\" class=\"btn btn-lg btn-danger center-block\" *ngFor=\"let item of soundBoardMediaInformation\">\n        {{item.name}}\n        Hello\n      </button>\n    </div>\n\n    <div class=\"col-md-4\">\n\n      <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{sound.name}}\n      </button>\n      <!-- <button (click)='onClick($event)' type=\"button\" id={{items.items[1].mediaLink}} class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{items.items[1].name}}\n      </button> -->\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div>\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n<br>\n<br>\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <h3>SoundCasts</h3>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n      <hr>\n\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n      <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n        {{result.name}}\n      </button>\n      </div>\n      <hr>\n\n      <div>\n      <h3>SoundBoard</h3>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n      </div>\n\n<br>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n    <button type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    <br>\n    <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n    <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()'>Add to Cast</button>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-2\">\n    </div>\n    <!-- <div class=\"col-md-8\">\n      \n      <button type=\"button\" class=\"btn btn-lg btn-danger center-block\">\n        Live\n      </button>\n    </div> -->\n    <div class=\"col-md-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -468,8 +468,10 @@ let SoundplayerComponent = class SoundplayerComponent {
     constructor(http, soundBite) {
         this.http = http;
         this.soundBite = soundBite;
+        this.songSelected = false;
         this.sounds = [];
         this.playlists = [];
+        this.searchResults = [];
     }
     ngOnInit() {
         this.http.get('/test')
@@ -489,14 +491,43 @@ let SoundplayerComponent = class SoundplayerComponent {
     }
     playlistClick(event) {
         this.soundBite.playlistEmit(event.target.id);
+        this.newcastid = event.target.id;
+    }
+    openNewCastComponent() {
+        console.log("this will open the entire new cast creator");
+    }
+    searchSongToCast(song) {
+        this.http.post('djView/searchSong', { song }).subscribe((data) => {
+            console.log(data);
+            this.searchResults = data['items'].map((songObj) => {
+                return { name: songObj.snippet.title, id: songObj.id.videoId };
+            });
+        });
+    }
+    songSelect(event) {
+        this.songSelected = true;
+        this.http.post('/djView/insertSong', { songId: event.target.id, playlistId: this.newcastid })
+            .subscribe((data) => {
+            console.log(data);
+        });
+    }
+    submitCastName(title) {
+        this.castName = title;
+        this.http.post('djView/nameCast', { title }).subscribe((data) => {
+            this.newcastid = data['id'];
+        });
     }
     soundClick(event) {
         //  console.log(event.target.id);
         this.soundBite.soundEmit(event.target.id);
     }
+    addToCast() {
+        console.log("would pop up song search");
+    }
     buttonMaker() {
         this.items.items.map((item) => {
-            this.sounds.push({ name: item.name, mediaLink: item.mediaLink });
+            // this.sounds.push({ name: item.name, mediaLink: item.mediaLink })
+            this.sounds.push({ name: item.name.substring(-4), mediaLink: item.mediaLink });
         });
     }
 };
@@ -562,7 +593,7 @@ let AppComponent = class AppComponent {
     constructor(ref, opentokService) {
         this.ref = ref;
         this.opentokService = opentokService;
-        this.title = 'Angular Basic Video Chat';
+        this.title = null;
         this.streams = [];
         this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
         this.changeDetectorRef = ref;
@@ -664,7 +695,10 @@ let PublisherComponent = class PublisherComponent {
     }
     ngAfterViewInit() {
         const OT = this.opentokService.getOT();
-        this.publishOptions = { videoSource: null, insertMode: 'append' };
+        this.publishOptions = {
+            videoSource: null, insertMode: 'append', height: "10%",
+            width: "10%"
+        };
         this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, this.publishOptions);
         if (this.session) {
             if (this.session['isConnected']()) {

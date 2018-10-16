@@ -12,7 +12,7 @@ import config from '../../config.js'
   providers: [ OpentokService ]
 })
 export class AppComponent implements OnInit {
-  title = 'Angular Basic Video Chat';
+  title = null;
   session: any;
   sessionId: any;
   streams: Array<OT.Stream> = [];

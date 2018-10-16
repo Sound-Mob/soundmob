@@ -7,13 +7,14 @@ import { SoundBoardService } from '../../services/sound-board.service';
   styleUrls: ['./soundplayer.component.css']
 })
 export class SoundplayerComponent implements OnInit {
-
+  songSelected: boolean = false;
   items: any;
   sounds: Array<{ name: string, mediaLink: string }> = [];
   playlists: Array<{ name: string, id: string }> = [];
+  newcastid: string;
+  searchResults: Array<{ name: string, id: string }> = [];
+  castName: string;
 
-
-  
   constructor(private http: HttpClient, private soundBite:SoundBoardService) { }
   ngOnInit() {
       this.http.get('/test')
@@ -35,17 +36,47 @@ export class SoundplayerComponent implements OnInit {
 
   playlistClick(event) {
     this.soundBite.playlistEmit(event.target.id);
+    this.newcastid = event.target.id;
+  }
+  openNewCastComponent() {
+    console.log("this will open the entire new cast creator")
+  }
+  searchSongToCast(song){
+    this.http.post('djView/searchSong', { song }).subscribe((data) => {
+      console.log(data);
+      this.searchResults = data['items'].map((songObj)=>{
+        return { name: songObj.snippet.title, id: songObj.id.videoId }
+      })
+    })
   }
 
+  songSelect(event){
+    this.songSelected = true;
+    this.http.post('/djView/insertSong', { songId: event.target.id, playlistId: this.newcastid})
+    .subscribe((data)=>{
+      console.log(data);
+    })
+  }
+
+  submitCastName(title){
+    this.castName = title;
+    this.http.post('djView/nameCast',{title}).subscribe((data)=>{
+      this.newcastid = data['id'];
+    })
+  }
    soundClick(event) {
     //  console.log(event.target.id);
      this.soundBite.soundEmit(event.target.id);
     
    }
+
+   addToCast(){
+     console.log("would pop up song search")
+   }
    buttonMaker() {
     this.items.items.map((item) => {
-      this.sounds.push({ name: item.name, mediaLink: item.mediaLink })
-       
+      // this.sounds.push({ name: item.name, mediaLink: item.mediaLink })
+      this.sounds.push({ name: item.name.substring(-4), mediaLink: item.mediaLink })
      })
    }
  

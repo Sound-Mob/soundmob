@@ -23,13 +23,14 @@ module.exports = {
     return rp(options);
   },
   createPlaylist: (token, obj) => {
+
     const options = {
       method: 'POST',
       uri: 'https://www.googleapis.com/youtube/v3/playlists?part=snippet',
       body: {
         snippet: {
-          title: 'New playlist',
-          description: 'Sample playlist for Data API',
+          title: obj.title,
+          description: 'My Soundmob Cast',
         },
       },
       headers: {
@@ -64,15 +65,16 @@ module.exports = {
     return rp(options);
   },
   insertSong: (token, song) => {
+    console.log(song);
     const options = {
       method: 'POST',
-      uri: 'https://www.googleapis.com/youtube/v3/playlists?part=snippet',
+      uri: 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet',
       body: {
         snippet: {
-          playlistId: 'PLR4epTa34lZwzBUMi10kEArbGLhwJ9fv6',
+          playlistId: song.playlistId,
           resourceId: {
             kind: 'youtube#video',
-            videoId: '74pZUgCOJoE',
+            videoId: song.songId,
           },
         },
       },

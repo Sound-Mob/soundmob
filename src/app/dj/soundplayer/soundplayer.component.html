@@ -8,33 +8,33 @@
 
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
-      <h3>Sound-cast</h3>
+      <h3>SoundCasts</h3>
       <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button" class="btn btn-outline-info btn-lg btn-block">
             {{playlist.name}}
           </button>
         </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Dapibus ac facilisis in
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Morbi leo risus
-        </li>
       </ul>
       <hr>
 
-      <div *ngFor="let playlist of playlists">
-      <h3>sound-Bowd</h3>
+      <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
+      <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
+      <div *ngIf="songSelected === false">
+      <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
+        {{result.name}}
+      </button>
+      </div>
+      <hr>
+
+      <div>
+      <h3>SoundBoard</h3>
       <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <button type="button" class="btn btn-outline-warning btn-block">Warning</button>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <button type="button" class="btn btn-outline-warning btn-block">Warning</button>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <button type="button" class="btn btn-outline-warning btn-block">Warning</button>
+          <!-- <button type="button" class="btn btn-outline-warning btn-block">Warning</button> -->
+          <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
+            {{sound.name}}
+          </button>
         </li>
       </ul>
       </div>
@@ -44,41 +44,29 @@
   <div class="row">
     <hr>
   </div>
-  <div>
-    <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"  class="btn btn-outline-info btn-lg btn-block">
-      {{playlist.name}}
-    </button>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
+  <div id="createPlaylist">
+    <button type="button" id="createCast" (click)='openNewCastComponent()'>Create Soundcast</button>
+    <br>
+    <button type="button" id="submitCastName" (click)='submitCastName(text)'>Name Cast</button>
+    <input type="text" [(ngModel)]="text" id="input-field" placeholder="Name your soundcast." />
+    <br>
 
-      <button type="button" id="soundboard-button" class="btn btn-lg btn-danger center-block" *ngFor="let item of soundBoardMediaInformation">
-        {{item.name}}
-        Hello
-      </button>
-    </div>
 
-    <div class="col-md-4">
-
-      <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
-        {{sound.name}}
-      </button>
-      <!-- <button (click)='onClick($event)' type="button" id={{items.items[1].mediaLink}} class="btn btn-outline-secondary btn-lg btn-block">
-        {{items.items[1].name}}
-      </button> -->
-    </div>
+    
+    <br>
+    <button type="button" id="addToCast" (click)='addToCast()'>Add to Cast</button>
   </div>
 </div>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-2">
     </div>
-    <div class="col-md-8">
+    <!-- <div class="col-md-8">
       
       <button type="button" class="btn btn-lg btn-danger center-block">
         Live
       </button>
-    </div>
+    </div> -->
     <div class="col-md-2">
     </div>
   </div>
