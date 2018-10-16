@@ -3,22 +3,42 @@
 </div>
 <br>
 <br>
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="#">Like</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="#">Follow</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="#">Rate</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="#">Suggest Tracks</a>
-    </li>
-  </ol>
-</nav>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <h3>Sound-cast</h3>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button" class="btn btn-outline-info btn-lg btn-block">
+            {{playlist.name}}
+          </button>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Dapibus ac facilisis in
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Morbi leo risus
+        </li>
+      </ul>
+      <hr>
+
+      <div *ngFor="let playlist of playlists">
+      <h3>sound-Bowd</h3>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <button type="button" class="btn btn-outline-warning btn-block">Warning</button>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <button type="button" class="btn btn-outline-warning btn-block">Warning</button>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <button type="button" class="btn btn-outline-warning btn-block">Warning</button>
+        </li>
+      </ul>
+      </div>
+
 <br>
 <div class="container-fluid">
   <div class="row">
