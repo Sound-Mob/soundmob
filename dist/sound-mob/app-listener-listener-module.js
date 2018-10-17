@@ -716,7 +716,10 @@ let ListenerTrackComponent = class ListenerTrackComponent {
         });
         this.chatService.listenerReceiveSongDetails()
             .subscribe(songinfo => {
+            console.log("song info recieved", songinfo);
             this.video = songinfo['songinfo'][0].songid;
+            // this.init();
+            this.hearCast();
         });
     }
     init() {
@@ -742,6 +745,13 @@ let ListenerTrackComponent = class ListenerTrackComponent {
                 }
             });
         };
+    }
+    hearCast() {
+        this.init();
+        if (this.player !== undefined) {
+            this.player.loadVideoById(this.video);
+        }
+        // console.log("start cast was fired", this.player)
     }
     pauseCast() {
         if (this.paused) {

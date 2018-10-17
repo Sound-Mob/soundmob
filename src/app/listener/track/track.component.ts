@@ -36,7 +36,11 @@ export class ListenerTrackComponent implements OnInit {
     
     this.chatService.listenerReceiveSongDetails()
       .subscribe(songinfo => {
+        console.log("song info recieved", songinfo)
+        
         this.video = songinfo['songinfo'][0].songid;
+        // this.init();
+        this.hearCast();
       })
   }
   init() {
@@ -65,6 +69,17 @@ export class ListenerTrackComponent implements OnInit {
         }
       });
     };
+    
+  }
+
+  hearCast() {
+    this.init();
+    if (this.player !== undefined){
+      this.player.loadVideoById(this.video)
+    }
+    
+    // console.log("start cast was fired", this.player)
+ 
   }
 
   pauseCast() {
