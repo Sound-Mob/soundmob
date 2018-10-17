@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ["./featured.component.css"]
 })
 export class FeaturedComponent implements OnInit {
-  activeDj: Object;
+  activeDj: Object = {djs: []};
   prop: string;
   profile: object;
 
