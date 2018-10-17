@@ -1,6 +1,6 @@
-.img-landing {
-    width: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto 
+#landing{
+  padding: 70px;
+}
+#log-login-btn{
+  padding-left: 30px;
 }

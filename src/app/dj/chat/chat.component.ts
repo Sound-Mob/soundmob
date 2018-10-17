@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
+import { DjProfileService } from 'src/app/services/dj-profile.service';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -18,12 +19,17 @@ export class ChatComponent implements OnInit {
   values = '';
   name: object
   id: string
+  profile: object; 
   currentSongs: object;
+
   chatMessages: Array<{ userName: string, lastName: string, message: string }> = [];
-  constructor(private chatService: ChatService, private http: HttpClient) {
+
+  constructor(private chatService: ChatService,
+    private djProfileService: DjProfileService,
+    private http: HttpClient) {
     this.chatService.receiveMessages()
       .subscribe(data => {
-        if (this.chatMessages.length > 10) {
+        if (this.chatMessages.length > 6) {
           this.chatMessages.pop()
         }
         this.chatMessages.unshift(data)
@@ -79,7 +85,10 @@ export class ChatComponent implements OnInit {
     }
   ngOnInit() {
     this.chatService.createRoom("hey");
-    
+    this.djProfileService.getProfileInfo()
+      .subscribe(profile => {
+        this.profile = profile
+      })
   }
 
 

@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "b {\n  color: #999a9b;\n}\n\n.example1 {\n     height: 50px;\t\n     overflow: hidden;\n     position: relative;\n    }\n\n.example1 h3 {\n     font-size: 3em;\n     color: limegreen;\n     position: absolute;\n     width: 100%;\n     height: 100%;\n     margin: 0;\n     line-height: 50px;\n     text-align: center;\n     /* Starting position */\n     -webkit-transform:translateX(100%);\t\n     transform:translateX(100%);\n     /* Apply animation to this element */\n     -webkit-animation: example1 15s linear infinite;\n     animation: example1 15s linear infinite;\n    }\n\n/* Move it (define the animation) */\n\n@-webkit-keyframes example1 {\n     0%   { -webkit-transform: translateX(100%); }\n     100% { -webkit-transform: translateX(-100%); }\n    }\n\n@keyframes example1 {\n     0%   { /* Firefox bug fix */\n     -webkit-transform: translateX(100%); /* Firefox bug fix */\n     transform: translateX(100%); \t\t\n     }\n     100% { /* Firefox bug fix */\n     -webkit-transform: translateX(-100%); /* Firefox bug fix */\n     transform: translateX(-100%); \n     }\n    }"
 
 /***/ }),
 
@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<!-- Styles -->\t\n<style>\n    .example1 {\n     height: 50px;\t\n     overflow: hidden;\n     position: relative;\n    }\n    .example1 h3 {\n     font-size: 3em;\n     color: limegreen;\n     position: absolute;\n     width: 100%;\n     height: 100%;\n     margin: 0;\n     line-height: 50px;\n     text-align: center;\n     /* Starting position */\n     -moz-transform:translateX(100%);\n     -webkit-transform:translateX(100%);\t\n     transform:translateX(100%);\n     /* Apply animation to this element */\t\n     -moz-animation: example1 15s linear infinite;\n     -webkit-animation: example1 15s linear infinite;\n     animation: example1 15s linear infinite;\n    }\n    /* Move it (define the animation) */\n    @-moz-keyframes example1 {\n     0%   { -moz-transform: translateX(100%); }\n     100% { -moz-transform: translateX(-100%); }\n    }\n    @-webkit-keyframes example1 {\n     0%   { -webkit-transform: translateX(100%); }\n     100% { -webkit-transform: translateX(-100%); }\n    }\n    @keyframes example1 {\n     0%   { \n     -moz-transform: translateX(100%); /* Firefox bug fix */\n     -webkit-transform: translateX(100%); /* Firefox bug fix */\n     transform: translateX(100%); \t\t\n     }\n     100% { \n     -moz-transform: translateX(-100%); /* Firefox bug fix */\n     -webkit-transform: translateX(-100%); /* Firefox bug fix */\n     transform: translateX(-100%); \n     }\n    }\n    </style>\n    \n    <!-- HTML -->\t\n    <div class=\"example1\">  \n    <h3>{{this.currentSongs[this.count -1].name}}</h3>\n    </div>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n\n<button (click)=\"sendChatMessage()\">Send!</button>\n<!-- <button class=\"btun\" (click)=\"getMessage()\">get</button> -->"
+module.exports = "\n\n\n<div class=\"card border-0 rounded\" style=\"box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 75vh;\">\n\n  <div class=\"card-header p-1 bg-light border border-top-0 border-left-0 border-right-0\" style=\"color: rgba(96, 125, 139,1.0);\">\n\n    <img class=\"rounded float-left\" style=\"width: 50px; height: 50px;\" src={{profile.photo.value}} />\n\n    <h6 class=\"float-left\" style=\"margin: 0px; margin-left: 10px;\"><i class=\"fa fa-check text-primary\"\n        title=\"Onaylanmış Hesap!\" aria-hidden=\"true\"></i> <br><small>{{profile.userName}}{{profile.lastName}}</small></h6>\n\n\n  </div>\n\n  <div class=\"card bg-sohbet border-0 m-0 p-0\" style=\"height: 100vh;\">\n    <div id=\"sohbet\" class=\"card border-0 m-0 p-0 position-relative bg-transparent\" style=\"overflow-y: auto; height: 100vh;\" *ngFor=\"let message of chatMessages\">\n      <div *ngIf=\"message.id !== profile.googleid\">\n        <div class=\"balon1 p-2 m-0 position-relative\">\n          <b class=\"float-right\">{{message.userName}} {{message.lastName}}</b>\n          <a class=\"float-right\">{{message.message}}</a>\n        </div>\n      </div>\n      <div *ngIf=\"message.id === profile.googleid\">\n        <div class=\"balon2 p-2 m-0 position-relative\">\n          <b>{{message.userName}} {{message.lastName}}</b>\n          <a class=\"float-left sohbet2\">{{message.message}}</a>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"w-100 card-footer p-0 bg-light border border-bottom-0 border-left-0 border-right-0\">\n\n    <form class=\"m-0 p-0\" action=\"\" method=\"POST\" autocomplete=\"off\">\n\n      <div class=\"row m-0 p-0\">\n        <div class=\"col-9 m-0 p-1\">\n\n            <input id=\"text\" class=\"mw-100 border rounded form-control\" type=\"text\" name=\"text\" title=\"Type a message...\"\n            placeholder=\"Type a message...\" required [(ngModel)]=\"messageToSend\">\n\n        </div>\n        <div class=\"col-3 m-0 p-1\">\n\n          <button class=\"btn btn-outline-secondary rounded border w-100\" title=\"Gönder!\" style=\"padding-right: 16px;\" (click)=\"sendChatMessage()\"><i class=\"fa fa-paper-plane\"\n            aria-hidden=\"true\" ></i>Send!</button>\n\n        </div>\n      </div>\n\n    </form>\n\n  </div>\n\n</div>\n\n\n<!-- HTML -->\n<div class=\"example1\">\n  <h3>{{this.currentSongs[this.count -1].name}}</h3>\n</div>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n\n"
 
 /***/ }),
 
@@ -43,10 +43,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ "./src/app/services/chat.service.ts");
+const dj_profile_service_1 = __webpack_require__(/*! src/app/services/dj-profile.service */ "./src/app/services/dj-profile.service.ts");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 let ChatComponent = class ChatComponent {
-    constructor(chatService, http) {
+    constructor(chatService, djProfileService, http) {
         this.chatService = chatService;
+        this.djProfileService = djProfileService;
         this.http = http;
         this.count = 0;
         this.messageToSend = '';
@@ -54,7 +56,7 @@ let ChatComponent = class ChatComponent {
         this.chatMessages = [];
         this.chatService.receiveMessages()
             .subscribe(data => {
-            if (this.chatMessages.length > 10) {
+            if (this.chatMessages.length > 6) {
                 this.chatMessages.pop();
             }
             this.chatMessages.unshift(data);
@@ -106,6 +108,10 @@ let ChatComponent = class ChatComponent {
     }
     ngOnInit() {
         this.chatService.createRoom("hey");
+        this.djProfileService.getProfileInfo()
+            .subscribe(profile => {
+            this.profile = profile;
+        });
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -123,7 +129,9 @@ ChatComponent = __decorate([
         template: __webpack_require__(/*! ./chat.component.html */ "./src/app/dj/chat/chat.component.html"),
         styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/dj/chat/chat.component.css")]
     }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService, http_1.HttpClient])
+    __metadata("design:paramtypes", [chat_service_1.ChatService,
+        dj_profile_service_1.DjProfileService,
+        http_1.HttpClient])
 ], ChatComponent);
 exports.ChatComponent = ChatComponent;
 
@@ -252,7 +260,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-profile></app-profile>\n      \n      <app-soundplayer></app-soundplayer>\n      <br>\n      <div>\n        <app-chat></app-chat>\n          <dj-tokbox></dj-tokbox>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n  <app-profile></app-profile>\n  \n  <app-soundplayer></app-soundplayer>\n  <br>\n  <div>\n    <app-chat></app-chat>\n      <dj-tokbox></dj-tokbox>\n  </div>"
 
 /***/ }),
 
@@ -312,7 +320,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src={{profile.photo.value}} />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">{{profile.bio}}</h3>\n  <h1 class=\"station-name\">{{profile.firstname}} {{profile.lasttname}}</h1>\n\n  <img id =\"lilpic\"alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src={{profile.photo.value}} />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n        <!-- <li>\n          {{profile | json}}\n        </li> \n      </ol>\n    </nav>\n  </div>\n</div> -->\n<header class=\"masthead\">\n  <div class=\"overlay\"></div>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-lg-8 col-md-10 mx-auto\">\n        <div class=\"site-heading\">\n          <h1>Yeezy2k18</h1>\n          <span class=\"subheading\">New York</span>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>"
+module.exports = "<!-- <div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src={{profile.photo.value}} />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">{{profile.bio}}</h3>\n  <h1 class=\"station-name\">{{profile.firstname}} {{profile.lasttname}}</h1>\n\n  <img id =\"lilpic\"alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src={{profile.photo.value}} />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n          <li>\n          {{profile | json}}\n        </li> \n      </ol>\n    </nav>\n  </div>\n</div> -->\n<header class=\"masthead\">\n  <div class=\"overlay\"></div>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-lg-8 col-md-10 mx-auto\">\n        <div class=\"site-heading\">\n          <h1>{{profile.firstname}} {{profile.lasttname}}</h1>\n          <span class=\"subheading\">{{profile.bio}}</span>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>"
 
 /***/ }),
 
@@ -436,7 +444,7 @@ exports.SearchComponent = SearchComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}\n#soundboard-button{\n    background-color: rgb(0, 0, 0, 0.10);\n    padding: 1em;\n    margin: 1em;\n}\n/* styles for ticker  */\n.example1 {\n    height: 50px;\t\n    overflow: hidden;\n    position: relative;\n}\n.example1 h3 {\n    font-size: 3em;\n    color: limegreen;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    line-height: 50px;\n    text-align: center;\n    /* Starting position */\n    -webkit-transform:translateX(100%);\t\n    transform:translateX(100%);\n    /* Apply animation to this element */\n    -webkit-animation: example1 15s linear infinite;\n    animation: example1 15s linear infinite;\n}\n/* Move it (define the animation) */\n@-webkit-keyframes example1 {\n    0%   { -webkit-transform: translateX(100%); }\n    100% { -webkit-transform: translateX(-100%); }\n}\n@keyframes example1 {\n    0%   { /* Firefox bug fix */\n    -webkit-transform: translateX(100%); /* Firefox bug fix */\n    transform: translateX(100%); \t\t\n    }\n    100% { /* Firefox bug fix */\n    -webkit-transform: translateX(-100%); /* Firefox bug fix */\n    transform: translateX(-100%); \n    }\n}"
+module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}\n#soundboard-button{\n    background-color: rgb(0, 0, 0, 0.10);\n    padding: 1em;\n    margin: 1em;\n}\n/* styles for ticker  */\n.example1 {\n    height: 50px;\t\n    overflow: hidden;\n    position: relative;\n}\n.example1 h3 {\n    font-size: 3em;\n    color: limegreen;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    line-height: 50px;\n    text-align: center;\n    /* Starting position */\n    -webkit-transform:translateX(100%);\t\n    transform:translateX(100%);\n    /* Apply animation to this element */\n    -webkit-animation: example1 15s linear infinite;\n    animation: example1 15s linear infinite;\n}\n/* Move it (define the animation) */\n@-webkit-keyframes example1 {\n    0%   { -webkit-transform: translateX(100%); }\n    100% { -webkit-transform: translateX(-100%); }\n}\n@keyframes example1 {\n    0%   { /* Firefox bug fix */\n    -webkit-transform: translateX(100%); /* Firefox bug fix */\n    transform: translateX(100%); \t\t\n    }\n    100% { /* Firefox bug fix */\n    -webkit-transform: translateX(-100%); /* Firefox bug fix */\n    transform: translateX(-100%); \n    }\n}\n"
 
 /***/ }),
 
@@ -865,46 +873,6 @@ SubscriberComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
 exports.SubscriberComponent = SubscriberComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/services/dj-profile.service.ts":
-/*!************************************************!*\
-  !*** ./src/app/services/dj-profile.service.ts ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-let DjProfileService = class DjProfileService {
-    constructor(http) {
-        this.http = http;
-    }
-    getProfileInfo() {
-        return this.http.get('/djView');
-    }
-};
-DjProfileService = __decorate([
-    core_1.Injectable({
-        providedIn: 'root'
-    }),
-    __metadata("design:paramtypes", [http_1.HttpClient])
-], DjProfileService);
-exports.DjProfileService = DjProfileService;
 
 
 /***/ })

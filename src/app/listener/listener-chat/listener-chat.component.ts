@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
+import { DjProfileService } from 'src/app/services/dj-profile.service';
 
 
 
@@ -12,12 +13,13 @@ export class ListenerChatComponent implements OnInit {
 
   messageToSend: string = '';
   values = '';
-  name: object
-  id: string
+  name: object;
+  id: string;
+  profile: object;
   chatMessages: Array<{ userName: string, lastName: string, message: string }> = [];
 
 
-  constructor(private chatService: ChatService) { 
+  constructor(private chatService: ChatService, private djProfileService: DjProfileService) { 
   this.chatService.receiveMessages()
     .subscribe(data => {
       if (this.chatMessages.length > 10) {
@@ -30,7 +32,10 @@ export class ListenerChatComponent implements OnInit {
   }
 
 ngOnInit() {
-  
+  this.djProfileService.getProfileInfo()
+      .subscribe(profile => {
+        this.profile = profile
+      })
 }
 
 
