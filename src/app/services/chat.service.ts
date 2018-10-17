@@ -116,7 +116,7 @@ export class ChatService {
         observer.next(songs);
       });
     });
- 
+
     return observable;
   }
 
@@ -124,7 +124,7 @@ export class ChatService {
     // console.log('recieved songgg   info')
     let observable = new Observable<{ songid: string, starttime: string, duration: string }>(observer => {
       this.socket.on('currentSong', (songInfo) => {
-        
+
         observer.next(songInfo);
       });
     });

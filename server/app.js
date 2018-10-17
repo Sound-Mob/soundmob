@@ -13,6 +13,9 @@ const OpenTok = require('opentok');
 const http = require('http');
 
 const app = express();
+
+
+
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
@@ -37,19 +40,17 @@ const {
   changeDjSong,
 } = require('./database');
 // hidden keys
+const {
+  Youtube,
+  ClientID,
+  ClientSecret,
+  RedirectURL,
+  TOKEN,
+  API_KEY,
+} = require('./config.js');
 
-// const {
-//   Youtube,
-//   ClientID,
-//   ClientSecret,
-//   RedirectURL,
-//   TOKEN,
-//   API_KEY,
-// } = require('./config.js');
 //  api methods
 
-// const ClientID = process.env.clientID;
-// const ClientSecret = process.env.clientSecret;
 
 const {
   playlist,
@@ -66,7 +67,9 @@ const {
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
   keys: ['qwerty'],
@@ -122,13 +125,27 @@ let songDuration;
 
 // on connection
 io.on('connection', (socket) => {
-  const { photo } = socket.request.session;
-  const { value } = photo;
-  const { name } = socket.request.session;
-  const { user } = socket.request.session.passport;
-  const { givenName } = name;
-  const { familyName } = name;
-  const { accessToken } = socket.request.session;
+  const {
+    photo
+  } = socket.request.session;
+  const {
+    value
+  } = photo;
+  const {
+    name
+  } = socket.request.session;
+  const {
+    user
+  } = socket.request.session.passport;
+  const {
+    givenName
+  } = name;
+  const {
+    familyName
+  } = name;
+  const {
+    accessToken
+  } = socket.request.session;
 
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
@@ -148,7 +165,9 @@ io.on('connection', (socket) => {
     opentok = new OpenTok(API_KEY, 'd32d357fe3e5776a240d0a32cbb9edf5765f7405');
 
     let sessionId;
-    opentok.createSession({ mediaMode: 'routed' }, (error, session) => {
+    opentok.createSession({
+      mediaMode: 'routed'
+    }, (error, session) => {
       if (error) {
         // console.log("Error creating session:", error)
       } else {
@@ -159,7 +178,11 @@ io.on('connection', (socket) => {
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
         djs.push({
-          name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token,
+          name,
+          id: socket.id,
+          photo: value,
+          tokSession: sessionId,
+          tokToken: token,
         });
       }
     });
@@ -170,12 +193,25 @@ io.on('connection', (socket) => {
     console.log(playlistId, ' playlistId');
     playlistIDs(accessToken, playlistId).then((data) => {
       const songIds = videoIDArray(data.items);
-      console.log({ songIds });
+      console.log({
+        songIds
+      });
       io.sockets.emit('songList', songIds);
     }).catch((error) => {
       console.log(error);
     });
   });
+
+  // listen for song pausing
+  socket.on('paused', (pauseInfo) => {
+    io.sockets.emit('pauseRelay', pauseInfo);
+  })
+
+  // listen for song resuming
+  socket.on('unpause', (resumeInfo) => {
+    console.log(resumeInfo)
+    io.sockets.emit('resumeRelay', resumeInfo);
+  })
 
   // listen for sound request
   socket.on('soundEmit', (data) => {
@@ -184,8 +220,10 @@ io.on('connection', (socket) => {
   // START CAST LISTENER -- listen for startCast
   socket.on('startCast', (id) => {
     // console.log(id, " id in startCast before get details from youtube")
-    searchDetails(accessToken, id).then(({ items }) => {
-      console.log(items, 'duration');
+    searchDetails(accessToken, id).then(({
+      items
+    }) => {
+      // console.log(items, 'duration');
       const durationArray = items[0].contentDetails.duration.split('');
       if (durationArray.length <= 4) {
         songDuration = (Number(durationArray[2]));
@@ -201,7 +239,13 @@ io.on('connection', (socket) => {
       const minsInSeconds = Number(songStartTime[3] + songStartTime[4]) * 60;
       const seconds = Number(songStartTime[6] + songStartTime[7]);
       songStartTime = minsInSeconds + seconds;
-      io.sockets.emit('castOn', { songStartTime, songDuration });
+      console.log({
+        songStartTime
+      })
+      io.sockets.emit('castOn', {
+        songStartTime,
+        songDuration
+      });
 
       getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
         // console.log(songinfo, " in get songs by id in start cast");
@@ -213,14 +257,20 @@ io.on('connection', (socket) => {
           changeDjSong(id, songStartTime, songDuration, socket.rooms[socket.id])
             .then(() => {
               songinfo[0].songid = id;
-              console.log(songinfo, 'changed in dj song');
-              io.sockets.emit('currentSong', { songinfo, listenerStartTime: songStartTime });
+              // console.log(songinfo, "changed in dj song")
+              io.sockets.emit('currentSong', {
+                songinfo,
+                listenerStartTime: songStartTime
+              });
             })
             .catch(err => console.log(err));
         }
       }).catch(er => console.log(er));
-    }).catch((err) => { console.log(err); });
+    }).catch((err) => {
+      console.log(err);
+    });
   });
+
   function getStartTime() {
     // calculate listener start time
     listenerStartTime += new Date();
@@ -263,10 +313,17 @@ io.on('connection', (socket) => {
   // listen for listener request of current song
   socket.on('listenerGetCurrentSong', () => {
     getStartTime();
+    console.log({
+      listenerStartTime
+    })
     // console.log(socket.rooms[socket.id], " in get current song")
     getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
       // console.log({ songinfo, listenerStartTime }, " in listener grab")
-      io.sockets.emit('currentSong', { songinfo, listenerStartTime, startAt });
+      io.sockets.emit('currentSong', {
+        songinfo,
+        listenerStartTime,
+        startAt
+      });
     }).catch(error => console.log(error));
   });
   // listen for username
@@ -294,13 +351,18 @@ io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
     const room = socket.rooms[socket.id];
     io.sockets.in(room).emit('chat message', {
-      message: msg, userName: givenName, lastName: familyName, id: user,
+      message: msg,
+      userName: givenName,
+      lastName: familyName,
+      id: user,
     });
   });
 
   // listen for active DJs request
   socket.on('djListReq', () => {
-    io.sockets.emit('djList', { djs });
+    io.sockets.emit('djList', {
+      djs
+    });
   });
 
   socket.on('soundEmit', (data) => {
@@ -312,7 +374,10 @@ io.on('connection', (socket) => {
     // remove user from users array
     users.splice(users.indexOf(socket.name), 1);
     // emit disconnection
-    io.emit('disconnect', { users, name: socket.name });
+    io.emit('disconnect', {
+      users,
+      name: socket.name
+    });
   });
 
 
@@ -354,37 +419,45 @@ const googleCallbackURL = '/auth/google/callback';
 
 // session entry
 passport.use(new GoogleStrategy({
-  clientID: process.env.ClientID,
-  clientSecret: process.env.ClientSecret,
-  callbackURL: googleCallbackURL,
-  passReqToCallback: true,
-},
-(req, accessToken, refreshToken, profile, done) => {
-  req.session.accessToken = accessToken;
-  req.session.name = profile.name;
-  req.session.photo = profile.photos[0];
-  const { id } = profile;
-  const { name } = profile;
-  const { givenName } = name;
-  const { familyName } = name;
-  const bio = 'Loray NC';
-  const samples = 'binary';
-  const savedplaylists = 'urls';
-  const followercount = 12;
-  const followingcount = 2;
-  getUserById(profile.id).then((user) => {
-    if (user.length === 1) {
-      user[0].name = profile.name;
-      done(null, user[0]);
-    } else {
-      createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
-        .then((newUser) => {
-          // console.log(newUser);
-          done(null, newUser);
-        }).catch(err => console.error(err));
-    }
-  }).catch(err => console.error(err, 'this should hit'));
-}));
+    clientID: ClientID,
+    clientSecret: ClientSecret,
+    callbackURL: googleCallbackURL,
+    passReqToCallback: true,
+  },
+  (req, accessToken, refreshToken, profile, done) => {
+    req.session.accessToken = accessToken;
+    req.session.name = profile.name;
+    req.session.photo = profile.photos[0];
+    const {
+      id
+    } = profile;
+    const {
+      name
+    } = profile;
+    const {
+      givenName
+    } = name;
+    const {
+      familyName
+    } = name;
+    const bio = 'Loray NC';
+    const samples = 'binary';
+    const savedplaylists = 'urls';
+    const followercount = 12;
+    const followingcount = 2;
+    getUserById(profile.id).then((user) => {
+      if (user.length === 1) {
+        user[0].name = profile.name;
+        done(null, user[0]);
+      } else {
+        createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
+          .then((newUser) => {
+            // console.log(newUser);
+            done(null, newUser);
+          }).catch(err => console.error(err));
+      }
+    }).catch(err => console.error(err, 'this should hit'));
+  }));
 
 server.listen(port, () => {
   console.log(`running on ${port}`);

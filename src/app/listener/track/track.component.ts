@@ -18,13 +18,13 @@ export class ListenerTrackComponent implements OnInit {
   public pausedAt: number = 0;
   public resumeAt: number = 0;
   public startAt: number = 0;
-  constructor(private chatService: ChatService) { 
+  constructor(private chatService: ChatService) {
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
         this.video = pauseInfo['songId'];
         this.pausedAt = pauseInfo['pausedAt'];
         this.pauseCast();
-      })
+      });
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
         this.video = resumeInfo['songId'];
@@ -32,16 +32,16 @@ export class ListenerTrackComponent implements OnInit {
         console.log(this.video, this.resumeAt)
         console.log("this.video, this.resumeAt")
         this.pauseCast();
-      })
-    
+      });
+
     this.chatService.listenerReceiveSongDetails()
       .subscribe(songinfo => {
         console.log("song info recieved", songinfo)
-        
+
         this.video = songinfo['songinfo'][0].songid;
         // this.init();
         this.hearCast();
-      })
+      });
   }
   init() {
     var tag = document.createElement('script');
@@ -69,7 +69,7 @@ export class ListenerTrackComponent implements OnInit {
         }
       });
     };
-    
+
   }
 
   hearCast() {
@@ -77,9 +77,9 @@ export class ListenerTrackComponent implements OnInit {
     if (this.player !== undefined){
       this.player.loadVideoById(this.video)
     }
-    
+
     // console.log("start cast was fired", this.player)
- 
+
   }
 
   pauseCast() {
