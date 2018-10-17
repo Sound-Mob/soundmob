@@ -40,6 +40,7 @@ const {
   changeDjSong,
 } = require('./database');
 // hidden keys
+<<<<<<< HEAD
 
 // const {
 //   Youtube,
@@ -49,6 +50,17 @@ const {
 //   TOKEN,
 //   API_KEY,
 // } = require('./config.js');
+=======
+const {
+  Youtube,
+  ClientID,
+  ClientSecret,
+  RedirectURL,
+  TOKEN,
+  API_KEY,
+} = require('./config.js');
+
+>>>>>>> 2bc20aea39c4d1d32700c5a08964101fa8c04cdb
 //  api methods
 
 // const ClientID = process.env.clientID;
@@ -180,6 +192,17 @@ io.on('connection', (socket) => {
     });
   });
 
+  // listen for song pausing
+  socket.on('paused', (pauseInfo)=>{
+    io.sockets.emit('pauseRelay', pauseInfo);
+  })
+
+  // listen for song resuming
+  socket.on('unpause', (resumeInfo) => {
+    console.log(resumeInfo)
+    io.sockets.emit('resumeRelay', resumeInfo);
+  })
+
   // listen for sound request
   socket.on('soundEmit', (data) => {
     io.sockets.emit('soundRelay', data);
@@ -188,7 +211,7 @@ io.on('connection', (socket) => {
   socket.on('startCast', (id) => {
     // console.log(id, " id in startCast before get details from youtube")
     searchDetails(accessToken, id).then(({ items }) => {
-      console.log(items, 'duration');
+      // console.log(items, 'duration');
       const durationArray = items[0].contentDetails.duration.split('');
       if (durationArray.length <= 4) {
         songDuration = (Number(durationArray[2]));
@@ -204,6 +227,7 @@ io.on('connection', (socket) => {
       const minsInSeconds = Number(songStartTime[3] + songStartTime[4]) * 60;
       const seconds = Number(songStartTime[6] + songStartTime[7]);
       songStartTime = minsInSeconds + seconds;
+      console.log({songStartTime})
       io.sockets.emit('castOn', { songStartTime, songDuration });
 
       getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
@@ -216,7 +240,7 @@ io.on('connection', (socket) => {
           changeDjSong(id, songStartTime, songDuration, socket.rooms[socket.id])
             .then(() => {
               songinfo[0].songid = id;
-              console.log(songinfo, 'changed in dj song');
+              // console.log(songinfo, "changed in dj song")
               io.sockets.emit('currentSong', { songinfo, listenerStartTime: songStartTime });
             })
             .catch(err => console.log(err));
@@ -266,6 +290,7 @@ io.on('connection', (socket) => {
   // listen for listener request of current song
   socket.on('listenerGetCurrentSong', () => {
     getStartTime();
+    console.log({listenerStartTime})
     // console.log(socket.rooms[socket.id], " in get current song")
     getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
       // console.log({ songinfo, listenerStartTime }, " in listener grab")

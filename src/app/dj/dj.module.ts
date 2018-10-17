@@ -16,6 +16,7 @@ import { SubscriberComponent } from './tokbox/subscriber/subscriber.component';
 import { PublisherComponent } from './tokbox/publisher/publisher.component';
 import { ChatComponent } from './chat/chat.component';
 import { YoutubePipe } from '../pipes/youtube.pipe';
+import { TrackComponent } from './track-component/track.component';
 
 
 
@@ -36,6 +37,7 @@ import { YoutubePipe } from '../pipes/youtube.pipe';
     PublisherComponent,
     ChatComponent, 
     YoutubePipe,
+    TrackComponent,
   ],
   providers: [OpentokService]
 })

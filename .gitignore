@@ -4,5 +4,4 @@ node_modules
 /src/app/config.js
 Dockerfile
 .env
-nginxconfig
-Halleb0t
+/nginxconfig.conf
