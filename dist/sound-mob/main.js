@@ -371,8 +371,9 @@ __webpack_require__.r(__webpack_exports__);
   SAMPLE_SERVER_BASE_URL: 'http://localhost:3000',
   TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9',
   API_KEY: '46194612',
-  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg'
+  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
 });
+
 
 /***/ }),
 
@@ -640,7 +641,33 @@ let ChatService = class ChatService {
                 observer.next(songInfo);
             });
         });
-        console.log(observable);
+        return observable;
+    }
+    sendPause(songId, pausedAt) {
+        console.log("service of pause reached");
+        this.socket.emit('paused', { songId, pausedAt });
+    }
+    sendUnpause(songId, resumedAt) {
+        console.log(songId, resumedAt);
+        this.socket.emit('unpause', { songId, resumedAt });
+    }
+    resumeListener() {
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('resumeRelay', (resumeInfo) => {
+                console.log(" recieved relay");
+                observer.next(resumeInfo);
+            });
+        });
+        // console.log(observable)
+        return observable;
+    }
+    pauseListener() {
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('pauseRelay', (pauseInfo) => {
+                observer.next(pauseInfo);
+            });
+        });
+        // console.log(observable)
         return observable;
     }
     receiveDjInfo() {
@@ -668,14 +695,12 @@ let ChatService = class ChatService {
                 observer.next(songs);
             });
         });
-        console.log(observable);
         return observable;
     }
     listenerReceiveSongDetails() {
         // console.log('recieved songgg   info')
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('currentSong', (songInfo) => {
-                console.log(songInfo, " songinfo in listener receiver");
                 observer.next(songInfo);
             });
         });
@@ -827,7 +852,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
 
 
 /***/ }),

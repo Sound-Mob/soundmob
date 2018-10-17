@@ -141,7 +141,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n<audio autoplay [src]=\"sound | youtube \"></audio>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n<audio autoplay [src]=\"sound | youtube \"></audio>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    <div class=\"col-sm-8\">\n      <app-profile></app-profile>\n      <br>\n      <app-soundplayer></app-soundplayer>\n      <br>\n      <app-listener-track></app-listener-track>\n      <br>\n      <app-listener-chat></app-listener-chat>\n      <br>\n      <app-tokbox id=\"listenertok\"></app-tokbox>\n    </div>\n    <div class=\"col-sm-2\">\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -224,6 +224,7 @@ const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subsc
 const forms_1 = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 const listener_chat_component_1 = __webpack_require__(/*! ./listener-chat/listener-chat.component */ "./src/app/listener/listener-chat/listener-chat.component.ts");
 const youtube_pipe_1 = __webpack_require__(/*! ../pipes/youtube.pipe */ "./src/app/pipes/youtube.pipe.ts");
+const track_component_1 = __webpack_require__(/*! ./track/track.component */ "./src/app/listener/track/track.component.ts");
 let ListenerModule = class ListenerModule {
 };
 ListenerModule = __decorate([
@@ -241,7 +242,8 @@ ListenerModule = __decorate([
             subscriber_component_1.SubscriberComponent,
             publisher_component_1.PublisherComponent,
             youtube_pipe_1.YoutubePipe,
-            listener_chat_component_1.ListenerChatComponent
+            listener_chat_component_1.ListenerChatComponent,
+            track_component_1.ListenerTrackComponent
         ]
     })
 ], ListenerModule);
@@ -356,7 +358,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
+    // video: string;
     constructor(chatService) {
+        // this.chatService.listenerReceiveSongDetails()
+        //   .subscribe(songinfo => {
+        //     // console.log(" start time ready for vid");
+        //     let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
+        //     if (startAt < 0 || startAt === null){
+        //       startAt = 0;
+        //     }
+        //     // console.log( {songinfo, startAt}, " song info in received");
+        //     // this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
         this.chatService = chatService;
         this.videos = [
             {
@@ -368,19 +380,10 @@ let SoundplayerComponent = class SoundplayerComponent {
                 video: 'https://www.youtube.com/embed/KgtizhlbIOQ?start=7&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1'
             }
         ];
-        this.chatService.listenerReceiveSongDetails()
-            .subscribe(songinfo => {
-            // console.log(" start time ready for vid");
-            let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
-            if (startAt < 0 || startAt === null) {
-                startAt = 0;
-            }
-            // console.log( {songinfo, startAt}, " song info in received");
-            this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
-        });
+        //   })
     }
     ngOnInit() {
-        this.chatService.listenerGetSongDetails();
+        // this.chatService.listenerGetSongDetails()
     }
 };
 SoundplayerComponent = __decorate([
@@ -674,6 +677,136 @@ SubscriberComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
 exports.SubscriberComponent = SubscriberComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/listener/track/track.component.ts":
+/*!***************************************************!*\
+  !*** ./src/app/listener/track/track.component.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
+let ListenerTrackComponent = class ListenerTrackComponent {
+    constructor(chatService) {
+        this.chatService = chatService;
+        this.paused = false;
+        this.count = 0;
+        this.pausedAt = 0;
+        this.resumeAt = 0;
+        this.startAt = 0;
+        this.chatService.pauseListener()
+            .subscribe(pauseInfo => {
+            this.video = pauseInfo['songId'];
+            this.pausedAt = pauseInfo['pausedAt'];
+            this.pauseCast();
+        });
+        this.chatService.resumeListener()
+            .subscribe(resumeInfo => {
+            this.video = resumeInfo['songId'];
+            this.resumeAt = resumeInfo['resumedAt'];
+            console.log(this.video, this.resumeAt);
+            console.log("this.video, this.resumeAt");
+            this.pauseCast();
+        });
+        this.chatService.listenerReceiveSongDetails()
+            .subscribe(songinfo => {
+            console.log("song info recieved", songinfo);
+            this.video = songinfo['songinfo'][0].songid;
+            // this.init();
+            this.hearCast();
+        });
+    }
+    init() {
+        var tag = document.createElement('script');
+        tag.src = 'http://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+    ngOnInit() {
+        this.chatService.listenerGetSongDetails();
+        this.init();
+        window['onYouTubeIframeAPIReady'] = (e) => {
+            this.YT = window['YT'];
+            this.player = new window['YT'].Player('player', {
+                videoId: this.video,
+                startSeconds: this.startAt,
+                events: {
+                    // 'onStateChange': this.onPlayerStateChange.bind(this),
+                    'onError': this.onPlayerError.bind(this),
+                    'onReady': (e) => {
+                        this.player.loadVideoById(this.video);
+                    },
+                }
+            });
+        };
+    }
+    hearCast() {
+        this.init();
+        if (this.player !== undefined) {
+            this.player.loadVideoById(this.video);
+        }
+        // console.log("start cast was fired", this.player)
+    }
+    pauseCast() {
+        if (this.paused) {
+            console.log("paused is true in pausecast");
+            this.player.loadVideoById(this.video, this.resumeAt);
+            this.paused = false;
+        }
+        else {
+            console.log("paused is false in pausecast");
+            this.player.pauseVideo();
+            this.paused = true;
+        }
+    }
+    //utility
+    cleanTime() {
+        return Math.round(this.player.getCurrentTime());
+    }
+    ;
+    onPlayerError(event) {
+        debugger;
+        switch (event.data) {
+            case 2:
+                console.log('' + this.video);
+                break;
+            case 100:
+                break;
+            case 101 || 150:
+                break;
+        }
+        ;
+    }
+    ;
+};
+ListenerTrackComponent = __decorate([
+    core_1.Component({
+        selector: 'app-listener-track',
+        template: `<div class="max-width-1024">
+      <div class="embed-responsive embed-responsive-16by9" id="player">
+      </div>
+    </div>`,
+        styles: [`.max-width-1024 { max-width: 1024px; margin: 0 auto; }`],
+    }),
+    __metadata("design:paramtypes", [chat_service_1.ChatService])
+], ListenerTrackComponent);
+exports.ListenerTrackComponent = ListenerTrackComponent;
 
 
 /***/ })
