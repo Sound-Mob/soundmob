@@ -12,11 +12,14 @@ export class SubscriberComponent implements AfterViewInit {
   @Input() session: OT.Session;
   @Input() stream: OT.Stream;
 
+  options: object;
+
   constructor() { }
 
   ngAfterViewInit() {
     console.log(this.session, 'subscriber');
-    const subscriber = this.session.subscribe(this.stream, this.subscriberDiv.nativeElement, {}, (err) => {
+    this.options = { width: 10, height: 10, insertMode: 'append' }
+    const subscriber = this.session.subscribe(this.stream, this.subscriberDiv.nativeElement, this.options, (err) => {
       if (err) {
         alert(err.message);
       }

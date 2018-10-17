@@ -11,7 +11,7 @@ import { ChatService } from '../../services/chat.service';
   providers: [ OpentokService ]
 })
 export class AppComponent implements OnInit {
-  title = 'Angular Basic Video Chat';
+  title = null;
   session: OT.Session;
   streams: Array<OT.Stream> = [];
   changeDetectorRef: ChangeDetectorRef;
