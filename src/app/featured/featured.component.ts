@@ -3,6 +3,8 @@ import { HttpClient } from "@angular/common/http"
 
 import { DjlistService } from "../services/djlist.service";
 import { ChatService } from "../services/chat.service";
+import { DjProfileService } from "../services/dj-profile.service";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: "app-posts",
@@ -12,10 +14,16 @@ import { ChatService } from "../services/chat.service";
 export class FeaturedComponent implements OnInit {
   activeDj: Object;
   prop: string;
+  profile: object;
 
   
 
-  constructor(private http: HttpClient, private djList: DjlistService, private djJoin: ChatService) {
+  constructor(
+    private http: HttpClient,
+    private djList: DjlistService,
+    private djJoin: ChatService,
+    private djProfileService: DjProfileService,
+    ) {
     
   }
 
@@ -24,6 +32,11 @@ export class FeaturedComponent implements OnInit {
 
     this.djList.liveDj()
       .subscribe((data) => this.activeDj = data);
+
+    this.djProfileService.getProfileInfo()
+      .subscribe(profile => {
+        this.profile = profile
+      })
   }
 
   joinDj(event){

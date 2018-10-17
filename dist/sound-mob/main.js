@@ -15,6 +15,7 @@ var map = {
 	],
 	"../app/featured/featured.module": [
 		"./src/app/featured/featured.module.ts",
+		"common",
 		"app-featured-featured-module"
 	],
 	"../app/listener/listener.module": [

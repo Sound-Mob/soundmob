@@ -2,24 +2,41 @@
 <router-outlet></router-outlet>
 
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-2">
-    </div>
-    
-    <div class="col-sm-8">
-      <ul *ngFor="let dj of activeDj.djs">
-        <li>
-          <img src={{dj.photo}}>
-          <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
-          <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
-          </a>
-        </li>
-      </ul>
-    </div>
+<header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
 
-    <div class="col-sm-2">
-      <button routerLink="/dj">Create Station</button>
+        <div class="site-heading">
+          <h1>{{profile.firstname}} {{profile.lasttname}}</h1>
+          <span class="subheading">{{profile.bio}}</span>
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
+</header>
+
+
+  <div class="row">
+    
+    <div class="col-sm-8">
+        <div *ngFor="let dj of activeDj.djs">
+            <div class="team_wrapper clearfix">
+              <div class="single_member text-center">
+                <img class="rounded-circle" src={{dj.photo}} width="100" height="100">
+                <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
+                <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
+                </a>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"> 
+      <button class="btn std-btn btn-lg btn-info"routerLink="/dj" routerLinkActive="active">Create Station</button>
+  </div>
+  
+  
+
