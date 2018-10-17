@@ -321,7 +321,7 @@ exports.ProfileComponent = ProfileComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "/* styles for ticker  */\n.example1 {\n  height: 50px;\t\n  overflow: hidden;\n  position: relative;\n}\n.example1 h3 {\n  font-size: 3em;\n  color: limegreen;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  line-height: 50px;\n  text-align: center;\n  /* Starting position */\n  -webkit-transform:translateX(100%);\t\n  transform:translateX(100%);\n  /* Apply animation to this element */\n  -webkit-animation: example1 15s linear infinite;\n  animation: example1 15s linear infinite;\n}\n/* Move it (define the animation) */\n@-webkit-keyframes example1 {\n  0%   { -webkit-transform: translateX(100%); }\n  100% { -webkit-transform: translateX(-100%); }\n}\n@keyframes example1 {\n  0%   { /* Firefox bug fix */\n  -webkit-transform: translateX(100%); /* Firefox bug fix */\n  transform: translateX(100%); \t\t\n  }\n  100% { /* Firefox bug fix */\n  -webkit-transform: translateX(-100%); /* Firefox bug fix */\n  transform: translateX(-100%); \n  }\n}\n"
 
 /***/ }),
 
@@ -332,7 +332,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div> -->\n\n  <iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n\n\n  <!-- <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div> -->\n"
+module.exports = "<!-- <div> -->\n\n  <iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n\n<img src=\"{{this.photo}}\">\n<div class=\"example1\">  \n    <h3>{{this.name}}</h3>\n    </div>\n  <!-- <div>\n    <a>\n      <i class=\"material-icons\">\n        favorite_border\n      </i>\n    </a>\n    <a>\n      <i class=\"material-icons\">\n        chat_bubble_outline\n      </i>\n    </a>\n    <p>#inMyFeelings</p>\n  </div>\n\n</div> -->\n"
 
 /***/ }),
 
@@ -358,7 +358,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    // video: string;
     constructor(chatService) {
         // this.chatService.listenerReceiveSongDetails()
         //   .subscribe(songinfo => {
@@ -384,6 +383,15 @@ let SoundplayerComponent = class SoundplayerComponent {
     }
     ngOnInit() {
         // this.chatService.listenerGetSongDetails()
+        this.chatService.currentListener
+            .subscribe((data) => {
+            console.log(data, ' insidne the soundComponent listener');
+            this.name = data;
+        });
+        this.chatService.currentListenerPhoto
+            .subscribe((data) => {
+            this.photo = data;
+        });
     }
 };
 SoundplayerComponent = __decorate([
@@ -718,10 +726,14 @@ let ListenerTrackComponent = class ListenerTrackComponent {
         });
         this.chatService.resumeListener()
             .subscribe(resumeInfo => {
+            console.log('here in listener', resumeInfo);
+            this.trackTitle = resumeInfo['name'];
+            this.trackPhoto = resumeInfo['photo'];
             this.video = resumeInfo['songId'];
             this.resumeAt = resumeInfo['resumedAt'];
-            console.log(this.video, this.resumeAt);
-            console.log("this.video, this.resumeAt");
+            // console.log(this.video, this.resumeAt)
+            // console.log("this.video, this.resumeAt")
+            this.current(this.trackTitle, this.trackPhoto);
             this.pauseCast();
         });
         this.chatService.listenerReceiveSongDetails()
@@ -737,6 +749,10 @@ let ListenerTrackComponent = class ListenerTrackComponent {
         tag.src = 'http://www.youtube.com/iframe_api';
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+    current(name, photo) {
+        this.chatService.changeListenerPhoto(photo);
+        this.chatService.changeListenerSong(name);
     }
     ngOnInit() {
         this.chatService.listenerGetSongDetails();
