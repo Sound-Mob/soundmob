@@ -4,3 +4,4 @@ node_modules
 /src/app/config.js
 Dockerfile
 .env
+dist
