@@ -45,6 +45,7 @@ const {
   TOKEN,
   API_KEY,
 } = require('./config.js');
+
 //  api methods
 const {
   playlist,
@@ -217,6 +218,17 @@ io.on('connection', (socket) => {
   //  let songIds = ['AE005nZeF-A', 'vF1RPI6j7b0', 'x38ildLdUeM', 'KgtizhlbIOQ'];
    
  })
+
+  // listen for song pausing
+  socket.on('paused', (pauseInfo)=>{
+    io.sockets.emit('pauseRelay', pauseInfo);
+  })
+
+  // listen for song resuming
+  socket.on('unpause', (resumeInfo) => {
+    console.log(resumeInfo)
+    io.sockets.emit('resumeRelay', resumeInfo);
+  })
 
   // listen for sound request
   socket.on('soundEmit', (data) => {

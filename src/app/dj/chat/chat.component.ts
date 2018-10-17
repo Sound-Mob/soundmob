@@ -26,45 +26,45 @@ export class ChatComponent implements OnInit {
         }
         this.chatMessages.unshift(data)
       })
-    this.chatService.receiveSongs()
-    .subscribe(songs => {
-      this.songs = songs;
-    })
-    this.chatService.djGetSongDetails()
-    .subscribe(details => {
-      this.songStartTime = details.songStartTime;
-      this.songDuration = details.songDuration;
-      setTimeout(()=>{
-        this.castContinue();
-      }, details.songDuration);
-    })
+    // this.chatService.receiveSongs()
+    // .subscribe(songs => {
+    //   this.songs = songs;
+    // })
+    // this.chatService.djGetSongDetails()
+    // .subscribe(details => {
+    //   this.songStartTime = details.songStartTime;
+    //   this.songDuration = details.songDuration;
+    //   setTimeout(()=>{
+    //     this.castContinue();
+    //   }, details.songDuration);
+    // })
   }
 
-  video: string 
+  // video: string 
   // trigger cast on after duration runs
-  castContinue(){
-    let time;
-    if (this.songDuration){
-      time = this.songDuration;
-      console.log(time, " in if yes")
-    } else {
-      time = 6000;
-      console.log(time, " in if no")
-    }
-    setTimeout(()=>{
-      this.startCast()
-    }, time * 1000);
-    let counter = this.count + 1;
-    if (this.songs[counter]){
-      this.count++;
-    }
-  }
+  // castContinue(){
+  //   let time;
+  //   if (this.songDuration){
+  //     time = this.songDuration;
+  //     console.log(time, " in if yes")
+  //   } else {
+  //     time = 6000;
+  //     console.log(time, " in if no")
+  //   }
+  //   setTimeout(()=>{
+  //     this.startCast()
+  //   }, time * 1000);
+  //   let counter = this.count + 1;
+  //   if (this.songs[counter]){
+  //     this.count++;
+  //   }
+  // }
 
 
   // start music
   startCast() {
-    this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
-    this.chatService.djStartCast(this.songs[this.count]);
+    // this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
+    // this.chatService.djStartCast(this.songs[this.count]);
   }
 
   ngOnInit() {

@@ -1,7 +1,4 @@
-// borrowed code from https://time2hack.com/2017/11/easiest-way-to-integrate-youtube-iframe-api-in-angular-and-react/
-
 import { Component, OnInit } from '@angular/core';
-import reframe from 'reframe.js';
 import { ChatService } from '../../services/chat.service';
 
 @Component({
@@ -16,8 +13,32 @@ export class ListenerTrackComponent implements OnInit {
   public YT: any;
   public video: any;
   public player: any;
-  public reframed: Boolean = false;
-  constructor(private chatService: ChatService) { }
+  public paused: boolean = false;
+  public count: number = 0;
+  public pausedAt: number = 0;
+  public resumeAt: number = 0;
+  public startAt: number = 0;
+  constructor(private chatService: ChatService) { 
+    this.chatService.pauseListener()
+      .subscribe(pauseInfo => {
+        this.video = pauseInfo['songId'];
+        this.pausedAt = pauseInfo['pausedAt'];
+        this.pauseCast();
+      })
+    this.chatService.resumeListener()
+      .subscribe(resumeInfo => {
+        this.video = resumeInfo['songId'];
+        this.resumeAt = resumeInfo['resumedAt'];
+        console.log(this.video, this.resumeAt)
+        console.log("this.video, this.resumeAt")
+        this.pauseCast();
+      })
+    
+    this.chatService.listenerReceiveSongDetails()
+      .subscribe(songinfo => {
+        this.video = songinfo['songinfo'][0].songid;
+      })
+  }
   init() {
     var tag = document.createElement('script');
     tag.src = 'http://www.youtube.com/iframe_api';
@@ -26,20 +47,19 @@ export class ListenerTrackComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.chatService.listenerGetSongDetails()
     this.init();
-    this.video = '14WE3A0PwVs' //video id
 
     window['onYouTubeIframeAPIReady'] = (e) => {
       this.YT = window['YT'];
-      this.reframed = false;
       this.player = new window['YT'].Player('player', {
         videoId: this.video,
+        startSeconds: this.startAt,
         events: {
-          'onStateChange': this.onPlayerStateChange.bind(this),
+          // 'onStateChange': this.onPlayerStateChange.bind(this),
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
-            console.log('iFrame ready', this.player.getVolume());
-            e.target.playVideo();
+            this.player.loadVideoById(this.video);
 
           },
         }
@@ -47,26 +67,18 @@ export class ListenerTrackComponent implements OnInit {
     };
   }
 
-  onPlayerStateChange(event) {
-    console.log(event)
-    switch (event.data) {
-      case window['YT'].PlayerState.PLAYING:
-        if (this.cleanTime() == 0) {
-          console.log('started ' + this.cleanTime());
-        } else {
-          console.log('playing ' + this.cleanTime())
-        };
-        break;
-      case window['YT'].PlayerState.PAUSED:
-        if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
-          console.log('paused' + ' @ ' + this.cleanTime());
-        };
-        break;
-      case window['YT'].PlayerState.ENDED:
-        console.log('ended ');
-        break;
-    };
-  };
+  pauseCast() {
+    if (this.paused) {
+      console.log("paused is true in pausecast")
+      this.player.loadVideoById(this.video, this.resumeAt)
+      this.paused = false;
+    } else {
+      console.log("paused is false in pausecast")
+      this.player.pauseVideo();
+      this.paused = true;
+    }
+
+  }
   //utility
   cleanTime() {
     return Math.round(this.player.getCurrentTime())

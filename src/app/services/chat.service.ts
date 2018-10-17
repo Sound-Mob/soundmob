@@ -48,7 +48,39 @@ export class ChatService {
         observer.next(songInfo);
       });
     });
-    console.log(observable)
+    return observable;
+  }
+
+
+
+  sendPause(songId, pausedAt){
+    console.log("service of pause reached")
+    this.socket.emit('paused', {songId, pausedAt});
+  }
+
+  sendUnpause(songId, resumedAt) {
+    console.log(songId, resumedAt)
+    this.socket.emit('unpause', { songId, resumedAt });
+  }
+
+  resumeListener() {
+    let observable = new Observable<{ resumeInfo: object }>(observer => {
+      this.socket.on('resumeRelay', (resumeInfo) => {
+        console.log(" recieved relay")
+        observer.next(resumeInfo);
+      });
+    });
+    // console.log(observable)
+    return observable;
+  }
+
+  pauseListener(){
+    let observable = new Observable<{ pauseInfo: object }>(observer => {
+      this.socket.on('pauseRelay', (pauseInfo) => {
+        observer.next(pauseInfo);
+      });
+    });
+    // console.log(observable)
     return observable;
   }
 
@@ -80,7 +112,7 @@ export class ChatService {
         observer.next(songs);
       });
     });
-    console.log(observable)
+ 
     return observable;
   }
 
@@ -88,7 +120,7 @@ export class ChatService {
     // console.log('recieved songgg   info')
     let observable = new Observable<{ songid: string, starttime: string, duration: string }>(observer => {
       this.socket.on('currentSong', (songInfo) => {
-        console.log(songInfo, " songinfo in listener receiver");
+        
         observer.next(songInfo);
       });
     });

@@ -4,7 +4,11 @@ import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-track',
   template: `<div class="max-width-1024">
-      <div class="embed-responsive embed-responsive-16by9" id="player">
+  <div>
+  <input type="button" value="startCast" (click)="startCast()" />
+  <input type="button" value="pauseCast" (click)="pauseCast()" />
+      <div class="embed-responsive embed-responsive-16by9" id="player"> 
+      </div>
       </div>
     </div>`,
   styles: [`.max-width-1024 { max-width: 1024px; margin: 0 auto; }`],
@@ -13,8 +17,18 @@ export class TrackComponent implements OnInit {
   public YT: any;
   public video: any;
   public player: any;
-  public reframed: Boolean = false;
-  constructor(private chatService: ChatService) { }
+  public count: number = 0;
+  public songs: object;
+  public paused: boolean = false;
+  public pausedAt: number;
+ 
+  constructor(private chatService: ChatService) {
+    this.chatService.receiveSongs()
+      .subscribe(songs => {
+        this.songs = songs;
+        console.log({songs}, " receive songs happening in dj");
+      })
+   }
   init() {
     var tag = document.createElement('script');
     tag.src = 'http://www.youtube.com/iframe_api';
@@ -24,43 +38,73 @@ export class TrackComponent implements OnInit {
 
   ngOnInit() {
     this.init();
-    this.video = '14WE3A0PwVs' //video id
+    // this.video = '14WE3A0PwVs' //video id
 
     window['onYouTubeIframeAPIReady'] = (e) => {
       this.YT = window['YT'];
-      this.reframed = false;
       this.player = new window['YT'].Player('player', {
         videoId: this.video,
+        playerVars: {
+          'autoplay': 1},
         events: {
           'onStateChange': this.onPlayerStateChange.bind(this),
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
             console.log('iFrame ready', this.player.getVolume());
-            e.target.playVideo();
-            
           },
         }
       });
     };
   }
 
+  pauseCast(){
+    console.log(this.paused)
+    if (this.paused){
+      this.player.loadVideoById(this.songs[this.count], this.pausedAt);
+      console.log(this.pausedAt,"should be sending unpause")
+      this.paused = false;
+    } else {
+      this.player.pauseVideo();
+      
+      this.paused = true;
+    }
+    
+  }
+
+  startCast() {
+    this.init();
+    this.player.loadVideoById(this.songs[this.count])
+    console.log("start cast was fired", this.songs[this.count])
+    this.chatService.djStartCast(this.songs[this.count]);
+  }
   onPlayerStateChange(event) {
-    console.log(event)
+    console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED)
     switch (event.data) {
       case window['YT'].PlayerState.PLAYING:
         if (this.cleanTime() == 0) {
           console.log('started ' + this.cleanTime());
         } else {
+          let timestamp = this.cleanTime();
+          this.chatService.sendPause(this.songs[this.count], timestamp);
           console.log('playing ' + this.cleanTime())
         };
         break;
       case window['YT'].PlayerState.PAUSED:
         if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
           console.log('paused' + ' @ ' + this.cleanTime());
+          let timestamp = this.cleanTime();
+          this.pausedAt = this.cleanTime();
+          this.chatService.sendUnpause(this.songs[this.count], timestamp);
         };
         break;
       case window['YT'].PlayerState.ENDED:
-        console.log('ended ');
+      this.count = this.count+1;
+        console.log("start cast was fired", this.songs[this.count])
+        console.log("start cast was fired", this.songs)
+        // work around to make
+        this.player.seekTo(this.player.getDuration(), true);
+        this.startCast();
+        // this.chatService.djStartCast(this.songs[this.count]);
         break;
     };
   };
@@ -69,7 +113,7 @@ export class TrackComponent implements OnInit {
     return Math.round(this.player.getCurrentTime())
   };
   onPlayerError(event) {
-    debugger
+    
     switch (event.data) {
       case 2:
         console.log('' + this.video)
