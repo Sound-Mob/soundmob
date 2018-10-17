@@ -604,11 +604,21 @@ let ChatService = class ChatService {
     constructor() {
         this.songSource = new rxjs_1.BehaviorSubject('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg');
         this.currentSong = this.songSource.asObservable();
+        this.listenerSong = new rxjs_1.BehaviorSubject("");
+        this.currentListener = this.listenerSong.asObservable();
+        this.listenerPhoto = new rxjs_1.BehaviorSubject("");
+        this.currentListenerPhoto = this.listenerPhoto.asObservable();
         // private socket = io(`http://localhost:3000`)
         this.socket = io();
     }
     changeSong(song) {
         this.songSource.next(song);
+    }
+    changeListenerSong(name) {
+        this.listenerSong.next(name);
+    }
+    changeListenerPhoto(photo) {
+        this.listenerPhoto.next(photo);
     }
     createRoom(googleId) {
         this.socket.emit('newroom', googleId);
@@ -852,8 +862,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
-
+module.exports = __webpack_require__(/*! /Users/connor/Documents/soundmob/src/main.ts */"./src/main.ts");
 
 /***/ }),
 

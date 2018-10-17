@@ -125,4 +125,15 @@ module.exports = {
     };
     return rp(options);
   },
+  listenerInfo: (token, id) => {
+    const options = {
+      uri: `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}`,
+      headers: {
+        'User-Agent': 'Request-Promise',
+        Authorization: `Bearer ${token}`,
+      },
+      json: true,
+    };
+    return rp(options);
+  },
 };
