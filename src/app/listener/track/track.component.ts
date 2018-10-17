@@ -13,12 +13,18 @@ export class ListenerTrackComponent implements OnInit {
   public YT: any;
   public video: any;
   public player: any;
-  public paused: boolean = false;
+  public paused: boolean = true;
   public count: number = 0;
   public pausedAt: number = 0;
   public resumeAt: number = 0;
   public startAt: number = 0;
+<<<<<<< HEAD
   constructor(private chatService: ChatService) {
+=======
+  public trackTitle: string;
+  public trackPhoto: string;
+  constructor(private chatService: ChatService) { 
+>>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
         this.video = pauseInfo['songId'];
@@ -27,11 +33,16 @@ export class ListenerTrackComponent implements OnInit {
       });
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
+        console.log('here in listener', resumeInfo);
+      this.trackTitle = resumeInfo['name'];
+        this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
-        console.log(this.video, this.resumeAt)
-        console.log("this.video, this.resumeAt")
+        // console.log(this.video, this.resumeAt)
+        // console.log("this.video, this.resumeAt")
+        this.current(this.trackTitle,this.trackPhoto);
         this.pauseCast();
+<<<<<<< HEAD
       });
 
     this.chatService.listenerReceiveSongDetails()
@@ -42,6 +53,29 @@ export class ListenerTrackComponent implements OnInit {
         // this.init();
         this.hearCast();
       });
+=======
+      })
+    this.chatService.songStatusListener()
+      .subscribe(songStatusInfo => {
+        this.video = songStatusInfo['songId'];
+        this.startAt = songStatusInfo['timestamp'];
+        console.log(songStatusInfo, " songstatusinfo and start at")
+        // console.log("this.video, this.resumeAt")
+        // this.player.loadVideoById(this.video, this.startAt)
+
+        this.hearCast();
+      })
+    
+    // this.chatService.listenerReceiveSongDetails()
+    //   .subscribe(songinfo => {
+    //     console.log("song info recieved", songinfo)
+    //     this.startAt = songinfo['listenerStartTime'] - parseInt(songinfo['songinfo'][0].starttime);
+    //     console.log(this.startAt, "  iojoighoaj")
+    //     this.video = songinfo['songinfo'][0].songid;
+    //     this.init();
+    //     this.hearCast();
+    //   })
+>>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
   }
   init() {
     var tag = document.createElement('script');
@@ -49,9 +83,13 @@ export class ListenerTrackComponent implements OnInit {
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
+  current(name, photo) {
+    this.chatService.changeListenerPhoto(photo)
+    this.chatService.changeListenerSong(name);
+  }
 
   ngOnInit() {
-    this.chatService.listenerGetSongDetails()
+    
     this.init();
 
     window['onYouTubeIframeAPIReady'] = (e) => {
@@ -63,19 +101,28 @@ export class ListenerTrackComponent implements OnInit {
           // 'onStateChange': this.onPlayerStateChange.bind(this),
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
-            this.player.loadVideoById(this.video);
-
+            // this.player.loadVideoById(this.video);
+            this.chatService.listenerGetSongDetails()
           },
         }
       });
     };
+<<<<<<< HEAD
 
+=======
+    console.log(" in ng init")
+    
+>>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
   }
 
   hearCast() {
-    this.init();
+   this.init();
+    console.log(this, "  in hear cast")
+    console.log(this.startAt, "  in hear cast")
+    console.log(this.player, "  in hear cast")
     if (this.player !== undefined){
-      this.player.loadVideoById(this.video)
+      console.log(this.startAt, "  in hear cast")
+      this.player.loadVideoById(this.video, this.startAt)
     }
 
     // console.log("start cast was fired", this.player)
@@ -84,7 +131,7 @@ export class ListenerTrackComponent implements OnInit {
 
   pauseCast() {
     if (this.paused) {
-      console.log("paused is true in pausecast")
+      console.log(this.player, "paused is true in pausecast")
       this.player.loadVideoById(this.video, this.resumeAt)
       this.paused = false;
     } else {

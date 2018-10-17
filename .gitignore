@@ -1,7 +1,14 @@
 node_modules
-/server/config.js
+server/config.js
 #package-lock.json
+<<<<<<< HEAD
 /src/config.js
 Dockerfile
 .env
 /nginxconfig.conf
+=======
+src/app/config.js
+Dockerfile
+.env
+dist
+>>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
