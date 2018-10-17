@@ -38,16 +38,19 @@ const {
   changeDjSong,
 } = require('./database');
 // hidden keys
-const {
-  Youtube,
-  ClientID,
-  ClientSecret,
-  RedirectURL,
-  TOKEN,
-  API_KEY,
-} = require('./config.js');
+
+// const {
+//   Youtube,
+//   ClientID,
+//   ClientSecret,
+//   RedirectURL,
+//   TOKEN,
+//   API_KEY,
+// } = require('./config.js');
 //  api methods
 
+// const ClientID = process.env.clientID;
+// const ClientSecret = process.env.clientSecret;
 
 const {
   playlist,
@@ -396,8 +399,8 @@ const googleCallbackURL = '/auth/google/callback';
 
 // session entry
 passport.use(new GoogleStrategy({
-  clientID: ClientID,
-  clientSecret: ClientSecret,
+  clientID: process.env.ClientID,
+  clientSecret: process.env.ClientSecret,
   callbackURL: googleCallbackURL,
   passReqToCallback: true,
 },
