@@ -15,6 +15,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { AdminGuard } from './auth/guards/admin.guard';
 import { ChatService } from "./services/chat.service";
 import { OpentokService } from './services/opentok.service';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -26,6 +27,7 @@ import { OpentokService } from './services/opentok.service';
     AppComponent,
     HomeComponent,
     LandingComponent,
+    NavbarComponent,
     
   ],
   imports: [

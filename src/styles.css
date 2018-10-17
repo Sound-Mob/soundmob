@@ -90,9 +90,8 @@ input[type="color"]:focus,
   position: absolute;
 }
 
-body {
+body {  
   font-size: 20px;
-  color: #212529;
   font-family: 'Lora', 'Times New Roman', serif;
 }
 
@@ -207,15 +206,16 @@ img::-moz-selection {
     background: transparent;
   }
   #mainNav .navbar-brand {
+
     padding: 10px 20px;
-    color: #fff;
+    color:black;
   }
   #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
     color: rgba(255, 255, 255, 0.8);
   }
   #mainNav .navbar-nav > li.nav-item > a {
     padding: 10px 20px;
-    color: #fff;
+    color: black;
   }
   #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover {
     color: rgba(255, 255, 255, 0.8);
@@ -503,8 +503,4 @@ footer .copyright {
 .btn-lg {
   font-size: 16px;
   padding: 25px 35px;
-}
-
-#paysonContainer{
-  display: none;
 }

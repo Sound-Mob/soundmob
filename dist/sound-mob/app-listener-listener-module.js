@@ -124,7 +124,7 @@ exports.ListenerRoutingModule = ListenerRoutingModule;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "#listenertok {\n  display: none;\n}"
+module.exports = ""
 
 /***/ }),
 
@@ -313,7 +313,7 @@ exports.ProfileComponent = ProfileComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}"
+module.exports = ""
 
 /***/ }),
 
