@@ -852,7 +852,11 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
+module.exports = __webpack_require__(/*! /Users/connor/Documents/soundmob/src/main.ts */"./src/main.ts");
+=======
 module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
+>>>>>>> 2bc20aea39c4d1d32700c5a08964101fa8c04cdb
 
 
 /***/ }),
