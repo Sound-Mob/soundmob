@@ -21,7 +21,7 @@ module.exports = {
   createUser: (googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive) => {
     return db.any('INSERT INTO users (googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [googleid, firstname, lastname, bio, followercount, followingcount, useractive, djactive]);
   },
-  
+
   // adds a sound to samples collection
   addSound: (sample, id) => {
     return db.any('INSERT INTO soundsamples (binarydata, ownerid) VALUES ($1, $2)', [sample, id]);
@@ -60,5 +60,5 @@ module.exports = {
 
   getSoundsById: (id) => {
     return db.any(`SELECT * FROM soundsamples WHERE ownerid = $1`, id)
-  }
+  },
 };
