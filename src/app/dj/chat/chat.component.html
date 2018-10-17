@@ -1,15 +1,4 @@
-<!-- <ul>
-  <li *ngFor="let message of chatMessages">
-    <b>{{message.userName}} {{message.lastName}}:</b>
-    <p>{{message.message}}</p>
-  </li>
-</ul>
-<input type="button" value="startCast" (click)="startCast()" />
-<br>
-<iframe id='paysonContainer' allow="autoplay" [src]="video | youtube"></iframe> -->
-<!-- <input type="text" [(ngModel)]="messageToSend"> -->
 
-<!-- <button (click)="sendChatMessage()">Send!</button>  -->
 
 
 <div class="card border-0 rounded" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 75vh;">
@@ -28,7 +17,7 @@
     <div id="sohbet" class="card border-0 m-0 p-0 position-relative bg-transparent" style="overflow-y: auto; height: 100vh;" *ngFor="let message of chatMessages">
       <div *ngIf="message.id !== profile.googleid">
         <div class="balon1 p-2 m-0 position-relative">
-          <b>{{message.userName}} {{message.lastName}}</b>
+          <b class="float-right">{{message.userName}} {{message.lastName}}</b>
           <a class="float-right">{{message.message}}</a>
         </div>
       </div>
@@ -48,16 +37,12 @@
       <div class="row m-0 p-0">
         <div class="col-9 m-0 p-1">
 
-          <!-- <input id="text" class="mw-100 border rounded form-control" type="text" name="text" title="Type a message..."
-            placeholder="Type a message..." required> -->
             <input id="text" class="mw-100 border rounded form-control" type="text" name="text" title="Type a message..."
             placeholder="Type a message..." required [(ngModel)]="messageToSend">
 
         </div>
         <div class="col-3 m-0 p-1">
 
-          <!-- <button class="btn btn-outline-secondary rounded border w-100" title="Gönder!" style="padding-right: 16px;"><i
-              class="fa fa-paper-plane" aria-hidden="true"></i></button> -->
           <button class="btn btn-outline-secondary rounded border w-100" title="Gönder!" style="padding-right: 16px;" (click)="sendChatMessage()"><i class="fa fa-paper-plane"
             aria-hidden="true" ></i>Send!</button>
 
