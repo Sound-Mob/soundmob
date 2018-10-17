@@ -53,7 +53,7 @@ module.exports = "/* .container{\n  background: white;\n  height: 208;\n}\n.head
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    \n    <div class=\"col-sm-8\">\n      <ul *ngFor=\"let dj of activeDj.djs\">\n        <li>\n          <img src={{dj.photo}}>\n          <a routerLink=\"/listener\" routerLinkActive=\"active\" (click)=\"joinDj($event)\">\n          <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-2\">\n      <button routerLink=\"/dj\">Create Station</button>\n    </div>\n  </div>\n</div>"
+module.exports = "\n<router-outlet></router-outlet>\n\n\n<header class=\"masthead\">\n  <div class=\"overlay\"></div>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-lg-8 col-md-10 mx-auto\">\n\n        <div class=\"site-heading\">\n          <h1>{{profile.firstname}} {{profile.lasttname}}</h1>\n          <span class=\"subheading\">{{profile.bio}}</span>\n        </div>\n\n      </div>\n    </div>\n  </div>\n</header>\n\n\n  <div class=\"row\">\n    \n    <div class=\"col-sm-8\">\n        <div *ngFor=\"let dj of activeDj.djs\">\n            <div class=\"team_wrapper clearfix\">\n              <div class=\"single_member text-center\">\n                <img class=\"rounded-circle\" src={{dj.photo}} width=\"100\" height=\"100\">\n                <a routerLink=\"/listener\" routerLinkActive=\"active\" (click)=\"joinDj($event)\">\n                <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n                </a>\n              </div>\n            </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\"> \n      <button class=\"btn std-btn btn-lg btn-info\"routerLink=\"/dj\" routerLinkActive=\"active\">Create Station</button>\n  </div>\n  \n  \n\n"
 
 /***/ }),
 
@@ -80,16 +80,22 @@ const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 const djlist_service_1 = __webpack_require__(/*! ../services/djlist.service */ "./src/app/services/djlist.service.ts");
 const chat_service_1 = __webpack_require__(/*! ../services/chat.service */ "./src/app/services/chat.service.ts");
+const dj_profile_service_1 = __webpack_require__(/*! ../services/dj-profile.service */ "./src/app/services/dj-profile.service.ts");
 let FeaturedComponent = class FeaturedComponent {
-    constructor(http, djList, djJoin) {
+    constructor(http, djList, djJoin, djProfileService) {
         this.http = http;
         this.djList = djList;
         this.djJoin = djJoin;
+        this.djProfileService = djProfileService;
     }
     ngOnInit() {
         this.djList.liveDjReq();
         this.djList.liveDj()
             .subscribe((data) => this.activeDj = data);
+        this.djProfileService.getProfileInfo()
+            .subscribe(profile => {
+            this.profile = profile;
+        });
     }
     joinDj(event) {
         console.log(event.target, 'thisthe event log');
@@ -104,7 +110,10 @@ FeaturedComponent = __decorate([
         template: __webpack_require__(/*! ./featured.component.html */ "./src/app/featured/featured.component.html"),
         styles: [__webpack_require__(/*! ./featured.component.css */ "./src/app/featured/featured.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient, djlist_service_1.DjlistService, chat_service_1.ChatService])
+    __metadata("design:paramtypes", [http_1.HttpClient,
+        djlist_service_1.DjlistService,
+        chat_service_1.ChatService,
+        dj_profile_service_1.DjProfileService])
 ], FeaturedComponent);
 exports.FeaturedComponent = FeaturedComponent;
 
