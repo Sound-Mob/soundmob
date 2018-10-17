@@ -22,7 +22,8 @@ export class SoundplayerComponent implements OnInit {
   ];
 
   // video: string;
-
+  photo: string;
+  name:string;
   constructor(private chatService: ChatService) {
   
     // this.chatService.listenerReceiveSongDetails()
@@ -39,5 +40,14 @@ export class SoundplayerComponent implements OnInit {
   }
   ngOnInit() {
     // this.chatService.listenerGetSongDetails()
+    this.chatService.currentListener
+    .subscribe((data) => {
+      console.log(data,' insidne the soundComponent listener')
+      this.name = data;
+    })
+    this.chatService.currentListenerPhoto
+    .subscribe((data) => {
+      this.photo =data
+    })
   }
 }
