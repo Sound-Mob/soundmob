@@ -9,12 +9,22 @@ import { Observable, BehaviorSubject } from 'rxjs'
 export class ChatService {
   private songSource = new BehaviorSubject<string>('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
   currentSong = this.songSource.asObservable();
+  private listenerSong = new BehaviorSubject<string>("");
+  currentListener = this.listenerSong.asObservable();
+  private listenerPhoto = new BehaviorSubject<string>("");
+  currentListenerPhoto = this.listenerPhoto.asObservable();
   // private socket = io(`http://localhost:3000`)
   private socket = io();
 
   constructor() { }
   changeSong(song:string) {
     this.songSource.next(song);
+  }
+  changeListenerSong(name:string) {
+    this.listenerSong.next(name);
+  }
+  changeListenerPhoto(photo:string) {
+    this.listenerPhoto.next(photo);
   }
   createRoom(googleId) {
     this.socket.emit('newroom', googleId)

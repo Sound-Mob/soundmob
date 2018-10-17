@@ -18,6 +18,8 @@ export class ListenerTrackComponent implements OnInit {
   public pausedAt: number = 0;
   public resumeAt: number = 0;
   public startAt: number = 0;
+  public trackTitle: string;
+  public trackPhoto: string;
   constructor(private chatService: ChatService) { 
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
@@ -27,10 +29,14 @@ export class ListenerTrackComponent implements OnInit {
       })
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
+        console.log('here in listener', resumeInfo);
+      this.trackTitle = resumeInfo['name'];
+        this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
-        console.log(this.video, this.resumeAt)
-        console.log("this.video, this.resumeAt")
+        // console.log(this.video, this.resumeAt)
+        // console.log("this.video, this.resumeAt")
+        this.current(this.trackTitle,this.trackPhoto);
         this.pauseCast();
       })
     this.chatService.songStatusListener()
@@ -59,6 +65,10 @@ export class ListenerTrackComponent implements OnInit {
     tag.src = 'http://www.youtube.com/iframe_api';
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+  current(name, photo) {
+    this.chatService.changeListenerPhoto(photo)
+    this.chatService.changeListenerSong(name);
   }
 
   ngOnInit() {

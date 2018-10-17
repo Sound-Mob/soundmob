@@ -53,15 +53,11 @@ const {
 
 
 const {
-  playlist,
   playlistIDs,
   videoIDArray,
   searchDetails,
-  searchDetailsArray,
   getSoundBoard,
-  createPlaylist,
-  searchSong,
-  insertSong,
+  listenerInfo,
 } = require('./util.js');
 // middlewares
 app.use(cors());
@@ -74,7 +70,7 @@ app.use(cookieSession({
 }));
 
 const port = process.env.PORT || 3000;
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -179,16 +175,20 @@ io.on('connection', (socket) => {
   });
 
   // listen for song pausing
-  socket.on('paused', (pauseInfo)=>{
-    // make youtube call for song title and picture and add to pauseInfo object
+  socket.on('paused', (pauseInfo) => {
     io.sockets.emit('pauseRelay', pauseInfo);
-  })
-
+  });
   // listen for song resuming
   socket.on('unpause', (resumeInfo) => {
-    console.log(resumeInfo)
-    io.sockets.emit('resumeRelay', resumeInfo);
-  })
+    // make youtube call for song title and picture and add to pauseInfo object
+    listenerInfo(accessToken, resumeInfo.songId)
+      .then(({ items }) => {
+        const snippet = items[0].snippet;
+        resumeInfo.name = snippet.title;
+        resumeInfo.photo = snippet.thumbnails.high.url;
+        io.sockets.emit('resumeRelay', resumeInfo);
+      });
+  });
 
   // listen for sound request
   socket.on('soundEmit', (data) => {
@@ -214,7 +214,7 @@ io.on('connection', (socket) => {
       const minsInSeconds = Number(songStartTime[3] + songStartTime[4]) * 60;
       const seconds = Number(songStartTime[6] + songStartTime[7]);
       songStartTime = minsInSeconds + seconds;
-      console.log({songStartTime})
+      // console.log({songStartTime})
       io.sockets.emit('castOn', { songStartTime, songDuration });
 
       getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
