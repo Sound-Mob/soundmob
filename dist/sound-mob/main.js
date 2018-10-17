@@ -540,7 +540,8 @@ const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 let ChatService = class ChatService {
     constructor() {
-        this.socket = io('http://localhost:3000', { transports: ['websocket'] });
+        // private socket = io(`http://localhost:3000`)
+        this.socket = io();
     }
     createRoom(googleId) {
         this.socket.emit('newroom', googleId);
@@ -760,7 +761,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/connor/Documents/soundmob/src/main.ts */"./src/main.ts");
 
 
 /***/ }),
