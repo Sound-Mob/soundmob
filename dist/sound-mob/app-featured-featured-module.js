@@ -168,7 +168,8 @@ const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 let DjlistService = class DjlistService {
     constructor() {
-        this.socket = io('http://localhost:3000', { transports: ['websocket'] });
+        // private socket = io(`http://localhost:3000`)
+        this.socket = io();
     }
     liveDj() {
         let observable = new rxjs_1.Observable(observer => {

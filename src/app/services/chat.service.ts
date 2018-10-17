@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client'
-import { Observable } from 'rxjs'
+import { Observable, BehaviorSubject } from 'rxjs'
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-
+  private songSource = new BehaviorSubject<string>('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
+  currentSong = this.songSource.asObservable();
   // private socket = io(`http://localhost:3000`)
   private socket = io();
 
   constructor() { }
-
+  changeSong(song:string) {
+    this.songSource.next(song);
+  }
   createRoom(googleId) {
     this.socket.emit('newroom', googleId)
   }
