@@ -21,23 +21,23 @@ export class SoundplayerComponent implements OnInit {
     }
   ];
 
-  video: string;
+  // video: string;
 
   constructor(private chatService: ChatService) {
   
-    this.chatService.listenerReceiveSongDetails()
-      .subscribe(songinfo => {
-        // console.log(" start time ready for vid");
-        let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
-        if (startAt < 0 || startAt === null){
-          startAt = 0;
-        }
-        // console.log( {songinfo, startAt}, " song info in received");
-        this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
+    // this.chatService.listenerReceiveSongDetails()
+    //   .subscribe(songinfo => {
+    //     // console.log(" start time ready for vid");
+    //     let startAt = songinfo['listenerStartTime'] - songinfo['songinfo'][0].starttime;
+    //     if (startAt < 0 || startAt === null){
+    //       startAt = 0;
+    //     }
+    //     // console.log( {songinfo, startAt}, " song info in received");
+    //     // this.video = `https://www.youtube.com/embed/${songinfo['songinfo'][0].songid}?start=${startAt}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
         
-      })
+    //   })
   }
   ngOnInit() {
-    this.chatService.listenerGetSongDetails()
+    // this.chatService.listenerGetSongDetails()
   }
 }

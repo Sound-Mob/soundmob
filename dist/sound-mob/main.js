@@ -641,7 +641,33 @@ let ChatService = class ChatService {
                 observer.next(songInfo);
             });
         });
-        console.log(observable);
+        return observable;
+    }
+    sendPause(songId, pausedAt) {
+        console.log("service of pause reached");
+        this.socket.emit('paused', { songId, pausedAt });
+    }
+    sendUnpause(songId, resumedAt) {
+        console.log(songId, resumedAt);
+        this.socket.emit('unpause', { songId, resumedAt });
+    }
+    resumeListener() {
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('resumeRelay', (resumeInfo) => {
+                console.log(" recieved relay");
+                observer.next(resumeInfo);
+            });
+        });
+        // console.log(observable)
+        return observable;
+    }
+    pauseListener() {
+        let observable = new rxjs_1.Observable(observer => {
+            this.socket.on('pauseRelay', (pauseInfo) => {
+                observer.next(pauseInfo);
+            });
+        });
+        // console.log(observable)
         return observable;
     }
     receiveDjInfo() {
@@ -669,14 +695,12 @@ let ChatService = class ChatService {
                 observer.next(songs);
             });
         });
-        console.log(observable);
         return observable;
     }
     listenerReceiveSongDetails() {
         // console.log('recieved songgg   info')
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('currentSong', (songInfo) => {
-                console.log(songInfo, " songinfo in listener receiver");
                 observer.next(songInfo);
             });
         });
@@ -828,7 +852,11 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! /Users/connor/Documents/soundmob/src/main.ts */"./src/main.ts");
+=======
+module.exports = __webpack_require__(/*! /Users/josephdelahoussaye/Desktop/senior/soundmob/src/main.ts */"./src/main.ts");
+>>>>>>> 2bc20aea39c4d1d32700c5a08964101fa8c04cdb
 
 
 /***/ }),

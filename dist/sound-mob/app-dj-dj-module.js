@@ -44,13 +44,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ "./src/app/services/chat.service.ts");
 const dj_profile_service_1 = __webpack_require__(/*! src/app/services/dj-profile.service */ "./src/app/services/dj-profile.service.ts");
-const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 let ChatComponent = class ChatComponent {
-    constructor(chatService, djProfileService, http) {
+    constructor(chatService, djProfileService) {
         this.chatService = chatService;
         this.djProfileService = djProfileService;
-        this.http = http;
-        this.count = 0;
         this.messageToSend = '';
         this.values = '';
         this.chatMessages = [];
@@ -61,50 +58,6 @@ let ChatComponent = class ChatComponent {
             }
             this.chatMessages.unshift(data);
         });
-        this.chatService.receiveSongs()
-            .subscribe(songs => {
-            this.songs = songs;
-        });
-        this.chatService.djGetSongDetails()
-            .subscribe(details => {
-            this.songStartTime = details.songStartTime;
-            this.songDuration = details.songDuration;
-            setTimeout(() => {
-                this.castContinue();
-            }, details.songDuration);
-        });
-    }
-    // trigger cast on after duration runs
-    castContinue() {
-        let time;
-        if (this.songDuration) {
-            time = this.songDuration;
-            console.log(time, " in if yes");
-        }
-        else {
-            time = 6000;
-            console.log(time, " in if no");
-        }
-        setTimeout(() => {
-            this.startCast();
-        }, time * 1000);
-        let counter = this.count + 1;
-        if (this.songs[counter]) {
-            this.count++;
-        }
-    }
-    // start music
-    startCast() {
-        this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
-        this.chatService.djStartCast(this.songs[this.count]);
-        this.http.post('djView/songDetails', { songs: this.songs })
-            .subscribe((data) => {
-            this.currentSongs = data;
-            this.current();
-        });
-    }
-    current() {
-        this.chatService.changeSong(this.currentSongs[this.count - 1].photo);
     }
     ngOnInit() {
         this.chatService.createRoom("hey");
@@ -130,8 +83,7 @@ ChatComponent = __decorate([
         styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/dj/chat/chat.component.css")]
     }),
     __metadata("design:paramtypes", [chat_service_1.ChatService,
-        dj_profile_service_1.DjProfileService,
-        http_1.HttpClient])
+        dj_profile_service_1.DjProfileService])
 ], ChatComponent);
 exports.ChatComponent = ChatComponent;
 
@@ -214,6 +166,7 @@ const subscriber_component_1 = __webpack_require__(/*! ./tokbox/subscriber/subsc
 const publisher_component_1 = __webpack_require__(/*! ./tokbox/publisher/publisher.component */ "./src/app/dj/tokbox/publisher/publisher.component.ts");
 const chat_component_1 = __webpack_require__(/*! ./chat/chat.component */ "./src/app/dj/chat/chat.component.ts");
 const youtube_pipe_1 = __webpack_require__(/*! ../pipes/youtube.pipe */ "./src/app/pipes/youtube.pipe.ts");
+const track_component_1 = __webpack_require__(/*! ./track-component/track.component */ "./src/app/dj/track-component/track.component.ts");
 let DjModule = class DjModule {
 };
 DjModule = __decorate([
@@ -233,6 +186,7 @@ DjModule = __decorate([
             publisher_component_1.PublisherComponent,
             chat_component_1.ChatComponent,
             youtube_pipe_1.YoutubePipe,
+            track_component_1.TrackComponent,
         ],
         providers: [opentok_service_1.OpentokService]
     })
@@ -260,7 +214,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n  <app-profile></app-profile>\n  \n  <app-soundplayer></app-soundplayer>\n  <br>\n  <div>\n    <app-chat></app-chat>\n      <dj-tokbox></dj-tokbox>\n  </div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n  <app-profile></app-profile>\n  \n  <app-soundplayer></app-soundplayer>\n  <br>\n  <div>\n    <app-track></app-track>\n    <app-chat></app-chat>\n      <dj-tokbox></dj-tokbox>\n  </div>\n"
 
 /***/ }),
 
@@ -873,6 +827,167 @@ SubscriberComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], SubscriberComponent);
 exports.SubscriberComponent = SubscriberComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/dj/track-component/track.component.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/dj/track-component/track.component.ts ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+let TrackComponent = class TrackComponent {
+    constructor(chatService, http) {
+        this.chatService = chatService;
+        this.http = http;
+        this.count = 0;
+        this.paused = false;
+        this.chatService.receiveSongs()
+            .subscribe(songs => {
+            this.songs = songs;
+            console.log({ songs }, " receive songs happening in dj");
+        });
+    }
+    init() {
+        var tag = document.createElement('script');
+        tag.src = 'http://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+    ngOnInit() {
+        this.init();
+        // this.video = '14WE3A0PwVs' //video id
+        window['onYouTubeIframeAPIReady'] = (e) => {
+            this.YT = window['YT'];
+            this.player = new window['YT'].Player('player', {
+                videoId: this.video,
+                playerVars: {
+                    'autoplay': 1
+                },
+                events: {
+                    'onStateChange': this.onPlayerStateChange.bind(this),
+                    'onError': this.onPlayerError.bind(this),
+                    'onReady': (e) => {
+                        console.log('iFrame ready', this.player.getVolume());
+                    },
+                }
+            });
+        };
+    }
+    current() {
+        this.chatService.changeSong(this.currentSongs[this.count].photo);
+    }
+    pauseCast() {
+        console.log(this.paused);
+        if (this.paused) {
+            this.player.loadVideoById(this.songs[this.count], this.pausedAt);
+            console.log(this.pausedAt, "should be sending unpause");
+            this.paused = false;
+        }
+        else {
+            this.player.pauseVideo();
+            this.paused = true;
+        }
+    }
+    startCast() {
+        this.init();
+        this.player.loadVideoById(this.songs[this.count]);
+        console.log("start cast was fired", this.songs[this.count]);
+        this.chatService.djStartCast(this.songs[this.count]);
+        this.http.post('djView/songDetails', { songs: this.songs })
+            .subscribe((data) => {
+            this.currentSongs = data;
+            this.current();
+        });
+    }
+    onPlayerStateChange(event) {
+        console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED);
+        switch (event.data) {
+            case window['YT'].PlayerState.PLAYING:
+                if (this.cleanTime() == 0) {
+                    console.log('started ' + this.cleanTime());
+                }
+                else {
+                    let timestamp = this.cleanTime();
+                    this.chatService.sendPause(this.songs[this.count], timestamp);
+                    console.log('playing ' + this.cleanTime());
+                }
+                ;
+                break;
+            case window['YT'].PlayerState.PAUSED:
+                if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
+                    console.log('paused' + ' @ ' + this.cleanTime());
+                    let timestamp = this.cleanTime();
+                    this.pausedAt = this.cleanTime();
+                    this.chatService.sendUnpause(this.songs[this.count], timestamp);
+                }
+                ;
+                break;
+            case window['YT'].PlayerState.ENDED:
+                this.count = this.count + 1;
+                console.log("start cast was fired", this.songs[this.count]);
+                console.log("start cast was fired", this.songs);
+                // work around to make
+                this.player.seekTo(this.player.getDuration(), true);
+                this.startCast();
+                // this.chatService.djStartCast(this.songs[this.count]);
+                break;
+        }
+        ;
+    }
+    ;
+    //utility
+    cleanTime() {
+        return Math.round(this.player.getCurrentTime());
+    }
+    ;
+    onPlayerError(event) {
+        switch (event.data) {
+            case 2:
+                console.log('' + this.video);
+                break;
+            case 100:
+                break;
+            case 101 || 150:
+                break;
+        }
+        ;
+    }
+    ;
+};
+TrackComponent = __decorate([
+    core_1.Component({
+        selector: 'app-track',
+        template: `<div class="max-width-1024">
+  <div>
+  <input type="button" value="startCast" (click)="startCast()" />
+  <input type="button" value="pauseCast" (click)="pauseCast()" />
+      <div class="embed-responsive embed-responsive-16by9" id="player"> 
+      </div>
+      </div>
+    </div>`,
+        styles: [`.max-width-1024 { max-width: 1024px; margin: 0 auto; }`],
+    }),
+    __metadata("design:paramtypes", [chat_service_1.ChatService, http_1.HttpClient])
+], TrackComponent);
+exports.TrackComponent = TrackComponent;
 
 
 /***/ })
