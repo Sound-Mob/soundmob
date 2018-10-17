@@ -5,7 +5,9 @@
   </li>
 </ul>
 <input type="button" value="startCast" (click)="startCast()" />
+<br>
 <iframe id='paysonContainer' allow="autoplay" [src]="video | youtube"></iframe>
 <input type="text" [(ngModel)]="messageToSend">
+
 <button (click)="sendChatMessage()">Send!</button>
-<button class="btun" (click)="getMessage()">get</button>
+<!-- <button class="btun" (click)="getMessage()">get</button> -->

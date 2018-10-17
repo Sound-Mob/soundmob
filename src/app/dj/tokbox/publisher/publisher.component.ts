@@ -24,7 +24,9 @@ export class PublisherComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const OT = this.opentokService.getOT();
-    this.publishOptions = { videoSource: null, insertMode: 'append' };
+    this.publishOptions = {
+      videoSource: null, insertMode: 'append', height: "10%",
+      width: "10%"};
     this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, this.publishOptions);
 
     if (this.session) {

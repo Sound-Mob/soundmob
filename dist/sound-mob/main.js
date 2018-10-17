@@ -187,39 +187,6 @@ const auth_guard_1 = __webpack_require__(/*! ./auth/guards/auth.guard */ "./src/
 const admin_guard_1 = __webpack_require__(/*! ./auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const chat_service_1 = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
 const opentok_service_1 = __webpack_require__(/*! ./services/opentok.service */ "./src/app/services/opentok.service.ts");
-// import { YoutubePipe } from './youtube.pipe';
-//angular material components
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MatCheckboxModule } from '@angular/material';
-// import { MatButtonModule } from '@angular/material';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatAutocompleteModule } from '@angular/material/autocomplete';
-// import { MatDatepickerModule } from '@angular/material/datepicker';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatRadioModule } from '@angular/material/radio';
-// import { MatSelectModule } from '@angular/material/select';
-// import { MatSliderModule } from '@angular/material/slider';
-// import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-// import { MatMeuModule } from '@angular/material/menu';
-// import { MatSidenavModule } from '@angular/material/sidenav';
-// import { MatToolbarModule } from '@angular/material/toolbar';
-// import { MatListModule } from '@angular/material/list';
-// import { MatGridListModule } from '@angular/material/grid-list';
-// import { MatCardModule } from '@angular/material/card';
-// import { MatStepperModule } from '@angular/material/stepper';
-// import { MatTabsModule } from '@angular/material/tabs';
-// import { MatExpansionModule } from '@angular/material/expansion';
-// import { MatButtonToggleModule } from '@angular/material/button-toggle';
-// import { MatChipsModule } from '@angular/material/chips';
-// import { MatIconModule } from '@angular/material/icon';
-// import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-// import { MatProgressBarModule } from '@angular/material/progress-bar';
-// import { MatDialogModule } from '@angular/material/dialog';
-// import { MatTooltipModule } from '@angular/material/tooltip';
-// import { MatSnackBarModule } from '@angular/material/snack-bar';
-// import { MatTableModule } from '@angular/material/table';
-// import { MatSortModule } from '@angular/material/sort';
-// import { MatPaginatorModule } from '@angular/material/paginator';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -235,41 +202,6 @@ AppModule = __decorate([
             http_1.HttpModule,
             forms_1.FormsModule,
             http_2.HttpClientModule
-            //begin import of angular material
-            // BrowserAnimationsModule,
-            // BrowserModule,
-            // BrowserAnimationsModule,
-            // MatCheckboxModule,
-            // MatCheckboxModule,
-            // MatButtonModule,
-            // MatInputModule,
-            // MatAutocompleteModule,
-            // MatDatepickerModule,
-            // MatFormFieldModule,
-            // MatRadioModule,
-            // MatSelectModule,
-            // MatSliderModule,
-            // MatSlideToggleModule,
-            // MatMenuModule,
-            // MatSidenavModule,
-            // MatToolbarModule,
-            // MatListModule,
-            // MatGridListModule,
-            // MatCardModule,
-            // MatStepperModule,
-            // MatTabsModule,
-            // MatExpansionModule,
-            // MatButtonToggleModule,
-            // MatChipsModule,
-            // MatIconModule,
-            // MatPaginatorModule,
-            // MatProgressSpinnerModule,
-            // MatProgressBarModule,
-            // MatDialogModule,
-            // MatTooltipModule,
-            // MatSnackBarModule,
-            // MatTableModule,
-            // MatSortModule,
         ],
         providers: [auth_guard_1.AuthGuard, auth_service_1.AuthService, admin_guard_1.AdminGuard, chat_service_1.ChatService, opentok_service_1.OpentokService],
         bootstrap: [app_component_1.AppComponent]
@@ -607,7 +539,8 @@ const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 let ChatService = class ChatService {
     constructor() {
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+        // private socket = io(`http://localhost:3000`)
+        this.socket = io();
     }
     createRoom(googleId) {
         this.socket.emit('newroom', googleId);
@@ -664,7 +597,7 @@ let ChatService = class ChatService {
         console.log('recieved songs');
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('songList', (songs) => {
-                console.log(songs);
+                // console.log(songs);
                 observer.next(songs);
             });
         });
@@ -675,15 +608,18 @@ let ChatService = class ChatService {
         // console.log('recieved songgg   info')
         let observable = new rxjs_1.Observable(observer => {
             this.socket.on('currentSong', (songInfo) => {
-                console.log(songInfo, " in  listen get song deets");
+                console.log(songInfo, " songinfo in listener receiver");
                 observer.next(songInfo);
             });
         });
-        console.log(observable);
+        // console.log(observable)
         return observable;
     }
     listenerGetSongDetails() {
         this.socket.emit("listenerGetCurrentSong");
+    }
+    djInfoReq() {
+        this.socket.emit('djInfoReq');
     }
 };
 ChatService = __decorate([
