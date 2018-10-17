@@ -118,7 +118,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <nav>\n<a routerLink=\"/\" >Home</a>\n\n<a routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n\n<a routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n\n<a routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n\n  </nav>\n\n</div>\n\n\n\n<div class=\"center\">\n\n<router-outlet></router-outlet>\n\n</div>\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n<app-navbar></app-navbar>\n\n<div class=\"container\">\n  <router-outlet></router-outlet>\n</div>\n"
 
 /***/ }),
 
@@ -187,6 +187,7 @@ const auth_guard_1 = __webpack_require__(/*! ./auth/guards/auth.guard */ "./src/
 const admin_guard_1 = __webpack_require__(/*! ./auth/guards/admin.guard */ "./src/app/auth/guards/admin.guard.ts");
 const chat_service_1 = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
 const opentok_service_1 = __webpack_require__(/*! ./services/opentok.service */ "./src/app/services/opentok.service.ts");
+const navbar_component_1 = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/navbar/navbar.component.ts");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -195,6 +196,7 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             home_component_1.HomeComponent,
             landing_component_1.LandingComponent,
+            navbar_component_1.NavbarComponent,
         ],
         imports: [
             platform_browser_1.BrowserModule,
@@ -369,9 +371,8 @@ __webpack_require__.r(__webpack_exports__);
   SAMPLE_SERVER_BASE_URL: 'http://localhost:3000',
   TOKEN: 'T1==cGFydG5lcl9pZD00NjE5NDYxMiZzaWc9YWZjZTA1YWZiZmE2OWQ3NmY2ZmIzODQyNjg0NzMzZDMyZjkwZmY3YzpzZXNzaW9uX2lkPTFfTVg0ME5qRTVORFl4TW41LU1UVXpPVEF6TXpVek5qSTBOSDVoT1U4MGFpdGtVVFJDZWpOTFlsVmpRVUpCWnpSSVZUUi1mZyZjcmVhdGVfdGltZT0xNTM5MDMzNjEzJm5vbmNlPTAuNDA1MjUzOTkxNjE0NjA3NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTQxNjI5MjEyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9',
   API_KEY: '46194612',
-  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg',
+  SESSION_ID: '1_MX40NjE5NDYxMn5-MTUzOTAzMzUzNjI0NH5hOU80aitkUTRCejNLYlVjQUJBZzRIVTR-fg'
 });
-
 
 /***/ }),
 
@@ -382,7 +383,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "input{\n    width: 20rem;\n    height: 2rem;\n    font-size: 1.2rem;\n}"
+module.exports = ""
 
 /***/ }),
 
@@ -444,7 +445,7 @@ exports.HomeComponent = HomeComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n}\n"
+module.exports = "#landing{\n  padding: 70px;\n}\n#log-login-btn{\n  padding-left: 30px;\n}"
 
 /***/ }),
 
@@ -455,7 +456,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"row\">\n        <div class=\"col-md-4\">\n        </div>\n        <div class=\"col-md-4\" align=\"center\">\n          <h3>\n            Sound Mob\n          </h3><img alt=\"Bootstrap Image Preview\" src=\"https://operationspark.org/assets/images/Robot-Mascot.png\"\n            height=\"350\" />\n          <br>\n          <br>\n          <button type=\"button\" class=\"btn btn-success\" routerLink=\"/posts\" routerLinkActive=\"active\">\n            <a href=\"/auth\">Sign In with Google</a>\n          </button>\n        </div>\n        <div class=\"col-md-4\">\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\" id=\"landing\">\n      <img alt=\"Bootstrap Image Preview\" src=\"https://operationspark.org/assets/images/Robot-Mascot.png\"\n        height=\"350\" />\n      <br>\n      <br>\n      <button type=\"button\" class=\"btn btn-success col-lg-5 col-md-10 mx-auto\" routerLink=\"/posts\" routerLinkActive=\"active\" id=\"login-btn\">\n        <a href=\"/auth\">Sign In with Google</a>\n      </button>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -516,6 +517,66 @@ exports.LandingComponent = LandingComponent;
 
 /***/ }),
 
+/***/ "./src/app/navbar/navbar.component.css":
+/*!*********************************************!*\
+  !*** ./src/app/navbar/navbar.component.css ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/navbar/navbar.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/navbar/navbar.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- <nav>\n  <a routerLink=\"/\">Home</a>\n\n  <a routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n\n  <a routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n\n  <a routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n\n</nav> -->\n\n<nav class=\"navbar navbar-expand-lg navbar-light fixed-top\" id=\"mainNav\">\n  <div class=\"container\">\n    <h3 class=\"navbar-brand\">Soundmob</h3>\n    <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\"\n      aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      Menu\n      <i class=\"fas fa-bars\"></i>\n    </button>\n    <div class=\"collapse navbar-collapse \" id=\"navbarResponsive\">\n      <ul class=\"navbar-nav ml-auto\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/\">Home</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/featured\" routerLinkActive=\"active\">Featured</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/listener\" routerLinkActive=\"active\">Listener</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/dj\" routerLinkActive=\"active\">Dj</a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>"
+
+/***/ }),
+
+/***/ "./src/app/navbar/navbar.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/navbar/navbar.component.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+let NavbarComponent = class NavbarComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+NavbarComponent = __decorate([
+    core_1.Component({
+        selector: 'app-navbar',
+        template: __webpack_require__(/*! ./navbar.component.html */ "./src/app/navbar/navbar.component.html"),
+        styles: [__webpack_require__(/*! ./navbar.component.css */ "./src/app/navbar/navbar.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], NavbarComponent);
+exports.NavbarComponent = NavbarComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/services/chat.service.ts":
 /*!******************************************!*\
   !*** ./src/app/services/chat.service.ts ***!
@@ -540,7 +601,13 @@ const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 let ChatService = class ChatService {
     constructor() {
-        this.socket = io('http://localhost:3000', { transports: ['websocket'] });
+        this.songSource = new rxjs_1.BehaviorSubject('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg');
+        this.currentSong = this.songSource.asObservable();
+        // private socket = io(`http://localhost:3000`)
+        this.socket = io();
+    }
+    changeSong(song) {
+        this.songSource.next(song);
     }
     createRoom(googleId) {
         this.socket.emit('newroom', googleId);
@@ -760,7 +827,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/JanAlamis/Documents/soundmob/soundmob/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/kenneththomas/Desktop/soundmob/src/main.ts */"./src/main.ts");
 
 
 /***/ }),
