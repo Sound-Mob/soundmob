@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n\n<button (click)=\"sendChatMessage()\">Send!</button>\n<!-- <button class=\"btun\" (click)=\"getMessage()\">get</button> -->"
+module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n\n<!-- Styles -->\t\n<style>\n    .example1 {\n     height: 50px;\t\n     overflow: hidden;\n     position: relative;\n    }\n    .example1 h3 {\n     font-size: 3em;\n     color: limegreen;\n     position: absolute;\n     width: 100%;\n     height: 100%;\n     margin: 0;\n     line-height: 50px;\n     text-align: center;\n     /* Starting position */\n     -moz-transform:translateX(100%);\n     -webkit-transform:translateX(100%);\t\n     transform:translateX(100%);\n     /* Apply animation to this element */\t\n     -moz-animation: example1 15s linear infinite;\n     -webkit-animation: example1 15s linear infinite;\n     animation: example1 15s linear infinite;\n    }\n    /* Move it (define the animation) */\n    @-moz-keyframes example1 {\n     0%   { -moz-transform: translateX(100%); }\n     100% { -moz-transform: translateX(-100%); }\n    }\n    @-webkit-keyframes example1 {\n     0%   { -webkit-transform: translateX(100%); }\n     100% { -webkit-transform: translateX(-100%); }\n    }\n    @keyframes example1 {\n     0%   { \n     -moz-transform: translateX(100%); /* Firefox bug fix */\n     -webkit-transform: translateX(100%); /* Firefox bug fix */\n     transform: translateX(100%); \t\t\n     }\n     100% { \n     -moz-transform: translateX(-100%); /* Firefox bug fix */\n     -webkit-transform: translateX(-100%); /* Firefox bug fix */\n     transform: translateX(-100%); \n     }\n    }\n    </style>\n    \n    <!-- HTML -->\t\n    <div class=\"example1\">  \n    <h3>{{this.currentSongs[this.count -1].name}}</h3>\n    </div>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n\n<button (click)=\"sendChatMessage()\">Send!</button>\n<!-- <button class=\"btun\" (click)=\"getMessage()\">get</button> -->"
 
 /***/ }),
 
@@ -43,9 +43,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ "./src/app/services/chat.service.ts");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 let ChatComponent = class ChatComponent {
-    constructor(chatService) {
+    constructor(chatService, http) {
         this.chatService = chatService;
+        this.http = http;
         this.count = 0;
         this.messageToSend = '';
         this.values = '';
@@ -93,10 +95,17 @@ let ChatComponent = class ChatComponent {
     startCast() {
         this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`;
         this.chatService.djStartCast(this.songs[this.count]);
+        this.http.post('djView/songDetails', { songs: this.songs })
+            .subscribe((data) => {
+            this.currentSongs = data;
+            this.current();
+        });
+    }
+    current() {
+        this.chatService.changeSong(this.currentSongs[this.count - 1].photo);
     }
     ngOnInit() {
         this.chatService.createRoom("hey");
-        this.chatService.selectPlaylist('iddoeooe');
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -114,7 +123,7 @@ ChatComponent = __decorate([
         template: __webpack_require__(/*! ./chat.component.html */ "./src/app/dj/chat/chat.component.html"),
         styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/dj/chat/chat.component.css")]
     }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
+    __metadata("design:paramtypes", [chat_service_1.ChatService, http_1.HttpClient])
 ], ChatComponent);
 exports.ChatComponent = ChatComponent;
 
@@ -427,7 +436,7 @@ exports.SearchComponent = SearchComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}\n#soundboard-button{\n    background-color: rgb(0, 0, 0, 0.10);\n    padding: 1em;\n    margin: 1em;\n}"
+module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}\n#soundboard-button{\n    background-color: rgb(0, 0, 0, 0.10);\n    padding: 1em;\n    margin: 1em;\n}\n/* styles for ticker  */\n.example1 {\n    height: 50px;\t\n    overflow: hidden;\n    position: relative;\n}\n.example1 h3 {\n    font-size: 3em;\n    color: limegreen;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    line-height: 50px;\n    text-align: center;\n    /* Starting position */\n    -webkit-transform:translateX(100%);\t\n    transform:translateX(100%);\n    /* Apply animation to this element */\n    -webkit-animation: example1 15s linear infinite;\n    animation: example1 15s linear infinite;\n}\n/* Move it (define the animation) */\n@-webkit-keyframes example1 {\n    0%   { -webkit-transform: translateX(100%); }\n    100% { -webkit-transform: translateX(-100%); }\n}\n@keyframes example1 {\n    0%   { /* Firefox bug fix */\n    -webkit-transform: translateX(100%); /* Firefox bug fix */\n    transform: translateX(100%); \t\t\n    }\n    100% { /* Firefox bug fix */\n    -webkit-transform: translateX(-100%); /* Firefox bug fix */\n    transform: translateX(-100%); \n    }\n}"
 
 /***/ }),
 
@@ -438,7 +447,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <!-- make this toggleable -->\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showCasts()'>\n          Select Cast\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedCast\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n  \n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n\n    <button class=\"btn btn-outline-info btn-lg btn-block\" type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    \n  \n    <div *ngIf=\"madeNew\">\n    <div *ngIf=\"wasNamed === false\">\n      <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n      <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    </div>\n      <div *ngIf=\"wasNamed\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n        </div>\n      </div>\n    </div>\n    </div>\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()' class=\"btn btn-outline-info btn-lg btn-block\">Add to Cast</button>\n    <div *ngIf=\"wasAdded\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n      </div>\n    </div>\n\n    <div>\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showSoundboard()'>\n        <h3>SoundBoard</h3>\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedBoard\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"album-block\">\n  <img src={{this.image}} class=\"img-landing\" height=\"350\">\n  <div class=\"example1\">  \n      <h3>test</h3>\n      </div>\n</div>\n\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <!-- make this toggleable -->\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showCasts()'>\n          Select Cast\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedCast\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n  \n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n\n    <button class=\"btn btn-outline-info btn-lg btn-block\" type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    \n  \n    <div *ngIf=\"madeNew\">\n    <div *ngIf=\"wasNamed === false\">\n      <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n      <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    </div>\n      <div *ngIf=\"wasNamed\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n        </div>\n      </div>\n    </div>\n    </div>\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()' class=\"btn btn-outline-info btn-lg btn-block\">Add to Cast</button>\n    <div *ngIf=\"wasAdded\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n      </div>\n    </div>\n\n    <div>\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showSoundboard()'>\n        <h3>SoundBoard</h3>\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedBoard\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -464,10 +473,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 const sound_board_service_1 = __webpack_require__(/*! ../../services/sound-board.service */ "./src/app/services/sound-board.service.ts");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor(http, soundBite) {
+    constructor(http, soundBite, chatService) {
         this.http = http;
         this.soundBite = soundBite;
+        this.chatService = chatService;
         this.songSelected = false;
         this.viewedCast = false;
         this.viewedBoard = false;
@@ -492,6 +503,10 @@ let SoundplayerComponent = class SoundplayerComponent {
             info['items'].map((item) => {
                 this.playlists.push({ name: item.snippet.localized.title, id: item.id });
             });
+        });
+        this.chatService.currentSong
+            .subscribe(data => {
+            this.image = data;
         });
     }
     playlistClick(event) {
@@ -572,7 +587,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/dj/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/dj/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient, sound_board_service_1.SoundBoardService])
+    __metadata("design:paramtypes", [http_1.HttpClient, sound_board_service_1.SoundBoardService, chat_service_1.ChatService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 

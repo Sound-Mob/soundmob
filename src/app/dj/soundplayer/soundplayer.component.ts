@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SoundBoardService } from '../../services/sound-board.service';
+import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-soundplayer',
   templateUrl: './soundplayer.component.html',
@@ -13,7 +14,7 @@ export class SoundplayerComponent implements OnInit {
   madeNew: boolean = false;
   wasAdded: boolean = false;
   wasNamed: boolean = false;
-
+  image: string;
   items: any;
   sounds: Array<{ name: string, mediaLink: string }> = [];
   playlists: Array<{ name: string, id: string }> = [];
@@ -21,7 +22,7 @@ export class SoundplayerComponent implements OnInit {
   searchResults: Array<{ name: string, id: string }> = [];
   castName: string;
 
-  constructor(private http: HttpClient, private soundBite:SoundBoardService) { }
+constructor(private http: HttpClient, private soundBite:SoundBoardService, private chatService: ChatService) { }
   ngOnInit() {
       this.http.get('/test')
       .subscribe(( items ) => {
@@ -37,6 +38,10 @@ export class SoundplayerComponent implements OnInit {
           this.playlists.push({ name: item.snippet.localized.title, id: item.id })
 
         })
+      })
+      this.chatService.currentSong
+      .subscribe(data => {
+        this.image = data;
       })
     }
 
