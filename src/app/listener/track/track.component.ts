@@ -85,18 +85,17 @@ export class ListenerTrackComponent implements OnInit {
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
             // this.player.loadVideoById(this.video);
-
+            this.chatService.listenerGetSongDetails()
           },
         }
       });
     };
     console.log(" in ng init")
-    this.chatService.listenerGetSongDetails()
+    
   }
 
   hearCast() {
    this.init();
-  //  debugger;
     console.log(this, "  in hear cast")
     console.log(this.startAt, "  in hear cast")
     console.log(this.player, "  in hear cast")
