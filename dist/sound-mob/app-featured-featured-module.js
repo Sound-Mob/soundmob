@@ -42,7 +42,7 @@ exports.FeaturedRoutingModule = FeaturedRoutingModule;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{\n  background: white;\n}\nnav li {\n  display: inline-block;\n  padding: 31px 18px\n\n}\nul {\n  list-style: none;\n}\n.img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n}\n"
+module.exports = "/* .container{\n  background: white;\n  height: 208;\n}\n.header{\n  background: white;\n}\n\nnav li {\n  display: inline-block;\n  padding: 31px 18px\n\n}\nul {\n  list-style: none;\n}\n\n.img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto \n} */\n"
 
 /***/ }),
 
@@ -53,7 +53,7 @@ module.exports = ".container{\n  background: white;\n  height: 208;\n}\n.header{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\"\n  crossorigin=\"anonymous\">\n<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    \n    <div class=\"col-sm-8\">\n      <ul *ngFor=\"let dj of activeDj.djs\">\n        <li>\n          <img src={{dj.photo}}>\n          <a routerLink=\"/listener\" routerLinkActive=\"active\" (click)=\"joinDj($event)\">\n          <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-2\">\n      <button routerLink=\"/dj\">Create Station</button>\n    </div>\n  </div>\n</div>"
+module.exports = "\n<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-2\">\n    </div>\n    \n    <div class=\"col-sm-8\">\n      <ul *ngFor=\"let dj of activeDj.djs\">\n        <li>\n          <img src={{dj.photo}}>\n          <a routerLink=\"/listener\" routerLinkActive=\"active\" (click)=\"joinDj($event)\">\n          <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-2\">\n      <button routerLink=\"/dj\">Create Station</button>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -168,7 +168,8 @@ const io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 let DjlistService = class DjlistService {
     constructor() {
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+        // private socket = io(`http://localhost:3000`)
+        this.socket = io();
     }
     liveDj() {
         let observable = new rxjs_1.Observable(observer => {

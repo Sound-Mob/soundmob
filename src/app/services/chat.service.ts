@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client'
-import { Observable } from 'rxjs'
+import { Observable, BehaviorSubject } from 'rxjs'
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-
-  private socket = io('ws://localhost:3000', { transports: ['websocket'] })
+  private songSource = new BehaviorSubject<string>('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
+  currentSong = this.songSource.asObservable();
+  // private socket = io(`http://localhost:3000`)
+  private socket = io();
 
   constructor() { }
-  
-  createRoom(googleId){
+  changeSong(song:string) {
+    this.songSource.next(song);
+  }
+  createRoom(googleId) {
     this.socket.emit('newroom', googleId)
   }
 
@@ -32,17 +36,17 @@ export class ChatService {
     return observable;
   }
 
-  getDjInfo(){
+  getDjInfo() {
     this.socket.emit('getDjInfo')
   }
 
-  djStartCast(songId){
+  djStartCast(songId) {
     this.socket.emit('startCast', songId);
   }
 
-  djGetSongDetails(){
+  djGetSongDetails() {
     // console.log('recieved songgg   info')
-    let observable = new Observable<{ songStartTime: string, songDuration: string}>(observer => {
+    let observable = new Observable<{ songStartTime: string, songDuration: string }>(observer => {
       this.socket.on('castOn', (songInfo) => {
         // console.log(songInfo);
         observer.next(songInfo);
@@ -86,7 +90,7 @@ export class ChatService {
 
   receiveDjInfo() {
     console.log('recieved info')
-    let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string}>(observer => {
+    let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string }>(observer => {
       this.socket.on('startlistener', (djInfo) => {
         // console.log(djInfo);
         observer.next(djInfo);
@@ -127,10 +131,10 @@ export class ChatService {
     // console.log(observable)
     return observable;
   }
-  listenerGetSongDetails(){
-    this.socket.emit("listenerGetCurrentSong"); 
+  listenerGetSongDetails() {
+    this.socket.emit("listenerGetCurrentSong");
   }
-    djInfoReq(){
+  djInfoReq() {
     this.socket.emit('djInfoReq')
   }
 

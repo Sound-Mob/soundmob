@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-track',
@@ -21,8 +22,9 @@ export class TrackComponent implements OnInit {
   public songs: object;
   public paused: boolean = false;
   public pausedAt: number;
+  public currentSongs: object;
  
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveSongs()
       .subscribe(songs => {
         this.songs = songs;
@@ -57,6 +59,10 @@ export class TrackComponent implements OnInit {
     };
   }
 
+  current() {
+    this.chatService.changeSong(this.currentSongs[this.count].photo)
+  }
+
   pauseCast(){
     console.log(this.paused)
     if (this.paused){
@@ -65,7 +71,6 @@ export class TrackComponent implements OnInit {
       this.paused = false;
     } else {
       this.player.pauseVideo();
-      
       this.paused = true;
     }
     
@@ -76,6 +81,11 @@ export class TrackComponent implements OnInit {
     this.player.loadVideoById(this.songs[this.count])
     console.log("start cast was fired", this.songs[this.count])
     this.chatService.djStartCast(this.songs[this.count]);
+    this.http.post('djView/songDetails', { songs: this.songs })
+      .subscribe((data) => {
+        this.currentSongs = data;
+        this.current()
+      });
   }
   onPlayerStateChange(event) {
     console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED)

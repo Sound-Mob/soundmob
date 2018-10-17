@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "b {\n  color: #999a9b;\n}\n\n.example1 {\n     height: 50px;\t\n     overflow: hidden;\n     position: relative;\n    }\n\n.example1 h3 {\n     font-size: 3em;\n     color: limegreen;\n     position: absolute;\n     width: 100%;\n     height: 100%;\n     margin: 0;\n     line-height: 50px;\n     text-align: center;\n     /* Starting position */\n     -webkit-transform:translateX(100%);\t\n     transform:translateX(100%);\n     /* Apply animation to this element */\n     -webkit-animation: example1 15s linear infinite;\n     animation: example1 15s linear infinite;\n    }\n\n/* Move it (define the animation) */\n\n@-webkit-keyframes example1 {\n     0%   { -webkit-transform: translateX(100%); }\n     100% { -webkit-transform: translateX(-100%); }\n    }\n\n@keyframes example1 {\n     0%   { /* Firefox bug fix */\n     -webkit-transform: translateX(100%); /* Firefox bug fix */\n     transform: translateX(100%); \t\t\n     }\n     100% { /* Firefox bug fix */\n     -webkit-transform: translateX(-100%); /* Firefox bug fix */\n     transform: translateX(-100%); \n     }\n    }"
 
 /***/ }),
 
@@ -18,7 +18,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul>\n  <li *ngFor=\"let message of chatMessages\">\n    <b>{{message.userName}} {{message.lastName}}:</b>\n    <p>{{message.message}}</p>\n  </li>\n</ul>\n<!-- <input type=\"button\" value=\"startCast\" (click)=\"startCast()\" /> -->\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n<input type=\"text\" [(ngModel)]=\"messageToSend\">\n\n<button (click)=\"sendChatMessage()\">Send!</button>\n<!-- <button class=\"btun\" (click)=\"getMessage()\">get</button> -->"
+module.exports = "\n\n\n<div class=\"card border-0 rounded\" style=\"box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 75vh;\">\n\n  <div class=\"card-header p-1 bg-light border border-top-0 border-left-0 border-right-0\" style=\"color: rgba(96, 125, 139,1.0);\">\n\n    <img class=\"rounded float-left\" style=\"width: 50px; height: 50px;\" src={{profile.photo.value}} />\n\n    <h6 class=\"float-left\" style=\"margin: 0px; margin-left: 10px;\"><i class=\"fa fa-check text-primary\"\n        title=\"Onaylanmış Hesap!\" aria-hidden=\"true\"></i> <br><small>{{profile.userName}}{{profile.lastName}}</small></h6>\n\n\n  </div>\n\n  <div class=\"card bg-sohbet border-0 m-0 p-0\" style=\"height: 100vh;\">\n    <div id=\"sohbet\" class=\"card border-0 m-0 p-0 position-relative bg-transparent\" style=\"overflow-y: auto; height: 100vh;\" *ngFor=\"let message of chatMessages\">\n      <div *ngIf=\"message.id !== profile.googleid\">\n        <div class=\"balon1 p-2 m-0 position-relative\">\n          <b class=\"float-right\">{{message.userName}} {{message.lastName}}</b>\n          <a class=\"float-right\">{{message.message}}</a>\n        </div>\n      </div>\n      <div *ngIf=\"message.id === profile.googleid\">\n        <div class=\"balon2 p-2 m-0 position-relative\">\n          <b>{{message.userName}} {{message.lastName}}</b>\n          <a class=\"float-left sohbet2\">{{message.message}}</a>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"w-100 card-footer p-0 bg-light border border-bottom-0 border-left-0 border-right-0\">\n\n    <form class=\"m-0 p-0\" action=\"\" method=\"POST\" autocomplete=\"off\">\n\n      <div class=\"row m-0 p-0\">\n        <div class=\"col-9 m-0 p-1\">\n\n            <input id=\"text\" class=\"mw-100 border rounded form-control\" type=\"text\" name=\"text\" title=\"Type a message...\"\n            placeholder=\"Type a message...\" required [(ngModel)]=\"messageToSend\">\n\n        </div>\n        <div class=\"col-3 m-0 p-1\">\n\n          <button class=\"btn btn-outline-secondary rounded border w-100\" title=\"Gönder!\" style=\"padding-right: 16px;\" (click)=\"sendChatMessage()\"><i class=\"fa fa-paper-plane\"\n            aria-hidden=\"true\" ></i>Send!</button>\n\n        </div>\n      </div>\n\n    </form>\n\n  </div>\n\n</div>\n\n\n<!-- HTML -->\n<div class=\"example1\">\n  <h3>{{this.currentSongs[this.count -1].name}}</h3>\n</div>\n<input type=\"button\" value=\"startCast\" (click)=\"startCast()\" />\n<br>\n<iframe id='paysonContainer' allow=\"autoplay\" [src]=\"video | youtube\"></iframe>\n\n"
 
 /***/ }),
 
@@ -43,60 +43,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! src/app/services/chat.service */ "./src/app/services/chat.service.ts");
+const dj_profile_service_1 = __webpack_require__(/*! src/app/services/dj-profile.service */ "./src/app/services/dj-profile.service.ts");
 let ChatComponent = class ChatComponent {
-    constructor(chatService) {
+    constructor(chatService, djProfileService) {
         this.chatService = chatService;
-        this.count = 0;
+        this.djProfileService = djProfileService;
         this.messageToSend = '';
         this.values = '';
         this.chatMessages = [];
         this.chatService.receiveMessages()
             .subscribe(data => {
-            if (this.chatMessages.length > 10) {
+            if (this.chatMessages.length > 6) {
                 this.chatMessages.pop();
             }
             this.chatMessages.unshift(data);
         });
-        // this.chatService.receiveSongs()
-        // .subscribe(songs => {
-        //   this.songs = songs;
-        // })
-        // this.chatService.djGetSongDetails()
-        // .subscribe(details => {
-        //   this.songStartTime = details.songStartTime;
-        //   this.songDuration = details.songDuration;
-        //   setTimeout(()=>{
-        //     this.castContinue();
-        //   }, details.songDuration);
-        // })
-    }
-    // video: string 
-    // trigger cast on after duration runs
-    // castContinue(){
-    //   let time;
-    //   if (this.songDuration){
-    //     time = this.songDuration;
-    //     console.log(time, " in if yes")
-    //   } else {
-    //     time = 6000;
-    //     console.log(time, " in if no")
-    //   }
-    //   setTimeout(()=>{
-    //     this.startCast()
-    //   }, time * 1000);
-    //   let counter = this.count + 1;
-    //   if (this.songs[counter]){
-    //     this.count++;
-    //   }
-    // }
-    // start music
-    startCast() {
-        // this.video = `https://www.youtube.com/embed/${this.songs[this.count]}?start=0&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`
-        // this.chatService.djStartCast(this.songs[this.count]);
     }
     ngOnInit() {
         this.chatService.createRoom("hey");
-        // this.chatService.selectPlaylist('iddoeooe');
+        this.djProfileService.getProfileInfo()
+            .subscribe(profile => {
+            this.profile = profile;
+        });
     }
     sendChatMessage() {
         const { messageToSend } = this;
@@ -114,7 +82,8 @@ ChatComponent = __decorate([
         template: __webpack_require__(/*! ./chat.component.html */ "./src/app/dj/chat/chat.component.html"),
         styles: [__webpack_require__(/*! ./chat.component.css */ "./src/app/dj/chat/chat.component.css")]
     }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
+    __metadata("design:paramtypes", [chat_service_1.ChatService,
+        dj_profile_service_1.DjProfileService])
 ], ChatComponent);
 exports.ChatComponent = ChatComponent;
 
@@ -245,7 +214,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-profile></app-profile>\n      \n      <app-soundplayer></app-soundplayer>\n      <br>\n      <div>\n        <app-track></app-track>\n        <app-chat></app-chat>\n        <dj-tokbox></dj-tokbox>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>\n\n\n  <app-profile></app-profile>\n  \n  <app-soundplayer></app-soundplayer>\n  <br>\n  <div>\n    <app-track></app-track>\n    <app-chat></app-chat>\n      <dj-tokbox></dj-tokbox>\n  </div>\n"
 
 /***/ }),
 
@@ -305,7 +274,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src={{profile.photo.value}} />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">{{profile.bio}}</h3>\n  <h1 class=\"station-name\">{{profile.firstname}} {{profile.lasttname}}</h1>\n\n  <img id =\"lilpic\"alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src={{profile.photo.value}} />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n        <!-- <li>\n          {{profile | json}}\n        </li> \n      </ol>\n    </nav>\n  </div>\n</div> -->\n<header class=\"masthead\">\n  <div class=\"overlay\"></div>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-lg-8 col-md-10 mx-auto\">\n        <div class=\"site-heading\">\n          <h1>Yeezy2k18</h1>\n          <span class=\"subheading\">New York</span>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>"
+module.exports = "<!-- <div id=\"container_image\" class=\"profile-block\">\n  <img alt=\"user-profile-image\" class=\"image-landing blur-me\" height=\"350\" id=\"main_image\" src={{profile.photo.value}} />\n\n  <button type=\"button\" class=\"btn btn-default back-button\" aria-label=\"Left Align\" routerLink=\"comment\">\n    <span class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span>\n  </button>\n\n  <h3 class=\"user-location\">{{profile.bio}}</h3>\n  <h1 class=\"station-name\">{{profile.firstname}} {{profile.lasttname}}</h1>\n\n  <img id =\"lilpic\"alt=\"user-profile-image\" class=\"image-landing\" id=\"overlay_image\" height=\"150\" src={{profile.photo.value}} />\n  <div id=\"overlay_image_list\">\n    <br>\n    <br>\n    <nav>\n      <ol class=\"breadcrumb\">\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Bio</a>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Likes</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Followers</a>\n          <p>{{profile.Followercount}}</p>\n        </li>\n        <li class=\"breadcrumb-item\">\n          <a href=\"#\">Rating</a>\n        </li>\n          <li>\n          {{profile | json}}\n        </li> \n      </ol>\n    </nav>\n  </div>\n</div> -->\n<header class=\"masthead\">\n  <div class=\"overlay\"></div>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-lg-8 col-md-10 mx-auto\">\n        <div class=\"site-heading\">\n          <h1>{{profile.firstname}} {{profile.lasttname}}</h1>\n          <span class=\"subheading\">{{profile.bio}}</span>\n        </div>\n      </div>\n    </div>\n  </div>\n</header>"
 
 /***/ }),
 
@@ -429,7 +398,7 @@ exports.SearchComponent = SearchComponent;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}\n#soundboard-button{\n    background-color: rgb(0, 0, 0, 0.10);\n    padding: 1em;\n    margin: 1em;\n}"
+module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 20px;\n}\n.breadcrumb{\n    background-color: white;\n    text-align: center;\n}\n.album-block{\n    background-color: black;\n    width: auto;\n    display: block;\n}\n#soundboard-button{\n    background-color: rgb(0, 0, 0, 0.10);\n    padding: 1em;\n    margin: 1em;\n}\n/* styles for ticker  */\n.example1 {\n    height: 50px;\t\n    overflow: hidden;\n    position: relative;\n}\n.example1 h3 {\n    font-size: 3em;\n    color: limegreen;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    line-height: 50px;\n    text-align: center;\n    /* Starting position */\n    -webkit-transform:translateX(100%);\t\n    transform:translateX(100%);\n    /* Apply animation to this element */\n    -webkit-animation: example1 15s linear infinite;\n    animation: example1 15s linear infinite;\n}\n/* Move it (define the animation) */\n@-webkit-keyframes example1 {\n    0%   { -webkit-transform: translateX(100%); }\n    100% { -webkit-transform: translateX(-100%); }\n}\n@keyframes example1 {\n    0%   { /* Firefox bug fix */\n    -webkit-transform: translateX(100%); /* Firefox bug fix */\n    transform: translateX(100%); \t\t\n    }\n    100% { /* Firefox bug fix */\n    -webkit-transform: translateX(-100%); /* Firefox bug fix */\n    transform: translateX(-100%); \n    }\n}\n"
 
 /***/ }),
 
@@ -440,7 +409,7 @@ module.exports = ".img-landing {\n    width: auto;\n    display: block;\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"album-block\">\n  <img src=\"https://images-na.ssl-images-amazon.com/images/I/51ik%2BwjSdwL._SS500.jpg\" class=\"img-landing\" height=\"350\">\n</div>\n\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <!-- make this toggleable -->\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showCasts()'>\n          Select Cast\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedCast\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n  \n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n\n    <button class=\"btn btn-outline-info btn-lg btn-block\" type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    \n  \n    <div *ngIf=\"madeNew\">\n    <div *ngIf=\"wasNamed === false\">\n      <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n      <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    </div>\n      <div *ngIf=\"wasNamed\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n        </div>\n      </div>\n    </div>\n    </div>\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()' class=\"btn btn-outline-info btn-lg btn-block\">Add to Cast</button>\n    <div *ngIf=\"wasAdded\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n      </div>\n    </div>\n\n    <div>\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showSoundboard()'>\n        <h3>SoundBoard</h3>\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedBoard\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"album-block\">\n  <img src={{this.image}} class=\"img-landing\" height=\"350\">\n  <div class=\"example1\">  \n      <h3>test</h3>\n      </div>\n</div>\n\n\n<div class=\"container\">\n\n  <div class=\"row\">\n    <div class=\"col-lg-8 col-md-10 mx-auto\">\n      <!-- make this toggleable -->\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showCasts()'>\n          Select Cast\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedCast\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <button *ngFor=\"let playlist of playlists\" [attr.id]=\"playlist.id\" (click)='playlistClick($event)' type=\"button\" class=\"btn btn-outline-info btn-lg btn-block\">\n            {{playlist.name}}\n          </button>\n        </li>\n      </ul>\n  \n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <hr>\n  </div>\n  <div id=\"createPlaylist\">\n\n    <button class=\"btn btn-outline-info btn-lg btn-block\" type=\"button\" id=\"createCast\" (click)='openNewCastComponent()'>Create Soundcast</button>\n    \n  \n    <div *ngIf=\"madeNew\">\n    <div *ngIf=\"wasNamed === false\">\n      <button type=\"button\" id=\"submitCastName\" (click)='submitCastName(text)'>Name Cast</button>\n      <input type=\"text\" [(ngModel)]=\"text\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n    </div>\n      <div *ngIf=\"wasNamed\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n        </div>\n      </div>\n    </div>\n    </div>\n    <br>\n\n\n    \n    <br>\n    <button type=\"button\" id=\"addToCast\" (click)='addToCast()' class=\"btn btn-outline-info btn-lg btn-block\">Add to Cast</button>\n    <div *ngIf=\"wasAdded\">\n      <button type=\"button\" id=\"searchSongToCast\" (click)='searchSongToCast(search)'>Search Songs</button>\n      <input type=\"text\" [(ngModel)]=\"search\" id=\"input-field\" placeholder=\"Name your soundcast.\" />\n      <div *ngIf=\"songSelected === false\">\n        <button *ngFor=\"let result of searchResults\" [attr.id]=\"result.id\" (click)='songSelect($event)' type=\"button\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n          {{result.name}}\n        </button>\n      </div>\n    </div>\n\n    <div>\n      <button class=\"btn btn-outline-info btn-lg btn-block\" (click)='showSoundboard()'>\n        <h3>SoundBoard</h3>\n      </button>\n      <ul class=\"list-group\" *ngIf=\"viewedBoard\">\n        <li class=\"list-group-item d-flex justify-content-between align-items-center\">\n          <!-- <button type=\"button\" class=\"btn btn-outline-warning btn-block\">Warning</button> -->\n          <button *ngFor=\"let sound of sounds\" (click)='soundClick($event)' type=\"button\" [attr.id]=\"sound.mediaLink\" class=\"btn btn-outline-secondary btn-lg btn-block\">\n            {{sound.name}}\n          </button>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -466,10 +435,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 const sound_board_service_1 = __webpack_require__(/*! ../../services/sound-board.service */ "./src/app/services/sound-board.service.ts");
+const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
 let SoundplayerComponent = class SoundplayerComponent {
-    constructor(http, soundBite) {
+    constructor(http, soundBite, chatService) {
         this.http = http;
         this.soundBite = soundBite;
+        this.chatService = chatService;
         this.songSelected = false;
         this.viewedCast = false;
         this.viewedBoard = false;
@@ -494,6 +465,10 @@ let SoundplayerComponent = class SoundplayerComponent {
             info['items'].map((item) => {
                 this.playlists.push({ name: item.snippet.localized.title, id: item.id });
             });
+        });
+        this.chatService.currentSong
+            .subscribe(data => {
+            this.image = data;
         });
     }
     playlistClick(event) {
@@ -574,7 +549,7 @@ SoundplayerComponent = __decorate([
         template: __webpack_require__(/*! ./soundplayer.component.html */ "./src/app/dj/soundplayer/soundplayer.component.html"),
         styles: [__webpack_require__(/*! ./soundplayer.component.css */ "./src/app/dj/soundplayer/soundplayer.component.css")]
     }),
-    __metadata("design:paramtypes", [http_1.HttpClient, sound_board_service_1.SoundBoardService])
+    __metadata("design:paramtypes", [http_1.HttpClient, sound_board_service_1.SoundBoardService, chat_service_1.ChatService])
 ], SoundplayerComponent);
 exports.SoundplayerComponent = SoundplayerComponent;
 
@@ -632,7 +607,8 @@ let AppComponent = class AppComponent {
         this.opentokService = opentokService;
         this.title = null;
         this.streams = [];
-        this.socket = io('ws://localhost:3000', { transports: ['websocket'] });
+        // private socket = io(`http://localhost:3000`)
+        this.socket = io();
         this.changeDetectorRef = ref;
     }
     ngOnInit() {
@@ -876,9 +852,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ "./src/app/services/chat.service.ts");
+const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 let TrackComponent = class TrackComponent {
-    constructor(chatService) {
+    constructor(chatService, http) {
         this.chatService = chatService;
+        this.http = http;
         this.count = 0;
         this.paused = false;
         this.chatService.receiveSongs()
@@ -913,6 +891,9 @@ let TrackComponent = class TrackComponent {
             });
         };
     }
+    current() {
+        this.chatService.changeSong(this.currentSongs[this.count].photo);
+    }
     pauseCast() {
         console.log(this.paused);
         if (this.paused) {
@@ -930,6 +911,11 @@ let TrackComponent = class TrackComponent {
         this.player.loadVideoById(this.songs[this.count]);
         console.log("start cast was fired", this.songs[this.count]);
         this.chatService.djStartCast(this.songs[this.count]);
+        this.http.post('djView/songDetails', { songs: this.songs })
+            .subscribe((data) => {
+            this.currentSongs = data;
+            this.current();
+        });
     }
     onPlayerStateChange(event) {
         console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED);
@@ -999,49 +985,9 @@ TrackComponent = __decorate([
     </div>`,
         styles: [`.max-width-1024 { max-width: 1024px; margin: 0 auto; }`],
     }),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
+    __metadata("design:paramtypes", [chat_service_1.ChatService, http_1.HttpClient])
 ], TrackComponent);
 exports.TrackComponent = TrackComponent;
-
-
-/***/ }),
-
-/***/ "./src/app/services/dj-profile.service.ts":
-/*!************************************************!*\
-  !*** ./src/app/services/dj-profile.service.ts ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-const http_1 = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-let DjProfileService = class DjProfileService {
-    constructor(http) {
-        this.http = http;
-    }
-    getProfileInfo() {
-        return this.http.get('/djView');
-    }
-};
-DjProfileService = __decorate([
-    core_1.Injectable({
-        providedIn: 'root'
-    }),
-    __metadata("design:paramtypes", [http_1.HttpClient])
-], DjProfileService);
-exports.DjProfileService = DjProfileService;
 
 
 /***/ })

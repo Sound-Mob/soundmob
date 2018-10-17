@@ -28,7 +28,7 @@
         <li class="breadcrumb-item">
           <a href="#">Rating</a>
         </li>
-        <!-- <li>
+          <li>
           {{profile | json}}
         </li> 
       </ol>
@@ -41,8 +41,8 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="site-heading">
-          <h1>Yeezy2k18</h1>
-          <span class="subheading">New York</span>
+          <h1>{{profile.firstname}} {{profile.lasttname}}</h1>
+          <span class="subheading">{{profile.bio}}</span>
         </div>
       </div>
     </div>
