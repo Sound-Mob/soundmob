@@ -23,7 +23,6 @@ module.exports = {
     return rp(options);
   },
   createPlaylist: (token, obj) => {
-
     const options = {
       method: 'POST',
       uri: 'https://www.googleapis.com/youtube/v3/playlists?part=snippet',
@@ -52,8 +51,6 @@ module.exports = {
     return rp(options);
   },
   searchDetails: (token, id) => {
-    console.log({ id });
-    // id = '9bZkp7q19f0';
     const options = {
       uri: `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=contentDetails`,
       headers: {
@@ -105,7 +102,7 @@ module.exports = {
   },
   searchDetailsArray: (array, token) => {
     const options = {
-      uri: 'https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=',
+      uri: 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=',
       headers: {
         'User-Agent': 'Request-Promise',
         Authorization: `Bearer ${token}`,
@@ -113,7 +110,7 @@ module.exports = {
       json: true,
     };
     array.forEach((id) => {
-      options.uri += `${id}`;
+      options.uri += `${id},`;
     });
     return rp(options);
   },
