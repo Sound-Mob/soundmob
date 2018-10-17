@@ -180,6 +180,7 @@ io.on('connection', (socket) => {
 
   // listen for song pausing
   socket.on('paused', (pauseInfo)=>{
+    // make youtube call for song title and picture and add to pauseInfo object
     io.sockets.emit('pauseRelay', pauseInfo);
   })
 
@@ -273,10 +274,17 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('songStatus', (songInfo)=>{
+    console.log("in songstatus")
+    io.sockets.emit('songStatusToListener', songInfo);
+  })
+  
+
   // listen for listener request of current song
   socket.on('listenerGetCurrentSong', () => {
+    io.sockets.emit('songStatusRequest', { test: 'hello' });
     getStartTime();
-    console.log({listenerStartTime})
+    // console.log({listenerStartTime})
     // console.log(socket.rooms[socket.id], " in get current song")
     getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
       // console.log({ songinfo, listenerStartTime }, " in listener grab")

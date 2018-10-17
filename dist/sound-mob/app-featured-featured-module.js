@@ -85,6 +85,7 @@ let FeaturedComponent = class FeaturedComponent {
         this.http = http;
         this.djList = djList;
         this.djJoin = djJoin;
+        this.activeDj = { djs: [] };
     }
     ngOnInit() {
         this.djList.liveDjReq();

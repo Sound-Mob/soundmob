@@ -10,7 +10,7 @@ import { ChatService } from "../services/chat.service";
   styleUrls: ["./featured.component.css"]
 })
 export class FeaturedComponent implements OnInit {
-  activeDj: Object;
+  activeDj: Object = {djs: []};
   prop: string;
 
   

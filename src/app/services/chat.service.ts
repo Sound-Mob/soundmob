@@ -78,6 +78,34 @@ export class ChatService {
     return observable;
   }
 
+  songStatusListener() {
+    let observable = new Observable<{ songStatusInfo: object }>(observer => {
+      this.socket.on('songStatusToListener', (songStatusInfo) => {
+        console.log(" recieved song status in listener")
+        observer.next(songStatusInfo);
+      });
+    });
+    // console.log(observable)
+    return observable;
+  }
+
+  receiveSongStatusRequest() {
+    let observable = new Observable<{ songStatus: object }>(observer => {
+      this.socket.on('songStatusRequest', (songStatus) => {
+        console.log(" recieved status request")
+        observer.next(songStatus);
+      });
+    });
+    // console.log(observable)
+    return observable;
+  }
+
+  sendSongStatus(songId, timestamp) {
+    console.log("in send songstatus service")
+    console.log(songId, timestamp)
+    this.socket.emit('songStatus', { songId, timestamp });
+  }
+
   pauseListener(){
     let observable = new Observable<{ pauseInfo: object }>(observer => {
       this.socket.on('pauseRelay', (pauseInfo) => {

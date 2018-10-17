@@ -864,6 +864,12 @@ let TrackComponent = class TrackComponent {
             this.songs = songs;
             console.log({ songs }, " receive songs happening in dj");
         });
+        this.chatService.receiveSongStatusRequest()
+            .subscribe(() => {
+            console.log(this.songs[this.count], " video id before sending status");
+            console.log(this.cleanTime(), " time id before sending status");
+            this.chatService.sendSongStatus(this.songs[this.count], this.cleanTime());
+        });
     }
     init() {
         var tag = document.createElement('script');
@@ -910,7 +916,10 @@ let TrackComponent = class TrackComponent {
         this.init();
         this.player.loadVideoById(this.songs[this.count]);
         console.log("start cast was fired", this.songs[this.count]);
-        this.chatService.djStartCast(this.songs[this.count]);
+        if (this.count !== 0) {
+            // this.chatService.djStartCast(this.songs[this.count]);
+            this.chatService.sendUnpause(this.songs[this.count], this.cleanTime());
+        }
         this.http.post('djView/songDetails', { songs: this.songs })
             .subscribe((data) => {
             this.currentSongs = data;

@@ -18,7 +18,7 @@ module.exports = "b {\n  color: #999a9b;\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card border-0 rounded\" style=\"box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 75vh;\">\n\n  <div class=\"card-header p-1 bg-light border border-top-0 border-left-0 border-right-0\" style=\"color: rgba(96, 125, 139,1.0);\">\n\n    <img class=\"rounded float-left\" style=\"width: 50px; height: 50px;\" src={{profile.photo.value}} />\n\n    <h6 class=\"float-left\" style=\"margin: 0px; margin-left: 10px;\"><i class=\"fa fa-check text-primary\" title=\"Onaylanmış Hesap!\"\n        aria-hidden=\"true\"></i> <br><small>{{profile.userName}}{{profile.lastName}}</small></h6>\n\n\n  </div>\n\n  <div class=\"card bg-sohbet border-0 m-0 p-0\" style=\"height: 100vh;\">\n    <div id=\"sohbet\" class=\"card border-0 m-0 p-0 position-relative bg-transparent\" style=\"overflow-y: auto; height: 100vh;\"\n      *ngFor=\"let message of chatMessages\">\n      <div *ngIf=\"message.id !== profile.googleid\">\n        <div class=\"balon1 p-2 m-0 position-relative\">\n          <b class=\"float-right\">{{message.userName}} {{message.lastName}}</b><a class=\"float-right\">{{message.message}}</a>\n        </div>\n      </div>\n      <div *ngIf=\"message.id === profile.googleid\">\n        <div class=\"balon2 p-2 m-0 position-relative\">\n          <b>{{message.userName}} {{message.lastName}}</b>\n          <a class=\"float-left sohbet2\">{{message.message}}</a>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"w-100 card-footer p-0 bg-light border border-bottom-0 border-left-0 border-right-0\">\n\n    <form class=\"m-0 p-0\" action=\"\" method=\"POST\" autocomplete=\"off\">\n\n      <div class=\"row m-0 p-0\">\n        <div class=\"col-9 m-0 p-1\">\n\n          <input id=\"text\" class=\"mw-100 border rounded form-control\" type=\"text\" name=\"text\" title=\"Type a message...\"\n            placeholder=\"Type a message...\" required [(ngModel)]=\"messageToSend\">\n\n        </div>\n        <div class=\"col-3 m-0 p-1\">\n\n          <button class=\"btn btn-outline-secondary rounded border w-100\" title=\"Gönder!\" style=\"padding-right: 16px;\"\n            (click)=\"sendChatMessage()\"><i class=\"fa fa-paper-plane\" aria-hidden=\"true\"></i>Send!</button>\n\n        </div>\n      </div>\n\n    </form>\n\n  </div>\n\n</div>"
+module.exports = "<div class=\"card border-0 rounded\" style=\"box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 75vh;\">\n\n  <div class=\"card-header p-1 bg-light border border-top-0 border-left-0 border-right-0\" style=\"color: rgba(96, 125, 139,1.0);\">\n\n    <img class=\"rounded float-left\" style=\"width: 50px; height: 50px;\" />\n\n    <!-- <h6 class=\"float-left\" style=\"margin: 0px; margin-left: 10px;\"><i class=\"fa fa-check text-primary\" title=\"Onaylanmış Hesap!\"\n        aria-hidden=\"true\"></i> <br><small>{{profile.userName}}{{profile.lastName}}</small></h6> -->\n\n\n  </div>\n\n  <div class=\"card bg-sohbet border-0 m-0 p-0\" style=\"height: 100vh;\">\n    <div id=\"sohbet\" class=\"card border-0 m-0 p-0 position-relative bg-transparent\" style=\"overflow-y: auto; height: 100vh;\"\n      *ngFor=\"let message of chatMessages\">\n      <div *ngIf=\"message.id !== profile.googleid\">\n        <div class=\"balon1 p-2 m-0 position-relative\">\n          <b class=\"float-right\">{{message.userName}} {{message.lastName}}</b><a class=\"float-right\">{{message.message}}</a>\n        </div>\n      </div>\n      <div *ngIf=\"message.id === profile.googleid\">\n        <div class=\"balon2 p-2 m-0 position-relative\">\n          <b>{{message.userName}} {{message.lastName}}</b>\n          <a class=\"float-left sohbet2\">{{message.message}}</a>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"w-100 card-footer p-0 bg-light border border-bottom-0 border-left-0 border-right-0\">\n\n    <form class=\"m-0 p-0\" action=\"\" method=\"POST\" autocomplete=\"off\">\n\n      <div class=\"row m-0 p-0\">\n        <div class=\"col-9 m-0 p-1\">\n\n          <input id=\"text\" class=\"mw-100 border rounded form-control\" type=\"text\" name=\"text\" title=\"Type a message...\"\n            placeholder=\"Type a message...\" required [(ngModel)]=\"messageToSend\">\n\n        </div>\n        <div class=\"col-3 m-0 p-1\">\n\n          <button class=\"btn btn-outline-secondary rounded border w-100\" title=\"Gönder!\" style=\"padding-right: 16px;\"\n            (click)=\"sendChatMessage()\"><i class=\"fa fa-paper-plane\" aria-hidden=\"true\"></i>Send!</button>\n\n        </div>\n      </div>\n\n    </form>\n\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -705,7 +705,7 @@ const chat_service_1 = __webpack_require__(/*! ../../services/chat.service */ ".
 let ListenerTrackComponent = class ListenerTrackComponent {
     constructor(chatService) {
         this.chatService = chatService;
-        this.paused = false;
+        this.paused = true;
         this.count = 0;
         this.pausedAt = 0;
         this.resumeAt = 0;
@@ -724,13 +724,24 @@ let ListenerTrackComponent = class ListenerTrackComponent {
             console.log("this.video, this.resumeAt");
             this.pauseCast();
         });
-        this.chatService.listenerReceiveSongDetails()
-            .subscribe(songinfo => {
-            console.log("song info recieved", songinfo);
-            this.video = songinfo['songinfo'][0].songid;
-            // this.init();
+        this.chatService.songStatusListener()
+            .subscribe(songStatusInfo => {
+            this.video = songStatusInfo['songId'];
+            this.startAt = songStatusInfo['timestamp'];
+            console.log(songStatusInfo, " songstatusinfo and start at");
+            // console.log("this.video, this.resumeAt")
+            // this.player.loadVideoById(this.video, this.startAt)
             this.hearCast();
         });
+        // this.chatService.listenerReceiveSongDetails()
+        //   .subscribe(songinfo => {
+        //     console.log("song info recieved", songinfo)
+        //     this.startAt = songinfo['listenerStartTime'] - parseInt(songinfo['songinfo'][0].starttime);
+        //     console.log(this.startAt, "  iojoighoaj")
+        //     this.video = songinfo['songinfo'][0].songid;
+        //     this.init();
+        //     this.hearCast();
+        //   })
     }
     init() {
         var tag = document.createElement('script');
@@ -739,7 +750,6 @@ let ListenerTrackComponent = class ListenerTrackComponent {
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
     ngOnInit() {
-        this.chatService.listenerGetSongDetails();
         this.init();
         window['onYouTubeIframeAPIReady'] = (e) => {
             this.YT = window['YT'];
@@ -750,22 +760,29 @@ let ListenerTrackComponent = class ListenerTrackComponent {
                     // 'onStateChange': this.onPlayerStateChange.bind(this),
                     'onError': this.onPlayerError.bind(this),
                     'onReady': (e) => {
-                        this.player.loadVideoById(this.video);
+                        // this.player.loadVideoById(this.video);
                     },
                 }
             });
         };
+        console.log(" in ng init");
+        this.chatService.listenerGetSongDetails();
     }
     hearCast() {
         this.init();
+        //  debugger;
+        console.log(this, "  in hear cast");
+        console.log(this.startAt, "  in hear cast");
+        console.log(this.player, "  in hear cast");
         if (this.player !== undefined) {
-            this.player.loadVideoById(this.video);
+            console.log(this.startAt, "  in hear cast");
+            this.player.loadVideoById(this.video, this.startAt);
         }
         // console.log("start cast was fired", this.player)
     }
     pauseCast() {
         if (this.paused) {
-            console.log("paused is true in pausecast");
+            console.log(this.player, "paused is true in pausecast");
             this.player.loadVideoById(this.video, this.resumeAt);
             this.paused = false;
         }
