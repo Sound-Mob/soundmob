@@ -24,13 +24,14 @@ export class ListenerTrackComponent implements OnInit {
   constructor(private chatService: ChatService) { 
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
+        console.log("received pause ping", pauseInfo)
         this.video = pauseInfo['songId'];
         this.pausedAt = pauseInfo['pausedAt'];
         this.pauseCast();
       })
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
-
+        console.log("received resume ping", resumeInfo)
        this.trackTitle = resumeInfo['name'];
 
         this.trackPhoto = resumeInfo['photo'];
@@ -80,6 +81,7 @@ export class ListenerTrackComponent implements OnInit {
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
             // this.player.loadVideoById(this.video);
+            console.log(" made it in youtube init")
             this.chatService.listenerGetSongDetails()
           },
         }
@@ -89,6 +91,7 @@ export class ListenerTrackComponent implements OnInit {
 
   hearCast() {
    this.init();
+    this.paused = false;
     if (this.player !== undefined){
       this.player.loadVideoById(this.video, this.startAt)
     }

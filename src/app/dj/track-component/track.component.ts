@@ -84,10 +84,10 @@ export class TrackComponent implements OnInit {
     if (this.paused){
       this.player.loadVideoById(this.songs[this.count], this.pausedAt);
       console.log(this.pausedAt,"should be sending unpause")
-      this.paused = false;
+      
     } else {
       this.player.pauseVideo();
-      this.paused = true;
+      
     }
     
   }
@@ -111,20 +111,24 @@ export class TrackComponent implements OnInit {
     console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED)
     switch (event.data) {
       case window['YT'].PlayerState.PLAYING:
+        this.paused = false;
         if (this.cleanTime() == 0) {
           console.log('started ' + this.cleanTime());
         } else {
           let timestamp = this.cleanTime();
-          this.chatService.sendPause(this.songs[this.count], timestamp);
+          this.chatService.sendUnpause(this.songs[this.count], timestamp);
           console.log('playing ' + this.cleanTime())
         };
         break;
       case window['YT'].PlayerState.PAUSED:
+        this.paused = true;
         if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
           console.log('paused' + ' @ ' + this.cleanTime());
+          
           let timestamp = this.cleanTime();
           this.pausedAt = this.cleanTime();
-          this.chatService.sendUnpause(this.songs[this.count], timestamp);
+          this.chatService.sendPause(this.songs[this.count], timestamp);
+          
         };
         break;
       case window['YT'].PlayerState.ENDED:
