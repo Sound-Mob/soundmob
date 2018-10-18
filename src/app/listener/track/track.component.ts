@@ -21,23 +21,30 @@ export class ListenerTrackComponent implements OnInit {
   public startAt: number = 0;
   public trackTitle: string;
   public trackPhoto: string;
+<<<<<<< HEAD
   constructor(private chatService: ChatService) {
+=======
+  public volume: object;
+
+  constructor(private chatService: ChatService) { 
+>>>>>>> e6f820b769967d20bfdcdd744f4674f9f3b1fc03
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
+        console.log("received pause ping", pauseInfo)
         this.video = pauseInfo['songId'];
         this.pausedAt = pauseInfo['pausedAt'];
         this.pauseCast();
       });
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
-
+        console.log("received resume ping", resumeInfo)
        this.trackTitle = resumeInfo['name'];
 
         this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
         this.current(this.trackTitle,this.trackPhoto);
-        this.pauseCast();
+        this.resumeCast();
       })
     this.chatService.songStatusListener()
       .subscribe(songStatusInfo => {
@@ -45,13 +52,14 @@ export class ListenerTrackComponent implements OnInit {
         this.trackPhoto = songStatusInfo['photo'];
         this.video = songStatusInfo['songId'];
         this.startAt = songStatusInfo['timestamp'];
-
-        console.log(songStatusInfo, " songstatusinfo and start at")
-        // console.log("this.video, this.resumeAt")
-        // this.player.loadVideoById(this.video, this.startAt)
         this.current(this.trackTitle,this.trackPhoto);
-
         this.hearCast();
+      })
+    this.chatService.listenForVolume()
+      .subscribe(volume => {
+        this.volume = volume;
+        this.player.setVolume(this.volume)
+        console.log(this.volume, " receive volume happening in listener");
       })
 
   }
@@ -80,6 +88,7 @@ export class ListenerTrackComponent implements OnInit {
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
             // this.player.loadVideoById(this.video);
+            console.log(" made it in youtube init")
             this.chatService.listenerGetSongDetails()
           },
         }
@@ -89,9 +98,17 @@ export class ListenerTrackComponent implements OnInit {
 
   hearCast() {
    this.init();
+    this.paused = false;
     if (this.player !== undefined){
       this.player.loadVideoById(this.video, this.startAt)
     }
+  }
+  resumeCast() {
+    // this.init();
+    this.paused = false;
+    
+      this.player.loadVideoById(this.video, this.resumeAt)
+    
   }
 
   pauseCast() {
