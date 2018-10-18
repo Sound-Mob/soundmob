@@ -121,8 +121,8 @@ export class ListenerTrackComponent implements OnInit {
       this.player.pauseVideo();
       this.paused = true;
     }
-      
-    
+
+
 
   }
   onPlayerStateChange(event) {
