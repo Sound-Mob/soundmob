@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private chatService:ChatService) { }
 
   ngOnInit() {
+   
+      this.chatService.getInfoListener()
+      .subscribe(data => {
+        console.log(data, 'Should be Kenneth')
+      })
   }
 
   profile(){

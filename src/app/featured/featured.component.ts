@@ -40,9 +40,9 @@ export class FeaturedComponent implements OnInit {
   }
 
   joinDj(event){
-    console.log(event.target, 'thisthe event log')
+    const id = this.activeDj['djs'][0].googleid;
     let sockAndTok = event.target.id.split("---")
-
+    sockAndTok.push(id);
     this.djJoin.joinRoom(sockAndTok);
     // console.log(sockAndTok, " google id");
     
