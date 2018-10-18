@@ -21,7 +21,7 @@ export class SoundplayerComponent implements OnInit {
   newcastid: string;
   searchResults: Array<{ name: string, id: string }> = [];
   castName: string;
-  songTitle: string = 'letters';
+  songTitle: string;
 
 
 constructor(private http: HttpClient, private soundBite:SoundBoardService, private chatService: ChatService) { }

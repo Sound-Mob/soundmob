@@ -404,8 +404,6 @@ passport.use(new GoogleStrategy({
   const { givenName } = name;
   const { familyName } = name;
   const bio = 'Loray NC';
-  const samples = 'binary';
-  const savedplaylists = 'urls';
   const followercount = 12;
   const followingcount = 2;
   getUserById(profile.id).then((user) => {
