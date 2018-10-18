@@ -17,6 +17,8 @@ import { PublisherComponent } from './tokbox/publisher/publisher.component';
 import { ChatComponent } from './chat/chat.component';
 import { YoutubePipe } from '../pipes/youtube.pipe';
 import { TrackComponent } from './track-component/track.component';
+import { MatSliderComponent } from './mat-slider/mat-slider.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 
 
@@ -26,6 +28,7 @@ import { TrackComponent } from './track-component/track.component';
     CommonModule,
     DjRoutingModule,
     FormsModule,
+    MatSliderModule,
   ],
   declarations: [
     SoundplayerComponent,
@@ -38,6 +41,7 @@ import { TrackComponent } from './track-component/track.component';
     ChatComponent, 
     YoutubePipe,
     TrackComponent,
+    MatSliderComponent,
   ],
   providers: [OpentokService]
 })
