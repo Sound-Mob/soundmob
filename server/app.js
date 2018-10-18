@@ -240,18 +240,8 @@ io.on('connection', (socket) => {
       const minsInSeconds = Number(songStartTime[3] + songStartTime[4]) * 60;
       const seconds = Number(songStartTime[6] + songStartTime[7]);
       songStartTime = minsInSeconds + seconds;
-<<<<<<< HEAD
-      console.log({
-        songStartTime
-      })
-      io.sockets.emit('castOn', {
-        songStartTime,
-        songDuration
-      });
-=======
       // console.log({songStartTime})
       io.sockets.emit('castOn', { songStartTime, songDuration });
->>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
 
       getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
         // console.log(songinfo, " in get songs by id in start cast");
@@ -320,19 +310,13 @@ io.on('connection', (socket) => {
     console.log("in songstatus")
     io.sockets.emit('songStatusToListener', songInfo);
   })
-  
+
 
   // listen for listener request of current song
   socket.on('listenerGetCurrentSong', () => {
     io.sockets.emit('songStatusRequest', { test: 'hello' });
     getStartTime();
-<<<<<<< HEAD
-    console.log({
-      listenerStartTime
-    })
-=======
     // console.log({listenerStartTime})
->>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
     // console.log(socket.rooms[socket.id], " in get current song")
     getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
       // console.log({ songinfo, listenerStartTime }, " in listener grab")

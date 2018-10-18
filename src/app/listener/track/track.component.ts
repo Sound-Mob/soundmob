@@ -18,13 +18,9 @@ export class ListenerTrackComponent implements OnInit {
   public pausedAt: number = 0;
   public resumeAt: number = 0;
   public startAt: number = 0;
-<<<<<<< HEAD
-  constructor(private chatService: ChatService) {
-=======
   public trackTitle: string;
   public trackPhoto: string;
-  constructor(private chatService: ChatService) { 
->>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
+  constructor(private chatService: ChatService) {
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
         this.video = pauseInfo['songId'];
@@ -42,18 +38,6 @@ export class ListenerTrackComponent implements OnInit {
         // console.log("this.video, this.resumeAt")
         this.current(this.trackTitle,this.trackPhoto);
         this.pauseCast();
-<<<<<<< HEAD
-      });
-
-    this.chatService.listenerReceiveSongDetails()
-      .subscribe(songinfo => {
-        console.log("song info recieved", songinfo)
-
-        this.video = songinfo['songinfo'][0].songid;
-        // this.init();
-        this.hearCast();
-      });
-=======
       })
     this.chatService.songStatusListener()
       .subscribe(songStatusInfo => {
@@ -65,7 +49,7 @@ export class ListenerTrackComponent implements OnInit {
 
         this.hearCast();
       })
-    
+
     // this.chatService.listenerReceiveSongDetails()
     //   .subscribe(songinfo => {
     //     console.log("song info recieved", songinfo)
@@ -75,7 +59,6 @@ export class ListenerTrackComponent implements OnInit {
     //     this.init();
     //     this.hearCast();
     //   })
->>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
   }
   init() {
     var tag = document.createElement('script');
@@ -89,7 +72,7 @@ export class ListenerTrackComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.init();
 
     window['onYouTubeIframeAPIReady'] = (e) => {
@@ -107,12 +90,8 @@ export class ListenerTrackComponent implements OnInit {
         }
       });
     };
-<<<<<<< HEAD
-
-=======
     console.log(" in ng init")
-    
->>>>>>> 9f2f1370bb13d025d7393a59d098b20a93dd4264
+
   }
 
   hearCast() {
@@ -155,6 +134,6 @@ export class ListenerTrackComponent implements OnInit {
         break;
       case 101 || 150:
         break;
-    };
-  };
+    }
+  }
 }
