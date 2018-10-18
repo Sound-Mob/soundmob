@@ -21,9 +21,13 @@ export class SoundplayerComponent implements OnInit {
   newcastid: string;
   searchResults: Array<{ name: string, id: string }> = [];
   castName: string;
+  songTitle: string = 'letters';
+
 
 constructor(private http: HttpClient, private soundBite:SoundBoardService, private chatService: ChatService) { }
   ngOnInit() {
+      this.chatService.currentName
+      .subscribe(data => this.songTitle = data);
       this.http.get('/test')
       .subscribe(( items ) => {
       //  console.log(items);
@@ -42,6 +46,7 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
       this.chatService.currentSong
       .subscribe(data => {
         this.image = data;
+        console.log(data);
       })
     }
 

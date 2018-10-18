@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SoundplayerComponent } from './soundplayer.component';
+import { MatSliderComponent } from './mat-slider.component';
 
-describe('SoundplayerComponent', () => {
-  let component: SoundplayerComponent;
-  let fixture: ComponentFixture<SoundplayerComponent>;
+describe('MatSliderComponent', () => {
+  let component: MatSliderComponent;
+  let fixture: ComponentFixture<MatSliderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SoundplayerComponent ]
+      declarations: [ MatSliderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SoundplayerComponent);
+    fixture = TestBed.createComponent(MatSliderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

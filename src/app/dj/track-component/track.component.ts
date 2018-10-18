@@ -2,17 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-track',
-  template: `<div class="max-width-1024">
-  <div>
-  <input type="button" value="startCast" (click)="startCast()" />
-  <input type="button" value="pauseCast" (click)="pauseCast()" />
-      <div class="embed-responsive embed-responsive-16by9" id="player"> 
-      </div>
-      </div>
-    </div>`,
-  styles: [`.max-width-1024 { max-width: 1024px; margin: 0 auto; }`],
+  templateUrl: './track.component.html',
+  styleUrls: ['./track.component.css'],
 })
 export class TrackComponent implements OnInit {
   public YT: any;
@@ -23,7 +17,12 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
+
+  public pauseButton: boolean = false;
+
+  public volume: object;
  
+
   constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveSongs()
       .subscribe(songs => {
@@ -35,6 +34,12 @@ export class TrackComponent implements OnInit {
         console.log(this.songs[this.count], " video id before sending status")
         console.log(this.cleanTime(), " time id before sending status")
         this.chatService.sendSongStatus(this.songs[this.count], this.cleanTime());
+      })
+    this.chatService.listenForVolume()
+      .subscribe(volume => {
+        this.volume = volume;
+        this.player.setVolume(this.volume)
+        console.log(this.volume, " receive volume happening in dj");
       })
    }
   init() {
@@ -67,17 +72,23 @@ export class TrackComponent implements OnInit {
 
   current() {
     this.chatService.changeSong(this.currentSongs[this.count].photo)
+    this.chatService.changeName(this.currentSongs[this.count].name)
   }
 
   pauseCast(){
+    if(this.pauseButton){
+      this.pauseButton = false
+    } else {
+      this.pauseButton = true
+    }
     console.log(this.paused)
     if (this.paused){
       this.player.loadVideoById(this.songs[this.count], this.pausedAt);
       console.log(this.pausedAt,"should be sending unpause")
-      this.paused = false;
+      
     } else {
       this.player.pauseVideo();
-      this.paused = true;
+      
     }
     
   }
@@ -101,20 +112,24 @@ export class TrackComponent implements OnInit {
     console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED)
     switch (event.data) {
       case window['YT'].PlayerState.PLAYING:
+        this.paused = false;
         if (this.cleanTime() == 0) {
           console.log('started ' + this.cleanTime());
         } else {
           let timestamp = this.cleanTime();
-          this.chatService.sendPause(this.songs[this.count], timestamp);
+          this.chatService.sendUnpause(this.songs[this.count], timestamp);
           console.log('playing ' + this.cleanTime())
         };
         break;
       case window['YT'].PlayerState.PAUSED:
+        this.paused = true;
         if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
           console.log('paused' + ' @ ' + this.cleanTime());
+          
           let timestamp = this.cleanTime();
           this.pausedAt = this.cleanTime();
-          this.chatService.sendUnpause(this.songs[this.count], timestamp);
+          this.chatService.sendPause(this.songs[this.count], timestamp);
+          
         };
         break;
       case window['YT'].PlayerState.ENDED:

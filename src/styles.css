@@ -3,6 +3,7 @@
  * Copyright 2013-2018 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-clean-blog/blob/master/LICENSE)
  */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 textarea:focus,
 input[type="text"]:focus,
@@ -262,22 +263,22 @@ img::-moz-selection {
 }
 
 header.masthead {
-  height: 375px;
+  height: 100px;
   margin-bottom: 20px;
   background: no-repeat center center;
-  background-color: #868e96;
+  background-color: white;
   background-attachment: scroll;
   position: relative;
   background-size: cover;
 }
 
 header.masthead .overlay {
-  height: 375px;
+  height: 100px;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #212529;
+  background-color: white;
   opacity: 0.5;
 }
 
