@@ -15,7 +15,6 @@ export class ChatService {
   currentListener = this.listenerSong.asObservable();
   private listenerPhoto = new BehaviorSubject<string>("");
   currentListenerPhoto = this.listenerPhoto.asObservable();
-  // private socket = io(`http://localhost:3000`)
   private socket = io();
 
   constructor() { }

@@ -72,6 +72,7 @@ export class TrackComponent implements OnInit {
 
   current() {
     this.chatService.changeSong(this.currentSongs[this.count].photo)
+    console.log(this.currentSongs, "herherhe")
     this.chatService.changeName(this.currentSongs[this.count].name)
   }
 
@@ -88,7 +89,6 @@ export class TrackComponent implements OnInit {
       
     } else {
       this.player.pauseVideo();
-      
     }
     
   }

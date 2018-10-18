@@ -6,7 +6,7 @@
 }
 .example1 h3 {
   font-size: 3em;
-  color: limegreen;
+  color: black;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -42,4 +42,9 @@
   -webkit-transform: translateX(-100%); /* Firefox bug fix */
   transform: translateX(-100%); 
   }
+}
+img {
+  height: 410px;
+  object-fit: cover;
+  border-radius: 20px;
 }

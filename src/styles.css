@@ -212,14 +212,14 @@ img::-moz-selection {
     color:black;
   }
   #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 0, 0, 0.7);
   }
   #mainNav .navbar-nav > li.nav-item > a {
     padding: 10px 20px;
     color: black;
   }
   #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 0, 0, 0.7);
   }
 }
 
