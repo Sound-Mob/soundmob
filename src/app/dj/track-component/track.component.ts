@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { HttpClient } from '@angular/common/http';
+import { timingSafeEqual } from 'crypto';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
-
+  public castedOff: boolean = false;
   public pauseButton: boolean = false;
 
   public volume: object;
@@ -49,10 +50,14 @@ export class TrackComponent implements OnInit {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
 
+  castOff(){
+    this.castedOff = true;
+  }
+
   ngOnInit() {
     this.init();
     // this.video = '14WE3A0PwVs' //video id
-
+    console.log("in init")
     window['onYouTubeIframeAPIReady'] = (e) => {
       this.YT = window['YT'];
       this.player = new window['YT'].Player('player', {
@@ -95,6 +100,7 @@ export class TrackComponent implements OnInit {
 
   startCast() {
     this.init();
+    
     this.player.loadVideoById(this.songs[this.count])
     console.log("start cast was fired", this.songs[this.count])
     if (this.count !== 0){

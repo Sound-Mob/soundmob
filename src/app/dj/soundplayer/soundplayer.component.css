@@ -10,11 +10,7 @@
     text-align: center;
 }
 
-.album-block{
-    background-color: white;
-    width: auto;
-    display: block;
-}
+
 
 #soundboard-button{
     background-color: rgb(0, 0, 0, 0.10);
@@ -66,4 +62,10 @@
     -webkit-transform: translateX(-100%); /* Firefox bug fix */
     transform: translateX(-100%); 
     }
+}
+
+img {
+  height: 410px;
+  object-fit: cover;
+  border-radius: 20px;
 }
