@@ -18,7 +18,7 @@ export class TrackComponent implements OnInit {
   public pausedAt: number;
   public currentSongs: object;
 
-  public pauseButton: boolean = true;
+  public pauseButton: boolean = false;
 
   public volume: object;
  

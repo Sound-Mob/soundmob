@@ -21,6 +21,8 @@ export class ListenerTrackComponent implements OnInit {
   public startAt: number = 0;
   public trackTitle: string;
   public trackPhoto: string;
+  public volume: object;
+
   constructor(private chatService: ChatService) { 
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
@@ -38,7 +40,7 @@ export class ListenerTrackComponent implements OnInit {
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
         this.current(this.trackTitle,this.trackPhoto);
-        this.pauseCast();
+        this.resumeCast();
       })
     this.chatService.songStatusListener()
       .subscribe(songStatusInfo => {
@@ -46,13 +48,14 @@ export class ListenerTrackComponent implements OnInit {
         this.trackPhoto = songStatusInfo['photo'];
         this.video = songStatusInfo['songId'];
         this.startAt = songStatusInfo['timestamp'];
-
-        console.log(songStatusInfo, " songstatusinfo and start at")
-        // console.log("this.video, this.resumeAt")
-        // this.player.loadVideoById(this.video, this.startAt)
         this.current(this.trackTitle,this.trackPhoto);
-
         this.hearCast();
+      })
+    this.chatService.listenForVolume()
+      .subscribe(volume => {
+        this.volume = volume;
+        this.player.setVolume(this.volume)
+        console.log(this.volume, " receive volume happening in listener");
       })
 
   }
@@ -95,6 +98,13 @@ export class ListenerTrackComponent implements OnInit {
     if (this.player !== undefined){
       this.player.loadVideoById(this.video, this.startAt)
     }
+  }
+  resumeCast() {
+    // this.init();
+    this.paused = false;
+    
+      this.player.loadVideoById(this.video, this.resumeAt)
+    
   }
 
   pauseCast() {
