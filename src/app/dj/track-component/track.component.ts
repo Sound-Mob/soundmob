@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-track',
   templateUrl: './track.component.html',
@@ -16,7 +17,12 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
+
   public pauseButton: boolean = true;
+
+  public volume: object;
+ 
+
   constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveSongs()
       .subscribe(songs => {
@@ -28,6 +34,12 @@ export class TrackComponent implements OnInit {
         console.log(this.songs[this.count], " video id before sending status")
         console.log(this.cleanTime(), " time id before sending status")
         this.chatService.sendSongStatus(this.songs[this.count], this.cleanTime());
+      })
+    this.chatService.listenForVolume()
+      .subscribe(volume => {
+        this.volume = volume;
+        this.player.setVolume(this.volume)
+        console.log(this.volume, " receive volume happening in dj");
       })
    }
   init() {

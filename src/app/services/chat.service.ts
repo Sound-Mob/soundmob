@@ -110,6 +110,21 @@ export class ChatService {
     return observable;
   }
 
+  listenForVolume() {
+    let observable = new Observable<{ volume: object }>(observer => {
+      this.socket.on('changeVolume', (volume) => {
+        console.log(" recieved volume change")
+        observer.next(volume);
+      });
+    });
+    // console.log(observable)
+    return observable;
+  }
+
+  changeVolume(volume){
+    this.socket.emit('changeVolume', volume);
+  }
+
   sendSongStatus(songId, timestamp) {
     console.log("in send songstatus service")
     console.log(songId, timestamp)

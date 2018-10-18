@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 
+
 @Component({
   selector: 'app-listener-track',
   template: `<div class="max-width-1024">
@@ -29,12 +30,12 @@ export class ListenerTrackComponent implements OnInit {
       })
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
-      this.trackTitle = resumeInfo['name'];
+
+       this.trackTitle = resumeInfo['name'];
+
         this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
-        // console.log(this.video, this.resumeAt)
-        // console.log("this.video, this.resumeAt")
         this.current(this.trackTitle,this.trackPhoto);
         this.pauseCast();
       })
@@ -44,22 +45,15 @@ export class ListenerTrackComponent implements OnInit {
         this.trackPhoto = songStatusInfo['photo'];
         this.video = songStatusInfo['songId'];
         this.startAt = songStatusInfo['timestamp'];
+
         console.log(songStatusInfo, " songstatusinfo and start at")
         // console.log("this.video, this.resumeAt")
         // this.player.loadVideoById(this.video, this.startAt)
         this.current(this.trackTitle,this.trackPhoto);
+
         this.hearCast();
       })
-    
-    // this.chatService.listenerReceiveSongDetails()
-    //   .subscribe(songinfo => {
-    //     console.log("song info recieved", songinfo)
-    //     this.startAt = songinfo['listenerStartTime'] - parseInt(songinfo['songinfo'][0].starttime);
-    //     console.log(this.startAt, "  iojoighoaj")
-    //     this.video = songinfo['songinfo'][0].songid;
-    //     this.init();
-    //     this.hearCast();
-    //   })
+
   }
   init() {
     var tag = document.createElement('script');
@@ -91,31 +85,20 @@ export class ListenerTrackComponent implements OnInit {
         }
       });
     };
-    console.log(" in ng init")
-    
   }
 
   hearCast() {
    this.init();
-    console.log(this, "  in hear cast")
-    console.log(this.startAt, "  in hear cast")
-    console.log(this.player, "  in hear cast")
     if (this.player !== undefined){
-      console.log(this.startAt, "  in hear cast")
       this.player.loadVideoById(this.video, this.startAt)
     }
-    
-    // console.log("start cast was fired", this.player)
- 
   }
 
   pauseCast() {
     if (this.paused) {
-      console.log(this.player, "paused is true in pausecast")
       this.player.loadVideoById(this.video, this.resumeAt)
       this.paused = false;
     } else {
-      console.log("paused is false in pausecast")
       this.player.pauseVideo();
       this.paused = true;
     }
