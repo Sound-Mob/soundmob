@@ -44,6 +44,7 @@ export class ListenerTrackComponent implements OnInit {
       })
     this.chatService.songStatusListener()
       .subscribe(songStatusInfo => {
+        console.log("in song status receive ", songStatusInfo)
         this.trackTitle = songStatusInfo['name'];
         this.trackPhoto = songStatusInfo['photo'];
         this.video = songStatusInfo['songId'];
@@ -80,10 +81,9 @@ export class ListenerTrackComponent implements OnInit {
         videoId: this.video,
         startSeconds: this.startAt,
         events: {
-          // 'onStateChange': this.onPlayerStateChange.bind(this),
+          'onStateChange': this.onPlayerStateChange.bind(this),
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
-            // this.player.loadVideoById(this.video);
             console.log(" made it in youtube init")
             this.chatService.listenerGetSongDetails()
           },
@@ -93,6 +93,7 @@ export class ListenerTrackComponent implements OnInit {
   }
 
   hearCast() {
+    console.log("in hear cast")
    this.init();
     this.paused = false;
     if (this.player !== undefined){
@@ -100,23 +101,55 @@ export class ListenerTrackComponent implements OnInit {
     }
   }
   resumeCast() {
+<<<<<<< HEAD
     // this.init();
     this.paused = false;
 
       this.player.loadVideoById(this.video, this.resumeAt)
 
+=======
+    console.log(this.paused, "in resume cast")
+      this.player.loadVideoById(this.video, this.resumeAt)
+      this.paused = false;
+>>>>>>> da03b87dcc53cdf89d70682fe97d54508b3006d6
   }
 
   pauseCast() {
-    if (this.paused) {
-      this.player.loadVideoById(this.video, this.resumeAt)
-      this.paused = false;
-    } else {
+    console.log(this.paused, "in pause cast")
+    if (this.paused === false){
+      console.log("inside about to pause")
       this.player.pauseVideo();
       this.paused = true;
     }
+      
+    
 
   }
+  onPlayerStateChange(event) {
+    console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED)
+    switch (event.data) {
+      case window['YT'].PlayerState.PLAYING:
+        this.paused = false;
+        if (this.cleanTime() == 0) {
+          console.log('started ' + this.cleanTime());
+        } else {
+          console.log('playing ' + this.cleanTime())
+        };
+        break;
+      case window['YT'].PlayerState.PAUSED:
+        this.paused = true;
+        if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
+          console.log('paused' + ' @ ' + this.cleanTime());
+          let timestamp = this.cleanTime();
+          this.pausedAt = this.cleanTime();
+        };
+        break;
+      case window['YT'].PlayerState.ENDED:
+        console.log("in ended")
+        break;
+    };
+  };
+
   //utility
   cleanTime() {
     return Math.round(this.player.getCurrentTime())

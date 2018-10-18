@@ -9,6 +9,8 @@ import { Observable, BehaviorSubject } from 'rxjs'
 export class ChatService {
   private songSource = new BehaviorSubject<string>('//ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
   currentSong = this.songSource.asObservable();
+  private songName = new BehaviorSubject<string>('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
+  currentName = this.songName.asObservable();
   private listenerSong = new BehaviorSubject<string>("");
   currentListener = this.listenerSong.asObservable();
   private listenerPhoto = new BehaviorSubject<string>("");
@@ -19,6 +21,9 @@ export class ChatService {
   constructor() { }
   changeSong(song:string) {
     this.songSource.next(song);
+  }
+  changeName(name:string) {
+    this.songName.next(name);
   }
   changeListenerSong(name:string) {
     this.listenerSong.next(name);

@@ -30,9 +30,9 @@ export class PublisherComponent implements AfterViewInit {
       width: "0%", showControls: true};
     
     this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, this.publishOptions);
-    this.publisher.setStyle('backgroundImageURI',
-      'https://mbtskoudsalg.com/explore/cartoon-microphone-png/#gal_post_3455_cartoon-microphone-png-8.png'
-    );
+    // this.publisher.setStyle('backgroundImageURI',
+    //   'https://mbtskoudsalg.com/explore/cartoon-microphone-png/#gal_post_3455_cartoon-microphone-png-8.png'
+    // );
     if (this.session) {
       if (this.session['isConnected']()) {
       
