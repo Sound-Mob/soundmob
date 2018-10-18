@@ -184,6 +184,12 @@ io.on('connection', (socket) => {
     });
   });
 
+  // listen for volume change
+  socket.on('changeVolume', (volume) => {
+    console.log(volume)
+    io.sockets.emit('changeVolume', volume);
+  })
+
   // choose playlist listener
   socket.on('djSelectsPlaylist', (playlistId) => {
     console.log(playlistId, ' playlistId');

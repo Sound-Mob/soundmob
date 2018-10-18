@@ -3,6 +3,7 @@
  * Copyright 2013-2018 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-clean-blog/blob/master/LICENSE)
  */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 textarea:focus,
 input[type="text"]:focus,

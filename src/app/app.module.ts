@@ -35,7 +35,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppRoutingModule,
     HttpModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [AuthGuard, AuthService, AdminGuard, ChatService, OpentokService],
   bootstrap: [AppComponent]
