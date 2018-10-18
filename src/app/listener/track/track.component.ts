@@ -21,43 +21,48 @@ export class ListenerTrackComponent implements OnInit {
   public startAt: number = 0;
   public trackTitle: string;
   public trackPhoto: string;
+  public volume: object;
+
   constructor(private chatService: ChatService) { 
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
+        console.log("received pause ping", pauseInfo)
         this.video = pauseInfo['songId'];
         this.pausedAt = pauseInfo['pausedAt'];
         this.pauseCast();
       })
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
-
+        console.log("received resume ping", resumeInfo)
        this.trackTitle = resumeInfo['name'];
 
         this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
         this.current(this.trackTitle,this.trackPhoto);
-        this.pauseCast();
+        this.resumeCast();
       })
     this.chatService.songStatusListener()
       .subscribe(songStatusInfo => {
+        console.log("in song status receive ", songStatusInfo)
         this.trackTitle = songStatusInfo['name'];
         this.trackPhoto = songStatusInfo['photo'];
         this.video = songStatusInfo['songId'];
         this.startAt = songStatusInfo['timestamp'];
-
-        console.log(songStatusInfo, " songstatusinfo and start at")
-        // console.log("this.video, this.resumeAt")
-        // this.player.loadVideoById(this.video, this.startAt)
         this.current(this.trackTitle,this.trackPhoto);
-
         this.hearCast();
+      })
+    this.chatService.listenForVolume()
+      .subscribe(volume => {
+        this.volume = volume;
+        this.player.setVolume(this.volume)
+        console.log(this.volume, " receive volume happening in listener");
       })
 
   }
   init() {
     var tag = document.createElement('script');
-    tag.src = 'http://www.youtube.com/iframe_api';
+    tag.src = '//www.youtube.com/iframe_api';
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
@@ -76,10 +81,10 @@ export class ListenerTrackComponent implements OnInit {
         videoId: this.video,
         startSeconds: this.startAt,
         events: {
-          // 'onStateChange': this.onPlayerStateChange.bind(this),
+          'onStateChange': this.onPlayerStateChange.bind(this),
           'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
-            // this.player.loadVideoById(this.video);
+            console.log(" made it in youtube init")
             this.chatService.listenerGetSongDetails()
           },
         }
@@ -88,22 +93,55 @@ export class ListenerTrackComponent implements OnInit {
   }
 
   hearCast() {
+    console.log("in hear cast")
    this.init();
+    this.paused = false;
     if (this.player !== undefined){
       this.player.loadVideoById(this.video, this.startAt)
     }
   }
-
-  pauseCast() {
-    if (this.paused) {
+  resumeCast() {
+    console.log(this.paused, "in resume cast")
       this.player.loadVideoById(this.video, this.resumeAt)
       this.paused = false;
-    } else {
+  }
+
+  pauseCast() {
+    console.log(this.paused, "in pause cast")
+    if (this.paused === false){
+      console.log("inside about to pause")
       this.player.pauseVideo();
       this.paused = true;
     }
+      
+    
 
   }
+  onPlayerStateChange(event) {
+    console.log(event.data, window['YT'].PlayerState.PLAYING, window['YT'].PlayerState.PAUSED, window['YT'].PlayerState.ENDED)
+    switch (event.data) {
+      case window['YT'].PlayerState.PLAYING:
+        this.paused = false;
+        if (this.cleanTime() == 0) {
+          console.log('started ' + this.cleanTime());
+        } else {
+          console.log('playing ' + this.cleanTime())
+        };
+        break;
+      case window['YT'].PlayerState.PAUSED:
+        this.paused = true;
+        if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
+          console.log('paused' + ' @ ' + this.cleanTime());
+          let timestamp = this.cleanTime();
+          this.pausedAt = this.cleanTime();
+        };
+        break;
+      case window['YT'].PlayerState.ENDED:
+        console.log("in ended")
+        break;
+    };
+  };
+
   //utility
   cleanTime() {
     return Math.round(this.player.getCurrentTime())
