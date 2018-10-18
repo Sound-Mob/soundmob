@@ -57,7 +57,7 @@ export class TrackComponent implements OnInit {
   ngOnInit() {
     this.init();
     // this.video = '14WE3A0PwVs' //video id
-
+    console.log("in init")
     window['onYouTubeIframeAPIReady'] = (e) => {
       this.YT = window['YT'];
       this.player = new window['YT'].Player('player', {
@@ -100,6 +100,7 @@ export class TrackComponent implements OnInit {
 
   startCast() {
     this.init();
+    
     this.player.loadVideoById(this.songs[this.count])
     console.log("start cast was fired", this.songs[this.count])
     if (this.count !== 0){
