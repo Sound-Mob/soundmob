@@ -2,8 +2,8 @@
 <router-outlet></router-outlet>
 
 
-<header class="masthead">
-  <div class="overlay"></div>
+<!-- <header class="masthead"> -->
+  <!-- <div class="overlay"></div>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
@@ -15,11 +15,33 @@
 
       </div>
     </div>
-  </div>
-</header>
+  </div> -->
+<!-- </header> -->
 
+<div class="container">
   <div class="row">
-    
+    <div class="col-4">
+      <button class="btn std-btn btn-lg btn-info" routerLink="/dj" routerLinkActive="active">Create Station</button>
+    </div>
+    <div class="col-8">
+      <h1>Active Soundcasts</h1>
+      <div class="row" *ngFor="let dj of activeDj.djs">
+        <div class="col-2">
+          <img class="rounded-circle" src={{dj.photo}} width="100" height="100">
+        </div>
+        <div class="col-10">
+          <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
+            <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="row">
+
     <div class="col-sm-8">
         <div *ngFor="let dj of activeDj.djs">
             <div class="team_wrapper clearfix">
@@ -30,12 +52,11 @@
                 </a>
               </div>
             </div>
+
       </div>
+      <button class="btn std-btn btn-lg btn-info" routerLink="/dj" routerLinkActive="active">Create Station</button>
     </div>
-  </div>
-  <div class="row"> 
-      <button class="btn std-btn btn-lg btn-info"routerLink="/dj" routerLinkActive="active">Create Station</button>
-  </div>
-  
-  
+  </div> -->
+
+
 

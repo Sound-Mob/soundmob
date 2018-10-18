@@ -72,7 +72,6 @@ export class TrackComponent implements OnInit {
 
   current() {
     this.chatService.changeSong(this.currentSongs[this.count].photo)
-    this.chatService.changeName(this.currentSongs[this.count].name)
   }
 
   pauseCast(){
@@ -88,7 +87,6 @@ export class TrackComponent implements OnInit {
       
     } else {
       this.player.pauseVideo();
-      
     }
     
   }
