@@ -275,10 +275,14 @@ io.on('connection', (socket) => {
   });
 
   socket.on('songStatus', (songInfo)=>{
-    console.log("in songstatus")
-    io.sockets.emit('songStatusToListener', songInfo);
-  })
-  
+    listenerInfo(accessToken, songInfo.songId)
+      .then(({ items }) => {
+        const snippet = items[0].snippet;
+        songInfo.name = snippet.title;
+        songInfo.photo = snippet.thumbnails.high.url;
+        io.sockets.emit('songStatusToListener', songInfo);
+      });
+  });
 
   // listen for listener request of current song
   socket.on('listenerGetCurrentSong', () => {
