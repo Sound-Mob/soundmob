@@ -156,7 +156,7 @@ io.on('connection', (socket) => {
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
         djs.push({
-          name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token,
+          name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user,
         });
       }
     });
@@ -253,8 +253,7 @@ io.on('connection', (socket) => {
     const room = djInfo[0];
     const tokSession = djInfo[1];
     const tokToken = djInfo[2];
-    const songIds = ['KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
-
+    const googleID = djInfo[3];
     getSessionInfoById(user).then((session) => {
       if (!session.length) {
         addSession(tokSession, tokToken, user)
@@ -263,6 +262,11 @@ io.on('connection', (socket) => {
       } else {
         changeSession(tokSession, tokToken, user)
           .then(() => console.log('changed in tok session'))
+          .then(() => {
+            getUserById(googleID).then((data) => {
+              io.sockets.emit('info4Listener', data);
+            }).catch(err => console.error(err));
+          })
           .catch(err => console.log(err));
       }
     }).catch(error => console.log(error, ' in get session'));
@@ -274,11 +278,15 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('songStatus', (songInfo)=>{
-    console.log("in songstatus")
-    io.sockets.emit('songStatusToListener', songInfo);
-  })
-  
+  socket.on('songStatus', (songInfo) => {
+    listenerInfo(accessToken, songInfo.songId)
+      .then(({ items }) => {
+        const snippet = items[0].snippet;
+        songInfo.name = snippet.title;
+        songInfo.photo = snippet.thumbnails.high.url;
+        io.sockets.emit('songStatusToListener', songInfo);
+      });
+  });
 
   // listen for listener request of current song
   socket.on('listenerGetCurrentSong', () => {

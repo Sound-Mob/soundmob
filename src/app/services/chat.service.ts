@@ -137,6 +137,19 @@ export class ChatService {
     // console.log(observable)
     return observable;
   }
+  getInfoListener() {
+    console.log('obboboobobob')
+    let observable = new Observable<object>(observer => {
+      this.socket.on('info4Listener', (djInfo) => {
+        // console.log(djInfo);
+        observer.next(djInfo);
+      });
+    });
+    // return this.socket.on<object>('info4Listener', profile => {
+    //   observer.next(profile)
+    // });
+    return observable;
+  }
 
   joinRoom(djInfo) {
     this.socket.emit('roomroute', djInfo)

@@ -48,17 +48,17 @@ module.exports = {
   getSessionInfoById: id => db.any('SELECT * FROM sessions WHERE googleid = $1', id),
   // select and return users
   getUsers: () => {
-  return  db.any('SELECT * FROM users')
-      .then(user => {
+    return db.any('SELECT * FROM users')
+      .then((user) => {
         console.log(user); // print user name;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error); // print the error;
       });
   },
   getUserById: id => db.any('SELECT * FROM users WHERE googleid = $1', id),
 
   getSoundsById: (id) => {
-    return db.any(`SELECT * FROM soundsamples WHERE ownerid = $1`, id)
+    return db.any('SELECT * FROM soundsamples WHERE ownerid = $1', id);
   }
 };
