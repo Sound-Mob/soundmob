@@ -1,6 +1,17 @@
 #landing{
   padding: 70px;
 }
-#log-login-btn{
-  padding-left: 30px;
+.login-icon {
+  text-align: center;
+  vertical-align: bottom;
+}
+.center {
+  text-align: center;
+  height: 50%;
+}
+.login-button {
+  border-radius: 2px;
+}
+.fa-google-plus-g {
+  color: white;
 }
