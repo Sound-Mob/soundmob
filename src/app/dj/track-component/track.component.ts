@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { HttpClient } from '@angular/common/http';
+import { timingSafeEqual } from 'crypto';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
-
+  public castedOff: boolean = false;
   public pauseButton: boolean = false;
 
   public volume: object;
@@ -47,6 +48,10 @@ export class TrackComponent implements OnInit {
     tag.src = 'http://www.youtube.com/iframe_api';
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+
+  castOff(){
+    this.castedOff = true;
   }
 
   ngOnInit() {
