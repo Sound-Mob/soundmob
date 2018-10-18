@@ -1,4 +1,23 @@
-<p>
-  track-component works!
-</p>
-
+<div class="max-width-1024">
+  <div>
+    <button type="button" class="btn std-btn btn-sm btn-common" value="startCast" (click)="startCast()">
+      Start Cast
+    </button>
+    <div *ngIf="pauseButton">
+      <button type="button" class="btn std-btn btn-sm btn-common" value="pauseCast" (click)="pauseCast()">
+        <i class="material-icons">
+          play_circle_filled
+        </i>
+      </button>
+    </div>
+    <div *ngIf="pauseButton === false">
+      <button type="button" class="btn std-btn btn-sm btn-common" value="pauseCast" (click)="pauseCast()">
+        <i class="material-icons">
+          pause_circle_filled
+        </i>
+      </button>
+    </div>
+    <div id="player" style="display:none;">
+    </div>
+  </div>
+</div>

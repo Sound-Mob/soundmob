@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-profile',
@@ -6,13 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
-  constructor() { }
+profile: object;
+  constructor(private chatService:ChatService) { }
 
   ngOnInit() {
-  }
-
-  profile(){
-    
+   
+      this.chatService.getInfoListener()
+      .subscribe(data => {
+       this.profile = data
+     });
   }
 }

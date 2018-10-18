@@ -1,4 +1,4 @@
-import { Component, OnInit,} from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { start } from 'repl';
 
@@ -41,13 +41,13 @@ export class SoundplayerComponent implements OnInit {
   ngOnInit() {
     // this.chatService.listenerGetSongDetails()
     this.chatService.currentListener
-    .subscribe((data) => {
-      console.log(data,' insidne the soundComponent listener')
-      this.name = data;
-    })
+      .subscribe((data) => {
+        console.log(data, ' insidne the soundComponent listener')
+        this.name = data;
+      })
     this.chatService.currentListenerPhoto
-    .subscribe((data) => {
-      this.photo =data
-    })
+      .subscribe((data) => {
+        this.photo = data
+      })
   }
 }

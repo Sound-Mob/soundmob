@@ -30,7 +30,9 @@ export class ListenerTrackComponent implements OnInit {
       });
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
+
        this.trackTitle = resumeInfo['name'];
+
         this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
@@ -39,23 +41,19 @@ export class ListenerTrackComponent implements OnInit {
       })
     this.chatService.songStatusListener()
       .subscribe(songStatusInfo => {
+        this.trackTitle = songStatusInfo['name'];
+        this.trackPhoto = songStatusInfo['photo'];
         this.video = songStatusInfo['songId'];
         this.startAt = songStatusInfo['timestamp'];
+
+        console.log(songStatusInfo, " songstatusinfo and start at")
+        // console.log("this.video, this.resumeAt")
+        // this.player.loadVideoById(this.video, this.startAt)
+        this.current(this.trackTitle,this.trackPhoto);
+
         this.hearCast();
       })
 
-<<<<<<< HEAD
-    // this.chatService.listenerReceiveSongDetails()
-    //   .subscribe(songinfo => {
-    //     console.log("song info recieved", songinfo)
-    //     this.startAt = songinfo['listenerStartTime'] - parseInt(songinfo['songinfo'][0].starttime);
-    //     console.log(this.startAt, "  iojoighoaj")
-    //     this.video = songinfo['songinfo'][0].songid;
-    //     this.init();
-    //     this.hearCast();
-    //   })
-=======
->>>>>>> 0d3da53f45f9af7d11a6c2cf948468ec949ebf4f
   }
   init() {
     var tag = document.createElement('script');
@@ -87,11 +85,6 @@ export class ListenerTrackComponent implements OnInit {
         }
       });
     };
-<<<<<<< HEAD
-    console.log(" in ng init")
-
-=======
->>>>>>> 0d3da53f45f9af7d11a6c2cf948468ec949ebf4f
   }
 
   hearCast() {
@@ -99,12 +92,6 @@ export class ListenerTrackComponent implements OnInit {
     if (this.player !== undefined){
       this.player.loadVideoById(this.video, this.startAt)
     }
-<<<<<<< HEAD
-
-    // console.log("start cast was fired", this.player)
-
-=======
->>>>>>> 0d3da53f45f9af7d11a6c2cf948468ec949ebf4f
   }
 
   pauseCast() {

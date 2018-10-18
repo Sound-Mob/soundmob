@@ -24,12 +24,6 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
-<<<<<<< HEAD
-
-=======
-  public volume: object;
- 
->>>>>>> 0d3da53f45f9af7d11a6c2cf948468ec949ebf4f
   constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveSongs()
       .subscribe(songs => {
@@ -44,9 +38,9 @@ export class TrackComponent implements OnInit {
       })
     this.chatService.listenForVolume()
       .subscribe(volume => {
-        this.volume = volume;
-        this.player.setVolume(this.volume)
-        console.log(this.volume, " receive volume happening in dj");
+        // this.volume = volume;
+        // this.player.setVolume(this.volume)
+        // console.log(this.volume, " receive volume happening in dj");
       })
    }
   init() {
