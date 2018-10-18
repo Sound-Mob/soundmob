@@ -7,18 +7,14 @@ import { ChatService } from '../../services/chat.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
+profile: object;
   constructor(private chatService:ChatService) { }
 
   ngOnInit() {
    
       this.chatService.getInfoListener()
       .subscribe(data => {
-        console.log(data, 'Should be Kenneth')
-      })
-  }
-
-  profile(){
-    
+       this.profile = data
+     });
   }
 }
