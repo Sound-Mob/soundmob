@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   <div>
   <input type="button" value="startCast" (click)="startCast()" />
   <input type="button" value="pauseCast" (click)="pauseCast()" />
-      <div class="embed-responsive embed-responsive-16by9" id="player"> 
+      <div class="embed-responsive embed-responsive-16by9" id="player">
       </div>
       </div>
     </div>`,
@@ -23,7 +23,7 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
- 
+
   constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveSongs()
       .subscribe(songs => {
@@ -39,7 +39,7 @@ export class TrackComponent implements OnInit {
    }
   init() {
     var tag = document.createElement('script');
-    tag.src = 'http://www.youtube.com/iframe_api';
+    tag.src = '//www.youtube.com/iframe_api';
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
@@ -79,7 +79,7 @@ export class TrackComponent implements OnInit {
       this.player.pauseVideo();
       this.paused = true;
     }
-    
+
   }
 
   startCast() {
@@ -90,7 +90,7 @@ export class TrackComponent implements OnInit {
       // this.chatService.djStartCast(this.songs[this.count]);
       this.chatService.sendUnpause(this.songs[this.count], this.cleanTime());
     }
-    
+
     this.http.post('djView/songDetails', { songs: this.songs })
       .subscribe((data) => {
         this.currentSongs = data;
@@ -133,7 +133,7 @@ export class TrackComponent implements OnInit {
     return Math.round(this.player.getCurrentTime())
   };
   onPlayerError(event) {
-    
+
     switch (event.data) {
       case 2:
         console.log('' + this.video)

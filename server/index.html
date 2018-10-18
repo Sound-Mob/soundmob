@@ -8,11 +8,11 @@
       padding: 0;
       box-sizing: border-box;
     }
-  
+
     body {
       font: 13px Helvetica, Arial;
     }
-  
+
     form {
       background: #000;
       padding: 3px;
@@ -20,33 +20,33 @@
       bottom: 0;
       width: 100%;
     }
-  
+
     form input {
       border: 0;
       padding: 10px;
       width: 90%;
       margin-right: .5%;
     }
-  
+
     form button {
       width: 9%;
       background: rgb(130, 224, 255);
       border: none;
       padding: 10px;
     }
-  
-  
-  
+
+
+
     #messages {
       list-style-type: none;
       margin: 0;
       padding: 0;
     }
-  
+
     #messages li {
       padding: 5px 10px;
     }
-  
+
     .ghost {
       visibility: hidden;
     }
@@ -95,7 +95,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
-  
+
   <script>
 
     const socket = io('/');
@@ -107,7 +107,7 @@
     var duration;
     var castStartTime;
     var ids = ['JryGDi6SVQQ', 'Nnu1E5Kslig', '0Vto2RT3818']
-    
+
   $(function () {
     // sending chat messages
     $('#chat').click(function () {
@@ -140,7 +140,7 @@
       console.log(msg)
     $('#messages').append($('<li>').text(`${msg.name}: ${msg.msg}`));
       });
-      
+
       // notify room when someone leaves
       socket.on('disconnect', function (info) {
         // update users list
@@ -153,7 +153,7 @@
       $('#messages').append($('<li>').text(`${info.name} has left the station`));
       });
 
-      
+
     // listen for new user
       socket.on('new_user', function(info) {
         // update user list
@@ -168,9 +168,9 @@
       // JOIN ROOM LISTENER -- listen for user joining room
       socket.on('startlistener', function (timeInPlaylist) {
         // youtube embed / play on listener page
-        let videos = [`https://www.youtube.com/embed/${ids[1]}?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`];
+        let videos = [`//www.youtube.com/embed/${ids[1]}?start=${timeInPlaylist}&rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`];
         document.getElementById('myIframe').src = videos[0];
-        
+
         // START TOKBOX -- Listener
         // tokbox init for listener
         session = OT.initSession(apiKey, sessionId);
@@ -207,15 +207,15 @@
           }
         });
       });
- 
+
   });
 // //  set constrainsts for media devices
 // var constraints = { audio: true };
-// // select the audio element 
+// // select the audio element
 // const audio = document.querySelector('audio');
 //   // This function returns a promise that gives us access to the users mic and voice from mic
 //   navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
-//     // setting audio from tag so that the voice 
+//     // setting audio from tag so that the voice
 //       var mediaRecorder = new MediaRecorder(mediaStream);
 //       // create chunks array to store audio data
 //       mediaRecorder.onstart = function(e) {
@@ -273,15 +273,15 @@
       castStartTime = playlistStartTime;
       // setInterval(startCast, duration);
       // console.log("hello")
-      let videos = [`https://www.youtube.com/embed/${ids[1]}?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
+      let videos = [`//www.youtube.com/embed/${ids[1]}?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       // let videos = [`https://www.youtube.com/embed/0Vto2RT3818?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=0&autoplay=1`]
       document.getElementById('myIframe').src = videos[0];
-    } )   
+    } )
     </script>
     <script type="text/javascript">
       function iframeDidLoad() {
         console.log("song changed")
-      } 
+      }
     </script>
     <input type="button" value="startCast" onClick="startCast()" />
     <iframe id="myIframe" src="" allow="autoplay" onLoad="iframeDidLoad();"></iframe>
