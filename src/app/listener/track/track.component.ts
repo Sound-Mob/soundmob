@@ -30,7 +30,9 @@ export class ListenerTrackComponent implements OnInit {
       })
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
+
        this.trackTitle = resumeInfo['name'];
+
         this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
@@ -39,8 +41,16 @@ export class ListenerTrackComponent implements OnInit {
       })
     this.chatService.songStatusListener()
       .subscribe(songStatusInfo => {
+        this.trackTitle = songStatusInfo['name'];
+        this.trackPhoto = songStatusInfo['photo'];
         this.video = songStatusInfo['songId'];
         this.startAt = songStatusInfo['timestamp'];
+
+        console.log(songStatusInfo, " songstatusinfo and start at")
+        // console.log("this.video, this.resumeAt")
+        // this.player.loadVideoById(this.video, this.startAt)
+        this.current(this.trackTitle,this.trackPhoto);
+
         this.hearCast();
       })
 

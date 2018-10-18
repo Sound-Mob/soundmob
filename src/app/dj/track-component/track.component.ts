@@ -5,15 +5,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-track',
-  template: `<div class="max-width-1024">
-  <div>
-  <input type="button" value="startCast" (click)="startCast()" />
-  <input type="button" value="pauseCast" (click)="pauseCast()" />
-      <div class="embed-responsive embed-responsive-16by9" id="player"> 
-      </div>
-      </div>
-    </div>`,
-  styles: [`.max-width-1024 { max-width: 1024px; margin: 0 auto; }`],
+  templateUrl: './track.component.html',
+  styleUrls: ['./track.component.css'],
 })
 export class TrackComponent implements OnInit {
   public YT: any;
@@ -24,8 +17,12 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
+
+  public pauseButton: boolean = true;
+
   public volume: object;
  
+
   constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveSongs()
       .subscribe(songs => {
@@ -78,6 +75,11 @@ export class TrackComponent implements OnInit {
   }
 
   pauseCast(){
+    if(this.pauseButton){
+      this.pauseButton = false
+    } else {
+      this.pauseButton = true
+    }
     console.log(this.paused)
     if (this.paused){
       this.player.loadVideoById(this.songs[this.count], this.pausedAt);
