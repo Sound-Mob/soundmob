@@ -21,13 +21,9 @@ export class ListenerTrackComponent implements OnInit {
   public startAt: number = 0;
   public trackTitle: string;
   public trackPhoto: string;
-<<<<<<< HEAD
-  constructor(private chatService: ChatService) {
-=======
   public volume: object;
 
-  constructor(private chatService: ChatService) { 
->>>>>>> e6f820b769967d20bfdcdd744f4674f9f3b1fc03
+  constructor(private chatService: ChatService) {
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
         console.log("received pause ping", pauseInfo)
@@ -106,9 +102,9 @@ export class ListenerTrackComponent implements OnInit {
   resumeCast() {
     // this.init();
     this.paused = false;
-    
+
       this.player.loadVideoById(this.video, this.resumeAt)
-    
+
   }
 
   pauseCast() {
@@ -126,7 +122,7 @@ export class ListenerTrackComponent implements OnInit {
     return Math.round(this.player.getCurrentTime())
   };
   onPlayerError(event) {
-    debugger
+    // debugger
     switch (event.data) {
       case 2:
         console.log('' + this.video)

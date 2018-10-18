@@ -1,18 +1,18 @@
+
 <div class="album-block">
-  <img src={{this.image}} class="img-landing" height="350">
+  <img src={{this.image}} class="img-landing img-fluid">
   <div class="example1">
-      <h3>test</h3>
+      <h3>{{playlist.name}}</h3>
       </div>
 </div>
 
 
 <div class="container">
-
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
       <!-- make this toggleable -->
       <button class="btn btn-outline-info btn-lg btn-block" (click)='showCasts()'>
-          Select Cast
+      Select Cast
       </button>
       <ul class="list-group" *ngIf="viewedCast">
         <li class="list-group-item justify-content-between align-items-center">
@@ -21,22 +21,18 @@
           </button>
         </li>
       </ul>
-
-
-<div class="container-fluid">
-  <div class="row">
-    <hr>
-  </div>
-  <div id="createPlaylist">
-
-    <button class="btn btn-outline-info btn-lg btn-block" type="button" id="createCast" (click)='openNewCastComponent()'>Create Soundcast</button>
-
-
-    <div *ngIf="madeNew">
-    <div *ngIf="wasNamed === false">
-      <button type="button" id="submitCastName" (click)='submitCastName(text)'>Name Cast</button>
-      <input type="text" [(ngModel)]="text" id="input-field" placeholder="Name your soundcast." />
-    </div>
+      <br>
+    <!-- this is the create soundcast button it will let you make a playlist then choose songs for it -->
+      <div id="createPlaylist">
+        <button class="btn btn-outline-info btn-lg btn-block" type="button" id="createCast" (click)='openNewCastComponent()'>
+        Create Soundcast
+      </button>
+      <!-- this is the if block that lets you name your cast -->
+      <div *ngIf="madeNew" class="input-group input-group-lg">
+      <div *ngIf="wasNamed === false" class="input-group-prepend">
+        <button class="input-group-text" type="button" id="inputGroup-sizing-lg" (click)='submitCastName(text)'>Name Cast</button>
+        <input type="text" class="form-control" aria-label="Large" aria-descrybedby="inputGroup-sizing-sm" [(ngModel)]="text" id="input-field" placeholder="Name your soundcast." />
+      </div>
       <div *ngIf="wasNamed">
       <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
       <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
@@ -47,8 +43,16 @@
         </div>
       </div>
     </div>
-    </div>
-    <br>
+
+    <div class="input-group input-group-lg">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-lg">Large</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+</div>
+
+
+
 
 
 
