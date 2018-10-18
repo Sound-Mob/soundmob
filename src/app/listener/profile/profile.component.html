@@ -1,4 +1,4 @@
-<div id="container_image" class="profile-block">
+<!-- <div id="container_image" class="profile-block">
   <img alt="user-profile-image" class="image-landing blur-me" height="350" id="main_image" src="https://pbs.twimg.com/profile_images/986327929453006848/c5ShdmQS_400x400.jpg" />
 
   <button type="button" class="btn btn-default back-button" aria-label="Left Align" routerLink="comment">
@@ -29,4 +29,19 @@
       </ol>
     </nav>
   </div>
-</div>
+</div> -->
+
+<header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div *ngIf="profile" class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading" *ngIf='profile'>
+          <h1>{{this.profile[0].firstname}} {{this.profile[0].lastname}}</h1>
+          <span class="subheading">{{profile.bio}}</span>
+          <p>{{profile | json}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
