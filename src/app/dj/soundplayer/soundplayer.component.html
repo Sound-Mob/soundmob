@@ -7,75 +7,91 @@
 
 
 <div class="container">
-
   <div class="row">
-    <div class="col-lg-8 col-md-10 mx-auto">
-      <!-- make this toggleable -->
+    <div class="col-6 col-md-4">
       <button class="btn btn-outline-info btn-lg btn-block" (click)='showCasts()'>
-          Select Cast
+      Select Cast
       </button>
       <ul class="list-group" *ngIf="viewedCast">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button" class="btn btn-outline-info btn-lg btn-block">
+          <button *ngFor="let playlist of playlists" [attr.id]="playlist.id" (click)='playlistClick($event)' type="button"
+            class="btn btn-outline-info btn-lg btn-block">
             {{playlist.name}}
           </button>
         </li>
       </ul>
-  
-
-<div class="container-fluid">
-  <div class="row">
-    <hr>
-  </div>
-  <div id="createPlaylist">
-
-    <button class="btn btn-outline-info btn-lg btn-block" type="button" id="createCast" (click)='openNewCastComponent()'>Create Soundcast</button>
-    
-  
-    <div *ngIf="madeNew">
-    <div *ngIf="wasNamed === false">
-      <button type="button" id="submitCastName" (click)='submitCastName(text)'>Name Cast</button>
-      <input type="text" [(ngModel)]="text" id="input-field" placeholder="Name your soundcast." />
     </div>
-      <div *ngIf="wasNamed">
-      <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
-      <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
-      <div *ngIf="songSelected === false">
-        <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
-          {{result.name}}
+  </div>
+  <div class="col-6 col-md-4">
+    <div id="createPlaylist">
+      <button class="btn btn-outline-info btn-lg btn-block" type="button" id="createCast" (click)='openNewCastComponent()'>Create
+        Soundcast
+      </button>
+      <div *ngIf="madeNew">
+        <div *ngIf="wasNamed === false">
+          <button type="button" id="submitCastName" (click)='submitCastName(text)'>Name Cast</button>
+          <input type="text" [(ngModel)]="text" id="input-field" placeholder="Name your soundcast." />
+        </div>
+        <div *ngIf="wasNamed">
+          <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
+          <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
+          <div *ngIf="songSelected === false">
+            <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button"
+              class="btn btn-outline-secondary btn-lg btn-block">
+              {{result.name}}
+            </button>
+          </div>
+        </div>
+      </div>
+    <div class="col-6 col-md-4">
+      <button type="button" id="addToCast" (click)='addToCast()' class="btn btn-outline-info btn-lg btn-block">
+        Add to Cast
+      </button>
+      <div *ngIf="wasAdded">
+        <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>
+          Search Songs
         </button>
+        <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
+        <div *ngIf="songSelected === false">
+          <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
+            {{result.name}}
+          </button>
         </div>
       </div>
     </div>
+  </div>
+</div>
+  <!-- <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto"> -->
+      <!-- make this toggleable -->
+      
+  
+
+<!-- <div class="container-fluid">
+  <div class="row">
+    <hr>
+  </div>
+  
     </div>
-    <br>
+    <br> -->
 
 
     
-    <br>
-    <button type="button" id="addToCast" (click)='addToCast()' class="btn btn-outline-info btn-lg btn-block">Add to Cast</button>
-    <div *ngIf="wasAdded">
-      <button type="button" id="searchSongToCast" (click)='searchSongToCast(search)'>Search Songs</button>
-      <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
-      <div *ngIf="songSelected === false">
-        <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
-          {{result.name}}
-        </button>
-      </div>
-    </div>
+    <!-- <br>
+    
 
-    <div>
+     <div>
       <button class="btn btn-outline-info btn-lg btn-block" (click)='showSoundboard()'>
         <h3>SoundBoard</h3>
       </button>
       <ul class="list-group" *ngIf="viewedBoard">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <li class="list-group-item d-flex justify-content-between align-items-center"> -->
           <!-- <button type="button" class="btn btn-outline-warning btn-block">Warning</button> -->
-          <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
+          <!-- <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
             {{sound.name}}
           </button>
         </li>
       </ul>
     </div>
   </div>
-</div>
+</div> -->
