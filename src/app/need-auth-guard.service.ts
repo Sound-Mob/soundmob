@@ -12,13 +12,13 @@ export class NeedAuthGuardService implements CanActivate {
 
   constructor(private router: Router, private auth: AuthService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    debugger;
     const redirectUrl = route['_routerState']['url'];
 
-    if (this.auth.isLoggedIn()) {
-      return true;
-    }
-
+ 
+      
+      if(localStorage.getItem('clicked')) {
+        return true
+      } 
     this.router.navigateByUrl(
       this.router.createUrlTree(
         ['/login'], {
@@ -30,5 +30,7 @@ export class NeedAuthGuardService implements CanActivate {
     );
 
     return false;
+
+    
   }
 }
