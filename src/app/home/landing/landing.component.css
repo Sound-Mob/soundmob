@@ -19,3 +19,8 @@
 .fa-google-plus-g {
   color: white;
 }
+body {
+  background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/EQMOWcXPx/rotating-pastel-colors-background-with-white-circular-hole-in-the-middle_h2gq5tpo__F0000.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
