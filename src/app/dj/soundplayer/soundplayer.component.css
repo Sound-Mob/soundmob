@@ -71,17 +71,42 @@ img {
 }
 
 
-.material-icons.lg-20 { font-size: 130px; }
+.material-icons.lg-20 { 
+    font-size: 130px; 
+    background: #007291;
+}
+
+.material-icons:active {
+    background: #FBDE03;
+}
 
 .icon-size {
     font-size:60px;
 }
 
 .shoppingBadge-custom{
-    background: rgba(255, 0, 0, 0.151);
+    background: #FA9D04;
     position:absolute;
     left:47px; /** you can make changes here to change position **/
     top:18px;
     font-size:14px;
     z-index: 3;
+}
+
+.tokBadge-custom{
+    background:#FA9D04;
+    position:absolute;
+    left:54px; /** you can make changes here to change position **/
+    top:35px;
+    font-size:14px;
+    /* z-index: 3; */
+}
+
+.palette{
+    background: #FEF596;
+    background: #FBDE03;
+    background: #FA9D04;
+    background: #E7450D;
+    background: #3F362A;
+    background: #007291;
 }
