@@ -19,22 +19,22 @@
 .fa-google-plus-g {
   color: white;
 }
-/* body {
-  background-image: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/EQMOWcXPx/rotating-pastel-colors-background-with-white-circular-hole-in-the-middle_h2gq5tpo__F0000.png);
+body {
+  background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BuKKyFq/videoblocks-music-notes-fire-style-background-looped-animation_sae9zw4kb_thumbnail-full01.png);
   background-size: cover;
   background-repeat: no-repeat;
-} */
+}
 /* Scale up the box */
 .box:hover {
   transform: scale(1.2, 1.2);
 }
 
-/* Fade in the pseudo-element with the bigger shadow
+/* Fade in the pseudo-element with the bigger shadow */
 .box:hover::after {
   opacity: 1;
-} */
+}
 
 /* Transition to a bigger shadow on hover */
 .make-it-slow:hover {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(1, 1, 1, 4);
 }
