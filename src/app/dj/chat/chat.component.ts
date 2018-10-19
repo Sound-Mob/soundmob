@@ -25,7 +25,7 @@ export class ChatComponent implements OnInit {
    ) {
     this.chatService.receiveMessages()
       .subscribe(data => {
-        if (this.chatMessages.length > 6) {
+        if (this.chatMessages.length > 4) {
           this.chatMessages.pop()
         }
         this.chatMessages.unshift(data)

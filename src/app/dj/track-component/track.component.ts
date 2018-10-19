@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { HttpClient } from '@angular/common/http';
+import { timingSafeEqual } from 'crypto';
 
 
 @Component({
@@ -17,11 +18,11 @@ export class TrackComponent implements OnInit {
   public paused: boolean = false;
   public pausedAt: number;
   public currentSongs: object;
-
+  public castedOff: boolean = false;
   public pauseButton: boolean = false;
 
   public volume: object;
- 
+
 
   constructor(private chatService: ChatService, private http: HttpClient) {
     this.chatService.receiveSongs()
@@ -44,15 +45,19 @@ export class TrackComponent implements OnInit {
    }
   init() {
     var tag = document.createElement('script');
-    tag.src = 'http://www.youtube.com/iframe_api';
+    tag.src = '//www.youtube.com/iframe_api';
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+
+  castOff(){
+    this.castedOff = true;
   }
 
   ngOnInit() {
     this.init();
     // this.video = '14WE3A0PwVs' //video id
-
+    console.log("in init")
     window['onYouTubeIframeAPIReady'] = (e) => {
       this.YT = window['YT'];
       this.player = new window['YT'].Player('player', {
@@ -72,6 +77,7 @@ export class TrackComponent implements OnInit {
 
   current() {
     this.chatService.changeSong(this.currentSongs[this.count].photo)
+    console.log(this.currentSongs, "herherhe")
     this.chatService.changeName(this.currentSongs[this.count].name)
   }
 
@@ -85,23 +91,23 @@ export class TrackComponent implements OnInit {
     if (this.paused){
       this.player.loadVideoById(this.songs[this.count], this.pausedAt);
       console.log(this.pausedAt,"should be sending unpause")
-      
+
     } else {
       this.player.pauseVideo();
-      
     }
-    
+
   }
 
   startCast() {
     this.init();
+
     this.player.loadVideoById(this.songs[this.count])
     console.log("start cast was fired", this.songs[this.count])
     if (this.count !== 0){
       // this.chatService.djStartCast(this.songs[this.count]);
       this.chatService.sendUnpause(this.songs[this.count], this.cleanTime());
     }
-    
+
     this.http.post('djView/songDetails', { songs: this.songs })
       .subscribe((data) => {
         this.currentSongs = data;
@@ -125,11 +131,11 @@ export class TrackComponent implements OnInit {
         this.paused = true;
         if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
           console.log('paused' + ' @ ' + this.cleanTime());
-          
+
           let timestamp = this.cleanTime();
           this.pausedAt = this.cleanTime();
           this.chatService.sendPause(this.songs[this.count], timestamp);
-          
+
         };
         break;
       case window['YT'].PlayerState.ENDED:
@@ -148,7 +154,7 @@ export class TrackComponent implements OnInit {
     return Math.round(this.player.getCurrentTime())
   };
   onPlayerError(event) {
-    
+
     switch (event.data) {
       case 2:
         console.log('' + this.video)

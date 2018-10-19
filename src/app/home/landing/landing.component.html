@@ -1,14 +1,19 @@
 <router-outlet></router-outlet>
-
-
-  <div class="row">
-    <div class="col-lg-8 col-md-10 mx-auto" id="landing">
-      <img alt="Bootstrap Image Preview" src="https://operationspark.org/assets/images/Robot-Mascot.png"
-        height="350" />
-      <br>
-      <br>
-      <button type="button" class="btn btn-success col-lg-5 col-md-10 mx-auto" routerLink="/posts" routerLinkActive="active" id="login-btn">
-        <a href="/auth" (click)= 'login()'>Sign In with Google</a>
-      </button>
-    </div>
+<body>
+<div class="row">
+  <div class="mx-auto" id="landing">
+    <!-- <img alt="Bootstrap Image Preview" src="//operationspark.org/assets/images/Robot-Mascot.png" height="350" /> -->
+<img alt="Bootstrap Image Preview" src="//files.slack.com/files-pri/T02P3HQD6-FDF5YR8AX/screen_shot_2018-10-16_at_8.39.46_am.png"
+  height="215" />
+    <br>
+    <br>
+    <a class="btn btn-block btn-social btn-google btn-large rounded box make-it-slow" style="height: 30px" href="/auth" (click)= 'login()'>
+      <div class="align-items-center">
+        <i class="fab fa-google-plus-g fa-fw center"></i>
+        Sign in via Google
+      </div>
+      
+    </a>
   </div>
+</div>
+</body>

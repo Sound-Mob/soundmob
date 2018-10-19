@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs'
   providedIn: 'root'
 })
 export class ChatService {
-  private songSource = new BehaviorSubject<string>('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
+  private songSource = new BehaviorSubject<string>('//ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
   currentSong = this.songSource.asObservable();
   private songName = new BehaviorSubject<string>('')
   currentName = this.songName.asObservable();
@@ -15,7 +15,6 @@ export class ChatService {
   currentListener = this.listenerSong.asObservable();
   private listenerPhoto = new BehaviorSubject<string>("");
   currentListenerPhoto = this.listenerPhoto.asObservable();
-  // private socket = io(`http://localhost:3000`)
   private socket = io();
 
   constructor() { }
@@ -187,7 +186,7 @@ export class ChatService {
         observer.next(songs);
       });
     });
- 
+
     return observable;
   }
 
@@ -195,7 +194,7 @@ export class ChatService {
     // console.log('recieved songgg   info')
     let observable = new Observable<{ songid: string, starttime: string, duration: string }>(observer => {
       this.socket.on('currentSong', (songInfo) => {
-        
+
         observer.next(songInfo);
       });
     });

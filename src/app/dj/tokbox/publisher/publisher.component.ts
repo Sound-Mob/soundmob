@@ -26,8 +26,8 @@ export class PublisherComponent implements AfterViewInit {
   ngAfterViewInit() {
     const OT = this.opentokService.getOT();
     this.publishOptions = {
-      videoSource: null, insertMode: 'append', height: "0%",
-      width: "0%", showControls: true};
+      videoSource: null, insertMode: 'append', height: "auto",
+      width: "70px", showControls: true};
     
     this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, this.publishOptions);
     // this.publisher.setStyle('backgroundImageURI',
