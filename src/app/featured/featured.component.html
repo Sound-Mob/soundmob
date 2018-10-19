@@ -1,62 +1,47 @@
-
 <router-outlet></router-outlet>
 
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-<!-- <header class="masthead"> -->
-  <!-- <div class="overlay"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
 
-        <div *ngIf='profile' class="site-heading">
-          <h1>{{profile.firstname}} {{profile.lasttname}}</h1>
-          <span class="subheading">{{profile.bio}}</span>
-        </div>
-
-      </div>
-    </div>
-  </div> -->
-<!-- </header> -->
-
-<div class="container">
-  <div class="row">
-    <div class="col-4">
+<!--Coded with love by Mutiullah Samim-->
+<!-- <body> -->
+   	<div class="container">
+		<div class="d-flex justify-content-left h-100">
       <button class="btn std-btn btn-lg btn-info" routerLink="/dj" routerLinkActive="active">Create Station</button>
-    </div>
-    <div class="col-8">
-      <h1 class="mb-4">Active Soundcasts</h1>
-      <div class="row mb-3" *ngFor="let dj of activeDj.djs">
-        <div class="col-2">
-          <img class="rounded-circle" src={{dj.photo}} width="100" height="100">
-        </div>
-        <div class="col-10">
-          <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
-            <p class="dj__name" id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
-          </a>
-        </div>
+			<div class="image_outer_container" *ngFor="let dj of activeDj.djs">
+				<div class="green_icon"></div>
+				<div class="image_inner_container">
+          <!-- <img src={{dj.photo}} width="auto" height="auto"> -->
+          <!-- <img src=`//plus.google.com/s2/photos/profile/${{dj.id}}?sz=100` width="100" height="100"> -->
+          <img src=`//www.google.com`>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- </body> -->
+
+<!-- <div class="container">
+<div class="row">
+  <div class="col-4">
+    <button class="btn std-btn btn-lg btn-info" routerLink="/dj" routerLinkActive="active">Create Station</button>
+  </div>
+  <div class="col-8">
+    <h1 class="mb-4">Active Soundcasts</h1>
+    <div class="row mb-3" *ngFor="let dj of activeDj.djs">
+      <div class="col-2">
+        <img class="rounded-circle" src={{dj.photo}} width="100" height="100">
+      </div>
+      <div class="col-10">
+        <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
+          <p class="dj__name" id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
+        </a>
       </div>
     </div>
   </div>
 </div>
-
-
-<!-- <div class="row">
-
-    <div class="col-sm-8">
-        <div *ngFor="let dj of activeDj.djs">
-            <div class="team_wrapper clearfix">
-              <div class="single_member text-center">
-                <img class="rounded-circle" src={{dj.photo}} width="100" height="100">
-                <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
-                <p id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>{{dj.name.givenName}} {{dj.name.familyName}}</p>
-                </a>
-              </div>
-            </div>
-
-      </div>
-      <button class="btn std-btn btn-lg btn-info" routerLink="/dj" routerLinkActive="active">Create Station</button>
-    </div>
-  </div> -->
-
+</div> -->
 
 

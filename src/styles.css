@@ -94,6 +94,7 @@ input[type="color"]:focus,
 body {
   font-size: 20px;
   font-family: 'Lora', 'Times New Roman', serif;
+  background-color: #f8f8ff;
 }
 
 p {
