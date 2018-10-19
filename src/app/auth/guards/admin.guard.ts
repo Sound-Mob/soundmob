@@ -18,7 +18,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
     // redirect and return false
-    if (!this.auth.isLoggedIn) {
+    if (this.auth.isLoggedIn()) {
       this.router.navigate(['']);
       return false;
     }

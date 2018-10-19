@@ -14,8 +14,6 @@ const http = require('http');
 
 const app = express();
 
-
-
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
@@ -86,7 +84,6 @@ app.use('/djView', djViewRoutes);
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
-// create dj routes
 
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
@@ -96,9 +93,6 @@ app.get('/test', (req, res) => {
       body = data;
       res.send(body);
     });
-});
-app.get('/feature', (req, res) => {
-  res.render(path.join(__dirname, '../dist/sound-mob/app-featured-featured-module'));
 });
 app.get('/tester', (req, res) => {
   res.json(userobject);
