@@ -110,3 +110,11 @@ img {
     background: #3F362A;
     background: #007291;
 }
+
+.sample-pad{
+    background: #3F362A;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

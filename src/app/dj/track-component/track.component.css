@@ -1,7 +1,12 @@
 .max-width-1024 { 
-  max-width: 1024px; margin: 0 auto; 
+  max-width: 1024px; margin: 50 auto; 
 }
 
 #player {
   display: none !important;
 }
+
+#start-button{
+  padding-left: 80px;
+}
+
