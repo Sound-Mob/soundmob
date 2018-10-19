@@ -116,7 +116,8 @@ img {
 }
 
 .sample-pad{
-    background: #292b2c;
+    display: none;
+    /* background: #292b2c; */
     width: auto;
     display: block;
     margin-left: auto;

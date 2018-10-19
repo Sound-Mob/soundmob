@@ -111,7 +111,7 @@
       </div> -->
 <!-- <div class="sample-pad"> -->
 
-  <div class="container-fluid">
+  <!-- <div class="container-fluid">
     <h3 class="board-header text-center">SoundBoard</h3>
     <div class="row">
       <div class="col-md-12">
@@ -202,7 +202,102 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+<div class="container-fluid">
+  <h3 class="board-header text-center">SoundBoard</h3>
+  <div class="row">
+    <div class="col-md-7" style="background-color:#292b2c;border-radius:15px;">
+      <div class="row">
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[0].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Scream</span>
+          </div>
+        </div>
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[1].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Rawk!</span>
+          </div>
+        </div>
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[2].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Welcome</span>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[0].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Be Right Back</span>
+          </div>
+        </div>
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[1].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge tokBadge-custom">
+              <dj-tokbox></dj-tokbox>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[2].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Wassup</span>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[0].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Hadouken</span>
+          </div>
+        </div>
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[1].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Badum Chhh</span>
+          </div>
+        </div>
+        <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[2].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Airhorn</span>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <app-chat></app-chat>
+    </div>
   </div>
+</div>
+  
 <!-- </div> -->
 
 <!-- <div class="container-fluid">
