@@ -6,7 +6,7 @@
 
 
 
-
+<div class="container-fluid">
   <div class="row">
     <div class="col-6 col-md-4">
       <button class="btn btn-outline-info btn-lg btn-block" (click)='showCasts()'>
@@ -61,39 +61,162 @@
   </div>
   
 </div>
-
-
-  <!-- <div class="row">
-    <div class="col-lg-8 col-md-10 mx-auto"> -->
-      <!-- make this toggleable -->
-      
-  
-
-<!-- <div class="container-fluid">
-  <div class="row">
-    <hr>
-  </div>
-  
-    </div>
-    <br> -->
-
+</div>
 
     
-    <!-- <br>
-    
 
-     <div>
+     <!-- <div>
       <button class="btn btn-outline-info btn-lg btn-block" (click)='showSoundboard()'>
         <h3>SoundBoard</h3>
       </button>
       <ul class="list-group" *ngIf="viewedBoard">
-        <li class="list-group-item d-flex justify-content-between align-items-center"> -->
-          <!-- <button type="button" class="btn btn-outline-warning btn-block">Warning</button> -->
-          <!-- <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <button type="button" class="btn btn-outline-warning btn-block">Warning</button>
+          <button *ngFor="let sound of sounds" (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn btn-outline-secondary btn-lg btn-block">
             {{sound.name}}
           </button>
         </li>
       </ul>
+    </div> -->
+
+    <!-- <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row" *ngFor="let sound of sounds">
+            <div class="col-md-4">
+              <button (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn
+                    btn-outline-secondary btn-lg btn-block">
+                {{sound.name}}
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngFor="let sound of sounds">
+            <div class="col-md-4">
+              <button (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn
+                    btn-outline-secondary btn-lg btn-block">
+                {{sound.name}}
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngFor="let sound of sounds">
+            <div class="col-md-4">
+              <button (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn
+                    btn-outline-secondary btn-lg btn-block">
+                {{sound.name}}
+              </button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div> -->
+    
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[0].mediaLink">
+          <i class="material-icons lg-20" style="background-color: brown">
+            album
+          </i>
+          Airhorn
+        </div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[1].mediaLink">
+          <i class="material-icons lg-20" style="background-color: brown">
+            album
+          </i>
+          Kick Drum
+        </div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[2].mediaLink">
+          <i class="material-icons lg-20" style="background-color: brown">
+            album
+          </i>
+          Welcome
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[0].mediaLink">
+          <i class="material-icons lg-20" style="background-color: brown">
+            album
+          </i>
+          Laugh
+        </div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[1].mediaLink">
+          <dj-tokbox></dj-tokbox>
+        </div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[2].mediaLink">
+          <i class="material-icons lg-20" style="background-color: brown">
+            album
+          </i>
+          Wassup
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[0].mediaLink">
+          <i class="material-icons lg-20" style="background-color: brown">
+            album
+          </i>
+          Hadoken
+        </div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[1].mediaLink">
+          <i class="material-icons lg-20" style="background-color: brown">
+            album
+          </i>
+          <div>
+            Gong
+          </div>
+        </div>
+        <div class="col-md-2" (click)='soundClick($event)' [attr.id]="sounds[2].mediaLink">
+          <div class="container">
+            <i class="material-icons lg-20" style="background-color: brown">
+              album
+            </i>
+            <span class="badge shoppingBadge shoppingBadge-custom">Scream</span>
+          </div>
+          
+          
+        </div>
+        <div class="col-md-3"></div>
+      </div>
     </div>
+  </div>
+</div>
+
+
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row" *ngFor="let sound of sounds" >
+        <div class="col-md-4">
+          <button (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn
+          btn-outline-secondary btn-lg btn-block">
+            {{sound.name}}
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngFor="let sound of sounds">
+        <div class="col-md-4">
+          <button (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn
+                btn-outline-secondary btn-lg btn-block">
+            {{sound.name}}
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngFor="let sound of sounds">
+        <div class="col-md-4">
+          <button (click)='soundClick($event)' type="button" [attr.id]="sound.mediaLink" class="btn
+                btn-outline-secondary btn-lg btn-block">
+            {{sound.name}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
   </div>
 </div> -->
