@@ -106,7 +106,7 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
   }
    soundClick(event) {
     //  console.log(event.target.id);
-     this.soundBite.soundEmit(event.target.id);
+     this.soundBite.soundEmit(event.path[2].id);
     
    }
 
