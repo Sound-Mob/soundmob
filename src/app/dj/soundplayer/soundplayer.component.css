@@ -4,6 +4,7 @@
     margin-left: auto;
     margin-right: auto;
     border-radius: 20px;
+    
 }
 .breadcrumb{
     background-color: white;
@@ -23,9 +24,12 @@
     height: 50px;	
     overflow: hidden;
     position: relative;
+    background-color: #292b2c;
+    color: aliceblue;
 }
 .example1 h3 {
     font-size: 3em;
+    background-color: #292b2c;
     color: black;
     position: absolute;
     width: 100%;
@@ -68,4 +72,60 @@ img {
   height: 410px;
   object-fit: cover;
   border-radius: 20px;
+}
+
+
+.material-icons.lg-20 { 
+    font-size: 130px; 
+    background: #007291;
+}
+
+.material-icons:active {
+    background: #FBDE03;
+}
+
+.icon-size {
+    font-size:60px;
+}
+
+.shoppingBadge-custom{
+    background: #FA9D04;
+    position:absolute;
+    left:47px; /** you can make changes here to change position **/
+    top:18px;
+    font-size:14px;
+    z-index: 3;
+}
+
+.tokBadge-custom{
+    background:#FA9D04;
+    position:absolute;
+    left:54px; /** you can make changes here to change position **/
+    top:35px;
+    font-size:14px;
+    /* z-index: 3; */
+}
+
+.palette{
+    background: #FEF596;
+    background: #FBDE03;
+    background: #FA9D04;
+    background: #E7450D;
+    background: #3F362A;
+    background: #007291;
+}
+
+.sample-pad{
+    background: #292b2c;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.board-header {
+    background: #292b2c;
+    color: #FA9D04;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
