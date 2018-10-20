@@ -11,6 +11,8 @@
   <button class="btn std-btn btn-lg btn-info" routerLink="/dj" routerLinkActive="active">Create Station</button>
   <br>
   <br>
+  <br>
+  <br>
   <div class="container"  *ngFor="let dj of activeDj.djs">
     <div class="d-flex justify-content-left h-75 box make-it-slow profilebox">
       <div class="image_outer_container">
@@ -24,9 +26,11 @@
             </div>
             <div class="col">
               <div>
-                <p class="dj-name text-center text-wrap" style="padding: 20px 20px" id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>
-                {{dj.name.givenName}} {{dj.name.familyName}} assdfadsfwerasdfalsfjhdalsdfalsdhadsfliajsdflasjdflajdlfjasldfjaldsjflsjfakhdfkahdfkahdfkhadfkhakdfh
-                </p>
+                <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
+                  <p class="dj-name text-center text-wrap" style="padding: 20px 20px" id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>
+                  {{dj.name.givenName}} {{dj.name.familyName}} assdfadsfwerasdfalsfjhdalsdfalsdhadsfliajsdflasjdflajdlfjasldfjaldsjflsjfakhdfkahdfkahdfkhadfkhakdfh
+                  </p>
+                </a>
               </div>
             </div>
             <div class="col"></div>
@@ -58,7 +62,7 @@
       </div>
     </div>
   </div>
-  
+
 </div>
 </div> -->
 

@@ -19,7 +19,7 @@ img .profile {
        }
 
        .image_outer_container{
-        background-color: grey;
+        background-color: #f8f8ff;
        	margin-top: auto;
        	margin-bottom: auto;
        	border-radius: .3em;
@@ -71,8 +71,8 @@ img .profile {
 
 .profilebox {
   background-color: #f8f8ff;
-  padding: 20px 100px 20px 50px;
-  margin: 40px 100px 0px 100px;
+  padding: 20px 50px 20px 50px;
+  margin: 15px 100px 15px 100px;
   border-radius: .3em;
   /* zoom: 1;
 	filter: alpha(opacity=90);
