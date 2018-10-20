@@ -19,17 +19,20 @@ img .profile {
        }
 
        .image_outer_container{
+        background-color: grey;
        	margin-top: auto;
        	margin-bottom: auto;
-       	border-radius: 50%;
+       	border-radius: .3em;
         position: relative;
+        max-width: 100%;
+        word-wrap: break-word;
        }
 
        .image_inner_container{
-        height: 83px;
-       	width: 83px;
-       	border-radius: 50%;
-       	padding: 2px;
+        height: 77px;
+       	width: 77px;
+       	border-radius: .3em;
+       	padding: 0 0 0 0;
         background: #E7450D;
         /* background: -webkit-linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4); */
         /* background: linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4); */
@@ -37,7 +40,7 @@ img .profile {
        .image_inner_container img{
        	height: 75px;
        	width: 75px;
-       	border-radius: 50%;
+       	border-radius: .3em;
        	border: 2px #f8f8ff;
        }
 
@@ -69,7 +72,7 @@ img .profile {
 .profilebox {
   background-color: #f8f8ff;
   padding: 20px 100px 20px 50px;
-  margin: 0px 100px 0px 100px;
+  margin: 40px 100px 0px 100px;
   border-radius: .3em;
   /* zoom: 1;
 	filter: alpha(opacity=90);
