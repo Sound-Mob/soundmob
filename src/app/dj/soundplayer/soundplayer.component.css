@@ -119,12 +119,15 @@ img {
 }
 
 .sample-pad{
-    display: none;
+    position: relative;
+    /* display: none; */
     /* background: #292b2c; */
     width: auto;
-    display: block;
+    /* display: block; */
     margin-left: auto;
     margin-right: auto;
+    width: 130px;
+    height: 130px;
 }
 
 .board-header {
