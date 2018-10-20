@@ -1,5 +1,5 @@
 .img-landing {
-    width: auto;
+    width: 70%;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -11,7 +11,10 @@
     text-align: center;
 }
 
-
+.max-width-1024 { 
+  max-width: 102px; margin: 30 auto; 
+  background-color: blanchedalmond;
+}
 
 #soundboard-button{
     background-color: rgb(0, 0, 0, 0.10);
@@ -87,11 +90,19 @@ img {
 .icon-size {
     font-size:60px;
 }
+.sliderBadge{
+    background: #ffd828;
+    position:absolute;
+    left:47px; /** you can make changes here to change position **/
+    top:18px;
+    font-size:14px;
+    z-index: 3;
+}
 
 .shoppingBadge-custom{
     background: #FA9D04;
     position:absolute;
-    left:47px; /** you can make changes here to change position **/
+    left:14px; /** you can make changes here to change position **/
     top:18px;
     font-size:14px;
     z-index: 3;
@@ -100,9 +111,13 @@ img {
 .tokBadge-custom{
     background:#FA9D04;
     position:absolute;
-    left:54px; /** you can make changes here to change position **/
-    top:35px;
+    left:10px; /** you can make changes here to change position **/
+    top:6px;
     font-size:14px;
+    padding-left: 5px;
+    padding-top: 0px;
+    padding-bottom: 8px;
+
     /* z-index: 3; */
 }
 
@@ -116,11 +131,15 @@ img {
 }
 
 .sample-pad{
-    background: #292b2c;
+    position: relative;
+    /* display: none; */
+    /* background: #292b2c; */
     width: auto;
-    display: block;
+    /* display: block; */
     margin-left: auto;
     margin-right: auto;
+    width: 130px;
+    height: 130px;
 }
 
 .board-header {
