@@ -1,11 +1,11 @@
 <div >
   <div *ngIf="castedOff === false">
     <div >
-      <div value="startCast" (click)="castOff()" (click)="startCast()" >
+      <button type="button" class="btn std-btn btn-sm btn-common" value="startCast" (click)="castOff()" (click)="startCast()" >
         <i class="material-icons">
           play_circle_filled
         </i>
-      </div>
+      </button>
     </div>
   </div>
   <div *ngIf="castedOff">
