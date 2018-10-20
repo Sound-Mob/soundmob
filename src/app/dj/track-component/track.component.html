@@ -2,7 +2,7 @@
   <div *ngIf="castedOff === false">
     <div >
       <button type="button" style="background-color:#f8f9fa!important; height: 48px" class="btn std-btn btn-sm btn-common" value="startCast" (click)="castOff()" (click)="startCast()" >
-        <i class="material-icons">
+        <i class="material-icons" id="mat-play">
           play_circle_filled
         </i>
       </button>
@@ -10,10 +10,10 @@
   </div>
   <div *ngIf="castedOff">
     <button type="button" style="background-color:#f8f9fa!important; height: 48px" class="btn std-btn btn-sm btn-common" value="pauseCast" (click)="pauseCast()">
-        <i *ngIf="pauseButton" class="material-icons">
+        <i *ngIf="pauseButton" class="material-icons" id="mat-play">
           play_circle_filled
         </i>
-        <i *ngIf="!pauseButton" class="material-icons">
+        <i *ngIf="!pauseButton" class="material-icons" id="mat-play">
           pause_circle_filled
         </i>
       </button> 
