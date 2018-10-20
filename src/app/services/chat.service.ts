@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs'
   providedIn: 'root'
 })
 export class ChatService {
-  private songSource = new BehaviorSubject<string>('//ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/52/j5/p052j5kp.jpg')
+  private songSource = new BehaviorSubject<string>('//uproxx.files.wordpress.com/2015/02/say-anything-main-review.jpg')
   currentSong = this.songSource.asObservable();
   private songName = new BehaviorSubject<string>('')
   currentName = this.songName.asObservable();
