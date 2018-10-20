@@ -1,4 +1,4 @@
-.dj__name{
+.dj-name{
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -22,30 +22,62 @@ img .profile {
        	margin-top: auto;
        	margin-bottom: auto;
        	border-radius: 50%;
-       	position: relative;
+        position: relative;
        }
 
        .image_inner_container{
+        height: 83px;
+       	width: 83px;
        	border-radius: 50%;
-       	padding: 5px;
-        background: #833ab4;
-        background: -webkit-linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4);
-        background: linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4);
+       	padding: 2px;
+        background: #E7450D;
+        /* background: -webkit-linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4); */
+        /* background: linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4); */
        }
        .image_inner_container img{
-       	height: 200px;
-       	width: 200px;
+       	height: 75px;
+       	width: 75px;
        	border-radius: 50%;
-       	border: 5px solid white;
+       	border: 2px #f8f8ff;
        }
 
        .image_outer_container .green_icon{
          background-color: #4cd137;
          position: absolute;
-         right: 30px;
+         right: 0px;
          bottom: 10px;
-         height: 30px;
-         width: 30px;
-         border:5px solid white;
+         height: 20px;
+         width: 20px;
+         border:3px solid white;
          border-radius: 50%;
        }
+/* Scale up the box */
+.box:hover {
+  transform: scale(1.2, 1.2);
+}
+
+/* Fade in the pseudo-element with the bigger shadow */
+.box:hover::after {
+  opacity: 1;
+}
+
+/* Transition to a bigger shadow on hover */
+.make-it-slow:hover {
+  box-shadow: 0 5px 15px rgba(250, 157, 4, 4);
+}
+
+.profilebox {
+  background-color: #f8f8ff;
+  padding: 20px 100px 20px 50px;
+  margin: 0px 100px 0px 100px;
+  border-radius: .3em;
+  /* zoom: 1;
+	filter: alpha(opacity=90);
+	opacity: 0.90; */
+}
+
+body {
+  background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BuKKyFq/videoblocks-music-notes-fire-style-background-looped-animation_sae9zw4kb_thumbnail-full01.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
