@@ -26,13 +26,13 @@ export class PublisherComponent implements AfterViewInit {
   ngAfterViewInit() {
     const OT = this.opentokService.getOT();
     this.publishOptions = {
-      videoSource: null, insertMode: 'append', height: "auto",
-      width: "70px", showControls: true};
+      videoSource: null, insertMode: 'append', height: "100px",
+      width: "100px", showControls: true};
     
     this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, this.publishOptions);
-    // this.publisher.setStyle('backgroundImageURI',
-    //   'https://mbtskoudsalg.com/explore/cartoon-microphone-png/#gal_post_3455_cartoon-microphone-png-8.png'
-    // );
+    this.publisher.setStyle('backgroundImageURI',
+      'https://mbtskoudsalg.com/explore/cartoon-microphone-png/#gal_post_3455_cartoon-microphone-png-8.png'
+    );
     if (this.session) {
       if (this.session['isConnected']()) {
       
