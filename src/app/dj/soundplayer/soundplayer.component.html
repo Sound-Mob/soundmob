@@ -204,10 +204,11 @@
     </div>
   </div> -->
 
-<div class="container-fluid">
-  <h3 class="board-header text-center">SoundBoard</h3>
+<div class="container-fluid" style="padding: 20px">
+  
+  <!-- <h3 class="board-header text-center">SoundBoard</h3> -->
   <div class="row">
-    <div class="col-md-7" style="background-color:#292b2c;border-radius:15px;">
+    <div class="col-md-7" style="background-color:#292b2c;border-radius:15px;padding: 20px;">
       <div class="row">
         <div class="col-md-2 sample-pad" (click)='soundClick($event)' [attr.id]="sounds[0].mediaLink">
           <div class="container">
@@ -293,6 +294,15 @@
       </div>
     </div>
     <div class="col-md-5">
+      <div class="row" style="background-color: rgb(230, 230, 230);border-top-left-radius:15px;border-top-right-radius:15px;margin-left: -25;margin-left: 0px;margin-right: 0px;">
+        <div class="col-md-6">
+          <app-mat-slider></app-mat-slider>
+        </div>
+        <div class="col-md-6" class="max-width-1024" style="border-radius: 5px">
+          <app-track></app-track>
+        </div>
+      </div>
+      
       <app-chat></app-chat>
     </div>
   </div>

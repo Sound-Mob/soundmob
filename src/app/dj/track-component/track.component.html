@@ -1,8 +1,12 @@
-<div class="max-width-1024">
+<div >
   <div *ngIf="castedOff === false">
-    <button type="button" id="start-button" class="btn std-btn btn-sm btn-common" value="startCast" (click)="castOff()" (click)="startCast()">
-      Start Cast
-    </button>
+    <div >
+      <div value="startCast" (click)="castOff()" (click)="startCast()" >
+        <i class="material-icons">
+          play_circle_filled
+        </i>
+      </div>
+    </div>
   </div>
   <div *ngIf="castedOff">
     <div *ngIf="pauseButton">
