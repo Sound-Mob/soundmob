@@ -80,18 +80,18 @@ img {
 
 .material-icons.lg-20 { 
     font-size: 130px; 
-    background: #007291;
+    background: #435034;
 }
 
 .material-icons:active {
-    background: #FBDE03;
+    background: #B1CBD6;
 }
 
 .icon-size {
     font-size:60px;
 }
 .sliderBadge{
-    background: #ffd828;
+    background: #B1CBD6;
     position:absolute;
     left:47px; /** you can make changes here to change position **/
     top:18px;
@@ -100,7 +100,7 @@ img {
 }
 
 .shoppingBadge-custom{
-    background: #FA9D04;
+    background: #B1CBD6;
     position:absolute;
     left:14px; /** you can make changes here to change position **/
     top:18px;
@@ -109,7 +109,7 @@ img {
 }
 
 .tokBadge-custom{
-    background:#FA9D04;
+    background:#6e5c22;
     position:absolute;
     left:10px; /** you can make changes here to change position **/
     top:6px;
@@ -122,12 +122,11 @@ img {
 }
 
 .palette{
-    background: #FEF596;
-    background: #FBDE03;
-    background: #FA9D04;
-    background: #E7450D;
-    background: #3F362A;
-    background: #007291;
+    background: #3D1F0A;
+    background: #7B3A09;
+    background: #E23900;
+    background: #FFC309;
+    background: #B1CBD6;
 }
 
 .sample-pad{
@@ -144,7 +143,7 @@ img {
 
 .board-header {
     background: #292b2c;
-    color: #FA9D04;
+    color: #6e5c22;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
