@@ -140,6 +140,7 @@ body {
 /* Scale up the box */
 .box:hover {
   transform: scale(1.2, 1.2);
+  /* background-color: #e98300; */
 }
 
 /* Fade in the pseudo-element with the bigger shadow */
