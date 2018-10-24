@@ -19,13 +19,13 @@ img .profile {
        }
 
        .image_outer_container{
-        background-color: #f8f8ff;
+        /* background-color: #f8f8ff;
        	margin-top: auto;
        	margin-bottom: auto;
        	border-radius: .3em;
         position: relative;
         max-width: 100%;
-        word-wrap: break-word;
+        word-wrap: break-word; */
        }
 
        .image_inner_container{
@@ -70,6 +70,7 @@ img .profile {
 }
 
 .profilebox {
+  height: 100px !important;
   background-color: #f8f8ff;
   padding: 20px 50px 20px 50px;
   margin: 15px 100px 15px 100px;
@@ -80,7 +81,51 @@ img .profile {
 }
 
 body {
-  background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BuKKyFq/videoblocks-music-notes-fire-style-background-looped-animation_sae9zw4kb_thumbnail-full01.png);
+  /* background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BuKKyFq/videoblocks-music-notes-fire-style-background-looped-animation_sae9zw4kb_thumbnail-full01.png); */
+  background-color: black;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.src-image {
+  display: none;
+}
+
+.card {
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #CCC;
+  margin-bottom: 50px;
+  border-radius: 8px;
+  text-align: center;
+  padding: 0;
+  background-color: #284c79;
+  color: rgb(136, 172, 217);
+}
+
+.card .header-bg {
+  /* This stretches the canvas across the entire hero unit */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px #FFF solid;
+  /* This positions the canvas under the text */
+  z-index: 1;
+}
+
+.card .avatar {
+  position: relative;
+  margin-top: 15px;
+  z-index: 100;
+}
+
+.card .avatar img {
+  width: 100px;
+  height: 100px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 30, 0.8);
 }
