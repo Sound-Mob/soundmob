@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { AuthService } from '../../auth/auth.service';
 // const httpOptions = {
 //   headers: new HttpHeaders({
 //     'Content-Type':  'application/json',
@@ -13,24 +14,14 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   ngOnInit() {
-    // headers: new HttpHeaders({
-    //   'Content-Type': 'application/json',
-    //   'Authorization': 'my-auth-token'
-    // }) 
-   
+
   }
 
   login() {
-    //   console.log('yup');
-    // // window.location.href="/auth"
-    //   this.http.get('/auth')
-    //   .subscribe(
-    //     data => console.log(data)
-    //   )
-    // window.open('/api/login', "mywindow", "location=1,status=1,scrollbars=1, width=800,height=800");
+    localStorage.setItem('clicked', 'true')
   }
 }
 

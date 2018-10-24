@@ -1,23 +1,22 @@
-<div class="max-width-1024">
-  <div>
-    <button type="button" class="btn std-btn btn-sm btn-common" value="startCast" (click)="startCast()">
-      Start Cast
-    </button>
-    <div *ngIf="pauseButton">
-      <button type="button" class="btn std-btn btn-sm btn-common" value="pauseCast" (click)="pauseCast()">
-        <i class="material-icons">
+<div >
+  <div *ngIf="castedOff === false">
+    <div >
+      <button type="button" style="background-color:#f8f9fa!important; height: 48px" class="btn std-btn btn-sm btn-common" value="startCast" (click)="castOff()" (click)="startCast()" >
+        <i class="material-icons" id="mat-play">
           play_circle_filled
         </i>
       </button>
     </div>
-    <div *ngIf="pauseButton === false">
-      <button type="button" class="btn std-btn btn-sm btn-common" value="pauseCast" (click)="pauseCast()">
-        <i class="material-icons">
+  </div>
+  <div *ngIf="castedOff">
+    <button type="button" style="background-color:#f8f9fa!important; height: 48px" class="btn std-btn btn-sm btn-common" value="pauseCast" (click)="pauseCast()">
+        <i *ngIf="pauseButton" class="material-icons" id="mat-play">
+          play_circle_filled
+        </i>
+        <i *ngIf="!pauseButton" class="material-icons" id="mat-play">
           pause_circle_filled
         </i>
-      </button>
-    </div>
-    <div id="player" style="display:none;">
-    </div>
-  </div>
+      </button> 
+  </div> 
+  <div id="player" style="display:none;"></div>
 </div>

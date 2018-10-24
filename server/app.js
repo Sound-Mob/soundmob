@@ -14,8 +14,6 @@ const http = require('http');
 
 const app = express();
 
-
-
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
@@ -28,7 +26,6 @@ const userobject = require('./mockuserdata/object');
 // Database
 const {
   createUser,
-  getUsers,
   getUserById,
   addSound,
   getSoundsById,
@@ -41,11 +38,8 @@ const {
 } = require('./database');
 // hidden keys
 const {
-  Youtube,
   ClientID,
   ClientSecret,
-  RedirectURL,
-  TOKEN,
   API_KEY,
 } = require('./config.js');
 
@@ -86,7 +80,6 @@ app.use('/djView', djViewRoutes);
 app.use(mill);
 app.use(express.static('dist/sound-mob'));
 
-// create dj routes
 
 app.get('/test', (req, res) => {
   const key = req.session.accessToken;
@@ -96,9 +89,6 @@ app.get('/test', (req, res) => {
       body = data;
       res.send(body);
     });
-});
-app.get('/feature', (req, res) => {
-  res.render(path.join(__dirname, '../dist/sound-mob/app-featured-featured-module'));
 });
 app.get('/tester', (req, res) => {
   res.json(userobject);
@@ -115,6 +105,8 @@ let listenerStartTime = '';
 let startAt;
 // keeping track of song duration
 let songDuration;
+// active dj list
+const activeDjs = [];
 
 
 // on connection
@@ -130,7 +122,7 @@ io.on('connection', (socket) => {
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
     // socket.admin = true;
-
+    djs.splice(0, djs.length);
     // io.sockets.emit('starttokbox');
 
     // sending dj room to client
@@ -155,8 +147,19 @@ io.on('connection', (socket) => {
         // make this just go to particular dj
         io.sockets.emit('tokSession', sessionId, token);
         // add new dj to active dj list
-        djs.push({
-          name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user,
+        if (djs.length === 0) {
+          djs.push({
+            name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user
+          });
+        }
+        djs.forEach((dj) => {
+          if (dj.googleid === user) {
+            console.log(user, 'n if');
+          } else {
+            djs.push({
+              name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user,
+            });
+          }
         });
       }
     });
@@ -164,9 +167,8 @@ io.on('connection', (socket) => {
 
   // listen for volume change
   socket.on('changeVolume', (volume) => {
-    console.log(volume)
     io.sockets.emit('changeVolume', volume);
-  })
+  });
 
   // choose playlist listener
   socket.on('djSelectsPlaylist', (playlistId) => {
@@ -347,8 +349,25 @@ io.on('connection', (socket) => {
   socket.on('disconnect', (data) => {
     // remove user from users array
     users.splice(users.indexOf(socket.name), 1);
+
+    // get cookie session
+    // let cookieSession = socket.handshake.headers.cookie.split(" ");
+
     // emit disconnection
     io.emit('disconnect', { users, name: socket.name });
+
+    djs.forEach((dj, i) => {
+      console.log(djs, " on disconnect pre splice")
+      if (dj.googleid === user) {
+        djs.splice(i, 1);
+      } else {
+        // djs.push({
+        //   name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user,
+        // });
+        // console.log(djs, " in disconnect post splice")
+      }
+    });
+    console.log(djs, "   on exit")
   });
 
 
@@ -413,8 +432,11 @@ passport.use(new GoogleStrategy({
     } else {
       createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
         .then((newUser) => {
-          // console.log(newUser);
-          done(null, newUser);
+          getUserById(profile.id)
+            .then((user) => {
+              user[0].name = profile.name;
+              done(null, user[0]);
+            }).catch(err => console.error(err));
         }).catch(err => console.error(err));
     }
   }).catch(err => console.error(err, 'this should hit'));

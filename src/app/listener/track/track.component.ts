@@ -145,7 +145,7 @@ export class ListenerTrackComponent implements OnInit {
     return Math.round(this.player.getCurrentTime())
   };
   onPlayerError(event) {
-    debugger
+    
     switch (event.data) {
       case 2:
         console.log('' + this.video)

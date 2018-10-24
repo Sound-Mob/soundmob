@@ -1,18 +1,10 @@
-
-
-
-<div *ngIf='profile' class="card border-0 rounded" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 75vh;">
-
+<div *ngIf='profile' class="card border-0 rounded-0 pl-0" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); overflow: hidden; height: 50vh;">
   <div class="card-header p-1 bg-light border border-top-0 border-left-0 border-right-0" style="color: rgba(96, 125, 139,1.0);">
-
     <img class="rounded float-left" style="width: 50px; height: 50px;" src={{profile.photo.value}} />
-
     <h6 class="float-left" style="margin: 0px; margin-left: 10px;"><i class="fa fa-check text-primary"
-        title="Onaylanmış Hesap!" aria-hidden="true"></i> <br><small>{{profile.userName}}{{profile.lastName}}</small></h6>
-
-
+        title="Onaylanmış Hesap!" aria-hidden="true"></i> <br><small>{{profile.userName}}{{profile.lastName}}</small>
+    </h6>
   </div>
-
   <div class="card bg-sohbet border-0 m-0 p-0" style="height: 100vh;">
     <div id="sohbet" class="card border-0 m-0 p-0 position-relative bg-transparent" style="overflow-y: auto; height: 100vh;" *ngFor="let message of chatMessages">
       <div *ngIf="message.id !== profile.googleid">
@@ -29,29 +21,19 @@
       </div>
     </div>
   </div>
-
   <div class="w-100 card-footer p-0 bg-light border border-bottom-0 border-left-0 border-right-0">
-
     <form class="m-0 p-0" action="" method="POST" autocomplete="off">
-
       <div class="row m-0 p-0">
         <div class="col-9 m-0 p-1">
-
             <input id="text" class="mw-100 border rounded form-control" type="text" name="text" title="Type a message..."
             placeholder="Type a message..." required [(ngModel)]="messageToSend">
-
         </div>
         <div class="col-3 m-0 p-1">
-
           <button class="btn btn-outline-secondary rounded border w-100" title="Gönder!" style="padding-right: 16px;" (click)="sendChatMessage()"><i class="fa fa-paper-plane"
             aria-hidden="true" ></i>Send!</button>
-
         </div>
       </div>
-
     </form>
-
   </div>
-
 </div>
 

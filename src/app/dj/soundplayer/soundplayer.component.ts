@@ -37,11 +37,11 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
       });
       this.http.get('/djView/playlist').subscribe((info)=>{
         console.log(info, " data in dj soundplayer")
-        this.playlists.push(info['items']);
         info['items'].map((item) => {
           this.playlists.push({ name: item.snippet.localized.title, id: item.id })
 
         })
+        console.log(this.playlists, 'currnet list')
       })
       this.chatService.currentSong
       .subscribe(data => {
@@ -105,8 +105,8 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
     })
   }
    soundClick(event) {
-    //  console.log(event.target.id);
-     this.soundBite.soundEmit(event.target.id);
+     console.log(event);
+     this.soundBite.soundEmit(event.path[1].id);
     
    }
 

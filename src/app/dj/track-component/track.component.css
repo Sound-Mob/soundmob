@@ -1,7 +1,14 @@
-.max-width-1024 { 
-  max-width: 1024px; margin: 0 auto; 
-}
+
 
 #player {
   display: none !important;
+}
+
+#start-button{
+  padding-left: 80px;
+}
+
+#mat-play{
+  font-size: 57px;
+  line-height: 41px;
 }
