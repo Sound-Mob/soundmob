@@ -27,7 +27,8 @@
 }
 
 body {
-  background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BuKKyFq/videoblocks-music-notes-fire-style-background-looped-animation_sae9zw4kb_thumbnail-full01.png);
+  /* background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BuKKyFq/videoblocks-music-notes-fire-style-background-looped-animation_sae9zw4kb_thumbnail-full01.png); */
+  background-color: black;
   background-size: cover;
   background-repeat: no-repeat;
 }

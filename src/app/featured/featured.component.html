@@ -13,10 +13,90 @@
   <br>
   <br>
   <br>
-  <div class="container"  *ngFor="let dj of activeDj.djs">
+<div class="container" *ngFor="let dj of activeDj.djs">
+  <div class="row">
+    <!-- <h1>
+      Dynamically blurring avatar images using Canvas.
+    </h1> -->
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card box">
+        <!-- <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas> -->
+        <div class="avatar">
+          <img src={{dj.photo}} alt="" />
+        </div>
+        <div class="content">
+          <br>
+          <p> {{dj.name.givenName}} {{dj.name.familyName}} <br>
+            New Orleans </p>
+          <p>
+            <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
+              <button type="button" class="btn btn-default box" id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>Listen</button>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-sm-3">
+      <div class="card">
+        <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+        <div class="avatar">
+          <img src="" alt="" />
+        </div>
+        <div class="content">
+          <p>Web Developer <br>
+            More description here</p>
+          <p><button type="button" class="btn btn-default" id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>Contact</button></p>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="col-sm-3">
+      <div class="card">
+        <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+        <div class="avatar">
+          <img src="" alt="" />
+        </div>
+        <div class="content">
+          <p>Web Developer <br>
+            More description here</p>
+          <p><button type="button" class="btn btn-default">Contact</button></p>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+<br>
+<br>
+<br>
+  <!-- <div class="container" *ngFor="let dj of activeDj.djs">
+    <div class="d-flex justify-content-center h-75 box make-it-slow profilebox"> -->
+
+      <!-- <div class="image_outer_container"> -->
+
+        <!-- <div class="row w-100">
+          <div class="col-6 w-25">
+              <div class="center-block" style="padding-bottom: 10px">
+                <img src={{dj.photo}} style="width: 75px; height: 75px; border-radius: 20px;">
+            </div>
+          </div>
+          <div class="col-6 w-75">
+            <a routerLink="/listener" routerLinkActive="active" (click)="joinDj($event)">
+                  <p class="dj-name text-left text-wrap" style="padding: 20px 20px" id={{dj.id}}---{{dj.tokSession}}---{{dj.tokToken}}>
+                  Join {{dj.name.givenName}}'s Sound Cast!
+                  </p>
+                </a>
+          </div>
+        </div> -->
+
+      <!-- </div> -->
+
+    <!-- </div>
+  </div>
+   -->
+  <!-- <div class="container"  *ngFor="let dj of activeDj.djs">
     <div class="d-flex justify-content-left h-75 box make-it-slow profilebox">
       <div class="image_outer_container">
-      <!-- <div class="green_icon"></div> -->
         <div class="container">
           <div class="row">
             <div class="col w-25">
@@ -38,9 +118,68 @@
         </div>
       </div>
     </div>
+  </div> -->
+<!-- Footer -->
+<footer class="page-footer font-small special-color-light pt-4" style="background-color: #f8f8ff">
+
+  <!-- Footer Elements -->
+  <div class="container">
+
+    <!-- Social buttons -->
+    <ul class="list-unstyled list-inline text-center">
+      <li class="list-inline-item box">
+        <a class="btn-floating btn-fb mx-1">
+          <i class="fab fa-facebook"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item box">
+        <a class="btn-floating btn-tw mx-1">
+          <i class="fab fa-twitter"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item box">
+        <a class="btn-floating btn-gplus mx-1">
+          <i class="fab fa-google-plus"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item box">
+        <a class="btn-floating btn-li mx-1">
+          <i class="fab fa-linkedin"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item box">
+        <a class="btn-floating btn-dribbble mx-1">
+          <i class="fab fa-dribbble"> </i>
+        </a>
+      </li>
+      <ul class="list-unstyled list-inline text-center">
+        <li class="list-inline-item box">
+          <a href="" style="text-decoration: none">
+            Meet the Developers
+          </a>
+        </li>
+      </ul>
+    </ul>
+    <!-- Social buttons -->
+
   </div>
-<br>
+  <!-- Footer Elements -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2018 Copyright:
+    <div class="box">
+      <a href="//soundmob.net" style="text-decoration: none"> Soundmob.net</a>
+    </div>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
 </body>
+
+<!-- <br>
+</body> -->
 
 
 
