@@ -31,7 +31,6 @@ const routes: Routes = [
     loadChildren: "../app/dj/dj.module#DjModule",
     canActivate: [AdminGuard]
   }
-  // comment change
 ];
 
 @NgModule({
