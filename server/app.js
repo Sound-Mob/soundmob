@@ -44,8 +44,6 @@ const {
 } = require('./config.js');
 
 //  api methods
-
-
 const {
   playlistIDs,
   videoIDArray,
@@ -107,8 +105,6 @@ let startAt;
 let songDuration;
 // active dj list
 const activeDjs = [];
-
-
 // on connection
 io.on('connection', (socket) => {
   const { photo } = socket.request.session;
@@ -120,7 +116,7 @@ io.on('connection', (socket) => {
   const { accessToken } = socket.request.session;
 
   // MAKE ROOM LISTENER -- listen for new room
-  socket.on('newroom', (room) => {
+  socket.on('newroom', () => {
     // socket.admin = true;
     djs.splice(0, djs.length);
     // io.sockets.emit('starttokbox');
@@ -142,7 +138,6 @@ io.on('connection', (socket) => {
         // console.log("Error creating session:", error)
       } else {
         sessionId = session.sessionId;
-        const songIds = ['AE005nZeF-A', 'KgtizhlbIOQ', 'KgtizhlbIOQ', 'KgtizhlbIOQ'];
         const token = opentok.generateToken(sessionId);
         // make this just go to particular dj
         io.sockets.emit('tokSession', sessionId, token);
@@ -346,7 +341,7 @@ io.on('connection', (socket) => {
   });
 
   // listen for users to leave
-  socket.on('disconnect', (data) => {
+  socket.on('disconnect', () => {
     // remove user from users array
     users.splice(users.indexOf(socket.name), 1);
 
@@ -357,7 +352,7 @@ io.on('connection', (socket) => {
     io.emit('disconnect', { users, name: socket.name });
 
     djs.forEach((dj, i) => {
-      console.log(djs, " on disconnect pre splice")
+      console.log(djs, 'on disconnect pre splice');
       if (dj.googleid === user) {
         djs.splice(i, 1);
       } else {
@@ -367,7 +362,7 @@ io.on('connection', (socket) => {
         // console.log(djs, " in disconnect post splice")
       }
     });
-    console.log(djs, "   on exit")
+    console.log(djs, 'on exit');
   });
 
 
@@ -375,7 +370,7 @@ io.on('connection', (socket) => {
   socket.on('sample', (stream) => {
     // console.log(stream.blob);     // save sound to
     addSound(stream.blob, 3)
-      .then((data) => {
+      .then(() => {
         // console.log(data); // print data;
       })
       .catch((error) => {
@@ -383,7 +378,7 @@ io.on('connection', (socket) => {
       });
     // get sound from database
     getSoundsById(3)
-      .then((sound) => {
+      .then(() => {
         // console.log(sound);
         // emit voice stream data to all sockets
         // socket.emit('voice', sounds[0]);
@@ -431,7 +426,7 @@ passport.use(new GoogleStrategy({
       done(null, user[0]);
     } else {
       createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
-        .then((newUser) => {
+        .then(() => {
           getUserById(profile.id)
             .then((user) => {
               user[0].name = profile.name;
