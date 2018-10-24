@@ -61,7 +61,6 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
     } else {
       this.madeNew = true
     }
-    console.log("this will open the entire new cast creator")
   }
   searchSongToCast(song){
     this.http.post('djView/searchSong', { song }).subscribe((data) => {
@@ -91,9 +90,11 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
 
   songSelect(event){
     this.songSelected = true;
+    this.wasAdded = false;
     this.http.post('/djView/insertSong', { songId: event.target.id, playlistId: this.newcastid})
     .subscribe((data)=>{
       console.log(data);
+      this.soundBite.playlistEmit(this.newcastid);
     })
   }
 
@@ -102,6 +103,8 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
     this.wasNamed = true;
     this.http.post('djView/nameCast',{title}).subscribe((data)=>{
       this.newcastid = data['id'];
+      console.log(data);
+      
     })
   }
    soundClick(event) {
