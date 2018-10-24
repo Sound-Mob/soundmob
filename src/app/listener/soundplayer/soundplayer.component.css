@@ -4,29 +4,30 @@
 } */
 /* styles for ticker  */
 .example1 {
-  height: 100px;	
+  height: 50px;	
   overflow: hidden;
   position: relative;
 }
 
 .example1 h3 {
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 3em;
-  color: black;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  line-height: 50px;
-  text-align: center;
-  /* Starting position */
-  -moz-transform:translateX(100%);
-  -webkit-transform:translateX(100%);	
-  transform:translateX(100%);
-  /* Apply animation to this element */	
-  -moz-animation: example1 15s linear infinite;
-  -webkit-animation: example1 15s linear infinite;
-  animation: example1 15s linear infinite;
+    font-family: 'Lora', 'Times New Roman', serif;
+    font-size: 2em;
+    background-color: #292b2c;
+    color: rgb(169, 195, 218);
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    margin: 0;
+    line-height: 50px;
+    text-align: center;
+    /* Starting position */
+    -moz-transform:translateX(100%);
+    -webkit-transform:translateX(100%);	
+    transform:translateX(100%);
+    /* Apply animation to this element */	
+    -moz-animation: example1 15s linear infinite;
+    -webkit-animation: example1 15s linear infinite;
+    animation: example1 15s linear infinite;
 }
 /* Move it (define the animation) */
 @-moz-keyframes example1 {

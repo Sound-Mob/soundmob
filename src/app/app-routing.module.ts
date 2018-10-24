@@ -24,12 +24,12 @@ const routes: Routes = [
   {
     path: "listener",
     loadChildren: "../app/listener/listener.module#ListenerModule",
-    canActivate: [NeedAuthGuardService]
+    canActivate: [AdminGuard]
   },
   {
     path: "dj",
     loadChildren: "../app/dj/dj.module#DjModule",
-    canActivate: [NeedAuthGuardService]
+    canActivate: [AdminGuard]
   }
 ];
 

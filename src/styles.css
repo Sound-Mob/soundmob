@@ -44,7 +44,7 @@ input[type="color"]:focus,
 }
 
 .balon1 a {
-  background: #42a5f5;
+  background: #B1CBD6;
   color: #fff !important;
   border-radius: 20px 20px 3px 20px;
   display: block;
@@ -123,7 +123,7 @@ a {
 }
 
 a:focus, a:hover {
-  color: #0085A1;
+  color: #B1CBD6;
 }
 
 blockquote {
@@ -150,13 +150,13 @@ blockquote {
 
 ::-moz-selection {
   color: #fff;
-  background: #0085A1;
+  background: #B1CBD6;
   text-shadow: none;
 }
 
 ::selection {
   color: #fff;
-  background: #0085A1;
+  background: #B1CBD6;
   text-shadow: none;
 }
 
@@ -248,13 +248,13 @@ img::-moz-selection {
     color: #212529;
   }
   #mainNav.is-fixed .navbar-brand:focus, #mainNav.is-fixed .navbar-brand:hover {
-    color: #0085A1;
+    color: #B1CBD6;
   }
   #mainNav.is-fixed .navbar-nav > li.nav-item > a {
     color: #212529;
   }
   #mainNav.is-fixed .navbar-nav > li.nav-item > a:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
-    color: #0085A1;
+    color: #B1CBD6;
   }
   #mainNav.is-visible {
     /* if the user changes the scrolling direction, we show the header */
@@ -369,7 +369,7 @@ header.masthead .post-heading .meta a {
 
 .post-preview > a:focus, .post-preview > a:hover {
   text-decoration: none;
-  color: #0085A1;
+  color: #B1CBD6;
 }
 
 .post-preview > a > .post-title {
@@ -397,7 +397,7 @@ header.masthead .post-heading .meta a {
 
 .post-preview > .post-meta > a:focus, .post-preview > .post-meta > a:hover {
   text-decoration: underline;
-  color: #0085A1;
+  color: #B1CBD6;
 }
 
 @media only screen and (min-width: 768px) {
@@ -460,7 +460,7 @@ header.masthead .post-heading .meta a {
 }
 
 .floating-label-form-group-with-focus label {
-  color: #0085A1;
+  color: #B1CBD6;
 }
 
 form .form-group:first-child .floating-label-form-group {
@@ -493,14 +493,14 @@ footer .copyright {
 }
 
 .btn-primary {
-  background-color: #0085A1;
-  border-color: #0085A1;
+  background-color: #B1CBD6;
+  border-color: #B1CBD6;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
   color: #fff;
-  background-color: #00657b !important;
-  border-color: #00657b !important;
+  background-color: #B1CBD6 !important;
+  border-color: #B1CBD6 !important;
 }
 
 .btn-lg {
@@ -521,7 +521,7 @@ footer .copyright {
   position: relative;
   padding-left: 44px;
   text-align: left;
-  white-space: nowrap;
+  white-space:  unset !important;
   overflow: hidden;
   text-overflow: ellipsis
 }
@@ -572,7 +572,7 @@ footer .copyright {
   position: relative;
   padding-left: 44px;
   text-align: left;
-  white-space: nowrap;
+  white-space:  unset !important;
   overflow: hidden;
   text-overflow: ellipsis;
   height: 34px;
@@ -716,20 +716,20 @@ fieldset[disabled] .btn-adn.focus {
 
 .btn-bitbucket {
   color: #fff;
-  background-color: #205081;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
 .btn-bitbucket:focus,
 .btn-bitbucket.focus {
   color: #fff;
-  background-color: #163758;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
 .btn-bitbucket:hover {
   color: #fff;
-  background-color: #163758;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
@@ -737,7 +737,7 @@ fieldset[disabled] .btn-adn.focus {
 .btn-bitbucket.active,
 .open>.dropdown-toggle.btn-bitbucket {
   color: #fff;
-  background-color: #163758;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
@@ -770,31 +770,31 @@ fieldset[disabled] .btn-bitbucket:focus,
 .btn-bitbucket.disabled.focus,
 .btn-bitbucket[disabled].focus,
 fieldset[disabled] .btn-bitbucket.focus {
-  background-color: #205081;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
 .btn-bitbucket .badge {
-  color: #205081;
+  color: #B1CBD6;
   background-color: #fff
 }
 
 .btn-dropbox {
   color: #fff;
-  background-color: #1087dd;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
 .btn-dropbox:focus,
 .btn-dropbox.focus {
-  color: #fff;
+  color: #fff;B1CBD6
   background-color: #0d6aad;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
 .btn-dropbox:hover {
   color: #fff;
-  background-color: #0d6aad;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
@@ -802,7 +802,7 @@ fieldset[disabled] .btn-bitbucket.focus {
 .btn-dropbox.active,
 .open>.dropdown-toggle.btn-dropbox {
   color: #fff;
-  background-color: #0d6aad;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
@@ -816,7 +816,7 @@ fieldset[disabled] .btn-bitbucket.focus {
 .btn-dropbox.active.focus,
 .open>.dropdown-toggle.btn-dropbox.focus {
   color: #fff;
-  background-color: #0a568c;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
@@ -835,7 +835,7 @@ fieldset[disabled] .btn-dropbox:focus,
 .btn-dropbox.disabled.focus,
 .btn-dropbox[disabled].focus,
 fieldset[disabled] .btn-dropbox.focus {
-  background-color: #1087dd;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
@@ -846,14 +846,14 @@ fieldset[disabled] .btn-dropbox.focus {
 
 .btn-facebook {
   color: #fff;
-  background-color: #3b5998;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
 .btn-facebook:focus,
 .btn-facebook.focus {
   color: #fff;
-  background-color: #2d4373;
+  background-color: #B1CBD6;
   border-color: rgba(0, 0, 0, 0.2)
 }
 
