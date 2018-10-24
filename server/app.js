@@ -26,7 +26,6 @@ const userobject = require('./mockuserdata/object');
 // Database
 const {
   createUser,
-  getUsers,
   getUserById,
   addSound,
   getSoundsById,
@@ -39,11 +38,8 @@ const {
 } = require('./database');
 // hidden keys
 const {
-  Youtube,
   ClientID,
   ClientSecret,
-  RedirectURL,
-  TOKEN,
   API_KEY,
 } = require('./config.js');
 
@@ -126,7 +122,7 @@ io.on('connection', (socket) => {
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', (room) => {
     // socket.admin = true;
-    djs.splice(0, djs.length)
+    djs.splice(0, djs.length);
     // io.sockets.emit('starttokbox');
 
     // sending dj room to client
@@ -150,34 +146,29 @@ io.on('connection', (socket) => {
         const token = opentok.generateToken(sessionId);
         // make this just go to particular dj
         io.sockets.emit('tokSession', sessionId, token);
-    
         // add new dj to active dj list
-        if (djs.length === 0){
+        if (djs.length === 0) {
           djs.push({
             name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user
-          })
+          });
         }
-        djs.forEach((dj)=>{
-          console.log(djs, " in each")
-          if (dj.googleid === user){
-            console.log(user, "in if")
+        djs.forEach((dj) => {
+          if (dj.googleid === user) {
+            console.log(user, 'n if');
           } else {
             djs.push({
               name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user,
             });
-            console.log(djs, " in push")
           }
-        })
-        
+        });
       }
     });
   });
 
   // listen for volume change
   socket.on('changeVolume', (volume) => {
-    console.log(volume)
     io.sockets.emit('changeVolume', volume);
-  })
+  });
 
   // choose playlist listener
   socket.on('djSelectsPlaylist', (playlistId) => {
@@ -441,8 +432,11 @@ passport.use(new GoogleStrategy({
     } else {
       createUser(id, givenName, familyName, bio, followercount, followingcount, true, false)
         .then((newUser) => {
-          // console.log(newUser);
-          done(null, newUser);
+          getUserById(profile.id)
+            .then((user) => {
+              user[0].name = profile.name;
+              done(null, user[0]);
+            }).catch(err => console.error(err));
         }).catch(err => console.error(err));
     }
   }).catch(err => console.error(err, 'this should hit'));
