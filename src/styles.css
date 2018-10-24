@@ -521,7 +521,7 @@ footer .copyright {
   position: relative;
   padding-left: 44px;
   text-align: left;
-  white-space: nowrap;
+  white-space:  unset !important;
   overflow: hidden;
   text-overflow: ellipsis
 }
@@ -572,7 +572,7 @@ footer .copyright {
   position: relative;
   padding-left: 44px;
   text-align: left;
-  white-space: nowrap;
+  white-space:  unset !important;
   overflow: hidden;
   text-overflow: ellipsis;
   height: 34px;

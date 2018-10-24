@@ -18,6 +18,22 @@
         </li>
       </ul>
     </div>
+    <div class="col-6 col-md-4">
+      <button type="button" id="addToCast" (click)='addToCast()' class="btn btn-md btn-block" style="color: #B1CBD6;background-color: transparent;background-image: none;border-color: #B1CBD6;">
+        Add to Cast
+      </button>
+      <div *ngIf="wasAdded" style="position: absolute;z-index: 4;">
+        <button type="button" id="searchSongToCast" class="btn btn-secondary btn-sm btn-block" (click)='searchSongToCast(search)'>
+          Search Songs
+        </button>
+        <input type="text" [(ngModel)]="search" id="input-field" placeholder="" />
+        <div *ngIf="songSelected === false">
+          <button *ngFor="let result of searchResults" style="z-index: 4;white-space:  unset !important;" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-secondary btn-lg btn-block">
+            {{result.name}}
+          </button>
+        </div>
+      </div>
+    </div>
     
     <div class="col-6 col-md-4">
       <div id="createPlaylist">
@@ -26,39 +42,13 @@
         </button>
       <div *ngIf="madeNew" style="position: absolute;z-index: 4;">
         <div *ngIf="wasNamed === false">
-          <button type="button" id="submitCastName" class="btn btn-sm" style="color: #B1CBD6;background-color: transparent;background-image: none;border-color: #B1CBD6;" (click)='submitCastName(text)'>Name Cast</button>
+          <button type="button" id="submitCastName" class="btn btn-secondary btn-sm btn-block" (click)='submitCastName(text)'>Name Cast</button>
           <input type="text" [(ngModel)]="text" id="input-field" placeholder="" />
-        </div>
-        <div *ngIf="wasNamed">
-            <button type="button" id="searchSongToCast" class="btn btn-sm" style="color: #B1CBD6;background-color: transparent;background-image: none;border-color: #B1CBD6;" (click)='searchSongToCast(search)'>Search Songs</button>
-            <input type="text" [(ngModel)]="search" id="input-field" placeholder="Name your soundcast." />
-            <div *ngIf="songSelected === false">
-              <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button"
-                class="btn btn-outline-info btn-sm">
-                {{result.name}}
-              </button>
-            </div>
         </div>
         </div>
       </div>
     </div>
   
-  <div class="col-6 col-md-4">
-    <button type="button" id="addToCast" (click)='addToCast()' class="btn btn-md btn-block" style="color: #B1CBD6;background-color: transparent;background-image: none;border-color: #B1CBD6;">
-      Add to Cast
-    </button>
-    <div *ngIf="wasAdded" style="position: absolute;z-index: 4;">
-      <button type="button" id="searchSongToCast" class="btn btn-sm" style="color: #B1CBD6;background-color: transparent;background-image: none;border-color: #B1CBD6;" (click)='searchSongToCast(search)'>
-        Search Songs
-      </button>
-      <input type="text" [(ngModel)]="search" id="input-field" placeholder="" />
-      <div *ngIf="songSelected === false">
-        <button *ngFor="let result of searchResults" [attr.id]="result.id" (click)='songSelect($event)' type="button" class="btn btn-outline-secondary btn-lg btn-block">
-          {{result.name}}
-        </button>
-      </div>
-    </div>
-  </div>
   
 </div>
 </div>
