@@ -22,13 +22,13 @@
 
 .btn-google {
     color: #fff;
-    background-color: #5B5B59;
+    background-color: #292b2c;
     border-color: rgba(0, 0, 0, 0.2);
 }
 
 body {
   /* background-image: url(//d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/BuKKyFq/videoblocks-music-notes-fire-style-background-looped-animation_sae9zw4kb_thumbnail-full01.png); */
-  background-color: black;
+  background-color: #292b2c;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -49,4 +49,12 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.round {
+  border-radius: 10px;
+}
+
+.noborder {
+  border: 0px;
 }
