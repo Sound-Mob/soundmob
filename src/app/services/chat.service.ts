@@ -69,7 +69,9 @@ export class ChatService {
     return observable;
   }
 
-
+  djDisconnect(){
+    this.socket.emit('disconnect')
+  }
 
   sendPause(songId, pausedAt){
     console.log("service of pause reached")
