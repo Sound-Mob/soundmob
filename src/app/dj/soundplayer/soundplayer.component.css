@@ -31,9 +31,10 @@
     color: aliceblue;
 }
 .example1 h3 {
-    font-size: 3em;
+    font-family: 'Lora', 'Times New Roman', serif;
+    font-size: 2em;
     background-color: #292b2c;
-    color: black;
+    color: rgb(169, 195, 218);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -99,6 +100,8 @@ img {
     z-index: 3;
 }
 
+
+
 .shoppingBadge-custom{
     background: #B1CBD6;
     position:absolute;
@@ -146,4 +149,8 @@ img {
     color: #6e5c22;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+}
+
+.btn {
+    font-family: 'Lora', 'Times New Roman', serif;
 }
