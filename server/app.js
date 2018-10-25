@@ -57,8 +57,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
+  name: 'SoundMob',
   maxAge: 24 * 60 * 60 * 1000,
   keys: ['qwerty'],
+  httpOnly: false,
+
 }));
 
 const port = process.env.PORT || 3000;
@@ -67,6 +70,7 @@ const port = process.env.PORT || 3000;
 app.use(passport.initialize());
 app.use(passport.session());
 const mill = cookieSession({
+  name: 'SoundMob',
   maxAge: 24 * 60 * 60 * 1000,
   keys: ['qwerty'],
 });
