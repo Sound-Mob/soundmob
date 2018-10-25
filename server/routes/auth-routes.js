@@ -22,9 +22,9 @@ router.get('/google/callback',
     successRedirect: '/',
     failureRedirect: '/auth',
   }));
-  router.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
+router.get('/logout', (req, res) => {
+  req.logOut();
+  res.end();
 });
 
 module.exports = router;
