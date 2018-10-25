@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-
 export class SoundBoardService {
   // private socket = io(`http://localhost:3000`)
 

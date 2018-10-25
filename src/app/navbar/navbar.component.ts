@@ -8,15 +8,16 @@ import { ChatService } from '../services/chat.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(private http: HttpClient, private disconnect: ChatService) { }
+  constructor(private http: HttpClient, private chatservice: ChatService) { }
 
   ngOnInit() {
+   
   }
 
   logOut(){
-    this.http.get('auth/logout');
-    this.disconnect.djDisconnect();
+    this.chatservice.logOut();
+    return this.http.get('auth/logout',{ withCredentials: true })
+    .subscribe(data => console.log(data));
   }
 
 }
