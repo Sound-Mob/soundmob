@@ -53,17 +53,14 @@ const {
 } = require('./util.js');
 // middlewares
 app.use(cors());
-
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
 app.use(cookieSession({
   name: 'SoundMob',
   maxAge: 24 * 60 * 60 * 1000,
   keys: ['qwerty'],
   httpOnly: false,
-
 }));
 
 const port = process.env.PORT || 3000;
@@ -71,10 +68,6 @@ const port = process.env.PORT || 3000;
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser());
-app.use(cookieSession({
-    keys: ['secret'],
-}));
 const mill = cookieSession({
   name: 'SoundMob',
   maxAge: 24 * 60 * 60 * 1000,
@@ -164,10 +157,12 @@ io.on('connection', (socket) => {
             djs.push({
               name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user,
             });
+          
           }
         });
       }
     });
+    console.log(djs)
   });
 
   // listen for volume change
@@ -350,29 +345,32 @@ io.on('connection', (socket) => {
     io.sockets.emit('soundRelay', data);
   });
 
+  socket.on('discon', () => {
+    console.log(djs, " in discon")
+    djs.forEach((dj, i) => {
+      if (dj.googleid === user) {
+        djs.splice(i, 1);
+      }
+    });
+    console.log(djs, " right after splice in discon")
+  })
+
   // listen for users to leave
   socket.on('disconnect', () => {
     // remove user from users array
-    users.splice(users.indexOf(socket.name), 1);
+    // users.splice(users.indexOf(socket.name), 1);
 
     // get cookie session
     // let cookieSession = socket.handshake.headers.cookie.split(" ");
 
     // emit disconnection
-    io.emit('disconnect', { users, name: socket.name });
-
+    // io.emit('disconnect', { users, name: socket.name });
+    
     djs.forEach((dj, i) => {
-      console.log(djs, 'on disconnect pre splice');
-      if (dj.googleid === user) {
+      if (dj.googleid === user) { 
         djs.splice(i, 1);
-      } else {
-        // djs.push({
-        //   name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user,
-        // });
-        // console.log(djs, " in disconnect post splice")
       }
     });
-    console.log(djs, 'on exit');
   });
 
 
