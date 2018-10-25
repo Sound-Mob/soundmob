@@ -19,6 +19,7 @@ import { YoutubePipe } from '../pipes/youtube.pipe';
 import { TrackComponent } from './track-component/track.component';
 import { MatSliderComponent } from './mat-slider/mat-slider.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -42,6 +43,7 @@ import { MatSliderModule } from '@angular/material/slider';
     YoutubePipe,
     TrackComponent,
     MatSliderComponent,
+    NavbarComponent,
   ],
   providers: [OpentokService]
 })
