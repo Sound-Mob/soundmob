@@ -354,7 +354,7 @@ io.on('connection', (socket) => {
 
     // emit disconnection
     io.emit('disconnect', { users, name: socket.name });
-
+    console.log(djs, " just before splicing")
     djs.forEach((dj, i) => {
       console.log(djs, 'on disconnect pre splice');
       if (dj.googleid === user) {

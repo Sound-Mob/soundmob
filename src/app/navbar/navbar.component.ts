@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut(){
-    this.chatservice.logOut();
+    this.chatservice.djDisconnect();
     return this.http.get('auth/logout',{ withCredentials: true })
     .subscribe(data => console.log(data));
   }
