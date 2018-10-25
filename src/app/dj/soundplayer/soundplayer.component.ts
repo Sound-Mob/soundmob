@@ -30,7 +30,7 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
       .subscribe(data => this.songTitle = data);
       this.http.get('/test')
       .subscribe(( items ) => {
-      //  console.log(items);
+       console.log({items});
       this.items = items
         // return items.items.map(item => ({ name: item.name,mediaLink: item.mediaLink }));
         this.buttonMaker();
