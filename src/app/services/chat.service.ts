@@ -15,7 +15,7 @@ export class ChatService {
   currentListener = this.listenerSong.asObservable();
   private listenerPhoto = new BehaviorSubject<string>("");
   currentListenerPhoto = this.listenerPhoto.asObservable();
-  private socket;
+  private socket = io();
 
   
   
@@ -23,9 +23,9 @@ export class ChatService {
   changeSong(song:string) {
     this.songSource.next(song);
   }
-  init() {
-    this.socket = io();
-  } 
+  // init() {
+  //   this.socket = io();
+  // } 
   logOut(){
     this.socket.emit('disconnect');
   }

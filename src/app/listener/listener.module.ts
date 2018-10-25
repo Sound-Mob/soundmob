@@ -16,6 +16,7 @@ import { FormsModule } from "@angular/forms";
 import { ListenerChatComponent } from "./listener-chat/listener-chat.component";
 import { YoutubePipe } from "../pipes/youtube.pipe";
 import { ListenerTrackComponent } from './track/track.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -37,7 +38,8 @@ import { ListenerTrackComponent } from './track/track.component';
         PublisherComponent,
         YoutubePipe,
         ListenerChatComponent,
-        ListenerTrackComponent
+        ListenerTrackComponent,
+        NavbarComponent
     ]
 
 })
