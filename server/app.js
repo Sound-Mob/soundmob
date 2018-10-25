@@ -55,19 +55,20 @@ const {
 } = require('./util.js');
 // middlewares
 app.use(cors());
-app.use(cookieParser());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieSession({
-  maxAge: 24 * 60 * 60 * 1000,
-  keys: ['qwerty'],
-}));
+
 
 const port = process.env.PORT || 3000;
 // app.use(morgan('tiny'));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
+app.use(cookieSession({
+    keys: ['secret'],
+}));
 const mill = cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
   keys: ['qwerty'],
