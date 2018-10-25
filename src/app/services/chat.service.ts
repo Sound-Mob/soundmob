@@ -78,7 +78,7 @@ export class ChatService {
   }
 
   djDisconnect(){
-    this.socket.emit('disconnect')
+    this.socket.emit('discon')
   }
 
   sendPause(songId, pausedAt){
