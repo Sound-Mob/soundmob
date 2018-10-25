@@ -2,10 +2,10 @@
 
 # Build a new docker image
 # do NOT use tags, then push WITH latest tag !important
-docker build -t us.gcr.io/sound-mob12282/soundmob:presentation .
+docker build -t us.gcr.io/sound-mob12282/soundmob:15.01 .
 
 # Push new docker image to gcloud
-docker push us.gcr.io/sound-mob12282/soundmob:presentation
+docker push us.gcr.io/sound-mob12282/soundmob:15.01
 
 
 # Update running compute engine with newest image
