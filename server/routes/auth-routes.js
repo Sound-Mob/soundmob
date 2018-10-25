@@ -23,8 +23,8 @@ router.get('/google/callback',
     failureRedirect: '/auth',
   }));
 router.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
+  req.logOut();
+  res.end();
 });
 
 module.exports = router;
