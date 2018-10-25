@@ -24,14 +24,13 @@ const routes: Routes = [
   {
     path: "listener",
     loadChildren: "../app/listener/listener.module#ListenerModule",
-    canActivate: [AdminGuard]
+    canActivate: [NeedAuthGuardService]
   },
   {
     path: "dj",
     loadChildren: "../app/dj/dj.module#DjModule",
-    canActivate: [AdminGuard]
+    canActivate: [NeedAuthGuardService]
   }
-  // comment change
 ];
 
 @NgModule({
