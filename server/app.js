@@ -56,9 +56,8 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-<<<<<<< HEAD
 
-=======
+
 app.use(cookieSession({
   name: 'SoundMob',
   maxAge: 24 * 60 * 60 * 1000,
@@ -66,7 +65,6 @@ app.use(cookieSession({
   httpOnly: false,
 
 }));
->>>>>>> 33cdc01254e76b4d239172266f4a40224e079a80
 
 const port = process.env.PORT || 3000;
 // app.use(morgan('tiny'));
