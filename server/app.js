@@ -122,7 +122,7 @@ io.on('connection', (socket) => {
   // MAKE ROOM LISTENER -- listen for new room
   socket.on('newroom', () => {
     // socket.admin = true;
-    djs.splice(0, djs.length);
+    // djs.splice(0, djs.length);
     // io.sockets.emit('starttokbox');
 
     // sending dj room to client
