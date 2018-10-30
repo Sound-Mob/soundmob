@@ -30,9 +30,7 @@ const {
   addSession,
   getSessionInfoById,
   changeSession,
-  createDjSongSession,
   getDjSongById,
-  changeDjSong,
 } = require('./database');
 // hidden keys
 const {
@@ -45,7 +43,6 @@ const {
 const {
   playlistIDs,
   videoIDArray,
-  searchDetails,
   getSoundBoard,
   listenerInfo,
 } = require('./util.js');
@@ -95,10 +92,6 @@ app.get('/tester', (req, res) => {
 });
 
 const djs = [];
-let songStartTime = '';
-let listenerStartTime = '';
-let startAt;
-let songDuration;
 
 // on connection
 io.on('connection', (socket) => {
@@ -124,7 +117,12 @@ io.on('connection', (socket) => {
         // add new dj to active dj list
         if (djs.length === 0) {
           djs.push({
-            name, id: socket.id, photo: value, tokSession: sessionId, tokToken: token, googleid: user
+            name,
+            id: socket.id,
+            photo: value,
+            tokSession: sessionId,
+            tokToken: token,
+            googleid: user,
           });
         }
         djs.forEach((dj) => {
@@ -174,20 +172,6 @@ io.on('connection', (socket) => {
     io.sockets.emit('soundRelay', data);
   });
 
- 
-  function getStartTime() {
-    // calculate listener start time
-    listenerStartTime += new Date();
-    listenerStartTime = listenerStartTime.split('');
-    listenerStartTime = listenerStartTime.splice(16, 8);
-    const minsInSeconds = Number(listenerStartTime[3] + listenerStartTime[4]) * 60;
-    const seconds = Number(listenerStartTime[6] + listenerStartTime[7]);
-    // calculate difference between listener start and playlist start
-    listenerStartTime = minsInSeconds + seconds;
-    startAt = listenerStartTime - songStartTime;
-    // io.sockets.emit('startlistener', {timeInPlaylist, tokSession, tokToken});
-  }
-
   // NEW LISTENER LISTENER -- listen for room id
   socket.on('roomroute', (djInfo) => {
     const room = djInfo[0];
@@ -228,12 +212,11 @@ io.on('connection', (socket) => {
       });
   });
 
-  // listen for listener request of current song
+  // // listen for listener request of current song
   socket.on('listenerGetCurrentSong', () => {
     io.sockets.emit('songStatusRequest', { test: 'hello' });
-    getStartTime();
     getDjSongById(socket.rooms[socket.id]).then((songinfo) => {
-      io.sockets.emit('currentSong', { songinfo, listenerStartTime, startAt });
+      io.sockets.emit('currentSong', { songinfo });
     }).catch(error => console.log(error));
   });
   // listen for username
@@ -248,13 +231,6 @@ io.on('connection', (socket) => {
       // sends dj info to chat service
       io.sockets.emit('startlistener', sessionInfo);
     });
-  });
-
-  // listen for gjinfo in the listner profile component
-  socket.on('djInfoReq', () => {
-    // get info on selected dj
-
-    // send info on selected dj
   });
 
   // listen for chat message
@@ -275,26 +251,15 @@ io.on('connection', (socket) => {
   });
 
   socket.on('discon', () => {
-    console.log(djs, " in discon")
     djs.forEach((dj, i) => {
       if (dj.googleid === user) {
         djs.splice(i, 1);
       }
     });
-    console.log(djs, " right after splice in discon")
   })
 
   // listen for users to leave
   socket.on('disconnect', () => {
-    // remove user from users array
-    // users.splice(users.indexOf(socket.name), 1);
-
-    // get cookie session
-    // let cookieSession = socket.handshake.headers.cookie.split(" ");
-
-    // emit disconnection
-    // io.emit('disconnect', { users, name: socket.name });
-    
     djs.forEach((dj, i) => {
       if (dj.googleid === user) { 
         djs.splice(i, 1);

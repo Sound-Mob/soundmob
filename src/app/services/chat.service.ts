@@ -179,16 +179,6 @@ export class ChatService {
     return observable;
   }
 
-  // listenerReceiveSongDetails() {
-  //   let observable = new Observable<{ songid: string, starttime: string, duration: string }>(observer => {
-  //     this.socket.on('currentSong', (songInfo) => {
-  //       observer.next(songInfo);
-  //     });
-  //   });
-  //   console.log("in listener rescioga")
-  //   return observable;
-  // }
-
   listenerGetSongDetails() {
     this.socket.emit("listenerGetCurrentSong");
   }
