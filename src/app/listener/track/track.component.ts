@@ -26,16 +26,13 @@ export class ListenerTrackComponent implements OnInit {
   constructor(private chatService: ChatService) { 
     this.chatService.pauseListener()
       .subscribe(pauseInfo => {
-        console.log("received pause ping", pauseInfo)
         this.video = pauseInfo['songId'];
         this.pausedAt = pauseInfo['pausedAt'];
         this.pauseCast();
       })
     this.chatService.resumeListener()
       .subscribe(resumeInfo => {
-        console.log("received resume ping", resumeInfo)
        this.trackTitle = resumeInfo['name'];
-
         this.trackPhoto = resumeInfo['photo'];
         this.video = resumeInfo['songId'];
         this.resumeAt = resumeInfo['resumedAt'];
