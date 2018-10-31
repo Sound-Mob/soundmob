@@ -5,19 +5,20 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SoundBoardService {
-  // private socket = io(`http://localhost:3000`)
 
   private socket = io();
+
   constructor() { }
+
   soundEmit(sound) {
     this.socket.emit('soundEmit', sound);
-
   }
+
   playlistEmit(playlistId) {
     this.socket.emit('djSelectsPlaylist', playlistId)
   }
-  soundReceive() {
 
+  soundReceive() {
     let observable = new Observable<{ sound: string }>(observer => {
       this.socket.on('soundRelay', (data) => {
         observer.next(data);

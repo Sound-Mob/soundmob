@@ -15,7 +15,6 @@ export class SoundplayerComponent implements OnInit {
   constructor(private chatService: ChatService) { }
   ngOnInit() {
     
-    // this.chatService.listenerGetSongDetails()
     this.chatService.currentListener
       .subscribe((data) => {
         console.log(data, ' insidne the soundComponent listener')

@@ -23,9 +23,7 @@ export class ChatService {
   changeSong(song:string) {
     this.songSource.next(song);
   }
-  // init() {
-  //   this.socket = io();
-  // } 
+
   logOut(){
     this.socket.emit('disconnect');
   }
@@ -43,9 +41,6 @@ export class ChatService {
   }
 
   sendMessage(data) {
-    // console.log(data)
-    // console.log("hehehehee")
-    // console.log(this.socket.request, " in request");
     this.socket.emit('chat message', data)
   }
 
@@ -67,10 +62,8 @@ export class ChatService {
   }
 
   djGetSongDetails() {
-    // console.log('recieved songgg   info')
     let observable = new Observable<{ songStartTime: string, songDuration: string }>(observer => {
       this.socket.on('castOn', (songInfo) => {
-        // console.log(songInfo);
         observer.next(songInfo);
       });
     });
@@ -174,7 +167,6 @@ export class ChatService {
         observer.next(songs);
       });
     });
-
     return observable;
   }
 

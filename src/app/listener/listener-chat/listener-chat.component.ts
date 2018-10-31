@@ -18,7 +18,6 @@ export class ListenerChatComponent implements OnInit {
   profile: object;
   chatMessages: Array<{ userName: string, lastName: string, message: string }> = [];
 
-
   constructor(private chatService: ChatService, private djProfileService: DjProfileService) { 
   this.chatService.receiveMessages()
     .subscribe(data => {
@@ -27,8 +26,6 @@ export class ListenerChatComponent implements OnInit {
       }
     this.chatMessages.unshift(data)
     })
-    
-
   }
 
 ngOnInit() {
@@ -37,7 +34,6 @@ ngOnInit() {
         this.profile = profile
       })
 }
-
 
 sendChatMessage() {
   const { messageToSend } = this;
