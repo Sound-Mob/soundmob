@@ -42,7 +42,8 @@ export class TrackComponent implements OnInit {
         this.player.setVolume(this.volume)
         console.log(this.volume, " receive volume happening in dj");
       })
-   }
+  }
+
   init() {
     var tag = document.createElement('script');
     tag.src = '//www.youtube.com/iframe_api';
@@ -56,7 +57,6 @@ export class TrackComponent implements OnInit {
 
   ngOnInit() {
     this.init();
-    // this.video = '14WE3A0PwVs' //video id
     console.log("in init")
     window['onYouTubeIframeAPIReady'] = (e) => {
       this.YT = window['YT'];
@@ -90,11 +90,9 @@ export class TrackComponent implements OnInit {
     if (this.paused){
       this.player.loadVideoById(this.songs[this.count], this.pausedAt);
       console.log(this.pausedAt,"should be sending unpause")
-
     } else {
       this.player.pauseVideo();
     }
-
   }
 
   startCast() {
@@ -103,7 +101,6 @@ export class TrackComponent implements OnInit {
     this.player.loadVideoById(this.songs[this.count])
     console.log("start cast was fired", this.songs[this.count])
     if (this.count !== 0){
-      // this.chatService.djStartCast(this.songs[this.count]);
       this.chatService.sendUnpause(this.songs[this.count], this.cleanTime());
     }
 
@@ -130,25 +127,20 @@ export class TrackComponent implements OnInit {
         this.paused = true;
         if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
           console.log('paused' + ' @ ' + this.cleanTime());
-
           let timestamp = this.cleanTime();
           this.pausedAt = this.cleanTime();
           this.chatService.sendPause(this.songs[this.count], timestamp);
-
         };
         break;
       case window['YT'].PlayerState.ENDED:
       this.count = this.count+1;
         console.log("start cast was fired", this.songs[this.count])
         console.log("start cast was fired", this.songs)
-        // work around to make
         this.player.seekTo(this.player.getDuration(), true);
         this.startCast();
-        // this.chatService.djStartCast(this.songs[this.count]);
         break;
     };
   };
-  //utility
   cleanTime() {
     return Math.round(this.player.getCurrentTime())
   };
