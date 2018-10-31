@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat.service';
 import { DjProfileService } from 'src/app/services/dj-profile.service';
-import { HttpClient } from '@angular/common/http';
+
 
 
 
@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit {
 
   constructor(private chatService: ChatService,
     private djProfileService: DjProfileService,
-   ) {
+  ) {
     this.chatService.receiveMessages()
       .subscribe(data => {
         if (this.chatMessages.length > 4) {
@@ -31,7 +31,7 @@ export class ChatComponent implements OnInit {
         this.chatMessages.unshift(data)
       })
   }
-   
+
   ngOnInit() {
     this.chatService.createRoom("hey");
     this.djProfileService.getProfileInfo()
