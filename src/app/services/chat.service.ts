@@ -130,7 +130,6 @@ export class ChatService {
   }
 
   sendSongStatus(songId, timestamp) {
-    console.log(songId, timestamp)
     this.socket.emit('songStatus', { songId, timestamp });
   }
 
