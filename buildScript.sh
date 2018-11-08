@@ -5,10 +5,10 @@
 # Do not use latest tag to avoid complications. instead simply version the application
 
 # Build a new docker image
-docker build -t us.gcr.io/sound-mob12282/soundmob:15.02 .
+docker build -t us.gcr.io/sound-mob12282/soundmob:15.04 .
 
 # Push new docker image to gcloud
-docker push us.gcr.io/sound-mob12282/soundmob:15.02
+docker push us.gcr.io/sound-mob12282/soundmob:15.04
 
 # Navigate to GCLOUD
 # Create a new GCE with recent docker image
