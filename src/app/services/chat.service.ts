@@ -23,9 +23,7 @@ export class ChatService {
   changeSong(song:string) {
     this.songSource.next(song);
   }
-  // init() {
-  //   this.socket = io();
-  // } 
+
   logOut(){
     this.socket.emit('disconnect');
   }
@@ -43,9 +41,6 @@ export class ChatService {
   }
 
   sendMessage(data) {
-    // console.log(data)
-    // console.log("hehehehee")
-    // console.log(this.socket.request, " in request");
     this.socket.emit('chat message', data)
   }
 
@@ -67,10 +62,8 @@ export class ChatService {
   }
 
   djGetSongDetails() {
-    // console.log('recieved songgg   info')
     let observable = new Observable<{ songStartTime: string, songDuration: string }>(observer => {
       this.socket.on('castOn', (songInfo) => {
-        // console.log(songInfo);
         observer.next(songInfo);
       });
     });
@@ -82,56 +75,46 @@ export class ChatService {
   }
 
   sendPause(songId, pausedAt){
-    console.log("service of pause reached")
     this.socket.emit('paused', {songId, pausedAt});
   }
 
   sendUnpause(songId, resumedAt) {
-    console.log(songId, resumedAt)
     this.socket.emit('unpause', { songId, resumedAt });
   }
 
   resumeListener() {
     let observable = new Observable<{ resumeInfo: object }>(observer => {
       this.socket.on('resumeRelay', (resumeInfo) => {
-        console.log(" recieved relay")
         observer.next(resumeInfo);
       });
     });
-    // console.log(observable)
     return observable;
   }
 
   songStatusListener() {
     let observable = new Observable<{ songStatusInfo: object }>(observer => {
       this.socket.on('songStatusToListener', (songStatusInfo) => {
-        console.log(" recieved song status in listener")
         observer.next(songStatusInfo);
       });
     });
-    // console.log(observable)
     return observable;
   }
 
   receiveSongStatusRequest() {
     let observable = new Observable<{ songStatus: object }>(observer => {
       this.socket.on('songStatusRequest', (songStatus) => {
-        console.log(" recieved status request")
         observer.next(songStatus);
       });
     });
-    // console.log(observable)
     return observable;
   }
 
   listenForVolume() {
     let observable = new Observable<{ volume: object }>(observer => {
       this.socket.on('changeVolume', (volume) => {
-        console.log(" recieved volume change")
         observer.next(volume);
       });
     });
-    // console.log(observable)
     return observable;
   }
 
@@ -140,8 +123,6 @@ export class ChatService {
   }
 
   sendSongStatus(songId, timestamp) {
-    console.log("in send songstatus service")
-    console.log(songId, timestamp)
     this.socket.emit('songStatus', { songId, timestamp });
   }
 
@@ -151,32 +132,23 @@ export class ChatService {
         observer.next(pauseInfo);
       });
     });
-    // console.log(observable)
     return observable;
   }
 
   receiveDjInfo() {
-    console.log('recieved info')
     let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string }>(observer => {
       this.socket.on('startlistener', (djInfo) => {
-        // console.log(djInfo);
         observer.next(djInfo);
       });
     });
-    // console.log(observable)
     return observable;
   }
   getInfoListener() {
-    console.log('obboboobobob')
     let observable = new Observable<object>(observer => {
       this.socket.on('info4Listener', (djInfo) => {
-        // console.log(djInfo);
         observer.next(djInfo);
       });
     });
-    // return this.socket.on<object>('info4Listener', profile => {
-    //   observer.next(profile)
-    // });
     return observable;
   }
 
@@ -192,30 +164,17 @@ export class ChatService {
     console.log('recieved songs')
     let observable = new Observable<{ timeInPlaylist: string, tokSession: string, tokToken: string }>(observer => {
       this.socket.on('songList', (songs) => {
-        // console.log(songs);
         observer.next(songs);
       });
     });
-
     return observable;
   }
 
-  listenerReceiveSongDetails() {
-    // console.log('recieved songgg   info')
-    let observable = new Observable<{ songid: string, starttime: string, duration: string }>(observer => {
-      this.socket.on('currentSong', (songInfo) => {
-
-        observer.next(songInfo);
-      });
-    });
-    // console.log(observable)
-    return observable;
-  }
   listenerGetSongDetails() {
     this.socket.emit("listenerGetCurrentSong");
   }
+
   djInfoReq() {
     this.socket.emit('djInfoReq')
   }
-
 }

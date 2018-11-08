@@ -30,9 +30,8 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
       .subscribe(data => this.songTitle = data);
       this.http.get('/test')
       .subscribe(( items ) => {
-       console.log({items});
+        console.log({items});
       this.items = items
-        // return items.items.map(item => ({ name: item.name,mediaLink: item.mediaLink }));
         this.buttonMaker();
       });
       this.http.get('/djView/playlist').subscribe((info)=>{
@@ -107,27 +106,26 @@ constructor(private http: HttpClient, private soundBite:SoundBoardService, priva
       
     })
   }
-   soundClick(event) {
-     console.log(event);
-     this.soundBite.soundEmit(event.path[1].id);
+
+  soundClick(event) {
+    console.log(event);
+    this.soundBite.soundEmit(event.path[1].id);
     
-   }
+  }
 
-    addToCast(){
-      if (this.wasAdded === true) {
-        this.wasAdded = false;
-      } else {
-        this.wasAdded = true;
-      }
-      console.log("would pop up song search")
-   }
-   buttonMaker() {
+  addToCast(){
+    if (this.wasAdded === true) {
+      this.wasAdded = false;
+    } else {
+      this.wasAdded = true;
+    }
+    console.log("would pop up song search")
+  }
+
+  buttonMaker() {
     this.items.items.map((item) => {
-      // this.sounds.push({ name: item.name, mediaLink: item.mediaLink })
       this.sounds.push({ name: item.name.substring(-4), mediaLink: item.mediaLink })
-     })
-   }
- 
-
+    })
+  }
 
 }

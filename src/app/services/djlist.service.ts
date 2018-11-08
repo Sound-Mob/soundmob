@@ -7,7 +7,6 @@ import { Observable } from 'rxjs'
 })
 export class DjlistService {
 
-  // private socket = io(`http://localhost:3000`)
   private socket = io();
 
   constructor() { }

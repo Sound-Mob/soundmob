@@ -5,7 +5,6 @@ import { CommonModule } from "@angular/common";
 import { ListenerRoutingModule } from './listener-routing.module';
 
 import { ListenerComponent } from "./listener.component";
-import { ProfileComponent } from './profile/profile.component';
 import { SoundplayerComponent } from './soundplayer/soundplayer.component';
 
 import { AppComponent } from "./tokbox/app.component";
@@ -31,7 +30,6 @@ import { NavbarComponent } from './navbar/navbar.component';
     ],
     declarations: [
         ListenerComponent,
-        ProfileComponent,
         SoundplayerComponent,
         AppComponent,
         SubscriberComponent,
