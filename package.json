@@ -30,7 +30,7 @@
     "@opentok/client": "^2.14.8",
     "@types/jest": "^23.3.2",
     "auth0": "^2.13.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "b": "^2.0.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
