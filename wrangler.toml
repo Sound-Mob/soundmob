@@ -1,0 +1,12 @@
+name = "soundmob"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[secrets_store_secrets]]
+binding = "YOUTUBE_DATA_API_KEY"
+store_id = "cf7f63f9d571485992997ffb96ec5075"
+secret_name = "YOUTUBE_DATA_API_KEY"

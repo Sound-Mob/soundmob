@@ -1,29 +1,40 @@
 # SoundMob
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3.
+Live sound platform — **rebuilt** on Cloudflare Workers + Hono.
 
-## Development server
+## Live
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**https://soundmob.jvalamis.workers.dev**
 
-## Code scaffolding
+## Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- [Hono](https://hono.dev) on Cloudflare Workers
+- Static assets (`public/`) via Workers Assets
+- `YOUTUBE_DATA_API_KEY` from Cloudflare Secrets Store (ged vault)
 
-## Build
+## Develop
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```bash
+npm install
+npm run dev
+```
 
-## Running unit tests
+## Deploy
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+npm run deploy
+```
 
-## Running end-to-end tests
+Requires `CLOUDFLARE_API_TOKEN` or `wrangler login`. Secrets bind via `wrangler.toml` → `default_secrets_store`.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## API
 
-## Further help
+| Route | Description |
+|-------|-------------|
+| `GET /` | Landing (cinematic hero) |
+| `GET /health` | Liveness |
+| `GET /api/youtube/status` | Whether YouTube API key is bound |
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Repo history
 
-1. Test
+Legacy Angular 6 + Express app was removed in the 2026 gut-and-rebuild. See git history before this commit for the original SoundMob codebase.
